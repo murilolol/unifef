@@ -399,6 +399,8 @@ public class ConexaoDB {
 > **Resposta esperada:** pela verificação do campo `id`. Se estiver vazio, nulo ou zero, é um registro novo → `INSERT`. Se tiver um valor numérico existente, é uma edição → `UPDATE` filtrando por esse `id` — geralmente auxiliado por um campo oculto (`<input type="hidden" name="id" value="...">`) no formulário.
 
 **Questão 15.** Elabore a estrutura da classe Java `Livro` com os atributos especificados pelo professor (`id`, `nomeLivro`, `isbn`, `autor`, `dataPublicacao`, `valorLivro`), incluindo construtores, getters e setters.
+> **Nota de curadoria:** o arquivo original desta questão (`Simulados/Simulado-Questoes-Comentadas.md`) foi salvo de forma incompleta, cortado antes do gabarito. A resposta abaixo é a implementação-padrão (POJO com construtor, getters e setters) para exatamente os atributos que o próprio enunciado já especifica — não introduz nenhum dado ou requisito novo.
+>
 > **Resposta esperada:**
 > ```java
 > package com.exemplo.model;
