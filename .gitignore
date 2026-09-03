@@ -1,0 +1,28 @@
+# Ambientes e Variáveis Secretas
+.env
+.env.*
+*.local
+
+# Cache e Ferramentas Internas
+.ai-memory/
+.impeccable/
+.sync-cache.json
+.vscode/
+.idea/
+
+# Sistema Operacional
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporários e Logs
+*.tmp
+*.log
+scratch/
+*.swp
+
+# Binários executáveis locais
+*.exe
+*.dll
+*.o
+*.obj

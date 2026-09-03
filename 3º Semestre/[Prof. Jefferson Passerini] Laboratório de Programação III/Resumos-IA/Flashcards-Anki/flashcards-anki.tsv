@@ -1,0 +1,20 @@
+Qual é o nome do professor responsável pela disciplina de Laboratório de Programação III?	Prof. Jefferson Passerini
+Em qual semestre é ministrada a disciplina Laboratório de Programação III?	3º Semestre
+Qual é o tema da Aula 01 da disciplina Laboratório de Programação III?	Preparando o ambiente de desenvolvimento
+Qual é o foco da Aula 03 da disciplina Laboratório de Programação III?	Estrutura do Projeto - Front end
+Qual é o tema abordado na Aula 04 de Laboratório de Programação III?	Conexão com o Banco de Dados
+O que é desenvolvido na Aula 05 de Laboratório de Programação III?	Criando o Listar Usuario
+Quais funções do CRUD são implementadas na aula específica de funções do CRUD?	Incluir, alterar e excluir
+Qual é a tecnologia base utilizada nos materiais de estudo em Java Web listados nos links úteis (Capítulos 1 a 5)?	Java JSP
+O que deve ser construído no Trabalho de Programação de 27/04/2026 utilizando Servlets?	Um programa Java Web para manutenção de um cadastro de Livros
+Quais são os atributos obrigatórios da classe Livro no trabalho de programação?	id, nomeLivro, isbn, autor, dataPublicação e valorLivro
+Qual é a exigência extra para o projeto do Trabalho de Programação de Livros?	Implementar a manutenção (incluir, alterar e excluir) e colocar o projeto no GitHub
+Qual é o tamanho máximo dos grupos para o Trabalho de Programação de Livros?	Grupos de 3 alunos
+Qual é o tema do Desafio 01 nos links de recursos do trabalho de 11/05/2026?	Implementar as validações para o campo e-mail
+Qual é o tema do Desafio 02 nos links de recursos do trabalho de 11/05/2026?	Implementar o cadastro de Estado no projeto
+Qual é a data limite de entrega da Avaliação 1 (AV1) de Laboratório III?	24/03/2026 às 23:30
+Qual é a ferramenta utilizada para aplicação do questionário da Avaliação 1?	Google Forms
+Como o aluno deve proceder após responder ao questionário da Avaliação 1?	Voltar na atividade e marcar como entregue
+O que o aluno deve fazer para entregar a Avaliação II em 08/06/2026?	Fazer a implementação conforme a folha de prova e entregar o projeto zipado
+Qual é a pontuação máxima padrão das avaliações e trabalhos na disciplina?	100 pontos
+Qual é a finalidade da Avaliação Substitutiva prevista para 25/06/2026?	Substituir nota de avaliação anterior para alunos que perderam ou tiraram nota baixa

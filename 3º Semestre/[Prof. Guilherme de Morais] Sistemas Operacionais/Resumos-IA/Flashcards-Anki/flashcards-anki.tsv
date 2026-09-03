@@ -1,0 +1,20 @@
+O que é o DESPACHO em um sistema operacional?	O ato de designar um processador ao primeiro processo da lista de pronto.
+Qual entidade realiza o despacho de um processo?	O despachante.
+Qual é a função do relógio de interrupção em hardware (temporizador de intervalo)?	Evitar que qualquer processo monopolize o sistema acidentalmente ou maliciosamente.
+O que é o QUANTUM em sistemas operacionais?	O intervalo de tempo específico permitido para um processo executar antes de ser interrompido.
+O que acontece quando o quantum de um processo expira?	O relógio de interrupção gera uma interrupção, o SO muda o estado do processo de execução para pronto e despacha o próximo.
+Por que um processo se auto-bloqueia?	Quando inicia uma operação de E/S antes do quantum expirar, entregando voluntariamente o processador e esperando a conclusão.
+Qual é a diferença entre processos acordados e adormecidos?	Processos acordados (prontos ou em execução) disputam ativamente o tempo do processador; os adormecidos (bloqueados) não podem executar mesmo se houver processador livre.
+Qual é a única transição de estado iniciada pelo próprio processo de usuário?	O bloqueio (as outras três são disparadas pelo sistema operacional).
+O que significa a sigla PID no contexto de gerenciamento de processos?	Process Identification Number (Número de Identificação do Processo).
+O que é o PCB (Process Control Board ou Bloco de Controle de Processo)?	Uma estrutura (também chamada descritor de processo) que mantém as informações que o SO necessita para gerenciar os processos.
+Quais informações são comumente armazenadas no PCB?	Estado do processo, contador de programa, prioridade de escalonamento, credenciais, ponteiro para pai, ponteiros para filhos e conteúdo dos registradores.
+O que armazena o Contexto de Execução no PCB?	O conteúdo dos registradores do processador no qual o processo estava executando da última vez que saiu do estado de execução.
+O que é um processo-pai e um processo-filho?	O processo gerador é o pai e o processo criado é o filho, formando uma estrutura hierárquica.
+O que o SO realiza para interromper um processo em execução e começar outro previamente pronto?	Um chaveamento de contexto (context switch).
+Qual é o primeiro passo do núcleo para realizar um chaveamento de contexto?	Salvar o contexto de execução do processo atual no seu PCB e, em seguida, carregar o contexto do próximo processo pronto.
+Como alguns processadores otimizam e aceleram o acesso aos PCBs?	Fornecendo um registro próprio em hardware que indica o PCB do processo em execução e instruções dedicadas para salvar/restaurar o contexto.
+O que é uma interrupção síncrona?	Quando um processo tenta realizar uma ação ilegal ou se referir a uma localização de memória protegida.
+O que é uma interrupção assíncrona?	Quando um dispositivo de hardware (como teclado ou mouse) muda de estado e comunica ao processador.
+Qual abordagem antiga os processadores usavam para verificar dispositivos antes das interrupções, que aumentava com a complexidade?	Sondagem (Polling).
+O que é um tratado de interrupção?	Um conjunto de instruções especificado pelo sistema operacional para ser executado em resposta a cada tipo de interrupção.

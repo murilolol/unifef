@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aula em formato de slides sobre Views em SQL com PostgreSQL." />
+  <title>Aula — Views em SQL com PostgreSQL</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --surface:#0e1b2e;
+      --surface-2:#14243b;
+      --text:#f3f7fb;
+      --muted:#b9c7d8;
+      --primary:#4fd1c5;
+      --secondary:#60a5fa;
+      --accent:#fbbf24;
+      --danger:#fb7185;
+      --success:#86efac;
+      --border:rgba(255,255,255,.12);
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+      --radius:22px;
+      --code:#020617;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(79,209,197,.13), transparent 32%),
+        radial-gradient(circle at 100% 20%, rgba(96,165,250,.12), transparent 35%),
+        var(--bg);
+      color:var(--text);
+      overflow:hidden;
+    }
+    button{font:inherit}
+    .app{height:100vh;display:grid;grid-template-rows:6px 1fr 74px}
+    .progress-wrap{background:rgba(255,255,255,.08)}
+    .progress{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width .25s ease}
+    .stage{position:relative;overflow:hidden}
+    .slide{
+      position:absolute;inset:0;
+      padding:clamp(24px,4vw,64px);
+      overflow-y:auto;
+      opacity:0;transform:translateX(38px) scale(.99);
+      pointer-events:none;
+      transition:opacity .32s ease, transform .32s ease;
+    }
+    .slide.active{opacity:1;transform:none;pointer-events:auto}
+    .slide-inner{max-width:1280px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+    .eyebrow{font-size:.9rem;text-transform:uppercase;letter-spacing:.16em;color:var(--primary);font-weight:800;margin-bottom:12px}
+    h1,h2,h3{line-height:1.08;margin:0 0 18px}
+    h1{font-size:clamp(2.45rem,6vw,5.4rem);max-width:1100px}
+    h2{font-size:clamp(2rem,4.3vw,4rem)}
+    h3{font-size:clamp(1.2rem,2vw,1.75rem);color:#dce9f7}
+    p,li{font-size:clamp(1rem,1.55vw,1.28rem);line-height:1.58;color:var(--muted)}
+    strong{color:var(--text)}
+    .lead{font-size:clamp(1.15rem,2vw,1.55rem);max-width:1000px;color:#d9e6f4}
+    .hero-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);width:max-content;margin-top:20px;color:#dce9f7}
+    .grid{display:grid;gap:20px;margin-top:22px}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035));border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .card h3{margin-bottom:10px}
+    .card p,.card li{font-size:1.02rem}
+    .highlight{border-left:5px solid var(--primary);padding:18px 20px;background:rgba(79,209,197,.09);border-radius:0 16px 16px 0;margin:18px 0}
+    .warn{border-left-color:var(--accent);background:rgba(251,191,36,.09)}
+    .danger{border-left-color:var(--danger);background:rgba(251,113,133,.09)}
+    .success{border-left-color:var(--success);background:rgba(134,239,172,.09)}
+    pre{margin:16px 0 0;background:var(--code);border:1px solid rgba(96,165,250,.25);border-radius:16px;padding:20px;overflow:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+    code{font-family:"JetBrains Mono",Consolas,Monaco,monospace;font-size:clamp(.8rem,1.22vw,1rem);line-height:1.55;color:#d7e8ff;white-space:pre}
+    .kw{color:#7dd3fc;font-weight:700}.fn{color:#f9a8d4}.str{color:#86efac}.num{color:#fcd34d}.cm{color:#94a3b8;font-style:italic}
+    table{width:100%;border-collapse:collapse;margin-top:18px;background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
+    th,td{padding:13px 14px;border-bottom:1px solid var(--border);text-align:left;font-size:.98rem}
+    th{background:rgba(96,165,250,.12);color:#eaf4ff}
+    td{color:#cbd8e7}
+    .join-map{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin-top:25px}
+    .table-box{padding:22px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--border);text-align:center}
+    .join-symbol{font-size:2.5rem;color:var(--primary);font-weight:900}
+    .pill{display:inline-block;padding:6px 11px;border-radius:999px;background:rgba(96,165,250,.16);color:#bfdbfe;font-size:.88rem;font-weight:700;margin:3px 4px 3px 0}
+    .timeline{display:grid;gap:14px;margin-top:20px}
+    .step{display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start}
+    .step-num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#06111d;font-weight:900}
+    .controls{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border);background:rgba(5,12,22,.92);backdrop-filter:blur(14px)}
+    .ctrl-group{display:flex;gap:10px;align-items:center}
+    .btn{border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;transition:.2s}
+    .btn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#04111c;border:0;font-weight:800}
+    .counter{color:var(--muted);min-width:86px;text-align:center;font-weight:700}
+    .dots{display:flex;gap:6px;max-width:40vw;overflow:hidden}
+    .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);flex:0 0 auto}.dot.active{background:var(--primary);transform:scale(1.35)}
+    .kbd{border:1px solid var(--border);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:7px;color:#e5edf6;font-size:.82rem}
+    ul{margin-top:8px;padding-left:24px}
+    .question{font-size:clamp(1.35rem,2.6vw,2.2rem);color:#fff;font-weight:750;margin:14px 0}
+    .footer-note{margin-top:20px;font-size:.92rem;color:#92a5ba}
+    @media(max-width:860px){
+      .grid.two,.grid.three{grid-template-columns:1fr}
+      .join-map{grid-template-columns:1fr}.join-symbol{transform:rotate(90deg);text-align:center}
+      .controls .tips{display:none}.dots{display:none}.slide{padding:26px 20px}
+      body{overflow:hidden}
+    }
+    @media print{
+      body{overflow:visible;background:#fff;color:#111}
+      .app{display:block;height:auto}.progress-wrap,.controls{display:none}
+      .stage{overflow:visible}.slide{position:relative;opacity:1;transform:none;pointer-events:auto;page-break-after:always;min-height:100vh;overflow:visible;color:#111;background:#fff}
+      .slide-inner{min-height:90vh}.card,.highlight,pre,table{box-shadow:none}.card{border:1px solid #ccc;background:#fff}.card p,.card li,p,li{color:#333}
+      h1,h2,h3,strong{color:#111}pre{background:#f5f5f5;border:1px solid #bbb}code{color:#111}.kw,.fn,.str,.num,.cm{color:#111}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  <main class="stage" id="stage">
+
+    <section class="slide active"><div class="slide-inner">
+      <div class="eyebrow">Banco de Dados • PostgreSQL</div>
+      <h1>Views em SQL</h1>
+      <p class="lead">Como criar consultas virtuais reutilizáveis para simplificar acesso aos dados, padronizar relatórios e controlar o que cada usuário pode visualizar.</p>
+      <div class="hero-badge">CREATE VIEW • REPLACE • CHECK OPTION • MATERIALIZED VIEW</div>
+      <p class="footer-note">Use as setas do teclado ou os botões inferiores para navegar.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Objetivos</div><h2>O que será estudado</h2>
+      <div class="grid two">
+        <div class="card"><h3>Fundamentos</h3><ul>
+          <li>Conceito e finalidade de uma view</li>
+          <li>Diferença entre tabela e view</li>
+          <li>Criação, consulta, alteração e exclusão</li>
+        </ul></div>
+        <div class="card"><h3>Aplicação prática</h3><ul>
+          <li>Views com JOIN, filtros e agregações</li>
+          <li>Views atualizáveis e <code>WITH CHECK OPTION</code></li>
+          <li>Segurança e materialized views</li>
+        </ul></div>
+      </div>
+      <div class="highlight"><strong>Resultado esperado:</strong> utilizar views para encapsular consultas e oferecer uma camada de acesso mais simples e controlada sobre o banco.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Introdução</div><h2>Por que utilizar Views?</h2>
+      <p>Em sistemas reais, consultas podem envolver muitos <code>JOINs</code>, filtros, cálculos e regras de negócio. Repetir a mesma lógica em vários lugares torna o código difícil de manter.</p>
+      <div class="grid three">
+        <div class="card"><h3>Simplificar</h3><p>Ocultar a complexidade de consultas extensas.</p></div>
+        <div class="card"><h3>Reutilizar</h3><p>Centralizar uma consulta usada por vários relatórios ou aplicações.</p></div>
+        <div class="card"><h3>Controlar</h3><p>Expor apenas as colunas e linhas que determinado usuário pode acessar.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Conceito</div><h2>O que é uma View?</h2>
+      <p>Uma <strong>view</strong> é uma consulta SQL armazenada no banco de dados e apresentada ao usuário como se fosse uma tabela.</p>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_produtos_caros <span class="kw">AS</span>
+<span class="kw">SELECT</span> id_produto, nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; <span class="num">1000</span>;</code></pre>
+      <div class="highlight"><strong>Importante:</strong> uma view comum não armazena uma cópia independente dos dados. Quando é consultada, o PostgreSQL utiliza a definição da view para buscar os dados nas tabelas de origem.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Comparação</div><h2>Tabela × View</h2>
+      <table><thead><tr><th>Aspecto</th><th>Tabela</th><th>View</th></tr></thead><tbody>
+        <tr><td>Armazena dados diretamente?</td><td>Sim</td><td>Normalmente não</td></tr>
+        <tr><td>Possui definição SQL?</td><td>Estrutura de colunas</td><td>Consulta SELECT</td></tr>
+        <tr><td>Pode ser consultada com SELECT?</td><td>Sim</td><td>Sim</td></tr>
+        <tr><td>Pode ocultar colunas?</td><td>Não por si só</td><td>Sim</td></tr>
+        <tr><td>Pode simplificar JOINs?</td><td>Não</td><td>Sim</td></tr>
+      </tbody></table>
+      <div class="highlight warn">Uma view se comporta como uma tabela em muitas consultas, mas sua origem é uma instrução <code>SELECT</code>.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Modelo da aula</div><h2>Banco utilizado nos exemplos</h2>
+      <div class="grid three">
+        <div class="card"><h3>clientes</h3><span class="pill">id_cliente</span><span class="pill">nome</span><span class="pill">cidade</span><span class="pill">estado</span></div>
+        <div class="card"><h3>pedidos</h3><span class="pill">id_pedido</span><span class="pill">data_pedido</span><span class="pill">status</span><span class="pill">id_cliente</span></div>
+        <div class="card"><h3>itens_pedido</h3><span class="pill">id_pedido</span><span class="pill">id_produto</span><span class="pill">quantidade</span></div>
+        <div class="card"><h3>produtos</h3><span class="pill">id_produto</span><span class="pill">nome_produto</span><span class="pill">preco</span><span class="pill">id_categoria</span></div>
+        <div class="card"><h3>categorias</h3><span class="pill">id_categoria</span><span class="pill">nome_categoria</span></div>
+        <div class="card"><h3>vendedores</h3><span class="pill">id_vendedor</span><span class="pill">nome</span><span class="pill">salario</span></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Sintaxe</div><h2>Criando a primeira View</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> nome_da_view <span class="kw">AS</span>
+<span class="kw">SELECT</span> colunas
+<span class="kw">FROM</span> tabela
+<span class="kw">WHERE</span> condicao;</code></pre>
+      <p>Exemplo:</p>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes_sp <span class="kw">AS</span>
+<span class="kw">SELECT</span> id_cliente, nome, cidade
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> estado = <span class="str">'SP'</span>;</code></pre>
+      <div class="highlight success">Após criada, <code>vw_clientes_sp</code> passa a ser um objeto do banco que pode ser utilizado em consultas.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Consulta</div><h2>Consultando uma View</h2>
+      <p>O acesso é feito da mesma forma que em uma tabela:</p>
+      <pre><code><span class="kw">SELECT</span> *
+<span class="kw">FROM</span> vw_clientes_sp;</code></pre>
+      <p>Também é possível filtrar novamente:</p>
+      <pre><code><span class="kw">SELECT</span> nome, cidade
+<span class="kw">FROM</span> vw_clientes_sp
+<span class="kw">WHERE</span> cidade = <span class="str">'Campinas'</span>;</code></pre>
+      <div class="highlight">O filtro da consulta externa é aplicado sobre o conjunto de dados definido pela view.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Funcionamento</div><h2>O que acontece quando a View é consultada?</h2>
+      <div class="timeline">
+        <div class="step"><div class="step-num">1</div><div><h3>Aplicação consulta a view</h3><p><code>SELECT * FROM vw_clientes_sp;</code></p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>PostgreSQL utiliza a definição</h3><p>A consulta armazenada da view é integrada ao plano de execução.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>As tabelas reais são acessadas</h3><p>Os dados atuais são lidos das tabelas de origem.</p></div></div>
+      </div>
+      <div class="highlight success">Se os dados das tabelas mudarem, a view comum passa a apresentar os novos valores automaticamente.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Reutilização</div><h2>Sem View × Com View</h2>
+      <div class="grid two">
+        <div class="card"><h3>Sem view</h3><pre><code><span class="kw">SELECT</span> p.id_pedido,
+       c.nome,
+       p.data_pedido
+<span class="kw">FROM</span> pedidos p
+<span class="kw">JOIN</span> clientes c
+  <span class="kw">ON</span> p.id_cliente = c.id_cliente;</code></pre></div>
+        <div class="card"><h3>Com view</h3><pre><code><span class="kw">SELECT</span> *
+<span class="kw">FROM</span> vw_pedidos_clientes;</code></pre></div>
+      </div>
+      <p>A complexidade fica concentrada na definição da view, enquanto as consultas posteriores tornam-se menores e mais legíveis.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">JOIN</div><h2>View com relacionamento entre tabelas</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_pedidos_clientes <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  p.id_pedido,
+  p.data_pedido,
+  p.status,
+  c.id_cliente,
+  c.nome <span class="kw">AS</span> cliente
+<span class="kw">FROM</span> pedidos p
+<span class="kw">JOIN</span> clientes c
+  <span class="kw">ON</span> p.id_cliente = c.id_cliente;</code></pre>
+      <div class="highlight"><strong>Benefício:</strong> quem consulta a view não precisa conhecer o relacionamento entre <code>pedidos</code> e <code>clientes</code>.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">JOIN múltiplo</div><h2>View detalhada de vendas</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_detalhes_vendas <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  p.id_pedido,
+  c.nome <span class="kw">AS</span> cliente,
+  pr.nome_produto,
+  ip.quantidade,
+  ip.preco_unitario,
+  ip.quantidade * ip.preco_unitario <span class="kw">AS</span> subtotal
+<span class="kw">FROM</span> pedidos p
+<span class="kw">JOIN</span> clientes c
+  <span class="kw">ON</span> p.id_cliente = c.id_cliente
+<span class="kw">JOIN</span> itens_pedido ip
+  <span class="kw">ON</span> p.id_pedido = ip.id_pedido
+<span class="kw">JOIN</span> produtos pr
+  <span class="kw">ON</span> ip.id_produto = pr.id_produto;</code></pre>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Uso prático</div><h2>Consultando a View detalhada</h2>
+      <pre><code><span class="kw">SELECT</span>
+  id_pedido,
+  cliente,
+  nome_produto,
+  subtotal
+<span class="kw">FROM</span> vw_detalhes_vendas
+<span class="kw">WHERE</span> subtotal &gt; <span class="num">1000</span>
+<span class="kw">ORDER BY</span> subtotal <span class="kw">DESC</span>;</code></pre>
+      <div class="grid two">
+        <div class="card"><h3>Para relatórios</h3><p>A aplicação acessa um conjunto de dados já organizado.</p></div>
+        <div class="card"><h3>Para manutenção</h3><p>Alterações na lógica podem ser centralizadas na própria view.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Agregação</div><h2>View com GROUP BY e SUM</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_total_pedidos <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  p.id_pedido,
+  c.nome <span class="kw">AS</span> cliente,
+  <span class="fn">SUM</span>(ip.quantidade * ip.preco_unitario)
+    <span class="kw">AS</span> valor_total
+<span class="kw">FROM</span> pedidos p
+<span class="kw">JOIN</span> clientes c
+  <span class="kw">ON</span> p.id_cliente = c.id_cliente
+<span class="kw">JOIN</span> itens_pedido ip
+  <span class="kw">ON</span> p.id_pedido = ip.id_pedido
+<span class="kw">GROUP BY</span> p.id_pedido, c.nome;</code></pre>
+      <div class="highlight warn">Views com agregação são excelentes para relatórios, mas normalmente não são atualizáveis diretamente.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Agregação</div><h2>View de resumo por cliente</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_resumo_clientes <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  c.id_cliente,
+  c.nome,
+  <span class="fn">COUNT</span>(p.id_pedido) <span class="kw">AS</span> quantidade_pedidos
+<span class="kw">FROM</span> clientes c
+<span class="kw">LEFT JOIN</span> pedidos p
+  <span class="kw">ON</span> c.id_cliente = p.id_cliente
+<span class="kw">GROUP BY</span> c.id_cliente, c.nome;</code></pre>
+      <p>Consulta posterior:</p>
+      <pre><code><span class="kw">SELECT</span> *
+<span class="kw">FROM</span> vw_resumo_clientes
+<span class="kw">WHERE</span> quantidade_pedidos &gt;= <span class="num">2</span>;</code></pre>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Alteração</div><h2>CREATE OR REPLACE VIEW</h2>
+      <p>Quando é necessário modificar a consulta de uma view, o PostgreSQL permite substituir sua definição.</p>
+      <pre><code><span class="kw">CREATE OR REPLACE VIEW</span> vw_clientes_sp <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  id_cliente,
+  nome,
+  cidade,
+  limite_credito
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> estado = <span class="str">'SP'</span>;</code></pre>
+      <div class="highlight warn"><strong>Atenção:</strong> existem restrições na substituição. As colunas existentes precisam continuar compatíveis; mudanças estruturais maiores podem exigir remover e recriar a view.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Nomes de colunas</div><h2>Definindo aliases claros</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_produtos_categoria <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  p.id_produto,
+  p.nome_produto <span class="kw">AS</span> produto,
+  c.nome_categoria <span class="kw">AS</span> categoria,
+  p.preco
+<span class="kw">FROM</span> produtos p
+<span class="kw">JOIN</span> categorias c
+  <span class="kw">ON</span> p.id_categoria = c.id_categoria;</code></pre>
+      <div class="highlight">Uma view funciona como uma interface de dados. Por isso, nomes de colunas claros tornam seu uso mais intuitivo para outros desenvolvedores.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Organização</div><h2>Convenções de nomenclatura</h2>
+      <div class="grid two">
+        <div class="card"><h3>Prefixo</h3><p>Uma convenção comum é utilizar <code>vw_</code>:</p><p><code>vw_clientes_sp</code><br><code>vw_total_pedidos</code></p></div>
+        <div class="card"><h3>Nome descritivo</h3><p>O nome deve indicar claramente o que a view representa, evitando abreviações difíceis de interpretar.</p></div>
+      </div>
+      <div class="highlight success">Não é obrigação do PostgreSQL usar <code>vw_</code>, mas uma convenção consistente facilita manutenção e leitura do esquema.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exclusão</div><h2>DROP VIEW</h2>
+      <pre><code><span class="kw">DROP VIEW</span> vw_clientes_sp;</code></pre>
+      <p>Para evitar erro caso a view não exista:</p>
+      <pre><code><span class="kw">DROP VIEW IF EXISTS</span> vw_clientes_sp;</code></pre>
+      <div class="highlight danger"><strong>Cuidado:</strong> outras views ou objetos podem depender dela. Nesses casos, o PostgreSQL pode impedir a remoção.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Dependências</div><h2>CASCADE e RESTRICT</h2>
+      <pre><code><span class="kw">DROP VIEW</span> vw_base <span class="kw">RESTRICT</span>;</code></pre>
+      <p><code>RESTRICT</code> impede a exclusão caso existam objetos dependentes.</p>
+      <pre><code><span class="kw">DROP VIEW</span> vw_base <span class="kw">CASCADE</span>;</code></pre>
+      <p><code>CASCADE</code> remove também objetos dependentes.</p>
+      <div class="highlight danger">Utilize <code>CASCADE</code> com muito cuidado, especialmente em bancos compartilhados ou de produção.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Atualização</div><h2>Uma View pode receber INSERT, UPDATE e DELETE?</h2>
+      <p>Algumas views simples podem ser <strong>automaticamente atualizáveis</strong> no PostgreSQL.</p>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes_sp <span class="kw">AS</span>
+<span class="kw">SELECT</span> id_cliente, nome, cidade, estado
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> estado = <span class="str">'SP'</span>;</code></pre>
+      <pre><code><span class="kw">UPDATE</span> vw_clientes_sp
+<span class="kw">SET</span> cidade = <span class="str">'Jundiaí'</span>
+<span class="kw">WHERE</span> id_cliente = <span class="num">2</span>;</code></pre>
+      <div class="highlight success">Se a view for atualizável, a modificação é aplicada na tabela base <code>clientes</code>.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Limitações</div><h2>Quando uma View deixa de ser simples?</h2>
+      <p>Views que utilizam determinadas construções normalmente não são automaticamente atualizáveis.</p>
+      <div class="grid two">
+        <div class="card"><h3>Exemplos comuns</h3><ul><li><code>GROUP BY</code></li><li>funções de agregação</li><li><code>DISTINCT</code></li><li>operações de conjunto</li></ul></div>
+        <div class="card"><h3>Por quê?</h3><p>O PostgreSQL pode não conseguir determinar de maneira inequívoca qual linha da tabela original deve ser modificada.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Integridade</div><h2>Problema ao atualizar uma View filtrada</h2>
+      <p>Considere a view:</p>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes_sp <span class="kw">AS</span>
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> estado = <span class="str">'SP'</span>;</code></pre>
+      <p>Sem proteção adicional, uma alteração pode fazer a linha deixar de satisfazer o filtro:</p>
+      <pre><code><span class="kw">UPDATE</span> vw_clientes_sp
+<span class="kw">SET</span> estado = <span class="str">'MG'</span>
+<span class="kw">WHERE</span> id_cliente = <span class="num">1</span>;</code></pre>
+      <div class="highlight warn">Após a alteração, o cliente continua na tabela, mas deixa de aparecer na view.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Integridade</div><h2>WITH CHECK OPTION</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes_sp <span class="kw">AS</span>
+<span class="kw">SELECT</span> id_cliente, nome, cidade, estado
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> estado = <span class="str">'SP'</span>
+<span class="kw">WITH CHECK OPTION</span>;</code></pre>
+      <p>Agora, operações feitas através da view precisam gerar linhas que continuem atendendo ao filtro.</p>
+      <pre><code><span class="kw">UPDATE</span> vw_clientes_sp
+<span class="kw">SET</span> estado = <span class="str">'MG'</span>
+<span class="kw">WHERE</span> id_cliente = <span class="num">1</span>;
+<span class="cm">-- operação rejeitada</span></code></pre>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Segurança</div><h2>View como camada de acesso</h2>
+      <p>Uma view pode expor somente determinadas colunas de uma tabela.</p>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes_publico <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  id_cliente,
+  nome,
+  cidade,
+  estado
+<span class="kw">FROM</span> clientes;</code></pre>
+      <div class="grid two">
+        <div class="card"><h3>Expostos</h3><p>Nome, cidade e estado.</p></div>
+        <div class="card"><h3>Ocultos</h3><p>Campos internos, financeiros ou outros dados que não precisam ser entregues ao usuário.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Permissões</div><h2>GRANT em uma View</h2>
+      <pre><code><span class="kw">GRANT SELECT</span>
+<span class="kw">ON</span> vw_clientes_publico
+<span class="kw">TO</span> usuario_relatorios;</code></pre>
+      <p>Com uma política de permissões adequada, é possível dar acesso à view sem permitir que o usuário consulte diretamente todas as tabelas envolvidas.</p>
+      <div class="highlight warn">Segurança em banco exige planejamento de privilégios, proprietário dos objetos e contexto de execução. A view é uma ferramenta dessa estratégia, não uma solução isolada.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Boas práticas</div><h2>Views não substituem o projeto do banco</h2>
+      <div class="grid three">
+        <div class="card"><h3>Não esconder problemas</h3><p>Uma view não corrige modelagem inadequada ou ausência de índices.</p></div>
+        <div class="card"><h3>Evitar excesso</h3><p>Muitas camadas de views sobre views podem dificultar entendimento e manutenção.</p></div>
+        <div class="card"><h3>Documentar</h3><p>Views importantes devem possuir finalidade e dependências bem conhecidas.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Desempenho</div><h2>View comum melhora a velocidade?</h2>
+      <p>Não necessariamente. Uma view comum é principalmente uma forma de <strong>organizar e reutilizar uma consulta</strong>.</p>
+      <div class="highlight">O otimizador do PostgreSQL normalmente integra a definição da view à consulta e gera um plano de execução sobre as tabelas reais.</div>
+      <p>Se a consulta original é pesada, criar uma view comum sobre ela não significa que o resultado será armazenado ou ficará automaticamente mais rápido.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Análise</div><h2>EXPLAIN ANALYZE em uma View</h2>
+      <pre><code><span class="kw">EXPLAIN ANALYZE</span>
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> vw_total_pedidos
+<span class="kw">WHERE</span> valor_total &gt; <span class="num">3000</span>;</code></pre>
+      <p>O plano permite observar quais tabelas são acessadas, como os JOINs são executados e onde estão os maiores custos.</p>
+      <div class="highlight success">Uma view pode simplificar o SQL escrito pelo usuário sem esconder o plano real do PostgreSQL.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Materialized View</div><h2>Quando o resultado precisa ser armazenado</h2>
+      <p>Uma <strong>materialized view</strong> armazena fisicamente o resultado da consulta.</p>
+      <pre><code><span class="kw">CREATE MATERIALIZED VIEW</span> mv_vendas_por_cliente <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  c.id_cliente,
+  c.nome,
+  <span class="fn">SUM</span>(ip.quantidade * ip.preco_unitario) <span class="kw">AS</span> total
+<span class="kw">FROM</span> clientes c
+<span class="kw">JOIN</span> pedidos p
+  <span class="kw">ON</span> c.id_cliente = p.id_cliente
+<span class="kw">JOIN</span> itens_pedido ip
+  <span class="kw">ON</span> p.id_pedido = ip.id_pedido
+<span class="kw">GROUP BY</span> c.id_cliente, c.nome;</code></pre>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Comparação</div><h2>View × Materialized View</h2>
+      <table><thead><tr><th>Característica</th><th>View</th><th>Materialized View</th></tr></thead><tbody>
+        <tr><td>Resultado armazenado</td><td>Não</td><td>Sim</td></tr>
+        <tr><td>Dados sempre atuais</td><td>Sim, conforme tabelas base</td><td>Não automaticamente</td></tr>
+        <tr><td>Precisa de REFRESH</td><td>Não</td><td>Sim</td></tr>
+        <tr><td>Pode acelerar consultas pesadas</td><td>Não por armazenar resultado</td><td>Pode</td></tr>
+      </tbody></table>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Atualização</div><h2>REFRESH MATERIALIZED VIEW</h2>
+      <pre><code><span class="kw">REFRESH MATERIALIZED VIEW</span>
+mv_vendas_por_cliente;</code></pre>
+      <p>Depois do <code>REFRESH</code>, o conteúdo armazenado é recalculado a partir das tabelas base.</p>
+      <div class="highlight warn">Uma materialized view pode apresentar dados desatualizados entre dois processos de atualização.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Índices</div><h2>Índices em Materialized Views</h2>
+      <p>Como a materialized view armazena dados fisicamente, ela pode possuir índices próprios.</p>
+      <pre><code><span class="kw">CREATE INDEX</span> idx_mv_vendas_cliente
+<span class="kw">ON</span> mv_vendas_por_cliente(id_cliente);</code></pre>
+      <div class="highlight success">Esse recurso é útil em relatórios pesados ou consultas analíticas executadas repetidamente sobre dados que não precisam ser atualizados a cada instante.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Erros comuns</div><h2>SELECT * dentro de Views</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes <span class="kw">AS</span>
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> clientes;</code></pre>
+      <p>Apesar de funcionar, pode tornar a interface da view menos explícita e mais sensível a mudanças de estrutura.</p>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_clientes <span class="kw">AS</span>
+<span class="kw">SELECT</span> id_cliente, nome, cidade, estado
+<span class="kw">FROM</span> clientes;</code></pre>
+      <div class="highlight success">Prefira declarar conscientemente quais colunas fazem parte da view.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Erros comuns</div><h2>Views excessivamente complexas</h2>
+      <div class="grid two">
+        <div class="card"><h3>Problema</h3><p>Uma view chama outra, que chama outra, que possui vários JOINs e agregações.</p></div>
+        <div class="card"><h3>Consequência</h3><p>O SQL externo parece simples, mas a consulta real pode ser difícil de compreender e otimizar.</p></div>
+      </div>
+      <div class="highlight warn">Views devem reduzir complexidade para o consumidor sem criar uma estrutura de dependências impossível de manter.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Aplicação</div><h2>Quando uma View é uma boa escolha?</h2>
+      <div class="grid two">
+        <div class="card"><h3>Relatórios recorrentes</h3><p>Quando várias telas precisam da mesma combinação de tabelas.</p></div>
+        <div class="card"><h3>Compatibilidade</h3><p>Quando se deseja oferecer uma interface estável mesmo com mudanças internas controladas.</p></div>
+        <div class="card"><h3>Segurança</h3><p>Quando usuários devem visualizar apenas subconjuntos de dados.</p></div>
+        <div class="card"><h3>Padronização</h3><p>Quando cálculos e regras de consulta devem ser centralizados.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exemplo integrado</div><h2>Relatório de vendas pronto para uso</h2>
+      <pre><code><span class="kw">CREATE VIEW</span> vw_relatorio_vendas <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  p.id_pedido,
+  p.data_pedido,
+  p.status,
+  c.nome <span class="kw">AS</span> cliente,
+  <span class="fn">SUM</span>(ip.quantidade * ip.preco_unitario) <span class="kw">AS</span> total
+<span class="kw">FROM</span> pedidos p
+<span class="kw">JOIN</span> clientes c
+  <span class="kw">ON</span> p.id_cliente = c.id_cliente
+<span class="kw">JOIN</span> itens_pedido ip
+  <span class="kw">ON</span> p.id_pedido = ip.id_pedido
+<span class="kw">GROUP BY</span>
+  p.id_pedido, p.data_pedido, p.status, c.nome;</code></pre>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exemplo integrado</div><h2>Consultas sobre o relatório</h2>
+      <pre><code><span class="kw">SELECT</span> *
+<span class="kw">FROM</span> vw_relatorio_vendas
+<span class="kw">WHERE</span> status = <span class="str">'Pago'</span>
+<span class="kw">ORDER BY</span> total <span class="kw">DESC</span>;</code></pre>
+      <pre><code><span class="kw">SELECT</span> cliente, <span class="fn">SUM</span>(total) <span class="kw">AS</span> total_cliente
+<span class="kw">FROM</span> vw_relatorio_vendas
+<span class="kw">GROUP BY</span> cliente
+<span class="kw">ORDER BY</span> total_cliente <span class="kw">DESC</span>;</code></pre>
+      <div class="highlight">A view pode servir como uma nova camada lógica sobre a qual outras consultas são construídas.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exercícios</div><h2>Fixação — parte 1</h2>
+      <div class="grid two">
+        <div class="card"><h3>1</h3><p>Crie uma view contendo apenas clientes do estado de SP.</p></div>
+        <div class="card"><h3>2</h3><p>Crie uma view que exiba produtos com preço superior a R$ 1.000,00.</p></div>
+        <div class="card"><h3>3</h3><p>Crie uma view com pedidos e nomes dos respectivos clientes.</p></div>
+        <div class="card"><h3>4</h3><p>Consulte a view do exercício 3 exibindo somente pedidos pagos.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exercícios</div><h2>Fixação — parte 2</h2>
+      <div class="grid two">
+        <div class="card"><h3>5</h3><p>Crie uma view que calcule o valor total de cada pedido.</p></div>
+        <div class="card"><h3>6</h3><p>Crie uma view que mostre cada cliente e sua quantidade de pedidos.</p></div>
+        <div class="card"><h3>7</h3><p>Modifique uma view existente utilizando <code>CREATE OR REPLACE VIEW</code>.</p></div>
+        <div class="card"><h3>8</h3><p>Crie uma view atualizável de clientes de SP utilizando <code>WITH CHECK OPTION</code>.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exercícios</div><h2>Fixação — parte 3</h2>
+      <div class="grid two">
+        <div class="card"><h3>9</h3><p>Crie uma view que exponha somente id, nome, cidade e estado dos clientes.</p></div>
+        <div class="card"><h3>10</h3><p>Crie uma materialized view com o total de vendas por cliente e depois execute seu <code>REFRESH</code>.</p></div>
+      </div>
+      <div class="highlight success">Nos exercícios com views de agregação, teste também consultas externas com filtros e ordenações.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Atividade prática</div><h2>Sistema de biblioteca</h2>
+      <p>Considere as tabelas <strong>autores</strong>, <strong>livros</strong>, <strong>leitores</strong> e <strong>emprestimos</strong>.</p>
+      <div class="grid two">
+        <div class="card"><h3>Views solicitadas</h3><ul>
+          <li>Livros com nome do autor</li>
+          <li>Empréstimos com leitor e livro</li>
+          <li>Quantidade de livros por autor</li>
+        </ul></div>
+        <div class="card"><h3>Desafios</h3><ul>
+          <li>Leitores sem empréstimos</li>
+          <li>Livros nunca emprestados</li>
+          <li>Resumo de empréstimos por leitor</li>
+        </ul></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Revisão</div><h2>Perguntas essenciais</h2>
+      <div class="grid two">
+        <div class="card"><p>Qual a diferença entre uma tabela e uma view?</p><p>Uma view comum armazena seus resultados?</p><p>Quando utilizar <code>CREATE OR REPLACE VIEW</code>?</p></div>
+        <div class="card"><p>Para que serve <code>WITH CHECK OPTION</code>?</p><p>Quando uma view pode ser atualizável?</p><p>Qual a diferença entre view e materialized view?</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Resumo</div><h2>Comandos fundamentais</h2>
+      <table><thead><tr><th>Objetivo</th><th>Comando</th></tr></thead><tbody>
+        <tr><td>Criar uma view</td><td><code>CREATE VIEW</code></td></tr>
+        <tr><td>Alterar sua consulta</td><td><code>CREATE OR REPLACE VIEW</code></td></tr>
+        <tr><td>Excluir uma view</td><td><code>DROP VIEW</code></td></tr>
+        <tr><td>Restringir alterações ao filtro</td><td><code>WITH CHECK OPTION</code></td></tr>
+        <tr><td>Dar permissão</td><td><code>GRANT</code></td></tr>
+        <tr><td>Armazenar o resultado</td><td><code>CREATE MATERIALIZED VIEW</code></td></tr>
+        <tr><td>Atualizar materialized view</td><td><code>REFRESH MATERIALIZED VIEW</code></td></tr>
+      </tbody></table>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Conclusão</div><h2>Views criam uma camada lógica sobre o banco</h2>
+      <p class="lead">Uma view transforma uma consulta em um objeto reutilizável, permitindo simplificar acesso, padronizar consultas e controlar a exposição dos dados.</p>
+      <div class="grid three">
+        <div class="card"><h3>Abstração</h3><p>Oculta JOINs e regras repetitivas.</p></div>
+        <div class="card"><h3>Padronização</h3><p>Centraliza consultas importantes.</p></div>
+        <div class="card"><h3>Controle</h3><p>Ajuda a limitar linhas e colunas acessíveis.</p></div>
+      </div>
+      <div class="highlight success"><strong>Próximo passo:</strong> aplicar views em relatórios e cenários reais, analisando também atualização, permissões e desempenho.</div>
+    </div></section>
+
+  </main>
+  <footer class="controls">
+    <div class="ctrl-group"><button class="btn" id="prev">← Anterior</button><button class="btn primary" id="next">Próximo →</button></div>
+    <div class="counter" id="counter">1 / 1</div>
+    <div class="dots" id="dots"></div>
+    <div class="ctrl-group tips"><span class="kbd">←</span><span class="kbd">→</span><button class="btn" onclick="window.print()">Imprimir / PDF</button><button class="btn" id="fullscreen">Tela cheia</button></div>
+  </footer>
+</div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const progress=document.getElementById('progress');
+  const counter=document.getElementById('counter');
+  const dots=document.getElementById('dots');
+  let current=0;
+  slides.forEach((_,i)=>{const d=document.createElement('span');d.className='dot';d.onclick=()=>show(i);dots.appendChild(d)});
+  function show(index){
+    current=Math.max(0,Math.min(index,slides.length-1));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+    [...dots.children].forEach((d,i)=>d.classList.toggle('active',i===current));
+    counter.textContent=`${current+1} / ${slides.length}`;
+    progress.style.width=`${((current+1)/slides.length)*100}%`;
+    slides[current].scrollTop=0;
+  }
+  document.getElementById('prev').onclick=()=>show(current-1);
+  document.getElementById('next').onclick=()=>show(current+1);
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}
+    if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);
+  });
+  document.getElementById('fullscreen').onclick=()=>{
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();
+  };
+  let touchStart=0;
+  document.addEventListener('touchstart',e=>touchStart=e.changedTouches[0].screenX,{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchStart;if(Math.abs(dx)>60)show(current+(dx<0?1:-1))},{passive:true});
+  show(0);
+</script>
+</body>
+</html>

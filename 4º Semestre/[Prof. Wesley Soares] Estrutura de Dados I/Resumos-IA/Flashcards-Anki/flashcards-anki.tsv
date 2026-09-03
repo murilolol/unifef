@@ -1,0 +1,20 @@
+Qual é o nome completo do professor da disciplina de Estrutura de Dados I?	Prof. Ms. Wesley Soares de Souza
+Qual é a formação acadêmica do Prof. Wesley Soares em nível de mestrado?	Mestre em Engenharia de Software pela Universidade Federal do Pampa (UNIPAMPA)
+Qual é a fórmula de avaliação da disciplina do Prof. Wesley Soares?	[(AV1 * 0.8) + (T1 * 0.2)] + [(AV2 * 0.8) + (T2 * 0.2)] / 2
+O que é um algoritmo?	Uma sequência finita e ordenada de passos para resolver um problema.
+Qual é a diferença conceitual entre algoritmo e programa?	O algoritmo é a solução conceitual independente de linguagem, enquanto o programa é a implementação dependente de uma linguagem.
+O que define um Tipo Abstrato de Dados (TAD)?	Quais dados existem, quais operações podem ser realizadas e qual o comportamento esperado, sem definir como serão armazenados ou implementados.
+Qual é a diferença entre interface e implementação em um TAD?	A interface define O QUE a estrutura faz, e a implementação define COMO a estrutura faz.
+O que representa a notação Big O na análise de algoritmos?	Indica uma ordem de crescimento que o algoritmo não ultrapassa assintoticamente, ignorando constantes e termos de menor ordem.
+Qual é a complexidade de tempo de acessar diretamente uma posição de um vetor (ex: x = vetor[5])?	O(1) - Constante
+Qual é a complexidade de tempo típica de uma pesquisa sequencial ou percorrimento simples de uma lista de tamanho n?	O(n) - Linear
+Qual é a complexidade de tempo típica de dois laços aninhados que percorrem a entrada de tamanho n?	O(n²) - Quadrática
+Como se divide a memória principal (RAM) conceitualmente na execução de programas em Java para gerenciar variáveis e objetos?	Stack (Pilha) e Heap
+Onde são armazenadas as variáveis locais e chamadas de métodos na arquitetura de memória?	Na Stack (Pilha)
+Onde são armazenados os objetos e arrays criados dinamicamente com o operador new?	No Heap
+O que é o Garbage Collector (GC)?	Um mecanismo que identifica objetos que não podem mais ser alcançados pelo programa e libera a memória associada a eles.
+O que acontece quando tentamos acessar um método ou atributo de uma referência que aponta para null?	Lança uma exceção do tipo NullPointerException
+Qual é a principal diferença entre uma lista sequencial e uma lista ligada?	A lista sequencial armazena elementos em posições consecutivas de um array, enquanto a lista ligada utiliza nós encadeados por referências.
+Em uma lista linear sequencial baseada em array, qual é a complexidade para inserir um elemento no meio exigindo deslocamento?	O(n)
+Qual é a diferença entre a "capacidade" e o "tamanho" (ou quantidade de elementos) em uma lista sequencial?	Capacidade é o limite total alocado no array, e tamanho é a quantidade de elementos atualmente armazenados e utilizados.
+Qual é a complexidade de tempo para consultar um elemento em uma lista sequencial conhecendo exatamente a sua posição (índice)?	O(1) - Constante

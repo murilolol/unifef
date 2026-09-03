@@ -1,0 +1,17 @@
+FILENAME: solucao_exercicios_sql.sql
+---CODE_START---
+-- =============================================================================
+-- UNIVERSIDADE DE SISTEMAS DE INFORMAÇÃO
+-- DISCIPLINA: BANCO DE DADOS II (3º SEMESTRE)
+-- PROFESSOR: Guilherme de Morais
+-- ALUNO/DESENVOLVEDOR: Solução Completa do Trabalho
+-- ATIVIDADE: Exercícios com SQL de Duas Tabelas
+-- =============================================================================
+--
+-- NOTA DO PROFESSOR/SÊNIOR:
+-- Este script foi desenvolvido utilizando o padrão ANSI SQL, garantindo total
+-- compatibilidade com os principais SGBDs do mercado (PostgreSQL, MySQL, 
+-- SQL Server, Oracle e SQLite).
+--
+-- O trabalho está dividido em duas partes, conforme o arquivo original de 
+-- exercícios. Para evitar conflitos de nomes de tabel

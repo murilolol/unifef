@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aula em formato de slides sobre subconsultas em SQL com PostgreSQL." />
+  <title>Aula — Subconsultas em SQL com PostgreSQL</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --surface:#0e1b2e;
+      --surface-2:#14243b;
+      --text:#f3f7fb;
+      --muted:#b9c7d8;
+      --primary:#4fd1c5;
+      --secondary:#60a5fa;
+      --accent:#fbbf24;
+      --danger:#fb7185;
+      --success:#86efac;
+      --border:rgba(255,255,255,.12);
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+      --radius:22px;
+      --code:#020617;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(79,209,197,.13), transparent 32%),
+        radial-gradient(circle at 100% 20%, rgba(96,165,250,.12), transparent 35%),
+        var(--bg);
+      color:var(--text);
+      overflow:hidden;
+    }
+    button{font:inherit}
+    .app{height:100vh;display:grid;grid-template-rows:6px 1fr 74px}
+    .progress-wrap{background:rgba(255,255,255,.08)}
+    .progress{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width .25s ease}
+    .stage{position:relative;overflow:hidden}
+    .slide{
+      position:absolute;inset:0;
+      padding:clamp(24px,4vw,64px);
+      overflow-y:auto;
+      opacity:0;transform:translateX(38px) scale(.99);
+      pointer-events:none;
+      transition:opacity .32s ease, transform .32s ease;
+    }
+    .slide.active{opacity:1;transform:none;pointer-events:auto}
+    .slide-inner{max-width:1280px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+    .eyebrow{font-size:.9rem;text-transform:uppercase;letter-spacing:.16em;color:var(--primary);font-weight:800;margin-bottom:12px}
+    h1,h2,h3{line-height:1.08;margin:0 0 18px}
+    h1{font-size:clamp(2.45rem,6vw,5.4rem);max-width:1100px}
+    h2{font-size:clamp(2rem,4.3vw,4rem)}
+    h3{font-size:clamp(1.2rem,2vw,1.75rem);color:#dce9f7}
+    p,li{font-size:clamp(1rem,1.55vw,1.28rem);line-height:1.58;color:var(--muted)}
+    strong{color:var(--text)}
+    .lead{font-size:clamp(1.15rem,2vw,1.55rem);max-width:1000px;color:#d9e6f4}
+    .hero-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);width:max-content;margin-top:20px;color:#dce9f7}
+    .grid{display:grid;gap:20px;margin-top:22px}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035));border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .card h3{margin-bottom:10px}
+    .card p,.card li{font-size:1.02rem}
+    .highlight{border-left:5px solid var(--primary);padding:18px 20px;background:rgba(79,209,197,.09);border-radius:0 16px 16px 0;margin:18px 0}
+    .warn{border-left-color:var(--accent);background:rgba(251,191,36,.09)}
+    .danger{border-left-color:var(--danger);background:rgba(251,113,133,.09)}
+    .success{border-left-color:var(--success);background:rgba(134,239,172,.09)}
+    pre{margin:16px 0 0;background:var(--code);border:1px solid rgba(96,165,250,.25);border-radius:16px;padding:20px;overflow:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+    code{font-family:"JetBrains Mono",Consolas,Monaco,monospace;font-size:clamp(.8rem,1.22vw,1rem);line-height:1.55;color:#d7e8ff;white-space:pre}
+    .kw{color:#7dd3fc;font-weight:700}.fn{color:#f9a8d4}.str{color:#86efac}.num{color:#fcd34d}.cm{color:#94a3b8;font-style:italic}
+    table{width:100%;border-collapse:collapse;margin-top:18px;background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
+    th,td{padding:13px 14px;border-bottom:1px solid var(--border);text-align:left;font-size:.98rem}
+    th{background:rgba(96,165,250,.12);color:#eaf4ff}
+    td{color:#cbd8e7}
+    .join-map{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin-top:25px}
+    .table-box{padding:22px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--border);text-align:center}
+    .join-symbol{font-size:2.5rem;color:var(--primary);font-weight:900}
+    .pill{display:inline-block;padding:6px 11px;border-radius:999px;background:rgba(96,165,250,.16);color:#bfdbfe;font-size:.88rem;font-weight:700;margin:3px 4px 3px 0}
+    .timeline{display:grid;gap:14px;margin-top:20px}
+    .step{display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start}
+    .step-num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#06111d;font-weight:900}
+    .controls{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border);background:rgba(5,12,22,.92);backdrop-filter:blur(14px)}
+    .ctrl-group{display:flex;gap:10px;align-items:center}
+    .btn{border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;transition:.2s}
+    .btn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#04111c;border:0;font-weight:800}
+    .counter{color:var(--muted);min-width:86px;text-align:center;font-weight:700}
+    .dots{display:flex;gap:6px;max-width:40vw;overflow:hidden}
+    .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);flex:0 0 auto}.dot.active{background:var(--primary);transform:scale(1.35)}
+    .kbd{border:1px solid var(--border);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:7px;color:#e5edf6;font-size:.82rem}
+    ul{margin-top:8px;padding-left:24px}
+    .question{font-size:clamp(1.35rem,2.6vw,2.2rem);color:#fff;font-weight:750;margin:14px 0}
+    .footer-note{margin-top:20px;font-size:.92rem;color:#92a5ba}
+    @media(max-width:860px){
+      .grid.two,.grid.three{grid-template-columns:1fr}
+      .join-map{grid-template-columns:1fr}.join-symbol{transform:rotate(90deg);text-align:center}
+      .controls .tips{display:none}.dots{display:none}.slide{padding:26px 20px}
+      body{overflow:hidden}
+    }
+    @media print{
+      body{overflow:visible;background:#fff;color:#111}
+      .app{display:block;height:auto}.progress-wrap,.controls{display:none}
+      .stage{overflow:visible}.slide{position:relative;opacity:1;transform:none;pointer-events:auto;page-break-after:always;min-height:100vh;overflow:visible;color:#111;background:#fff}
+      .slide-inner{min-height:90vh}.card,.highlight,pre,table{box-shadow:none}.card{border:1px solid #ccc;background:#fff}.card p,.card li,p,li{color:#333}
+      h1,h2,h3,strong{color:#111}pre{background:#f5f5f5;border:1px solid #bbb}code{color:#111}.kw,.fn,.str,.num,.cm{color:#111}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  <main class="stage" id="stage">
+    <section class="slide active"><div class="slide-inner">
+      <div class="eyebrow">Banco de Dados • PostgreSQL</div>
+      <h1>Subconsultas em SQL</h1>
+      <p class="lead">Como utilizar uma consulta dentro de outra consulta para filtrar, comparar, calcular e transformar dados.</p>
+      <div class="hero-badge">SUBSELECT • IN • EXISTS • ANY • ALL • CORRELATED SUBQUERY</div>
+      <p class="footer-note">Use as setas do teclado ou os botões inferiores para navegar.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Objetivos</div><h2>O que será estudado</h2>
+      
+      <div class="grid two">
+        <div class="card"><h3>Fundamentos</h3><ul><li>Conceito de subconsulta</li><li>Consulta interna e consulta externa</li><li>Subconsultas de uma ou várias linhas</li></ul></div>
+        <div class="card"><h3>Aplicação prática</h3><ul><li>Uso em SELECT, WHERE, FROM e HAVING</li><li>IN, EXISTS, ANY e ALL</li><li>Subconsultas correlacionadas</li></ul></div>
+      </div>
+      <div class="highlight"><strong>Resultado esperado:</strong> construir consultas capazes de utilizar resultados intermediários para responder perguntas mais complexas.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Introdução</div><h2>O que é uma subconsulta?</h2>
+      
+      <p>Uma <strong>subconsulta</strong>, também chamada de <strong>subselect</strong> ou <strong>subquery</strong>, é uma instrução <code>SELECT</code> escrita dentro de outra instrução SQL.</p>
+      <pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; (
+  <span class="kw">SELECT</span> <span class="fn">AVG</span>(preco)
+  <span class="kw">FROM</span> produtos
+);</code></pre>
+      <div class="highlight"><strong>Leitura:</strong> exibir os produtos cujo preço seja maior que a média de preços de todos os produtos.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Estrutura</div><h2>Consulta interna e consulta externa</h2>
+      
+      <div class="grid two">
+        <div class="card"><h3>Subconsulta</h3><p>É executada para produzir um valor ou conjunto de valores intermediários.</p><pre><code>(<span class="kw">SELECT</span> <span class="fn">AVG</span>(preco)
+ <span class="kw">FROM</span> produtos)</code></pre></div>
+        <div class="card"><h3>Consulta externa</h3><p>Utiliza o resultado produzido pela subconsulta.</p><pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; resultado;</code></pre></div>
+      </div>
+      <div class="highlight success">A subconsulta normalmente é colocada entre parênteses para separar claramente os dois níveis da instrução.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Modelo da aula</div><h2>Banco de vendas utilizado nos exemplos</h2>
+      
+      <div class="grid three">
+        <div class="card"><h3>clientes</h3><span class="pill">id_cliente</span><span class="pill">nome</span><span class="pill">cidade</span></div>
+        <div class="card"><h3>pedidos</h3><span class="pill">id_pedido</span><span class="pill">id_cliente</span><span class="pill">status</span></div>
+        <div class="card"><h3>itens_pedido</h3><span class="pill">id_pedido</span><span class="pill">id_produto</span><span class="pill">quantidade</span></div>
+        <div class="card"><h3>produtos</h3><span class="pill">id_produto</span><span class="pill">nome_produto</span><span class="pill">preco</span></div>
+        <div class="card"><h3>categorias</h3><span class="pill">id_categoria</span><span class="pill">nome_categoria</span></div>
+        <div class="card"><h3>funcionarios</h3><span class="pill">id_funcionario</span><span class="pill">salario</span><span class="pill">departamento</span></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Classificação</div><h2>Tipos de resultado produzidos</h2>
+      
+      <table><thead><tr><th>Tipo</th><th>Resultado</th><th>Uso comum</th></tr></thead><tbody>
+        <tr><td>Escalar</td><td>Uma linha e uma coluna</td><td>Comparações com =, &gt;, &lt;</td></tr>
+        <tr><td>Uma coluna</td><td>Várias linhas</td><td>IN, NOT IN, ANY e ALL</td></tr>
+        <tr><td>Tabela</td><td>Várias linhas e colunas</td><td>Subconsulta no FROM</td></tr>
+        <tr><td>Correlacionada</td><td>Depende da linha externa</td><td>EXISTS e comparações por grupo</td></tr>
+      </tbody></table>
+      <div class="highlight warn">O operador escolhido deve ser compatível com a quantidade de valores retornados pela subconsulta.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta escalar</div><h2>Quando o resultado é um único valor</h2>
+      
+      <p>Uma subconsulta escalar deve retornar exatamente <strong>uma linha e uma coluna</strong>.</p>
+      <pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; (
+  <span class="kw">SELECT</span> <span class="fn">AVG</span>(preco)
+  <span class="kw">FROM</span> produtos
+);</code></pre>
+      <div class="grid two"><div class="card"><h3>Subconsulta</h3><p>Calcula um único valor: a média dos preços.</p></div><div class="card"><h3>Consulta externa</h3><p>Compara cada produto com essa média.</p></div></div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta escalar</div><h2>Produto mais caro</h2>
+      
+      <pre><code><span class="kw">SELECT</span> id_produto, nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco = (
+  <span class="kw">SELECT</span> <span class="fn">MAX</span>(preco)
+  <span class="kw">FROM</span> produtos
+);</code></pre>
+      <div class="highlight"><strong>Importante:</strong> essa forma retorna todos os produtos empatados no maior preço. Uma consulta com <code>ORDER BY ... LIMIT 1</code> retornaria somente uma linha.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta no SELECT</div><h2>Criando uma coluna calculada</h2>
+      
+      <p>Uma subconsulta escalar também pode aparecer na lista de colunas do <code>SELECT</code>.</p>
+      <pre><code><span class="kw">SELECT</span>
+  nome_produto,
+  preco,
+  (<span class="kw">SELECT</span> <span class="fn">AVG</span>(preco) <span class="kw">FROM</span> produtos)
+    <span class="kw">AS</span> media_geral
+<span class="kw">FROM</span> produtos;</code></pre>
+      <div class="highlight warn">A média será repetida em todas as linhas porque a subconsulta não depende do produto atual.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Comparação</div><h2>Diferença entre o preço e a média</h2>
+      
+      <pre><code><span class="kw">SELECT</span>
+  nome_produto,
+  preco,
+  preco - (
+    <span class="kw">SELECT</span> <span class="fn">AVG</span>(preco)
+    <span class="kw">FROM</span> produtos
+  ) <span class="kw">AS</span> diferenca_media
+<span class="kw">FROM</span> produtos
+<span class="kw">ORDER BY</span> diferenca_media <span class="kw">DESC</span>;</code></pre>
+      <p>Valores positivos indicam produtos acima da média; valores negativos indicam produtos abaixo da média.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">IN</div><h2>Subconsulta retornando várias linhas</h2>
+      
+      <p>O operador <code>IN</code> verifica se um valor pertence ao conjunto retornado pela subconsulta.</p>
+      <pre><code><span class="kw">SELECT</span> nome, cidade
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> id_cliente <span class="kw">IN</span> (
+  <span class="kw">SELECT</span> id_cliente
+  <span class="kw">FROM</span> pedidos
+);</code></pre>
+      <div class="highlight"><strong>Resultado:</strong> clientes que possuem pelo menos um pedido.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">IN</div><h2>Filtrando por categorias</h2>
+      
+      <pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> id_categoria <span class="kw">IN</span> (
+  <span class="kw">SELECT</span> id_categoria
+  <span class="kw">FROM</span> categorias
+  <span class="kw">WHERE</span> nome_categoria <span class="kw">IN</span>
+        (<span class="str">'Informática'</span>, <span class="str">'Acessórios'</span>)
+);</code></pre>
+      <p>A subconsulta localiza os identificadores das categorias; a consulta externa busca os produtos associados a eles.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">NOT IN</div><h2>Localizando registros fora do conjunto</h2>
+      
+      <pre><code><span class="kw">SELECT</span> nome
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> id_cliente <span class="kw">NOT IN</span> (
+  <span class="kw">SELECT</span> id_cliente
+  <span class="kw">FROM</span> pedidos
+);</code></pre>
+      <div class="highlight danger"><strong>Cuidado com NULL:</strong> se a subconsulta retornar algum valor nulo, o resultado de <code>NOT IN</code> pode se tornar desconhecido e nenhuma linha ser retornada.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">NOT IN e NULL</div><h2>Forma mais segura</h2>
+      
+      <p>Quando houver possibilidade de valores nulos, filtre-os explicitamente ou utilize <code>NOT EXISTS</code>.</p>
+      <pre><code><span class="kw">SELECT</span> nome
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> id_cliente <span class="kw">NOT IN</span> (
+  <span class="kw">SELECT</span> id_cliente
+  <span class="kw">FROM</span> pedidos
+  <span class="kw">WHERE</span> id_cliente <span class="kw">IS NOT NULL</span>
+);</code></pre>
+      <div class="highlight success">Em consultas de ausência, <code>NOT EXISTS</code> costuma expressar a intenção de forma mais segura.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">EXISTS</div><h2>Verificando se existe correspondência</h2>
+      
+      <p><code>EXISTS</code> retorna verdadeiro quando a subconsulta encontra pelo menos uma linha.</p>
+      <pre><code><span class="kw">SELECT</span> c.id_cliente, c.nome
+<span class="kw">FROM</span> clientes c
+<span class="kw">WHERE EXISTS</span> (
+  <span class="kw">SELECT</span> <span class="num">1</span>
+  <span class="kw">FROM</span> pedidos p
+  <span class="kw">WHERE</span> p.id_cliente = c.id_cliente
+);</code></pre>
+      <div class="highlight"><code>SELECT 1</code> é utilizado porque o conteúdo retornado não importa; interessa apenas saber se uma linha existe.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">NOT EXISTS</div><h2>Clientes sem pedidos</h2>
+      
+      <pre><code><span class="kw">SELECT</span> c.id_cliente, c.nome
+<span class="kw">FROM</span> clientes c
+<span class="kw">WHERE NOT EXISTS</span> (
+  <span class="kw">SELECT</span> <span class="num">1</span>
+  <span class="kw">FROM</span> pedidos p
+  <span class="kw">WHERE</span> p.id_cliente = c.id_cliente
+);</code></pre>
+      <div class="grid two"><div class="card"><h3>Para cada cliente</h3><p>A subconsulta procura um pedido relacionado.</p></div><div class="card"><h3>Quando não encontra</h3><p>O cliente permanece no resultado externo.</p></div></div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">ANY</div><h2>Comparando com algum valor</h2>
+      
+      <p><code>ANY</code> retorna verdadeiro quando a comparação é verdadeira para <strong>pelo menos um</strong> dos valores retornados.</p>
+      <pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; <span class="kw">ANY</span> (
+  <span class="kw">SELECT</span> preco
+  <span class="kw">FROM</span> produtos
+  <span class="kw">WHERE</span> id_categoria = <span class="num">4</span>
+);</code></pre>
+      <div class="highlight"><strong>Leitura:</strong> produtos mais caros que pelo menos um produto da categoria 4.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">ALL</div><h2>Comparando com todos os valores</h2>
+      
+      <p><code>ALL</code> exige que a comparação seja verdadeira para <strong>todos</strong> os valores retornados.</p>
+      <pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; <span class="kw">ALL</span> (
+  <span class="kw">SELECT</span> preco
+  <span class="kw">FROM</span> produtos
+  <span class="kw">WHERE</span> id_categoria = <span class="num">4</span>
+);</code></pre>
+      <div class="highlight"><strong>Leitura:</strong> produtos mais caros que todos os produtos da categoria 4.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta correlacionada</div><h2>A consulta interna depende da externa</h2>
+      
+      <p>Uma subconsulta é correlacionada quando utiliza uma coluna da linha que está sendo processada pela consulta externa.</p>
+      <pre><code><span class="kw">SELECT</span> p1.nome_produto, p1.preco, p1.id_categoria
+<span class="kw">FROM</span> produtos p1
+<span class="kw">WHERE</span> p1.preco &gt; (
+  <span class="kw">SELECT</span> <span class="fn">AVG</span>(p2.preco)
+  <span class="kw">FROM</span> produtos p2
+  <span class="kw">WHERE</span> p2.id_categoria = p1.id_categoria
+);</code></pre>
+      <div class="highlight">A média é recalculada para a categoria do produto que está sendo analisado.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Correlacionada</div><h2>Etapas da execução</h2>
+      
+      <div class="timeline">
+        <div class="step"><div class="step-num">1</div><div><h3>Seleciona um produto</h3><p>A consulta externa fornece sua categoria.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Calcula a média da categoria</h3><p>A subconsulta usa <code>p1.id_categoria</code>.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Compara o preço</h3><p>O produto é mantido se estiver acima da média do próprio grupo.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Repete para a próxima linha</h3><p>O processo continua até todos os produtos serem avaliados.</p></div></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta no FROM</div><h2>Criando uma tabela derivada</h2>
+      
+      <p>Uma subconsulta no <code>FROM</code> funciona como uma tabela temporária disponível apenas durante a consulta.</p>
+      <pre><code><span class="kw">SELECT</span>
+  resumo.id_cliente,
+  resumo.total_pedidos
+<span class="kw">FROM</span> (
+  <span class="kw">SELECT</span> id_cliente,
+         <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_pedidos
+  <span class="kw">FROM</span> pedidos
+  <span class="kw">GROUP BY</span> id_cliente
+) <span class="kw">AS</span> resumo
+<span class="kw">WHERE</span> resumo.total_pedidos &gt; <span class="num">1</span>;</code></pre>
+      <div class="highlight">No PostgreSQL, uma subconsulta no <code>FROM</code> deve receber um alias.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">FROM + JOIN</div><h2>Combinando tabela derivada com clientes</h2>
+      
+      <pre><code><span class="kw">SELECT</span>
+  c.nome,
+  r.total_pedidos
+<span class="kw">FROM</span> clientes c
+<span class="kw">JOIN</span> (
+  <span class="kw">SELECT</span> id_cliente,
+         <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_pedidos
+  <span class="kw">FROM</span> pedidos
+  <span class="kw">GROUP BY</span> id_cliente
+) r <span class="kw">ON</span> r.id_cliente = c.id_cliente
+<span class="kw">ORDER BY</span> r.total_pedidos <span class="kw">DESC</span>;</code></pre>
+      <p>Primeiro é criado um resumo por cliente; depois esse resumo é relacionado à tabela de clientes.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">HAVING</div><h2>Subconsulta em filtros de grupos</h2>
+      
+      <pre><code><span class="kw">SELECT</span> id_cliente, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total
+<span class="kw">FROM</span> pedidos
+<span class="kw">GROUP BY</span> id_cliente
+<span class="kw">HAVING</span> <span class="fn">COUNT</span>(*) &gt; (
+  <span class="kw">SELECT</span> <span class="fn">AVG</span>(quantidade)
+  <span class="kw">FROM</span> (
+    <span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">AS</span> quantidade
+    <span class="kw">FROM</span> pedidos
+    <span class="kw">GROUP BY</span> id_cliente
+  ) q
+);</code></pre>
+      <div class="highlight"><strong>Resultado:</strong> clientes cuja quantidade de pedidos está acima da média de pedidos por cliente.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta em UPDATE</div><h2>Atualizando com base em outro resultado</h2>
+      
+      <pre><code><span class="kw">UPDATE</span> produtos
+<span class="kw">SET</span> preco = preco * <span class="num">1.10</span>
+<span class="kw">WHERE</span> id_categoria = (
+  <span class="kw">SELECT</span> id_categoria
+  <span class="kw">FROM</span> categorias
+  <span class="kw">WHERE</span> nome_categoria = <span class="str">'Informática'</span>
+);</code></pre>
+      <div class="highlight warn">Antes de executar um <code>UPDATE</code>, recomenda-se testar a mesma condição em um <code>SELECT</code>.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta em DELETE</div><h2>Removendo registros selecionados</h2>
+      
+      <pre><code><span class="kw">DELETE FROM</span> clientes c
+<span class="kw">WHERE NOT EXISTS</span> (
+  <span class="kw">SELECT</span> <span class="num">1</span>
+  <span class="kw">FROM</span> pedidos p
+  <span class="kw">WHERE</span> p.id_cliente = c.id_cliente
+);</code></pre>
+      <div class="highlight danger"><strong>Atenção:</strong> operações de exclusão são permanentes após o commit. Utilize transações e faça uma consulta de conferência.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta em INSERT</div><h2>Copiando dados de uma consulta</h2>
+      
+      <pre><code><span class="kw">INSERT INTO</span> clientes_vip
+  (id_cliente, nome, total_comprado)
+<span class="kw">SELECT</span>
+  c.id_cliente,
+  c.nome,
+  (
+    <span class="kw">SELECT</span> <span class="fn">SUM</span>(ip.quantidade * ip.preco_unitario)
+    <span class="kw">FROM</span> pedidos p
+    <span class="kw">JOIN</span> itens_pedido ip <span class="kw">ON</span> ip.id_pedido = p.id_pedido
+    <span class="kw">WHERE</span> p.id_cliente = c.id_cliente
+  )
+<span class="kw">FROM</span> clientes c;</code></pre>
+      <p>O <code>INSERT ... SELECT</code> insere na tabela de destino os dados produzidos pela consulta.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Subconsulta ou JOIN?</div><h2>Duas formas de responder perguntas semelhantes</h2>
+      
+      <div class="grid two">
+        <div class="card"><h3>Subconsulta</h3><pre><code><span class="kw">SELECT</span> nome
+<span class="kw">FROM</span> clientes
+<span class="kw">WHERE</span> id_cliente <span class="kw">IN</span>
+ (<span class="kw">SELECT</span> id_cliente
+  <span class="kw">FROM</span> pedidos);</code></pre></div>
+        <div class="card"><h3>JOIN</h3><pre><code><span class="kw">SELECT DISTINCT</span> c.nome
+<span class="kw">FROM</span> clientes c
+<span class="kw">JOIN</span> pedidos p
+ <span class="kw">ON</span> p.id_cliente = c.id_cliente;</code></pre></div>
+      </div>
+      <div class="highlight">A escolha deve considerar clareza, necessidade das colunas e plano de execução, não apenas preferência pessoal.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">CTE</div><h2>Alternativa para organizar consultas</h2>
+      
+      <p>Uma expressão de tabela comum, criada com <code>WITH</code>, pode tornar consultas longas mais legíveis.</p>
+      <pre><code><span class="kw">WITH</span> resumo <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> id_cliente,
+         <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_pedidos
+  <span class="kw">FROM</span> pedidos
+  <span class="kw">GROUP BY</span> id_cliente
+)
+<span class="kw">SELECT</span> c.nome, r.total_pedidos
+<span class="kw">FROM</span> clientes c
+<span class="kw">JOIN</span> resumo r
+  <span class="kw">ON</span> r.id_cliente = c.id_cliente;</code></pre>
+      <div class="highlight">CTEs não substituem todas as subconsultas, mas ajudam a dividir uma consulta complexa em etapas nomeadas.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Erros comuns</div><h2>Subconsulta escalar retornando várias linhas</h2>
+      
+      <pre><code><span class="cm">-- Incorreto: a subconsulta pode retornar vários preços</span>
+<span class="kw">SELECT</span> nome_produto
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco = (
+  <span class="kw">SELECT</span> preco
+  <span class="kw">FROM</span> produtos
+  <span class="kw">WHERE</span> id_categoria = <span class="num">1</span>
+);</code></pre>
+      <div class="highlight danger">O PostgreSQL informará que a subconsulta usada como expressão retornou mais de uma linha.</div>
+      <p>Para várias linhas, utilize <code>IN</code>, <code>ANY</code>, <code>ALL</code> ou reformule a lógica.</p>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Erros comuns</div><h2>Falta de correlação</h2>
+      
+      <pre><code><span class="cm">-- A subconsulta não relaciona o pedido ao cliente atual</span>
+<span class="kw">SELECT</span> c.nome
+<span class="kw">FROM</span> clientes c
+<span class="kw">WHERE EXISTS</span> (
+  <span class="kw">SELECT</span> <span class="num">1</span>
+  <span class="kw">FROM</span> pedidos p
+);</code></pre>
+      <p>Se existir pelo menos um pedido no banco, <strong>todos os clientes</strong> serão retornados.</p>
+      <div class="highlight success">A condição correta é <code>p.id_cliente = c.id_cliente</code>.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Desempenho</div><h2>Como analisar a consulta</h2>
+      
+      <pre><code><span class="kw">EXPLAIN ANALYZE</span>
+<span class="kw">SELECT</span> c.nome
+<span class="kw">FROM</span> clientes c
+<span class="kw">WHERE EXISTS</span> (
+  <span class="kw">SELECT</span> <span class="num">1</span>
+  <span class="kw">FROM</span> pedidos p
+  <span class="kw">WHERE</span> p.id_cliente = c.id_cliente
+);</code></pre>
+      <div class="grid two"><div class="card"><h3>EXPLAIN</h3><p>Mostra o plano planejado pelo PostgreSQL.</p></div><div class="card"><h3>ANALYZE</h3><p>Executa a consulta e apresenta tempos e linhas reais.</p></div></div>
+      <div class="highlight warn">Índices nas colunas usadas em filtros e correlações podem reduzir o custo da consulta.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Boas práticas</div><h2>Como escrever subconsultas legíveis</h2>
+      
+      <div class="grid two">
+        <div class="card"><h3>Organização</h3><ul><li>Indentar a subconsulta</li><li>Usar aliases significativos</li><li>Selecionar somente as colunas necessárias</li></ul></div>
+        <div class="card"><h3>Segurança lógica</h3><ul><li>Verificar a quantidade de linhas retornadas</li><li>Tratar valores NULL</li><li>Testar UPDATE e DELETE com SELECT</li></ul></div>
+      </div>
+      <div class="highlight success">Uma consulta clara é mais fácil de revisar, corrigir e otimizar.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exercícios</div><h2>Fixação — nível inicial</h2>
+      
+      <div class="grid two">
+        <div class="card"><h3>1</h3><p>Exiba os produtos com preço acima da média geral.</p></div>
+        <div class="card"><h3>2</h3><p>Exiba o produto ou os produtos com o menor preço.</p></div>
+        <div class="card"><h3>3</h3><p>Exiba os clientes que possuem pedidos utilizando <code>IN</code>.</p></div>
+        <div class="card"><h3>4</h3><p>Exiba os clientes sem pedidos utilizando <code>NOT EXISTS</code>.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Exercícios</div><h2>Fixação — nível intermediário</h2>
+      
+      <div class="grid two">
+        <div class="card"><h3>5</h3><p>Exiba produtos com preço acima da média da própria categoria.</p></div>
+        <div class="card"><h3>6</h3><p>Exiba clientes que realizaram mais pedidos que a média.</p></div>
+        <div class="card"><h3>7</h3><p>Exiba categorias que não possuem produtos.</p></div>
+        <div class="card"><h3>8</h3><p>Exiba pedidos cujo valor total seja maior que a média dos pedidos.</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Resolução</div><h2>Produtos acima da média</h2>
+      
+      <pre><code><span class="kw">SELECT</span> nome_produto, preco
+<span class="kw">FROM</span> produtos
+<span class="kw">WHERE</span> preco &gt; (
+  <span class="kw">SELECT</span> <span class="fn">AVG</span>(preco)
+  <span class="kw">FROM</span> produtos
+);</code></pre>
+      <div class="highlight">A subconsulta produz a média; a consulta externa compara cada produto com esse valor.</div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Resolução</div><h2>Pedidos acima da média de valor</h2>
+      
+      <pre><code><span class="kw">SELECT</span> t.id_pedido, t.valor_total
+<span class="kw">FROM</span> (
+  <span class="kw">SELECT</span> id_pedido,
+         <span class="fn">SUM</span>(quantidade * preco_unitario) <span class="kw">AS</span> valor_total
+  <span class="kw">FROM</span> itens_pedido
+  <span class="kw">GROUP BY</span> id_pedido
+) t
+<span class="kw">WHERE</span> t.valor_total &gt; (
+  <span class="kw">SELECT</span> <span class="fn">AVG</span>(x.valor_total)
+  <span class="kw">FROM</span> (
+    <span class="kw">SELECT</span> <span class="fn">SUM</span>(quantidade * preco_unitario) <span class="kw">AS</span> valor_total
+    <span class="kw">FROM</span> itens_pedido
+    <span class="kw">GROUP BY</span> id_pedido
+  ) x
+);</code></pre>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Atividade prática</div><h2>Sistema de biblioteca</h2>
+      
+      <p>Utilizar as tabelas <strong>autores</strong>, <strong>livros</strong>, <strong>leitores</strong> e <strong>emprestimos</strong>.</p>
+      <div class="grid two">
+        <div class="card"><h3>Consultas básicas</h3><ul><li>Livros publicados acima da média de ano</li><li>Autores que possuem livros</li><li>Leitores sem empréstimos</li></ul></div>
+        <div class="card"><h3>Consultas avançadas</h3><ul><li>Autor com maior quantidade de livros</li><li>Leitores acima da média de empréstimos</li><li>Livros nunca emprestados</li></ul></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Revisão</div><h2>Perguntas essenciais</h2>
+      
+      <div class="grid two">
+        <div class="card"><p>O que diferencia a consulta interna da externa?</p><p>Quando uma subconsulta é escalar?</p><p>Por que <code>NOT IN</code> exige cuidado com NULL?</p></div>
+        <div class="card"><p>Qual a diferença entre <code>ANY</code> e <code>ALL</code>?</p><p>O que torna uma subconsulta correlacionada?</p><p>Quando utilizar uma tabela derivada?</p></div>
+      </div>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Resumo</div><h2>Escolha do recurso adequado</h2>
+      
+      <table><thead><tr><th>Necessidade</th><th>Recurso</th></tr></thead><tbody>
+        <tr><td>Comparar com um único valor calculado</td><td>Subconsulta escalar</td></tr>
+        <tr><td>Verificar participação em um conjunto</td><td>IN</td></tr>
+        <tr><td>Verificar existência de linhas relacionadas</td><td>EXISTS</td></tr>
+        <tr><td>Comparar com algum ou todos os valores</td><td>ANY / ALL</td></tr>
+        <tr><td>Calcular por linha ou grupo relacionado</td><td>Subconsulta correlacionada</td></tr>
+        <tr><td>Criar resultado intermediário tabular</td><td>Subconsulta no FROM ou CTE</td></tr>
+      </tbody></table>
+    </div></section>
+
+    <section class="slide"><div class="slide-inner">
+      <div class="eyebrow">Conclusão</div><h2>Subconsultas ampliam o poder das consultas SQL</h2>
+      
+      <p class="lead">Uma subconsulta permite utilizar o resultado de uma consulta como parte da lógica de outra instrução.</p>
+      <div class="grid three">
+        <div class="card"><h3>Filtrar</h3><p>Comparar linhas com valores calculados.</p></div>
+        <div class="card"><h3>Verificar</h3><p>Identificar existência ou ausência de registros.</p></div>
+        <div class="card"><h3>Organizar</h3><p>Criar resultados intermediários reutilizados pela consulta externa.</p></div>
+      </div>
+      <div class="highlight success"><strong>Dominar subconsultas</strong> permite responder perguntas que exigem médias, máximos, conjuntos, comparações por grupo e dependências entre registros.</div>
+    </div></section>
+
+  </main>
+  <footer class="controls">
+    <div class="ctrl-group"><button class="btn" id="prev">← Anterior</button><button class="btn primary" id="next">Próximo →</button></div>
+    <div class="counter" id="counter">1 / 40</div>
+    <div class="dots" id="dots"></div>
+    <div class="ctrl-group tips"><span class="kbd">←</span><span class="kbd">→</span><button class="btn" onclick="window.print()">Imprimir / PDF</button><button class="btn" id="fullscreen">Tela cheia</button></div>
+  </footer>
+</div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const progress=document.getElementById('progress');
+  const counter=document.getElementById('counter');
+  const dots=document.getElementById('dots');
+  let current=0;
+  slides.forEach((_,i)=>{const d=document.createElement('span');d.className='dot';d.onclick=()=>show(i);dots.appendChild(d)});
+  function show(index){
+    current=Math.max(0,Math.min(index,slides.length-1));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+    [...dots.children].forEach((d,i)=>d.classList.toggle('active',i===current));
+    counter.textContent=`${current+1} / ${slides.length}`;
+    progress.style.width=`${((current+1)/slides.length)*100}%`;
+    slides[current].scrollTop=0;
+  }
+  document.getElementById('prev').onclick=()=>show(current-1);
+  document.getElementById('next').onclick=()=>show(current+1);
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}
+    if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);
+  });
+  document.getElementById('fullscreen').onclick=()=>{
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();
+  };
+  let touchStart=0;
+  document.addEventListener('touchstart',e=>touchStart=e.changedTouches[0].screenX,{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchStart;if(Math.abs(dx)>60)show(current+(dx<0?1:-1))},{passive:true});
+  show(0);
+</script>
+</body>
+</html>

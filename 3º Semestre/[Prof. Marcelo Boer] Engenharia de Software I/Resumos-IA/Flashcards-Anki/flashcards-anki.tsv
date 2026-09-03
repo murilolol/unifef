@@ -1,0 +1,25 @@
+Qual é o nome do aplicativo móvel utilizado como contexto prático nas aulas de Engenharia de Software I do Prof. Marcelo Boer?	Desapega Já
+Qual é o objetivo principal do aplicativo móvel Desapega Já?	Conectar vendedores e compradores da mesma região para facilitar a venda de itens usados.
+Quais são os dois atores (usuários) primários identificados no aplicativo Desapega Já?	Pessoa Anunciante e Pessoa Cliente (ou Interessado).
+Quais dados básicos são solicitados no cadastro inicial do Interessado no Desapega Já?	Nome completo, e-mail, número de telefone (com WhatsApp), senha de acesso, cidade e estado.
+Quais dados adicionais podem ser solicitados no Desapega Já para aumentar a segurança e buscar por proximidade?	CPF, data de nascimento e bairro.
+Quais informações o sistema do Desapega Já deve gerar automaticamente após o cadastro do usuário?	ID do usuário, data de cadastro, histórico de contatos ou compras realizadas e avaliações recebidas.
+Quais são os atributos mapeados para a classe Anuncio no projeto Desapega Já?	Fotos, descrição, preço e categoria.
+Quais atributos compõem a classe Compra no modelo do sistema Desapega Já?	Data da compra, valor da compra, produtos, interessado e o anunciante.
+Quais são os quatro Requisitos Não-Funcionais (RNF) explicitamente listados para o Desapega Já?	Fácil usabilidade, segurança, prático e acessível, e integridade de dados.
+No levantamento de requisitos do Desapega Já, qual é o Requisito Funcional 08 (RF08)?	Possibilitar troca de mensagens entre as partes interessadas.
+No Caso de Uso Realizar Login Aplicativo, quais são os dados de entrada necessários?	E-mail e senha.
+Qual é a saída do Caso de Uso Realizar Login Aplicativo em caso de sucesso?	Msg01 e a Tela do Pessoa (Anunciante ou Cliente).
+No fluxo alternativo do Caso de Uso Solicitar Login, o que ocorre se o usuário não possuir cadastro?	O usuário clica na opção de cadastro e o aplicativo executa o Caso de Uso Cadastra Usuário Cliente.
+No fluxo alternativo de login, qual mensagem é exibida se o e-mail ou a senha não forem preenchidos?	Email/Senha não informados.
+Quais são os 6 Casos de Uso que o professor Marcelo Boer solicitou para desenvolvimento de descrição detalhada?	Logar, Cadastrar, Listar, Carregar, Alterar e Excluir.
+Qual software de modelagem UML teve sua licença disponibilizada pelo professor Marcelo Boer no material?	Astah UML.
+Na estrutura de entrega da AV2, qual diagrama específico deve ser apresentado na seção 2.1?	Diagrama de Classes Fase Análise.
+Quais são as duas primeiras subseções de diagramas e tabelas de atores no modelo de entrega da AV2?	1.2 Lista de Atores – Diagrama de Atores e 1.3 Quadro 1 – Descrição dos Atores do Aplicativo.
+No trabalho Apresentação Métodos de Processos de Softwares, quais itens devem constar logo após a Página Inicial e o Sumário?	Conceito (definição) do modelo de processo e Histórico (quando surgiu, por quê e quem o criou).
+No Caso de Uso Editar Produto, qual é o dado de entrada necessário para identificar o registro?	id_produto.
+Qual é a saída do Caso de Uso Excluir Anúncio no mapeamento de requisitos?	Msg04 (mensagem de confirmação de exclusão).
+Quais classes representam a interação direta de comunicação e transação entre Interessado e Anunciante no Desapega Já?	Compra e Histórico de contatos.
+Qual é o pré-requisito para que o ator Usuário Cliente consiga realizar o login no aplicativo Desapega Já?	O Usuário Cliente deve estar pré-cadastrado no aplicativo.
+No fluxo normal de login do Desapega Já, o que o aplicativo faz imediatamente após o usuário clicar em Logar?	O aplicativo verifica se o Usuário Cliente está cadastrado.
+No Caso de Uso Cadastrar Pessoa Anunciante, quais são a entrada e a saída mapeadas?	Entrada: dados_pessoa_anunciante; Sa
