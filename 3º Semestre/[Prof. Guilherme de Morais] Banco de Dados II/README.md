@@ -160,4 +160,9 @@ O repositório está estruturado de forma a facilitar a navegação entre a teor
     ```sql
     -- Concatenação de Strings e Formatação de Data
     SELECT 
-        CONCAT('O cliente ', nome, ' cadastrou-se em
+        CONCAT('O cliente ', nome, ' cadastrou-se em ', TO_CHAR(data_cadastro, 'DD/MM/YYYY')) AS resumo_cliente,
+        UPPER(nome) AS nome_maiusculo,
+        EXTRACT(YEAR FROM AGE(data_cadastro)) AS anos_de_cadastro
+    FROM cliente
+    ORDER BY data_cadastro DESC;
+    ```
