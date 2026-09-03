@@ -38,18 +38,31 @@ graph TD
 ---
 
 ## 📂 Estrutura das Pastas e Organização
-- **Aulas/**: Materiais didáticos, slides e comunicados.
-- **Trabalhos/**: Atividades avaliativas com resoluções em código.
-- **Provas/**: Avaliações semestrais e critérios.
-- **Resumos-IA/**: Resumos executivos, Simulados comentados, Códigos, Flashcards Anki (.tsv), CheatSheets e Apresentações PPTX.
+```text
+.
+├── 📂 Aulas/                       # Notas de aula (.md) por tema + links-recursos.md
+├── 📂 Trabalhos/                   # Atividades avaliativas resolvidas (detalhes.md + código)
+│   ├── 📂 20260427 - Trabalho de Programação (2 pontos)/
+│   └── 📂 20260511 - Trabalho de programação (1 ponto)/
+├── 📂 Provas/                      # Avaliações semestrais (detalhes.md + gabarito)
+│   ├── 📂 20260323 - Avaliação 1/
+│   ├── 📂 20260608 - Avaliação II/
+│   └── 📂 20260625 Avaliação Substitutiva/
+└── 📂 Resumos-IA/                  # Material de apoio gerado por IA — tudo em um único README
+    ├── 📄 README.md                # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── 📊 Slides-Revisao-[Prof. Jefferson Passerini] Laboratório de Programação III.pptx
+    ├── 📇 flashcards-anki.tsv      # Baralho para importar no Anki
+    └── 🤖 dataset-estudo-qa.jsonl  # Dataset de perguntas e respostas
+```
 
 ---
 
 ## 🚀 Como Estudar com Este Material
 1. **Siga a ordem cronológica das Aulas:** Comece entendendo a configuração de ambiente (Aula 01) e avance gradativamente para a criação de projetos web, conexões e CRUDs.
 2. **Explore os Links Úteis:** Cada aula possui materiais complementares estruturados no Notion com o passo a passo técnico.
-3. **Pratique com os Trabalhos:** Os trabalhos práticos (como o cadastro de livros e validações de e-mail/estado) consolidam a teoria vista em sala de aula.
-4. **Utilize o GitHub:** Suba seus projetos versionados para garantir boas práticas de mercado exigidas nas entregas.
+3. **Consulte o Resumos-IA:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento.
+4. **Pratique com os Trabalhos:** Os trabalhos práticos (como o cadastro de livros e validações de e-mail/estado) consolidam a teoria vista em sala de aula.
+5. **Utilize o GitHub:** Suba seus projetos versionados para garantir boas práticas de mercado exigidas nas entregas.
 
 ---
 

@@ -89,16 +89,18 @@ Cada matéria possui um ecossistema independente e completo:
 ├── 📁 Aulas/                               # Anúncios, materiais didáticos e referências
 ├── 📁 Trabalhos/                           # Atividades com enunciado original e código fonte resolvido
 ├── 📁 Provas/                              # Avaliações semestrais com gabaritos
-└── 📁 Resumos-IA/                          # Central inteligente de estudo e revisão
-    ├── 📁 Resumos/                         # Resumos executivos em Markdown
-    ├── 📁 Simulados/                       # Questões de múltipla escolha e discursivas
-    ├── 📁 Codigo-Exercicios/               # Apostilas de implementação prática
-    ├── 📁 Flashcards-Anki/                 # Cartões prontos para importação no Anki (.tsv)
-    ├── 📁 CheatSheets/                     # Folha de revisão rápida (1 página)
-    ├── 📁 Apresentacoes-PPTX/              # Slides PowerPoint (.pptx) modernos
-    ├── 📁 Diagramas-UML/                   # Modelagem de Classes, Sequência e ER em Mermaid
-    └── 📁 JSONL/                           # Datasets Q&A em formato JSONL para RAG/Estudos
+└── 📁 Resumos-IA/                          # Central de estudo e revisão — tudo em um único README
+    ├── 📄 README.md                        # Resumo, exercícios, simulado, cheatsheet e diagramas — um documento só
+    ├── 📊 Slides-Revisao-*.pptx            # Apresentação de revisão (dark mode, 5 slides, 16:9)
+    ├── 📇 flashcards-anki.tsv              # Baralho pronto para importar no Anki
+    └── 🤖 dataset-estudo-qa.jsonl          # Dataset de perguntas e respostas (Q&A)
 ```
+
+> A pasta `Resumos-IA/` é deliberadamente plana: todo o conteúdo textual (resumo,
+> exercícios comentados, simulado, cheatsheet e diagramas UML/Mermaid) vive dentro de
+> um único `README.md` por matéria. Só ficam como arquivo separado os formatos que
+> exigem isso para funcionar — `.pptx` (PowerPoint) e `.tsv` (importação no Anki) — e o
+> `.jsonl` do dataset (formato de consumo por ferramenta, não de leitura em prosa).
 
 ---
 
@@ -123,7 +125,7 @@ Cada matéria possui um ecossistema independente e completo:
 Todo o conteúdo de revisão foi sintetizado via **Google Gemini 3.5**, contemplando:
 1. **Soluções Executáveis de Exercícios:** Cada lista em Word/PDF possui seu correspondente script `.sql`, `.c` ou `.java` validado.
 2. **Slides PowerPoint (.pptx):** Decks de 5 slides em tema escuro profissional para apresentações em seminários.
-3. **Datasets JSONL:** 15 pares de perguntas e respostas por matéria para treino ou integração em LLMs locais.
+3. **Datasets JSONL:** ~14–15 pares de perguntas e respostas por matéria para treino ou integração em LLMs locais.
 
 ---
 

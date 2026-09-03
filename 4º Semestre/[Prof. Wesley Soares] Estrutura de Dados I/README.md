@@ -67,10 +67,27 @@ classDiagram
 
 O repositório está organizado de forma modular para facilitar o acompanhamento dos estudos:
 
-- **`Aulas/`**: Materiais didáticos, slides, códigos desenvolvidos em sala e comunicados oficiais.
-- **`Trabalhos/`**: Enunciados das atividades avaliativas acompanhados das respectivas resoluções em código.
-- **`Provas/`**: Avaliações semestrais, gabaritos e critérios de correção.
-- **`Resumos-IA/`**: Resumos executivos, simulados comentados, códigos de apoio, flashcards para o Anki (`.tsv`), CheatSheets e apresentações em PPTX.
+```bash
+.
+├── 📂 Aulas/                     # Notas de aula (.md) e slides originais (.pdf) do professor
+│   ├── 📄 2026-08-06 - Contedo aula 01.md
+│   ├── 📄 2026-08-11 - Aula 02.md
+│   ├── 📄 2026-09-01 - Aula anteriores.md
+│   ├── 📄 2026-09-01 - Contedo para aula 05.md
+│   ├── 📄 links-recursos.md
+│   └── 📊 Aula 01.pdf … Aula 05.pdf
+├── 📂 Trabalhos/                 # Atividades avaliativas com enunciado + resolução em código
+│   ├── 📂 Complexidade de algoritmos/
+│   └── 📂 Trabalho AV1/
+├── 📂 Provas/                    # (ainda sem materiais de prova aplicados)
+└── 📂 Resumos-IA/                # Material de apoio gerado por IA — tudo em um único README
+    ├── 📄 README.md              # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── 📊 Slides-Revisao-[Prof. Wesley Soares] Estrutura de Dados I.pptx
+    ├── 📇 flashcards-anki.tsv
+    └── 🤖 dataset-estudo-qa.jsonl
+```
+
+Cada subpasta de `Trabalhos/` contém um `detalhes.md` com o enunciado/contexto original e o código-fonte entregue (`.java`).
 
 ---
 
@@ -78,7 +95,8 @@ O repositório está organizado de forma modular para facilitar o acompanhamento
 
 1. **Acompanhe a Cronologia:** Siga a ordem das aulas listadas abaixo.
 2. **Pratique a Codificação:** Não apenas leia, mas implemente os códigos apresentados nos trabalhos e aulas (especialmente as classes `No` e `ListaLigada`).
-3. **Utilize os Resumos:** Aproveite os materiais da pasta `Resumos-IA` para revisões rápidas antes das avaliações.
+3. **Consulte o Resumos-IA:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento.
+4. **Estude com Flashcards:** Importe [`Resumos-IA/flashcards-anki.tsv`](./Resumos-IA/flashcards-anki.tsv) no [Anki](https://apps.ankiweb.net/) para fixar os conceitos por repetição espaçada.
 
 ---
 

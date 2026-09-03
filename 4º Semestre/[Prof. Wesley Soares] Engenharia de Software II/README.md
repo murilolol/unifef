@@ -65,10 +65,26 @@ classDiagram
 
 Este repositório está organizado para facilitar o estudo e o acompanhamento das atividades acadêmicas:
 
-- **`Aulas/`**: Materiais didáticos, slides de aula e comunicados oficiais.
-- **`Trabalhos/`**: Atividades avaliativas com orientações e resoluções em código/documentação.
-- **`Provas/`**: Avaliações semestrais, gabaritos e critérios de correção.
-- **`Resumos-IA/`**: Resumos executivos, simulados comentados, códigos de apoio, flashcards Anki (`.tsv`), *CheatSheets* e apresentações em PPTX.
+```bash
+.
+├── 📂 Aulas/                                                  # Materiais didáticos e comunicados oficiais
+│   ├── 📄 2026-08-06 - Aula 001.md
+│   ├── 📄 2026-08-11 - Aula 02.md
+│   ├── 📄 2026-08-17 - Aula 03.md
+│   ├── 📄 2026-08-25 - Aula.md
+│   ├── 📄 2026-09-01 - Material para aula.md
+│   └── 📎 Aula 01-ok.pdf, Aula 02.pdf, Aula 04.pdf, Aula 05.pdf, 03 Aula.pdf
+├── 📂 Trabalhos/                                              # Atividades avaliativas
+│   ├── 📂 Atividade Aula 3/
+│   ├── 📂 Atividade classe/
+│   └── 📂 Trabalho semestral/
+├── 📂 Provas/                                                 # (ainda sem avaliações aplicadas)
+└── 📂 Resumos-IA/                                             # Material de apoio gerado por IA — tudo em um único README
+    ├── 📄 README.md                                           # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── 📊 Slides-Revisao-[Prof. Wesley Soares] Engenharia de Software II.pptx
+    ├── 📇 flashcards-anki.tsv                                 # Baralho para importar no Anki
+    └── 🤖 dataset-estudo-qa.jsonl                             # Dataset de perguntas e respostas
+```
 
 ---
 
@@ -76,8 +92,9 @@ Este repositório está organizado para facilitar o estudo e o acompanhamento da
 
 1. **Acompanhe o Cronograma:** Leia os conteúdos das aulas sequencialmente (Aula 001 até Material para aula).
 2. **Pratique com os Trabalhos:** Resolva as atividades propostas (como a Atividade da Aula 3 e a Atividade de Classe) antes de olhar as soluções dos colegas.
-3. **Utilize o Material de Apoio:** Explore a pasta `Resumos-IA` para fixação rápida do conteúdo através de flashcards e resumos esquematizados.
-4. **Foque no Projeto Prático:** O **Trabalho Semestral** integra todos os conceitos da disciplina. Garanta que o levantamento de requisitos, a matriz MoSCoW e os Casos de Uso estejam devidamente documentados.
+3. **Utilize o Material de Apoio:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento.
+4. **Estude com Flashcards:** Importe [`Resumos-IA/flashcards-anki.tsv`](./Resumos-IA/flashcards-anki.tsv) no [Anki](https://apps.ankiweb.net/) para fixação por repetição espaçada.
+5. **Foque no Projeto Prático:** O **Trabalho Semestral** integra todos os conceitos da disciplina. Garanta que o levantamento de requisitos, a matriz MoSCoW e os Casos de Uso estejam devidamente documentados.
 
 ---
 

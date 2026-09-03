@@ -102,28 +102,38 @@ classDiagram
 
 ## 📂 Estrutura de Pastas
 
-O repositório está organizado de forma modular para acompanhar o cronograma de entregas (AV1 e AV2) e os artefatos desenvolvidos em sala de aula com o Prof. Marcelo Boer:
+Estrutura real deste repositório, alinhada ao padrão das demais matérias do acervo:
 
 ```text
-📦 Engenharia-de-Software-I-UniFEF
- ┣ 📂 01-Aulas-e-Contextos
- ┃ ┣ 📜 2026-02-24 - Contexto do Aplicativo.md
- ┃ ┣ 📜 2026-02-24 - Documento ESM1.md
- ┃ ┣ 📜 2026-03-03 - Licenca Astah UML.md
- ┃ ┗ 📜 2026-05-12 - Documento de Aula.md
- ┣ 📂 02-Revisioes-e-Avaliacoes
- ┃ ┣ 📜 2026-03-24 - Forms de Revisao AV1.md
- ┃ ┗ 📜 links-recursos.md
- ┣ 📂 03-Trabalhos-e-Apresentacoes
- ┃ ┣ 📜 2026-03-31 - Apresentacao Metodos de Engenharia de Software.md
- ┃ ┣ 📜 2026-06-09 - Modelo de Apresentacao AV2.md
- ┃ ┗ 📂 apresentacao_processos_software/
- ┣ 📂 04-Documentacao-Sistema (Desapega Já)
- ┃ ┣ 📜 ENGENHARIA E MODELAGEM DE SOFTWARE I.md (docx/pdf)
- ┃ ┣ 📜 Exemplo Descrição de Caso de Uso.md
- ┃ ┗ 📜 ModeloEntregaAv2Final.md
- ┗ 📜 README.md
+.
+├── 📂 Aulas/                          # Notas de aula, materiais do professor e recursos
+│   ├── 📄 2026-02-24 - Contexto do Aplicativo.md
+│   ├── 📄 2026-02-24 - Documento ESM1 do dia 24022026.md
+│   ├── 📄 2026-03-03 - Licença Astah UML.md
+│   ├── 📄 2026-03-24 - Forms contendo questões de revisão.md
+│   ├── 📄 2026-03-31 - Apresentação Métodos de Engenharia de S.md
+│   ├── 📄 2026-05-12 - Documento desenvolvido em sala de aula.md
+│   ├── 📄 2026-06-02 - Desenvolver a descrição dos seguintes.md
+│   ├── 📄 2026-06-02 - Exemplo Descrição de Caso de Uso.md
+│   ├── 📄 2026-06-09 - Modelo de Apresentação a ser seguido.md
+│   ├── 📄 links-recursos.md
+│   └── 📎 ENGENHARIA E MODELAGEM DE SOFTWARE I.docx/.pdf, ExemploDescriçãoDiagramaDCU.docx, ModeloEntregaAv2Final.docx, licença Astah UML (.zip)
+├── 📂 Trabalhos/                      # Atividades avaliativas resolvidas
+│   ├── 📂 APRESENTAÇÃO MÉTODOS DE PROCESSOS DE SOFTWARES/
+│   ├── 📂 ATIVIDADE AV2/
+│   ├── 📂 ATIVIDADE AVALIATIVA 01 - ESTUDO DE CASO/
+│   ├── 📂 Atividade Avaliativa Modelos de Processos de Software/
+│   └── 📂 Atividade Avaliativa Prática 02 - Atores e Diagrama de Classes Fase de Análise/
+├── 📂 Provas/                         # Avaliações e resoluções
+│   └── 📂 Avaliação Av1/
+└── 📂 Resumos-IA/                     # Material de apoio gerado por IA — tudo em um único README
+    ├── 📄 README.md                   # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── 📊 Slides-Revisao-[Prof. Marcelo Boer] Engenharia de Software I.pptx
+    ├── 📇 flashcards-anki.tsv
+    └── 🤖 dataset-estudo-qa.jsonl
 ```
+
+Cada subpasta de `Trabalhos/` e `Provas/` contém um `detalhes.md` com o enunciado/contexto original e os arquivos entregues.
 
 ---
 
@@ -139,5 +149,6 @@ Para obter sucesso na disciplina ministrada pelo **Prof. Marcelo Boer**, siga o 
    * Utilize a licença do **Astah UML** fornecida nas aulas para desenhar Diagramas de Classes, Diagramas de Atores e Diagramas de Casos de Uso (DCU).
    * Treine a escrita dos quadros de especificação de Casos de Uso cobrindo os métodos fundamentais solicitados em laboratório: **Logar, Cadastrar, Listar, Carregar, Alterar e Excluir**.
 4. **Avaliações (AV1 & AV2):**
-   * Responda aos questionários de revisão disponibilizados via Google Forms (*ver seção de links e revisões*).
+   * Responda aos questionários de revisão disponibilizados via Google Forms (*ver `Aulas/links-recursos.md`*).
    * Siga rigorosamente o template do documento `ModeloEntregaAv2Final.docx` para a elaboração e formatação da entrega final do projeto prático.
+5. **Revise com o Resumos-IA:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento — além do deck de slides (`.pptx`), flashcards para Anki (`.tsv`) e dataset de perguntas e respostas (`.jsonl`).

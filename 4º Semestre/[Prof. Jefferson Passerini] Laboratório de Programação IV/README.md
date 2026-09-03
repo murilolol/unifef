@@ -9,13 +9,13 @@
 
 A disciplina **Laboratório de Programação IV** foi estruturada para consolidar o desenvolvimento de software orientado a objetos avançado, arquitetura de sistemas e implementação de soluções práticas alinhadas às demandas do mercado. No 4º semestre do curso de Sistemas de Informação da UniFEF, o foco transita da lógica básica para a construção de sistemas robustos, escaláveis e focados em resolução de problemas reais, como o gerenciamento de Ordens de Serviço (OS).
 
-Ao longo do semestre, sob a tutela do **Prof. Jefferson Passerini**, os estudantes exercitam a criação de aplicações completas, aplicando padrões de projeto (*Design Patterns*), persistência de dados em banco de dados relacional e não-relacional, além de boas práticas de versionamento de código com Git e GitHub. O laboratório funciona como um ambiente de simulação profissional, preparando o futuro analista e desenvolvedor para cenários corporativos exigentes.
+Ao longo do semestre, sob a tutela do **Prof. Jefferson Passerini**, os estudantes exercitam a criação de aplicações completas, aplicando padrões de projeto (*Design Patterns*), persistência de dados e boas práticas de versionamento de código com Git e GitHub, tendo como base o repositório oficial de apoio [`jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026).
 
 ---
 
 ## 🏗️ Arquitetura e Modelagem do Conhecimento
 
-Abaixo está o diagrama estrutural que representa a arquitetura típica dos projetos desenvolvidos na disciplina, tendo como referência o ecossistema de suporte a sistemas de Ordem de Serviço (`suporteos2026`):
+Diagrama estrutural que representa a arquitetura típica dos projetos desenvolvidos na disciplina, tendo como referência o ecossistema de suporte a sistemas de Ordem de Serviço (`suporteos2026`) — detalhamento completo com diagrama de sequência e diagrama do repositório em [`Resumos-IA/README.md`](./Resumos-IA/README.md#️-diagramas-e-modelagem):
 
 ```mermaid
 classDiagram
@@ -54,22 +54,30 @@ classDiagram
 
 ## 📂 Estrutura das Pastas e Organização
 
-O repositório está organizado de forma modular para facilitar a navegação e o aprendizado contínuo:
+```text
+.
+├── Aulas/                                     # Notas de aula e recursos postados pelo professor
+│   ├── 2026-08-13 - Repositorio GitHub suporteos2026.md
+│   └── links-recursos.md
+├── Trabalhos/                                 # Atividades avaliativas (ainda sem entregas registradas)
+├── Provas/                                    # Avaliações semestrais (ainda sem materiais aplicados)
+└── Resumos-IA/                                # Material de apoio gerado por IA — tudo em um único README
+    ├── README.md                              # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── Slides-Revisao-[...] Laboratório de Programação IV.pptx   # Apresentação de revisão (dark mode, 5 slides)
+    ├── flashcards-anki.tsv                    # Baralho para importar no Anki
+    └── dataset-estudo-qa.jsonl                # Dataset de perguntas e respostas
+```
 
-- **`Aulas/`**: Contém materiais didáticos, slides apresentados em laboratório, roteiros práticos e comunicados oficiais da disciplina.
-- **`Trabalhos/`**: Atividades avaliativas propostas ao longo do semestre, acompanhadas de suas respectivas resoluções em código documentado.
-- **`Provas/`**: Avaliações semestrais anteriores, gabaritos e critérios de correção adotados pelo docente.
-- **`Resumos-IA/`**: Pasta inteligente contendo resumos executivos, simulados comentados, trechos de códigos otimizados, flashcards para o Anki (`.tsv`), *CheatSheets* de consulta rápida e apresentações estruturadas (`PPTX`).
-- **`suporteos2026/`**: Espaço dedicado ao acompanhamento do projeto prático oficial da disciplina (`https://github.com/jeffersonarpasserini/suporteos2026`).
+O conteúdo prático principal da disciplina vive fora deste repositório, no projeto oficial de suporte mantido pelo professor: [`jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026). `Trabalhos/` e `Provas/` estão vazias por enquanto — serão preenchidas conforme o professor for postando novas atividades ao longo do semestre.
 
 ---
 
 ## 🚀 Como Estudar com Este Material
 
-1. **Prática Ativa no Laboratório:** Não apenas leia os códigos da pasta `Trabalhos/` ou do repositório oficial `suporteos2026`. Clone os projetos, execute-os localmente na sua IDE de preferência e teste modificar regras de negócio para ver o comportamento do sistema.
-2. **Utilize os Flashcards (`.tsv`):** Revise os conceitos teóricos de arquitetura de software e programação utilizando a pasta `Resumos-IA/` integrada ao Anki para fixação de longo prazo.
-3. **Simule Provas Anteriores:** Antes das avaliações formais, utilize a pasta `Provas/` cronometrando o tempo de resolução para testar seus conhecimentos sob pressão realista.
-4. **Acompanhe o Repositório Oficial:** Mantenha-se atualizado acessando periodicamente o [GitHub - suporteos2026](https://github.com/jeffersonarpasserini/suporteos2026) disponibilizado pelo Prof. Jefferson Passerini para acompanhar atualizações de código, branchs de aula e novas *issues*.
+1. **Explore o Repositório Oficial:** [`jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026) é a fonte primária de exercícios e código da disciplina — clone-o e explore sua estrutura.
+2. **Consulte o Resumos-IA:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento.
+3. **Estude com Flashcards:** importe [`Resumos-IA/flashcards-anki.tsv`](./Resumos-IA/flashcards-anki.tsv) no [Anki](https://apps.ankiweb.net/) para fixação por repetição espaçada.
+4. **Acompanhe as Aulas:** revise os posts em `Aulas/` para links e recursos oficiais compartilhados pelo Prof. Jefferson Passerini.
 
 ---
-> *“A prática constante transforma a lógica em inovação.”* — Laboratório de Programação IV | UniFEF 2026
+> *"A prática constante transforma a lógica em inovação."* — Laboratório de Programação IV | UniFEF 2026

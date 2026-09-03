@@ -69,18 +69,32 @@ classDiagram
 
 O repositório está estruturado de forma modular para facilitar a navegação e o estudo autônomo:
 
-* 📁 **Aulas/**: Materiais didáticos, slides teóricos, scripts SQL de exemplo e comunicados oficiais.
-* 📁 **Trabalhos/**: Atividades práticas avaliativas com resoluções comentadas em código SQL.
-* 📁 **Provas/**: Avaliações semestrais, simulados e critérios de correção.
-* 📁 **Resumos-IA/**: Resumos executivos, simulados comentados, scripts de código, flashcards em formato Anki (`.tsv`), *CheatSheets* rápidos e apresentações em PPTX.
+```bash
+.
+├── 📂 Aulas/
+│   ├── 📂 Aulas Joins e Sub selects/     # Slides HTML de Joins e Subselects
+│   └── 📂 Views/                          # Slide HTML de Views
+├── 📂 Trabalhos/
+│   └── 📂 Exercicios Joins/               # Enunciado + script de resolução (.sql)
+├── 📂 Provas/
+│   ├── 📂 Exercicios SubSelects - parte 01/
+│   └── 📂 Exerciciso - SUbSelect - parte 2/
+└── 📂 Resumos-IA/                         # Material de apoio gerado por IA — tudo em um único README
+    ├── 📄 README.md                       # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── 📊 Slides-Revisao-[...].pptx        # Apresentação de revisão (dark mode, 5 slides)
+    ├── 📇 flashcards-anki.tsv             # Baralho para importar no Anki
+    └── 🤖 dataset-estudo-qa.jsonl         # Dataset de perguntas e respostas
+```
+
+Cada subpasta de `Aulas/`, `Trabalhos/` e `Provas/` contém um `detalhes.md` com o enunciado/contexto original e os arquivos entregues (scripts `.sql`, documentos do professor etc).
 
 ---
 
 ## 🚀 Como Estudar com Este Material
 
-1. **Base Teórica:** Comece revisando os scripts e materiais disponíveis na pasta `Aulas/`.
-2. **Prática Ativa:** Execute os códigos SQL em seu SGBD de preferência (PostgreSQL, MySQL, SQL Server, etc.).
-3. **Fixação:** Utilize os flashcards e resumos da pasta `Resumos-IA/` para memorização ativa dos conceitos de *Joins*, *Subqueries* e *Views*.
+1. **Base Teórica:** Comece revisando os materiais disponíveis na pasta `Aulas/` (Joins/Subselects e Views).
+2. **Prática Ativa:** Execute os códigos SQL em seu SGBD de preferência (PostgreSQL recomendado).
+3. **Fixação:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento. Importe [`Resumos-IA/flashcards-anki.tsv`](./Resumos-IA/flashcards-anki.tsv) no [Anki](https://apps.ankiweb.net/) para memorização ativa.
 4. **Desafios:** Resolva os exercícios práticos presentes nas seções de `Trabalhos/` e `Provas/` sem olhar o gabarito primeiro.
 
 ---

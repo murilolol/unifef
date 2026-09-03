@@ -68,36 +68,38 @@ O repositório está estruturado de forma a facilitar a navegação entre a teor
 
 ```bash
 .
-├── 📂 Aulas/                  # Slides, notas de aula e códigos de exemplo do professor
-│   ├── 📄 Aula_03_04_DML_DQL.md
-│   ├── 📄 Aula_05_SQL_Consultas.md
-│   ├── 📄 Aula_Complexas_IN.md
-│   ├── 📄 Aula_Duas_Tabelas.md
-│   └── 📄 Aula_Hora_Data_Concat.md
-├── 📂 Trabalhos/              # Atividades práticas avaliativas resolvidas
-│   ├── 📂 Trabalho_Material_03/
-│   ├── 📂 Trabalho_Material_04/
-│   ├── 📂 Trabalho_Aula_05/
-│   ├── 📂 Trabalho_Duas_Tabelas/
-│   └── 📂 Elaborar_Banco_Dados/
-├── 📂 Provas/                 # Roteiros de estudo e simulados para as avaliações
-│   └── 📄 Material_Para_Prova.md
-└── 📂 Resumos-IA/             # Materiais de apoio gerados por Inteligência Artificial
-    ├── 📄 Resumos_Executivos.md
-    ├── 📄 Simulados_Comentados.md
-    ├── 📄 Flashcards_Anki.tsv
-    ├── 📄 CheatSheet_SQL.md
-    └── 📊 Apresentacoes_Revisao.pptx
+├── 📂 Aulas/                                              # Notas de aula e material original do professor
+│   ├── 📂 aula 03 - insert delete e update, aula 04 consultado/
+│   ├── 📂 AULA 05 – SQL - CONSULTAS/
+│   ├── 📂 COMANDO IN E SQL MAIS COMPLEXAS/
+│   ├── 📂 exercicios com sql de duas tabelas/
+│   ├── 📂 hora data concatenação/
+│   ├── 📂 atividade s= banca/
+│   └── 📂 material para prova/
+├── 📂 Trabalhos/                                          # Atividades avaliativas resolvidas
+│   ├── 📂 trabalho banco material 03/
+│   ├── 📂 Atividade material 04/
+│   ├── 📂 AULA 05 – SQL - CONSULTAS/
+│   ├── 📂 exercicios com sql de duas tabelas/
+│   └── 📂 ELABORAR UM BANCO DE DADOS/
+├── 📂 Provas/                                             # (ainda sem materiais de prova aplicados)
+└── 📂 Resumos-IA/                                         # Material de apoio gerado por IA — tudo em um único README
+    ├── 📄 README.md                                       # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── 📊 Slides-Revisao-Banco de Dados II.pptx            # Apresentação de revisão (dark mode, 5 slides)
+    ├── 📇 flashcards-anki.tsv                              # Baralho para importar no Anki
+    └── 🤖 dataset-estudo-qa.jsonl                          # Dataset de perguntas e respostas
 ```
+
+Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciado/contexto original e os arquivos entregues (scripts `.sql`, documentos do professor etc).
 
 ---
 
 ## 🚀 Como Estudar com Este Material
 
-1.  **Siga a Trilha de Aprendizado:** Comece pelas pastas de `Aulas/` na ordem cronológica (Aula 03 -> Aula 04 -> Aula 05 -> Funções de Data/Hora).
-2.  **Pratique os Códigos:** Abra os scripts SQL contidos nas pastas de aulas e execute-os em seu SGBD local (MySQL/PostgreSQL).
-3.  **Consulte a CheatSheet:** Utilize o arquivo `Resumos-IA/CheatSheet_SQL.md` como guia rápido de consulta rápida durante a resolução de exercícios.
-4.  **Estude com Flashcards:** Importe o arquivo `Flashcards_Anki.tsv` no software [Anki](https://apps.ankiweb.net/) para fixar a sintaxe SQL por meio de repetição espaçada.
+1.  **Siga a Trilha de Aprendizado:** Comece pelas pastas de `Aulas/` na ordem cronológica (Aula 03/04 → Aula 05 → Comando IN → Duas Tabelas → Hora/Data/Concatenação).
+2.  **Pratique os Códigos:** Abra os scripts SQL contidos nas pastas de aulas e trabalhos e execute-os em seu SGBD local (PostgreSQL/MySQL).
+3.  **Consulte o Resumos-IA:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento.
+4.  **Estude com Flashcards:** Importe [`Resumos-IA/flashcards-anki.tsv`](./Resumos-IA/flashcards-anki.tsv) no [Anki](https://apps.ankiweb.net/) para fixar a sintaxe SQL por repetição espaçada.
 
 ---
 
