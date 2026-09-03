@@ -12,7 +12,7 @@
 <br />
 
 ```text
-Progresso do Curso: [████████████████████░░░░░░░░░░░░░░░░░░░░] 50% (4 de 8 Semestres)
+Acervo Ativo: 3º e 4º Semestres Catalogados (8 Disciplinas Completas)
 ```
 
 </div>
@@ -22,10 +22,9 @@ Progresso do Curso: [███████████████████�
 ## 🧭 Índice Remissivo e Navegação Rápida
 
 - [🏛️ Estrutura Geral do Acervo](#️-estrutura-geral-do-acervo)
-- [📚 Grade Curricular & Semestres](#-grade-curricular--semestres)
+- [📚 Semestres Catalogados](#-semestres-catalogados)
   - [4º Semestre (Atual - 2026/02)](#-4º-semestre-atual---202602)
   - [3º Semestre (2026/01)](#-3º-semestre-202601)
-  - [Semestres Anteriores & Futuros](#-semestres-anteriores--futuros)
 - [📂 Arquitetura Padrão de Cada Disciplina](#-arquitetura-padrão-de-cada-disciplina)
 - [💻 Tecnologias & Linguagens Aplicadas](#-tecnologias--linguagens-aplicadas)
 - [🤖 Materiais de Estudo Gerados por IA](#-materiais-de-estudo-gerados-por-ia)
@@ -35,14 +34,13 @@ Progresso do Curso: [███████████████████�
 
 ## 🏛️ Estrutura Geral do Acervo
 
-O repositório está organizado cronologicamente em diretórios semestrais do **1º ao 8º Semestre**, contendo cada disciplina identificada com seu **Docente Responsável**, acompanhada de códigos executáveis, enunciados originais, diagramas UML em Mermaid e apresentações de slides:
+O acervo contém exclusivamente os semestres com disciplinas ativas e conteúdos reais catalogados (**3º Semestre** e **4º Semestre**). Cada disciplina é identificada com o nome do **Professor Responsável**, acompanhada de códigos executáveis, enunciados originais, diagramas UML em Mermaid e apresentações de slides:
 
 ```mermaid
 graph TD
     Root["🎓 Acervo UniFEF (Sistemas de Informação)"]
-    Root --> Sem4["📁 4º Semestre (Atual)"]
-    Root --> Sem3["📁 3º Semestre"]
-    Root --> SemRest["📁 1º, 2º, 5º, 6º, 7º e 8º Semestres"]
+    Root --> Sem4["📁 4º Semestre (Atual - 2026/02)"]
+    Root --> Sem3["📁 3º Semestre (2026/01)"]
 
     Sem4 --> S4_Lab4["[Prof. Jefferson Passerini] Lab. de Programação IV"]
     Sem4 --> S4_TopBD["[Prof. Welington Garcia] Tópicos Avançados em BD"]
@@ -57,7 +55,7 @@ graph TD
 
 ---
 
-## 📚 Grade Curricular & Semestres
+## 📚 Semestres Catalogados
 
 ### 🟢 4º Semestre (Atual - 2026/02)
 
@@ -78,17 +76,6 @@ graph TD
 | **Banco de Dados II** | Prof. Guilherme de Morais | SQL DDL/DML, JOINs, Chaves Estrangeiras, Agregações | [Acessar Pasta](<3º Semestre/[Prof. Guilherme de Morais] Banco de Dados II>) |
 | **Engenharia de Software I** | Prof. Marcelo Boer | Astah UML, Diagramas de Classes, Casos de Uso, Processos | [Acessar Pasta](<3º Semestre/[Prof. Marcelo Boer] Engenharia de Software I>) |
 | **Laboratório de Programação III** | Prof. Jefferson Passerini | Java Web, Servlets, JDBC, Front-end JS, MVC | [Acessar Pasta](<3º Semestre/[Prof. Jefferson Passerini] Laboratório de Programação III>) |
-
----
-
-### ⚪ Semestres Anteriores & Futuros
-
-- **1º Semestre (2025/01):** [Acessar 1º Semestre](<1º Semestre/>) — Fundamentos de TI, Algoritmos Básicos e Lógica.
-- **2º Semestre (2025/02):** [Acessar 2º Semestre](<2º Semestre/>) — POO Introdutória, Banco de Dados I e Arquitetura de Computadores.
-- **5º Semestre (2027/01):** [Acessar 5º Semestre](<5º Semestre/>) — Redes de Computadores e Engenharia Web Avançada.
-- **6º Semestre (2027/02):** [Acessar 6º Semestre](<6º Semestre/>) — Inteligência Artificial, Segurança da Informação.
-- **7º Semestre (2028/01):** [Acessar 7º Semestre](<7º Semestre/>) — Governança de TI, Gestão de Projetos e TCC I.
-- **8º Semestre (2028/02):** [Acessar 8º Semestre](<8º Semestre/>) — TCC II, Empreendedorismo e Estágio Supervisionado.
 
 ---
 
