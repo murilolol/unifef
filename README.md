@@ -27,7 +27,7 @@ Acervo Ativo: 3º e 4º Semestres Catalogados (8 Disciplinas Completas)
   - [3º Semestre (2026/01)](#-3º-semestre-202601)
 - [📂 Arquitetura Padrão de Cada Disciplina](#-arquitetura-padrão-de-cada-disciplina)
 - [💻 Tecnologias & Linguagens Aplicadas](#-tecnologias--linguagens-aplicadas)
-- [🤖 Materiais de Estudo Gerados por IA](#-materiais-de-estudo-gerados-por-ia)
+- [🔬 Como Este Acervo é Gerado — Pipeline de Sincronização e IA](#-como-este-acervo-é-gerado--pipeline-de-sincronização-e-ia)
 - [📜 Licença & Disclaimer Acadêmico](#-licença--disclaimer-acadêmico)
 
 ---
@@ -120,12 +120,92 @@ Cada matéria possui um ecossistema independente e completo:
 
 ---
 
-## 🤖 Materiais de Estudo Gerados por IA
+## 🔬 Como Este Acervo é Gerado — Pipeline de Sincronização e IA
 
-Todo o conteúdo de revisão foi sintetizado via **Google Gemini 3.5**, contemplando:
-1. **Soluções Executáveis de Exercícios:** Cada lista em Word/PDF possui seu correspondente script `.sql`, `.c` ou `.java` validado.
-2. **Slides PowerPoint (.pptx):** Decks de 5 slides em tema escuro profissional para apresentações em seminários.
-3. **Datasets JSONL:** ~14–15 pares de perguntas e respostas por matéria para treino ou integração em LLMs locais.
+Este repositório é só o **resultado final**, publicado separadamente do motor que o
+gera (`classrom-api-sinc`, um projeto próprio em TypeScript, não versionado aqui de
+propósito). O pipeline roda em duas etapas independentes:
+
+```mermaid
+graph LR
+    GC["🏫 Google Classroom API"] -- "OAuth2 read-only" --> Sync["🔄 classrom-api-sinc"]
+    Sync -- "courses / courseWork / announcements" --> Local["💾 Aulas + Trabalhos + Provas"]
+    Sync -- "Drive readonly" --> Files["📎 Anexos originais"]
+    Files --> Local
+    Local --> AI["🤖 Pipeline Gemini 3.5"]
+    AI --> Resumo["📖 Resumos-IA/README.md"]
+    AI --> PPTX["🎞️ Slides PPTX"]
+    AI --> JSONL["🧠 Dataset JSONL"]
+    AI --> Anki["🃏 Flashcards Anki"]
+```
+
+### 1️⃣ Sincronização com o Google Classroom (a "consulta" das matérias)
+
+A autenticação usa **OAuth2** (`google-auth-library`, com token local renovável) com
+escopos estritamente somente-leitura:
+
+| Escopo OAuth2 | Para quê |
+| :--- | :--- |
+| `classroom.courses.readonly` | Lista as matérias em que o aluno está matriculado (`courses.list`) |
+| `classroom.coursework.me.readonly` | Busca trabalhos/atividades por matéria (`courses.courseWork.list`) |
+| `classroom.courseworkmaterials.readonly` | Busca materiais de apoio por matéria (`courses.courseWorkMaterials.list`) |
+| `classroom.announcements.readonly` | Avisos e anúncios de aula (`courses.announcements.list`) |
+| `drive.readonly` | Baixa os anexos (PDF, DOCX, slides) referenciados em cada item via Google Drive API |
+
+Ou seja: "consultar uma matéria" é, na prática, uma chamada `courses.list` pra
+descobrir o `courseId`, seguida de `courseWork.list`/`courseWorkMaterials.list`/
+`announcements.list` filtradas por esse ID — cada resposta vira um item que o
+sincronizador classifica automaticamente por professor/disciplina e organiza nas
+pastas `Aulas/`, `Trabalhos/` e `Provas/` daqui do acervo.
+
+### 2️⃣ Geração de material de estudo com IA
+
+Com o conteúdo bruto sincronizado, uma segunda etapa consulta a **Google Gemini API**
+diretamente via REST (`generateContent`), com uma cadeia de fallback de modelos
+(`gemini-3.5-flash-lite` → `gemini-3.5-flash` → `gemini-flash-latest`) para continuar
+funcionando mesmo sob limite de taxa. Por matéria, isso gera:
+
+| Saída | Descrição |
+| :--- | :--- |
+| 📖 Resumo Executivo | Síntese didática de toda a ementa |
+| 📝 Simulado Comentado | 10 questões objetivas + 5 discursivas com gabarito |
+| ⚡ CheatSheet | Folha de revisão de 1 página |
+| 💻 Exercícios Resolvidos | Código real (`.sql`/`.c`/`.java`) validado |
+| 🗺️ Diagramas UML/Mermaid | Classes, sequência e arquitetura |
+| 🎞️ Slides PPTX | Deck de revisão dark-mode, 5 slides, 16:9 |
+| 🃏 Flashcards Anki | 20–30 cartões `.tsv` prontos para importar |
+| 🤖 Dataset JSONL | Pares pergunta/resposta estruturados (ver abaixo) |
+
+> Nesta rodada de reorganização, os 6 primeiros itens foram consolidados em um único
+> `Resumos-IA/README.md` por matéria — só o PPTX, o TSV e o JSONL continuam como
+> arquivo separado, por serem formatos que exigem isso pra funcionar.
+
+### 📓 O dataset JSONL — formato e exemplo real
+
+Cada `dataset-estudo-qa.jsonl` é uma lista de objetos JSON, um por linha ([JSON
+Lines](https://jsonlines.org/), o formato padrão pra fine-tuning/RAG), no schema:
+
+```json
+{"id": <int>, "topico": "<string>", "pergunta": "<string>", "resposta": "<string>", "dificuldade": "facil | medio | dificil"}
+```
+
+Exemplo real, extraído de [`Banco de Dados II/Resumos-IA/dataset-estudo-qa.jsonl`](<3º Semestre/[Prof. Guilherme de Morais] Banco de Dados II/Resumos-IA/dataset-estudo-qa.jsonl>):
+
+```jsonl
+{"id": 1, "topico": "INSERT, DELETE e UPDATE", "pergunta": "Qual é a função do comando INSERT em Banco de Dados Relacionais?", "resposta": "O comando INSERT é utilizado para adicionar uma ou mais novas linhas (registros) em uma tabela existente.", "dificuldade": "facil"}
+{"id": 2, "topico": "INSERT, DELETE e UPDATE", "pergunta": "Por que o uso da cláusula WHERE é crítico ao executar o comando DELETE?", "resposta": "A cláusula WHERE especifica quais registros devem ser excluídos. Sem ela, o comando DELETE removerá todas as linhas da tabela.", "dificuldade": "medio"}
+```
+
+Cada linha é um objeto JSON independente e *machine-readable* — ao contrário do resto
+do material, que fica em prosa dentro do `README.md` único de cada matéria. É esse
+formato que torna o dataset diretamente consumível por scripts de estudo, geradores de
+flashcards e pipelines de RAG/fine-tuning locais.
+
+### 🔁 Atualizações
+
+O acervo é atualizado sob demanda: quando surge conteúdo novo em alguma matéria no
+Google Classroom, uma nova rodada de sincronização + geração roda localmente e o
+resultado é incorporado a este repositório.
 
 ---
 
