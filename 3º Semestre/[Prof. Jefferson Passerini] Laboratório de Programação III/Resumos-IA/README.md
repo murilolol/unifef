@@ -1,4 +1,4 @@
-# 🤖 Resumos-IA · Laboratório de Programação III
+# Resumos-IA · Laboratório de Programação III
 **Professor:** Jefferson Passerini · **Semestre:** 3º Semestre · **Foco:** Java Web (Servlets, JSP, JDBC, CRUD)
 
 Material de apoio gerado por IA para revisão da disciplina, consolidado em um único
@@ -7,19 +7,19 @@ cheatsheet de revisão rápida e diagramas de arquitetura/UML.
 
 ---
 
-## 🧭 Índice
-1. [Resumo Executivo](#-resumo-executivo)
-2. [Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-3. [Simulado Comentado](#-simulado-comentado)
-4. [CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-5. [Diagramas e Modelagem](#️-diagramas-e-modelagem)
-6. [Apresentação de Revisão em Slides](#-apresentação-de-revisão-em-slides)
-7. [Flashcards para Anki](#-flashcards-para-anki)
-8. [Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+## Índice
+1. [Resumo Executivo](#resumo-executivo)
+2. [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+3. [Simulado Comentado](#simulado-comentado)
+4. [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+5. [Diagramas e Modelagem](#diagramas-e-modelagem)
+6. [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+7. [Flashcards para Anki](#flashcards-para-anki)
+8. [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 ### 1. Visão Geral e Objetivos da Matéria
 A disciplina de **Laboratório de Programação III** (oferecida no 3º semestre do curso
@@ -72,7 +72,7 @@ código (Git/GitHub) e entrega de soluções funcionais ponta a ponta.
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 ### Módulo 1 — Configuração de Ambiente e Projeto Web
 *Baseado nas Aulas 01, 02 e 03.* Ferramentas necessárias: **JDK 17+**, **Apache Tomcat 9/10**, **Eclipse IDE for Enterprise Java / IntelliJ IDEA Ultimate**, **MySQL ou PostgreSQL**.
@@ -292,7 +292,7 @@ public class LivroServlet extends HttpServlet {
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 **Conteúdo abrangido:** Ambiente Java Web, Estrutura Front-end/Back-end, Conexão com
 Banco de Dados, Listagem e Operações de CRUD (Incluir, Alterar, Excluir).
@@ -449,7 +449,7 @@ public class ConexaoDB {
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 **Disciplina:** Lab. Programação III (3º Sem. — Java Web / JSP / Servlets)
 
@@ -486,7 +486,7 @@ Validações comuns: campos obrigatórios (ex: formato de e-mail) antes de persi
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 ### 1. Diagrama de Classes UML (Domínio do Sistema)
 Entidades principais das aulas de estruturação de projetos web e CRUD (`Usuario` e `Livro`).
@@ -592,7 +592,7 @@ estruturação do front-end, implementação de Servlets, conexão com o banco (
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-[Prof. Jefferson Passerini] Laboratório de Programação III.pptx`](./Slides-Revisao-%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20III.pptx) —
 deck de 5 slides em dark mode (Slate/Navy/Teal/Indigo), 16:9 widescreen, cobrindo
@@ -601,7 +601,7 @@ programático (zero overflow de texto garantido por medição real de fonte).
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv) — baralho pergunta/resposta (formato
 TSV de 2 colunas) cobrindo professor, semestre, cronograma de aulas e conceitos
@@ -610,7 +610,7 @@ centrais da disciplina. Para importar: no Anki, **Arquivo → Importar**, seleci
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl) — **15 pares** de
 pergunta/resposta estruturados (`id`, `topico`, `pergunta`, `resposta`,

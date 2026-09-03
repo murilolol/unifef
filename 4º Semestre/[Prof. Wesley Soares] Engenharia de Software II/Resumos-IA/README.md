@@ -1,4 +1,4 @@
-# 🤖 Resumos-IA · Engenharia de Software II
+# Resumos-IA · Engenharia de Software II
 
 > **Professor:** Wesley Soares de Souza · **Semestre:** 4º Semestre · **Curso:** Sistemas de Informação (UniFEF)
 
@@ -6,20 +6,20 @@ Material de apoio gerado com auxílio de IA a partir do conteúdo real das aulas
 
 ---
 
-## 🧭 Índice
+## Índice
 
-- [📖 Resumo Executivo](#-resumo-executivo)
-- [💻 Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-- [📝 Simulado Comentado](#-simulado-comentado)
-- [⚡ CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-- [🗺️ Diagramas e Modelagem](#️-diagramas-e-modelagem)
-- [🎞️ Apresentação de Revisão em Slides](#️-apresentação-de-revisão-em-slides)
-- [🃏 Flashcards para Anki](#-flashcards-para-anki)
-- [🤖 Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+- [Resumo Executivo](#resumo-executivo)
+- [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+- [Simulado Comentado](#simulado-comentado)
+- [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+- [Diagramas e Modelagem](#diagramas-e-modelagem)
+- [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+- [Flashcards para Anki](#flashcards-para-anki)
+- [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 ### Visão Geral e Objetivos da Matéria
 A disciplina de **Engenharia de Software II**, ministrada pelo Prof. Ms. Wesley Soares de Souza, aborda o ciclo de vida avançado do desenvolvimento de software, fazendo a transição crítica entre a **Análise de Requisitos (o "o quê fazer")** e o **Projeto Orientado a Objetos e Arquitetura (o "como fazer")**.
@@ -70,7 +70,7 @@ O principal objetivo da matéria é afastar o desenvolvimento de software da ide
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 Apostila prática que une os fundamentos teóricos (Elicitação de Requisitos, Ciclo de Vida de Software, Princípios de Projeto OO e Priorização MoSCoW) com códigos executáveis em **Java** e **TypeScript**.
 
@@ -280,7 +280,7 @@ projeto.filtrarEscopoAtual();
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 Simulado estruturado com 10 questões de múltipla escolha (gabarito comentado) e 5 questões discursivas/estudos de caso, cobrindo Engenharia de Requisitos, Ciclo de Vida do Software, Projeto Orientado a Objetos e Princípios de Design.
 
@@ -336,16 +336,16 @@ Simulado estruturado com 10 questões de múltipla escolha (gabarito comentado) 
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 **Foco:** Revisão para prova — conceitos essenciais e técnicas.
 
-### 🔄 O Ciclo de Vida de um Projeto de Software
+### O Ciclo de Vida de um Projeto de Software
 *"Faça a coisa certa (análise) e faça certo a coisa (projeto)."*
 
 1. **Identificação do Problema** 2. **Levantamento de Requisitos** 3. **Análise e Especificação** 4. **Planejamento** 5. **Arquitetura de Software** 6. **Projeto Detalhado (OO)** 7. **Implementação** 8. **Testes e Qualidade** 9. **Integração e Entrega (CI/CD)** 10. **Operação e Manutenção**
 
-### 🎯 Engenharia e Elicitação de Requisitos
+### Engenharia e Elicitação de Requisitos
 `Necessidade → Problema → Contexto → Expectativa → Requisito`. Dificuldades comuns: requisitos implícitos, conflitos entre stakeholders, termos diferentes, mudança de ideia do cliente.
 
 | Tradicionais | Complementares |
@@ -358,7 +358,7 @@ Simulado estruturado com 10 questões de múltipla escolha (gabarito comentado) 
 **Requisito Funcional (o que faz):** *"O sistema deve notificar o vendedor quando um pedido for registrado."*
 **Requisito Não Funcional (como se comporta/restrições):** *"A notificação deve ocorrer em até 5 segundos."*
 
-### 🧱 Projeto Orientado a Objetos (OO) & Princípios de Design
+### Projeto Orientado a Objetos (OO) & Princípios de Design
 **Análise:** o que fazer · **Projeto:** como fazer.
 
 * **Abstração:** ocultar detalhes irrelevantes, focar no essencial do domínio.
@@ -369,14 +369,14 @@ Simulado estruturado com 10 questões de múltipla escolha (gabarito comentado) 
 
 **Padrões de Projeto citados:** `Strategy`, `Factory`, `Observer`, `Adapter`, `Facade`.
 
-### 💡 Dicas Rápidas para a Prova
+### Dicas Rápidas para a Prova
 * Funcional = *função/ação*; Não Funcional = *qualidade* (velocidade, segurança, usabilidade).
 * **MoSCoW:** Must, Should, Could, Won't — priorização do que é essencial.
 * **Brainstorming:** separar geração de ideias da avaliação (quantidade primeiro, filtragem depois).
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 Artefatos visuais baseados nas diretrizes da disciplina: modelagem orientada a objetos, fluxo de submissão de atividades e a arquitetura conceitual do Trabalho Semestral (Requisitos, MoSCoW e Casos de Uso).
 
@@ -493,7 +493,7 @@ O processo do trabalho semestral inicia-se com a elicitação de requisitos junt
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-[Prof. Wesley Soares] Engenharia de Software II.pptx`](./Slides-Revisao-%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II.pptx)
 
@@ -501,7 +501,7 @@ Deck de revisão com 5 slides em widescreen 16:9, redesenhado em dark mode (pale
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv)
 
@@ -512,7 +512,7 @@ Baralho de flashcards (formato TSV: `frente<TAB>verso`) cobrindo os conceitos-ch
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl) — **15 pares** de pergunta/resposta em formato [JSON Lines](https://jsonlines.org/), cobrindo cronograma de aulas, atividades avaliativas e estrutura do curso. Pensado para consumo por ferramentas (fine-tuning, RAG, geração de flashcards automatizada), um objeto JSON por linha.
 

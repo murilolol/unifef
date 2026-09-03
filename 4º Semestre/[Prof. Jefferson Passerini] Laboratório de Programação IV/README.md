@@ -1,11 +1,11 @@
-# 🎓 [Prof. Jefferson Passerini] Laboratório de Programação IV
+# [Prof. Jefferson Passerini] Laboratório de Programação IV
 > **Semestre:** 4º Semestre  
 > **Curso:** Bacharelado em Sistemas de Informação (UniFEF)  
 > **Repositório Oficial de Suporte:** [`jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026)
 
 ---
 
-## 🎯 Objetivos de Aprendizagem e Ementa
+## Objetivos de Aprendizagem e Ementa
 
 A disciplina **Laboratório de Programação IV** foi estruturada para consolidar o desenvolvimento de software orientado a objetos avançado, arquitetura de sistemas e implementação de soluções práticas alinhadas às demandas do mercado. No 4º semestre do curso de Sistemas de Informação da UniFEF, o foco transita da lógica básica para a construção de sistemas robustos, escaláveis e focados em resolução de problemas reais, como o gerenciamento de Ordens de Serviço (OS).
 
@@ -13,9 +13,9 @@ Ao longo do semestre, sob a tutela do **Prof. Jefferson Passerini**, os estudant
 
 ---
 
-## 🏗️ Arquitetura e Modelagem do Conhecimento
+## Arquitetura e Modelagem do Conhecimento
 
-Diagrama estrutural que representa a arquitetura típica dos projetos desenvolvidos na disciplina, tendo como referência o ecossistema de suporte a sistemas de Ordem de Serviço (`suporteos2026`) — detalhamento completo com diagrama de sequência e diagrama do repositório em [`Resumos-IA/README.md`](./Resumos-IA/README.md#️-diagramas-e-modelagem):
+Diagrama estrutural que representa a arquitetura típica dos projetos desenvolvidos na disciplina, tendo como referência o ecossistema de suporte a sistemas de Ordem de Serviço (`suporteos2026`) — detalhamento completo com diagrama de sequência e diagrama do repositório em [`Resumos-IA/README.md`](./Resumos-IA/README.md#diagramas-e-modelagem):
 
 ```mermaid
 classDiagram
@@ -52,7 +52,7 @@ classDiagram
 
 ---
 
-## 📂 Estrutura das Pastas e Organização
+## Estrutura das Pastas e Organização
 
 ```text
 .
@@ -72,7 +72,7 @@ O conteúdo prático principal da disciplina vive fora deste repositório, no pr
 
 ---
 
-## 🚀 Como Estudar com Este Material
+## Como Estudar com Este Material
 
 1. **Explore o Repositório Oficial:** [`jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026) é a fonte primária de exercícios e código da disciplina — clone-o e explore sua estrutura.
 2. **Consulte o Resumos-IA:** [`Resumos-IA/README.md`](./Resumos-IA/README.md) reúne resumo executivo, exercícios comentados, simulado com gabarito, cheat sheet e diagramas — tudo em um único documento.

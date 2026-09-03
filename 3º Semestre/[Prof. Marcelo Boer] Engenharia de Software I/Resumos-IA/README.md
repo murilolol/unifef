@@ -1,4 +1,4 @@
-# 📘 Resumos-IA — Engenharia de Software I
+# Resumos-IA — Engenharia de Software I
 
 > **Professor:** Marcelo Boer (Marcelo Tadeu Boer) · **Semestre:** 3º Semestre · **Curso:** Sistemas de Informação (UniFEF)
 > **Estudo de caso base:** Aplicativo móvel **Desapega Já** (economia colaborativa entre vendedores e compradores da mesma região)
@@ -7,31 +7,31 @@ Material de apoio gerado por IA para revisão da disciplina — resumo executivo
 
 ---
 
-## 🧭 Índice
+## Índice
 
-1. [Resumo Executivo](#-resumo-executivo)
-2. [Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-3. [Simulado Comentado](#-simulado-comentado)
-4. [CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-5. [Diagramas e Modelagem](#-diagramas-e-modelagem)
-6. [Apresentação de Revisão em Slides](#-apresentação-de-revisão-em-slides)
-7. [Flashcards para Anki](#-flashcards-para-anki)
-8. [Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+1. [Resumo Executivo](#resumo-executivo)
+2. [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+3. [Simulado Comentado](#simulado-comentado)
+4. [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+5. [Diagramas e Modelagem](#diagramas-e-modelagem)
+6. [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+7. [Flashcards para Anki](#flashcards-para-anki)
+8. [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 **Foco:** Processos de Software, Ciclo de Vida, Requisitos, Modelagem UML (Astah UML) e Casos de Uso aplicados ao estudo de caso **"Desapega Já"**.
 
-### 📱 Contexto do Aplicativo: "Desapega Já"
+### Contexto do Aplicativo: "Desapega Já"
 
 O aplicativo **Desapega Já** é uma plataforma móvel de economia colaborativa voltada para conectar compradores e vendedores de uma mesma região. Seu objetivo principal é incentivar a reutilização de produtos inativados (roupas, eletrônicos, móveis, livros) e promover o consumo consciente.
 
 * **Vendedores (Anunciantes):** podem anunciar produtos livremente informando *fotos, descrição, preço e categoria*, sem obrigatoriedade de cadastro prévio.
 * **Compradores (Interessados):** devem realizar um cadastro simples para negociar e contatar os vendedores.
 
-### ⚙️ Engenharia de Requisitos
+### Engenharia de Requisitos
 
 **Requisitos Funcionais (RF)** — ações e comportamentos que o sistema deve executar:
 
@@ -56,7 +56,7 @@ O aplicativo **Desapega Já** é uma plataforma móvel de economia colaborativa 
 | RNF03 | Prático e acessível |
 | RNF04 | Integridade de dados |
 
-### 🗂️ Modelo de Domínio e Classes Principais
+### Modelo de Domínio e Classes Principais
 
 * **Anunciante / Interessado:** nome completo, e-mail, telefone (WhatsApp), senha de acesso, cidade, estado, foto de perfil, CPF, data de nascimento e bairro.
 * **Anúncio:** fotos, descrição, preço e categoria.
@@ -64,7 +64,7 @@ O aplicativo **Desapega Já** é uma plataforma móvel de economia colaborativa 
 * **Compra:** data da compra, valor, produtos, interessado e anunciante.
 * **Histórico de Contatos:** relacionamento entre interessado e anunciante.
 
-### 📐 Modelagem de Casos de Uso (Padrão Astah UML)
+### Modelagem de Casos de Uso (Padrão Astah UML)
 
 Operações fundamentais a descrever: **Logar, Cadastrar, Listar, Carregar, Alterar (Editar), Excluir.**
 
@@ -74,19 +74,19 @@ Estrutura padrão de um DCU (exemplo — *Realizar Login*):
 * **Fluxo Normal:** acessa o app → tela de login → informa e-mail/senha → sistema valida e exibe a tela principal.
 * **Fluxo Alternativo:** credenciais inválidas ou usuário não cadastrado → mensagem de erro e redirecionamento.
 
-### 🔄 Processos de Software e Ciclo de Vida (SDLC)
+### Processos de Software e Ciclo de Vida (SDLC)
 
 * **Estrutura do Modelo de Processo:** apresentação conceitual, histórico (origem, criadores, motivação), fases metodológicas, exemplos práticos e análise de custos de implantação.
 * **Atividades de Framework:** Comunicação, Planejamento, Modelagem, Construção e Implantação.
 
-### 🔗 Recursos e Links Úteis
+### Recursos e Links Úteis
 
 * **Questionários de Revisão (AV1):** disponibilizados via Google Forms pelo Prof. Marcelo Boer.
 * **Ferramenta de Modelagem:** *Astah UML* (licenciamento acadêmico para diagramação de Casos de Uso, Classes e Atores).
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 Apostila prática com templates de requisitos, especificações completas de Casos de Uso (CRUD: Logar, Cadastrar, Listar, Carregar, Alterar, Excluir) baseadas nas diretrizes oficiais da disciplina.
 
@@ -131,11 +131,11 @@ Fluxo alternativo: falha de conexão/dados inválidos → erro, mantém formulá
 Fluxo normal: "Excluir Anúncio" → confirmação → "Sim, excluir" → envia `id_anuncio` → sistema remove e exibe Msg04.
 Fluxo alternativo: "Cancelar" → processo abortado, tela de gestão restaurada.
 
-Os diagramas de classes, sequência e arquitetura que ilustram esses fluxos estão na seção [Diagramas e Modelagem](#-diagramas-e-modelagem) abaixo.
+Os diagramas de classes, sequência e arquitetura que ilustram esses fluxos estão na seção [Diagramas e Modelagem](#diagramas-e-modelagem) abaixo.
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 **Assuntos:** Modelos de Processos (Cascata, Ágil, Espiral) e Modelagem UML (Casos de Uso, Classes, Requisitos) baseados no aplicativo *Desapega Já*.
 
@@ -195,7 +195,7 @@ A) Criar instalador final B) Compreender o problema de negócio e o que o softwa
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 **RF vs. RNF:** Funcionais = **funções/ações** do sistema · Não-Funcionais = **qualidades/restrições** de operação.
 
@@ -222,7 +222,7 @@ A) Criar instalador final B) Compreender o problema de negócio e o que o softwa
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 ### 1. Diagrama de Classes UML (Domínio do Aplicativo)
 
@@ -353,19 +353,19 @@ Separa claramente a interface móvel voltada ao usuário final, as regras de neg
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-[Prof. Marcelo Boer] Engenharia de Software I.pptx`](./Slides-Revisao-%5BProf.%20Marcelo%20Boer%5D%20Engenharia%20de%20Software%20I.pptx) — deck de 5 slides com redesign dark mode (Slate/Navy/Teal/Indigo), 16:9 widescreen: Capa, Visão Geral, Conceitos Fundamentais, Exercícios & Prática e Dicas de Prova, cobrindo requisitos, UML e o estudo de caso *Desapega Já*.
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv) — 24 cartões (pergunta ↹ resposta, separados por tab) cobrindo o contexto do *Desapega Já*, atores, requisitos, atributos de classes e casos de uso. Importe no [Anki](https://apps.ankiweb.net/) via **Arquivo → Importar**, selecionando separador "Tab" e tipo de nota "Básico".
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl) — 12 pares de pergunta/resposta estruturados (`id`, `topico`, `pergunta`, `resposta`, `dificuldade`), pensados para fine-tuning/RAG ou geração de novos simulados. Amostra:
 

@@ -1,4 +1,4 @@
-# 🎓 [Prof. Guilherme de Morais] Banco de Dados II
+# [Prof. Guilherme de Morais] Banco de Dados II
 
 > **Semestre:** 3º Semestre  
 > **Curso:** Bacharelado em Sistemas de Informação (UniFEF)  
@@ -6,11 +6,11 @@
 
 ---
 
-## 🎯 Objetivos de Aprendizagem e Ementa
+## Objetivos de Aprendizagem e Ementa
 
 A disciplina de **Banco de Dados II** tem como propósito aprofundar os conhecimentos teóricos e práticos na manipulação, consulta e administração de Bancos de Dados Relacionais. O foco principal é capacitar o estudante a construir consultas complexas, otimizar a performance de busca e dominar a manipulação de dados (DML) e estruturação de esquemas relacionais.
 
-### 🧠 Competências Adquiridas:
+### Competências Adquiridas
 *   **Manipulação Avançada de Dados (DML):** Domínio absoluto sobre transações de escrita (`INSERT`, `UPDATE`, `DELETE`).
 *   **Consultas Complexas (DQL):** Construção de filtros avançados utilizando operadores lógicos, relacionais e o operador de conjunto `IN`.
 *   **Junções e Relacionamentos:** Junção de múltiplas tabelas (`INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`) para consolidação de relatórios.
@@ -19,7 +19,7 @@ A disciplina de **Banco de Dados II** tem como propósito aprofundar os conhecim
 
 ---
 
-## 🏗️ Arquitetura e Modelagem do Conhecimento
+## Arquitetura e Modelagem do Conhecimento
 
 Para ilustrar os conceitos de relacionamentos de tabelas, chaves primárias/estrangeiras e consultas multi-tabelas abordados na disciplina, abaixo está o Diagrama Entidade-Relacionamento (DER) padrão utilizado como base para os exercícios práticos:
 
@@ -62,39 +62,39 @@ erDiagram
 
 ---
 
-## 📂 Estrutura das Pastas e Organização
+## Estrutura das Pastas e Organização
 
 O repositório está estruturado de forma a facilitar a navegação entre a teoria ministrada em sala de aula e a prática exigida nos trabalhos avaliativos:
 
 ```bash
 .
-├── 📂 Aulas/                                              # Notas de aula e material original do professor
-│   ├── 📂 aula 03 - insert delete e update, aula 04 consultado/
-│   ├── 📂 AULA 05 – SQL - CONSULTAS/
-│   ├── 📂 COMANDO IN E SQL MAIS COMPLEXAS/
-│   ├── 📂 exercicios com sql de duas tabelas/
-│   ├── 📂 hora data concatenação/
-│   ├── 📂 atividade s= banca/
-│   └── 📂 material para prova/
-├── 📂 Trabalhos/                                          # Atividades avaliativas resolvidas
-│   ├── 📂 trabalho banco material 03/
-│   ├── 📂 Atividade material 04/
-│   ├── 📂 AULA 05 – SQL - CONSULTAS/
-│   ├── 📂 exercicios com sql de duas tabelas/
-│   └── 📂 ELABORAR UM BANCO DE DADOS/
-├── 📂 Provas/                                             # (ainda sem materiais de prova aplicados)
-└── 📂 Resumos-IA/                                         # Material de apoio gerado por IA — tudo em um único README
-    ├── 📄 README.md                                       # Resumo, exercícios, simulado, cheatsheet e diagramas
-    ├── 📊 Slides-Revisao-Banco de Dados II.pptx            # Apresentação de revisão (dark mode, 5 slides)
-    ├── 📇 flashcards-anki.tsv                              # Baralho para importar no Anki
-    └── 🤖 dataset-estudo-qa.jsonl                          # Dataset de perguntas e respostas
+├── Aulas/                                              # Notas de aula e material original do professor
+│   ├── aula 03 - insert delete e update, aula 04 consultado/
+│   ├── AULA 05 – SQL - CONSULTAS/
+│   ├── COMANDO IN E SQL MAIS COMPLEXAS/
+│   ├── exercicios com sql de duas tabelas/
+│   ├── hora data concatenação/
+│   ├── atividade s= banca/
+│   └── material para prova/
+├── Trabalhos/                                          # Atividades avaliativas resolvidas
+│   ├── trabalho banco material 03/
+│   ├── Atividade material 04/
+│   ├── AULA 05 – SQL - CONSULTAS/
+│   ├── exercicios com sql de duas tabelas/
+│   └── ELABORAR UM BANCO DE DADOS/
+├── Provas/                                             # (ainda sem materiais de prova aplicados)
+└── Resumos-IA/                                         # Material de apoio gerado por IA — tudo em um único README
+    ├── README.md                                       # Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── Slides-Revisao-Banco de Dados II.pptx            # Apresentação de revisão (dark mode, 5 slides)
+    ├── flashcards-anki.tsv                              # Baralho para importar no Anki
+    └── dataset-estudo-qa.jsonl                          # Dataset de perguntas e respostas
 ```
 
 Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciado/contexto original e os arquivos entregues (scripts `.sql`, documentos do professor etc).
 
 ---
 
-## 🚀 Como Estudar com Este Material
+## Como Estudar com Este Material
 
 1.  **Siga a Trilha de Aprendizado:** Comece pelas pastas de `Aulas/` na ordem cronológica (Aula 03/04 → Aula 05 → Comando IN → Duas Tabelas → Hora/Data/Concatenação).
 2.  **Pratique os Códigos:** Abra os scripts SQL contidos nas pastas de aulas e trabalhos e execute-os em seu SGBD local (PostgreSQL/MySQL).
@@ -103,9 +103,9 @@ Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciad
 
 ---
 
-## 📘 Conteúdo Acadêmico Detalhado
+## Conteúdo Acadêmico Detalhado
 
-### 📖 Aula 03 & 04: Manipulação de Dados (DML) e Consultas Iniciais (DQL)
+### Aula 03 & 04: Manipulação de Dados (DML) e Consultas Iniciais (DQL)
 *   **Foco:** Inserção, atualização, exclusão e consultas básicas.
 *   **Sintaxe Essencial:**
     ```sql
@@ -123,7 +123,7 @@ Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciad
     WHERE id = 1;
     ```
 
-### 📖 Aula 05: SQL - Consultas Avançadas e Filtros
+### Aula 05: SQL - Consultas Avançadas e Filtros
 *   **Foco:** Filtragem refinada de dados utilizando operadores lógicos (`AND`, `OR`, `NOT`), comparadores (`LIKE`, `BETWEEN`) e ordenação (`ORDER BY`).
 *   **Exemplo Prático:**
     ```sql
@@ -133,7 +133,7 @@ Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciad
     ORDER BY preco DESC;
     ```
 
-### 📖 Comando `IN` e Consultas Complexas
+### Comando `IN` e Consultas Complexas
 *   **Foco:** Substituição de múltiplos `OR` pelo operador `IN` e introdução a subconsultas (Subqueries).
 *   **Exemplo Prático:**
     ```sql
@@ -146,7 +146,7 @@ Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciad
     WHERE id IN (SELECT cliente_id FROM pedido WHERE valor_total > 500);
     ```
 
-### 📖 Consultas com Duas ou Mais Tabelas (JOINs)
+### Consultas com Duas ou Mais Tabelas (JOINs)
 *   **Foco:** Relacionar dados espalhados em múltiplas tabelas utilizando chaves primárias e estrangeiras.
 *   **Exemplo Prático:**
     ```sql
@@ -156,7 +156,7 @@ Cada subpasta de `Aulas/` e `Trabalhos/` contém um `detalhes.md` com o enunciad
     WHERE p.valor_total > 100.00;
     ```
 
-### 📖 Funções de Data, Hora e Concatenação
+### Funções de Data, Hora e Concatenação
 *   **Foco:** Formatação de strings e manipulação de campos temporais.
 *   **Exemplo Prático:**
     ```sql

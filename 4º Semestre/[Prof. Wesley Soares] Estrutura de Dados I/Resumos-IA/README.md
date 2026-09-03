@@ -1,24 +1,24 @@
-# 🤖 Material de Revisão com IA — Estrutura de Dados I
+# Material de Revisão com IA — Estrutura de Dados I
 
 > **Matéria:** Estrutura de Dados I · **Professor:** Prof. Ms. Wesley Soares de Souza · **Semestre:** 4º Semestre
 > Guia único e completo de revisão: resumo executivo, exercícios resolvidos em Java, simulado comentado, cheat sheet, diagramas de modelagem, slides de revisão, flashcards para Anki e dataset de perguntas e respostas.
 
 ---
 
-## 🧭 Índice
+## Índice
 
-- [📖 Resumo Executivo](#-resumo-executivo)
-- [💻 Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-- [📝 Simulado Comentado](#-simulado-comentado)
-- [⚡ CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-- [🗺️ Diagramas e Modelagem](#️-diagramas-e-modelagem)
-- [🎞️ Apresentação de Revisão em Slides](#️-apresentação-de-revisão-em-slides)
-- [🃏 Flashcards para Anki](#-flashcards-para-anki)
-- [🤖 Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+- [Resumo Executivo](#resumo-executivo)
+- [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+- [Simulado Comentado](#simulado-comentado)
+- [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+- [Diagramas e Modelagem](#diagramas-e-modelagem)
+- [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+- [Flashcards para Anki](#flashcards-para-anki)
+- [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 ### 1. Visão Geral e Objetivos da Matéria
 A disciplina **Estrutura de Dados I** (4º Semestre), ministrada pelo Prof. Ms. Wesley Soares de Souza, fundamenta-se na premissa de que um software de alto desempenho depende tanto de uma lógica algorítmica apurada quanto da organização inteligente dos dados na memória. O curso aborda a transição conceitual do problema real até a solução implementada, cobrindo os fundamentos de projeto e análise de algoritmos, tipos abstratos de dados (TADs), gerenciamento de memória e o estudo aprofundado de estruturas lineares (listas sequenciais, listas ligadas, pilhas, filas e deques).
@@ -62,7 +62,7 @@ No desenvolvimento de software corporativo, a escolha incorreta de uma estrutura
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 Apostila prática com base nas aulas do Prof. Ms. Wesley Soares de Souza, traduzindo os fundamentos teóricos em códigos Java limpos, comentados e prontos para execução.
 
@@ -273,7 +273,7 @@ public class ListaSequencial {
 }
 ```
 
-### 📝 Lista de Exercícios Práticos Resolvidos
+### Lista de Exercícios Práticos Resolvidos
 
 **Exercício 1 — Custo Computacional de Laços Aninhados**
 Determine a complexidade assintótica (Notação Big-O) do seguinte trecho de pseudocódigo apresentado em aula:
@@ -314,7 +314,7 @@ Adicione à classe `ListaSequencial` um método `pesquisar(int valor)` que retor
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 Simulado completo contendo 10 questões de múltipla escolha (com gabarito comentado) e 5 questões discursivas/estudos de caso práticos, cobrindo Introdução, Algoritmos, Análise Assintótica (Big O), Memória (Stack/Heap), Alocação Dinâmica e Listas Lineares Sequenciais.
 
@@ -386,7 +386,7 @@ a) Um algoritmo depende estritamente de uma linguagem de programação específi
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 **1. Fundamentos e Algoritmos**
 - **Algoritmo:** sequência finita, ordenada e precisa de passos (diferente do *programa*, que é a implementação em código).
@@ -425,7 +425,7 @@ Casos de análise: **Melhor caso** (mínimo de operações), **Pior caso** ($O$ 
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 Modelagem completa baseada nos requisitos do **Trabalho AV1** (implementação das classes `Main`, `No` e `ListaLigada`), vista na Aula 05 (listas encadeadas dinâmicas).
 
@@ -535,7 +535,7 @@ graph TD
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 **[`Slides-Revisao-[Prof. Wesley Soares] Estrutura de Dados I.pptx`](./Slides-Revisao-%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I.pptx)**
 
@@ -543,7 +543,7 @@ Deck de 5 slides em dark mode (Slate/Navy/Teal/Indigo), 16:9 widescreen, cobrind
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 **[`flashcards-anki.tsv`](./flashcards-anki.tsv)**
 
@@ -553,7 +553,7 @@ Deck de 5 slides em dark mode (Slate/Navy/Teal/Indigo), 16:9 widescreen, cobrind
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 **[`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl)**
 

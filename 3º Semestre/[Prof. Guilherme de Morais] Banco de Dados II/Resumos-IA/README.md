@@ -1,4 +1,4 @@
-# 🤖 Resumos-IA — Banco de Dados II
+# Resumos-IA — Banco de Dados II
 
 > **Docente:** Prof. Guilherme de Morais · **Semestre:** 3º Semestre · **Curso:** Bacharelado em Sistemas de Informação (UniFEF)
 
@@ -9,20 +9,20 @@ exigem formato próprio para funcionar: a apresentação em slides (`.pptx`), o 
 de flashcards (`.tsv` para importar no Anki) e o dataset de perguntas e respostas
 (`.jsonl`).
 
-## 🧭 Índice
+## Índice
 
-1. [Resumo Executivo](#-resumo-executivo)
-2. [Exercícios Práticos & Código](#-exercícios-práticos--código)
-3. [Simulado Comentado](#-simulado-comentado)
-4. [CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-5. [Diagramas e Modelagem](#️-diagramas-e-modelagem)
-6. [Apresentação de Revisão em Slides](#-apresentação-de-revisão-em-slides)
-7. [Flashcards para Anki](#-flashcards-para-anki)
-8. [Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+1. [Resumo Executivo](#resumo-executivo)
+2. [Exercícios Práticos e Código](#exercícios-práticos-e-código)
+3. [Simulado Comentado](#simulado-comentado)
+4. [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+5. [Diagramas e Modelagem](#diagramas-e-modelagem)
+6. [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+7. [Flashcards para Anki](#flashcards-para-anki)
+8. [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 ### 1. Visão Geral e Objetivos da Matéria
 A disciplina de **Banco de Dados II**, ministrada pelo **Prof. Guilherme de Morais**, aprofunda o conhecimento em Sistemas de Gerenciamento de Bancos de Dados Relacionais (SGBDRs) com foco intenso na manipulação, consulta e tratamento de dados através da linguagem **SQL (Structured Query Language)**.
@@ -74,7 +74,7 @@ No mercado de TI, a proficiência em SQL é pré-requisito fundamental para Dese
 
 ---
 
-## 💻 Exercícios Práticos & Código
+## Exercícios Práticos e Código
 
 > **Nota de curadoria:** o arquivo original desta seção (`Codigo-Exercicios/Exercicios-Praticos-Implementados.md`) foi salvo de forma incompleta (cortado na introdução, sem os exercícios em si). Em vez de inventar conteúdo novo, os exemplos de código abaixo foram reaproveitados — sem qualquer alteração — do CheatSheet e do gabarito do Simulado desta mesma matéria, que já cobrem DDL, DML, filtros, agregação e JOINs com SQL real e comentado.
 
@@ -147,7 +147,7 @@ FROM funcionarios;
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 Simulado completo (base no material do Prof. Guilherme de Morais) com **10 questões de múltipla escolha** (gabarito comentado) e **5 questões práticas de SQL**.
 
@@ -241,7 +241,7 @@ FROM funcionarios;
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 ### DDL, DML & Restrições (Constraints)
 ```sql
@@ -272,7 +272,7 @@ ALTER TABLE veiculos ADD CONSTRAINT fk_cpf_cli FOREIGN KEY (cpf_cli) REFERENCES 
 ### Funções Agregadas & Agrupamento (`GROUP BY`/`HAVING`)
 `AVG(col)` · `COUNT(col)` · `MAX(col)` · `MIN(col)` · `SUM(col)`.
 
-⚠️ **Regras de ouro:** (1) agregadas não vão no `WHERE`; (2) coluna não agregada no `SELECT` deve constar no `GROUP BY`; (3) filtro sobre resultado agregado usa `HAVING`.
+**Regras de ouro:** (1) agregadas não vão no `WHERE`; (2) coluna não agregada no `SELECT` deve constar no `GROUP BY`; (3) filtro sobre resultado agregado usa `HAVING`.
 
 ```sql
 SELECT ClienteID, COUNT(PedidoID) AS Qtd, SUM(Valor) AS Total
@@ -309,7 +309,7 @@ WHERE P.PedidoID IS NULL;
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 Material estruturado com base nos conteúdos de manipulação de dados (`INSERT`, `DELETE`, `UPDATE`), consultas avançadas (JOINs, operador `IN`, funções de data/hora/concatenação) e elaboração de projetos de banco de dados.
 
@@ -409,15 +409,15 @@ Um `PROFESSOR` cria várias `ATIVIDADES`; um `ALUNO` realiza múltiplos `TRABALH
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-Banco de Dados II.pptx`](./Slides-Revisao-Banco%20de%20Dados%20II.pptx) — deck de revisão em 5 slides (Capa, Visão Geral, Conceitos Fundamentais, Exercícios & Prática, Dicas de Prova), com design dark mode Slate/Navy/Teal/Indigo, layout 16:9 widescreen e tipografia ajustada para caber sem overflow em qualquer leitor de PowerPoint.
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv) — 24 cartões pergunta/resposta cobrindo `LIKE`/`ILIKE`, curingas, funções de data/string e agregação. Para importar: no Anki, **Arquivo → Importar**, selecione o `.tsv` e mapeie as colunas como *Frente* (pergunta) e *Verso* (resposta), separador **Tab**.
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl) — 15 pares de pergunta/resposta estruturados (`id`, `topico`, `pergunta`, `resposta`, `dificuldade`), prontos para consumo por ferramentas de estudo ou fine-tuning leve. Amostra:
 

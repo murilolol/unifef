@@ -1,24 +1,24 @@
-# 🤖 Resumos-IA — Laboratório de Programação IV
+# Resumos-IA — Laboratório de Programação IV
 
 > **Professor:** Jefferson Passerini · **Semestre:** 4º Semestre · **Curso:** Bacharelado em Sistemas de Informação (UniFEF)
 > **Repositório oficial de apoio da disciplina:** [`jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026)
 
 Material de apoio gerado por IA para revisão da disciplina — resumo executivo, exercícios práticos, simulado comentado, cheatsheet, diagramas e os artefatos complementares (slides, flashcards, dataset de perguntas e respostas), tudo consolidado neste único documento.
 
-## 🧭 Índice
+## Índice
 
-- [📖 Resumo Executivo](#-resumo-executivo)
-- [💻 Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-- [📝 Simulado Comentado](#-simulado-comentado)
-- [⚡ CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-- [🗺️ Diagramas e Modelagem](#️-diagramas-e-modelagem)
-- [🎞️ Apresentação de Revisão em Slides](#️-apresentação-de-revisão-em-slides)
-- [🃏 Flashcards para Anki](#-flashcards-para-anki)
-- [🤖 Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+- [Resumo Executivo](#resumo-executivo)
+- [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+- [Simulado Comentado](#simulado-comentado)
+- [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+- [Diagramas e Modelagem](#diagramas-e-modelagem)
+- [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+- [Flashcards para Anki](#flashcards-para-anki)
+- [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 > O material oficial disponibilizado pelo professor para esta disciplina é conciso e consiste primariamente em referências ao repositório oficial no GitHub. O resumo abaixo combina as informações explícitas com inferências lógicas sobre a natureza de um "Laboratório de Programação IV" — para um entendimento completo, a exploração direta do repositório `suporteos2026` é indispensável.
 
@@ -72,13 +72,13 @@ O conceito mais fundamental e explícito da disciplina é o uso de **GitHub** e 
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 **Módulo Base:** Configuração de Ambiente, Versionamento e Arquitetura de Projetos Base (`suporteos2026`)
 
 Esta apostila prática foi desenvolvida com base nas diretrizes da disciplina. O foco do laboratório é a consolidação de boas práticas de engenharia de software, controle de versão avançado com Git/GitHub, modelagem de sistemas robustos e implementação de código limpo, utilizando tecnologias padrão da indústria (Java, TypeScript, C, SQL, dependendo do escopo do projeto base).
 
-### 🛠️ Módulo 1 — Configuração do Repositório Oficial e Boas Práticas Git
+### Módulo 1 — Configuração do Repositório Oficial e Boas Práticas Git
 
 Ponto de partida para todas as implementações: **[github.com/jeffersonarpasserini/suporteos2026](https://github.com/jeffersonarpasserini/suporteos2026)**.
 
@@ -91,7 +91,7 @@ Ponto de partida para todas as implementações: **[github.com/jeffersonarpasser
 [Branch: feature/xxx] ──(merge)──► [Branch: main / local]
 ```
 
-### 💻 Módulo 2 — Implementação Prática e Padrões de Projeto
+### Módulo 2 — Implementação Prática e Padrões de Projeto
 
 Implementação padrão aplicando **Princípios SOLID**, **Separação de Responsabilidades** e comentários linha a linha. Cenário: controle de Ordens de Serviço (OS), alinhado ao contexto do repositório `suporteos2026`.
 
@@ -149,7 +149,7 @@ export class OrdemServicoService {
 }
 ```
 
-### 🔍 Módulo 3 — Scripts de Banco de Dados Relacional (SQL)
+### Módulo 3 — Scripts de Banco de Dados Relacional (SQL)
 
 Estruturação do banco de dados relacional para o backend do sistema de Ordem de Serviço, com integridade referencial e indexação adequada.
 
@@ -190,7 +190,7 @@ CREATE INDEX idx_os_status ON ordens_servico(status);
 CREATE INDEX idx_os_cliente ON ordens_servico(cliente_id);
 ```
 
-### 📝 Lista de Exercícios Práticos Recomendados
+### Lista de Exercícios Práticos Recomendados
 
 1. **Clonagem e Configuração:** clone o repositório oficial (`https://github.com/jeffersonarpasserini/suporteos2026`) em sua máquina local.
 2. **Versionamento:** crie uma branch própria no padrão `feature/nome-sobrenome` para as implementações semanais.
@@ -199,11 +199,11 @@ CREATE INDEX idx_os_cliente ON ordens_servico(cliente_id);
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 **Instruções:** este simulado engloba conceitos fundamentais de controle de versão, colaboração via Git/GitHub e gestão de repositórios, tendo como base o repositório oficial da disciplina (`suporteos2026`).
 
-### 🔵 Parte 1: Questões de Múltipla Escolha
+### Parte 1: Questões de Múltipla Escolha
 
 **Questão 1.** No contexto de controle de versão moderno utilizado na disciplina, qual é a principal finalidade de utilizar uma plataforma como o GitHub em comparação ao armazenamento local de código?
 - A) Apenas realizar a mineração de dados do código fonte gerado pelos alunos.
@@ -211,54 +211,54 @@ CREATE INDEX idx_os_cliente ON ordens_servico(cliente_id);
 - C) Substituir a necessidade de utilizar compiladores ou interpretadores na máquina local.
 - D) Executar o código automaticamente em servidores de produção sem a necessidade de testes.
 
-> ✅ **Alternativa Correta: B.** O GitHub atua como repositório remoto baseado em nuvem para o Git, viabilizando trabalho colaborativo simultâneo, backup e histórico detalhado de commits.
+> **Alternativa Correta: B.** O GitHub atua como repositório remoto baseado em nuvem para o Git, viabilizando trabalho colaborativo simultâneo, backup e histórico detalhado de commits.
 
 **Questão 2.** Ao clonar o repositório oficial da disciplina em sua máquina local, qual comando do Git deve ser utilizado?
 - A) `git init`  B) `git push origin main`  C) `git clone https://github.com/jeffersonarpasserini/suporteos2026.git`  D) `git commit -m "Clone repository"`
 
-> ✅ **Alternativa Correta: C.** `git clone` baixa uma cópia completa de um repositório remoto (com todo o histórico) para o ambiente local.
+> **Alternativa Correta: C.** `git clone` baixa uma cópia completa de um repositório remoto (com todo o histórico) para o ambiente local.
 
 **Questão 3.** Após `git add <arquivo>`, em qual área o Git armazena temporariamente as alterações?
 - A) Repositório Remoto  B) Diretório de Trabalho  C) Área de Preparação / Índice (*Staging Area*)  D) Lixeira do Sistema Operacional
 
-> ✅ **Alternativa Correta: C.** O fluxo do Git tem três estados: *Working Directory*, *Staging Area* (via `git add`) e *Repository* (via `git commit`).
+> **Alternativa Correta: C.** O fluxo do Git tem três estados: *Working Directory*, *Staging Area* (via `git add`) e *Repository* (via `git commit`).
 
 **Questão 4.** Para enviar as alterações locais já comitadas ao repositório remoto no GitHub, qual comando deve ser executado?
 - A) `git fetch`  B) `git pull`  C) `git push`  D) `git status`
 
-> ✅ **Alternativa Correta: C.** `git push` envia os commits locais para o remoto (`origin`).
+> **Alternativa Correta: C.** `git push` envia os commits locais para o remoto (`origin`).
 
 **Questão 5.** Para verificar quais arquivos foram modificados, quais estão em *staging* e quais não são rastreados, qual comando deve ser usado?
 - A) `git log`  B) `git status`  C) `git diff`  D) `git branch`
 
-> ✅ **Alternativa Correta: B.** `git status` mostra o panorama do diretório de trabalho e da área de preparação.
+> **Alternativa Correta: B.** `git status` mostra o panorama do diretório de trabalho e da área de preparação.
 
 **Questão 6.** O que representa a estrutura `jeffersonarpasserini/suporteos2026`?
 - A) Comando de instalação de dependências.  B) Caminho de diretório do Windows.  C) Identificador `usuario/repositorio` no GitHub.  D) Chave de criptografia SSH.
 
-> ✅ **Alternativa Correta: C.** A notação `usuario/repositorio` identifica unicamente um projeto no GitHub.
+> **Alternativa Correta: C.** A notação `usuario/repositorio` identifica unicamente um projeto no GitHub.
 
 **Questão 7.** Qual é a principal utilidade de um arquivo `.gitignore`?
 - A) Ocultar arquivos confidenciais/binários (temporários, logs, dependências) para que não sejam versionados.  B) Ignorar erros de sintaxe na compilação.  C) Bloquear acesso de outros alunos.  D) Configurar cores do terminal.
 
-> ✅ **Alternativa Correta: A.** `.gitignore` instrui o Git sobre quais arquivos/pastas ignorar, mantendo o repositório limpo.
+> **Alternativa Correta: A.** `.gitignore` instrui o Git sobre quais arquivos/pastas ignorar, mantendo o repositório limpo.
 
 **Questão 8.** Para atualizar seu repositório local com as modificações mais recentes enviadas por colegas, qual comando deve ser executado?
 - A) `git pull`  B) `git commit`  C) `git push`  D) `git rm`
 
-> ✅ **Alternativa Correta: A.** `git pull` busca (*fetch*) e mescla (*merge*) as alterações do remoto com a branch local.
+> **Alternativa Correta: A.** `git pull` busca (*fetch*) e mescla (*merge*) as alterações do remoto com a branch local.
 
 **Questão 9.** O que significa criar um *Commit* com uma mensagem descritiva?
 - A) Excluir permanentemente o histórico anterior.  B) Salvar um ponto de restauração documentado do estado atual da *staging area*.  C) Enviar automaticamente o código para produção.  D) Criar uma nova branch.
 
-> ✅ **Alternativa Correta: B.** O commit cria um snapshot permanente do projeto, documentado pela mensagem descritiva.
+> **Alternativa Correta: B.** O commit cria um snapshot permanente do projeto, documentado pela mensagem descritiva.
 
 **Questão 10.** Qual alternativa descreve corretamente a relação entre Git e GitHub?
 - A) Git é a linguagem usada para criar o GitHub.  B) GitHub é o VCS local; Git é a plataforma em nuvem.  C) Git é o sistema de controle de versão distribuído; GitHub é a plataforma web que hospeda repositórios Git.  D) São softwares concorrentes e incompatíveis.
 
-> ✅ **Alternativa Correta: C.** Git roda localmente; GitHub é o serviço de hospedagem web com funcionalidades de colaboração.
+> **Alternativa Correta: C.** Git roda localmente; GitHub é o serviço de hospedagem web com funcionalidades de colaboração.
 
-### 🟠 Parte 2: Questões Discursivas e Estudos de Caso
+### Parte 2: Questões Discursivas e Estudos de Caso
 
 **Estudo de Caso 1 — Inicialização e Primeiro Envio ao Repositório**
 *Contexto:* estruturar um novo projeto localmente para integrá-lo ao ecossistema da disciplina no GitHub, do zero até o primeiro `push`.
@@ -305,11 +305,11 @@ CREATE INDEX idx_os_cliente ON ordens_servico(cliente_id);
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 **Repositório Oficial:** [`github.com/jeffersonarpasserini/suporteos2026`](https://github.com/jeffersonarpasserini/suporteos2026)
 
-### 🚀 Comandos Git Essenciais
+### Comandos Git Essenciais
 
 | Ação | Comando | Descrição Rápida |
 | :--- | :--- | :--- |
@@ -320,11 +320,11 @@ CREATE INDEX idx_os_cliente ON ordens_servico(cliente_id);
 | **Enviar** | `git push` | Envia os commits locais para o GitHub |
 | **Atualizar** | `git pull` | Baixa e mescla atualizações do GitHub |
 
-> 💡 **Dica de prova:** mantenha o repositório sincronizado e atente-se aos padrões de código exigidos em laboratório.
+> **Dica de prova:** mantenha o repositório sincronizado e atente-se aos padrões de código exigidos em laboratório.
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 Três diagramas em **Mermaid** essenciais para compreender o ecossistema da disciplina, tendo como base o projeto prático `suporteos2026`.
 
@@ -408,7 +408,7 @@ graph TD
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-[Prof. Jefferson Passerini] Laboratório de Programação IV.pptx`](./Slides-Revisao-%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV.pptx)
 
@@ -416,7 +416,7 @@ Deck de 5 slides em formato widescreen 16:9, com redesign dark mode premium (pal
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv)
 
@@ -426,7 +426,7 @@ Conjunto de pares pergunta/resposta em formato `.tsv` (separado por tabulação)
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl)
 

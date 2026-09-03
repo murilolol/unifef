@@ -1,4 +1,4 @@
-# 🤖 Resumos-IA — Tópicos Avançados em Banco de Dados
+# Resumos-IA — Tópicos Avançados em Banco de Dados
 
 > **Professor:** Welington Garcia · **Semestre:** 4º Semestre · **Escopo:** JOINs, Subconsultas (Subqueries) e Views em SQL/PostgreSQL
 
@@ -6,20 +6,20 @@ Material de apoio gerado por IA para revisão e fixação da disciplina — resu
 
 ---
 
-## 🧭 Índice
+## Índice
 
-1. [📖 Resumo Executivo](#-resumo-executivo)
-2. [💻 Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-3. [📝 Simulado Comentado](#-simulado-comentado)
-4. [⚡ CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-5. [🗺️ Diagramas e Modelagem](#️-diagramas-e-modelagem)
-6. [🎞️ Apresentação de Revisão em Slides](#️-apresentação-de-revisão-em-slides)
-7. [🃏 Flashcards para Anki](#-flashcards-para-anki)
-8. [🤖 Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+1. [Resumo Executivo](#resumo-executivo)
+2. [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+3. [Simulado Comentado](#simulado-comentado)
+4. [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+5. [Diagramas e Modelagem](#diagramas-e-modelagem)
+6. [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+7. [Flashcards para Anki](#flashcards-para-anki)
+8. [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 ### 1. Visão Geral e Objetivos da Matéria
 A disciplina **Tópicos Avançados em Banco de Dados**, ministrada pelo **Prof. Welington Garcia**, foca no domínio profundo de manipulação, consulta e estruturação de dados relacionais utilizando o **PostgreSQL**. O conteúdo consolida a transição do modelo relacional básico para operações complexas de alta performance, capacitando o estudante de Sistemas de Informação a projetar consultas robustas para relatórios gerenciais, APIs, *dashboards* e sistemas corporativos.
@@ -54,8 +54,8 @@ Os dados em sistemas relacionais são normalizados em múltiplos repositórios (
 #### Módulo 2: Consultas Múltiplas, Filtros e Agregações
 * **Junção de Múltiplas Tabelas:** Encadeamento de múltiplos `JOINs` para conectar tabelas distantes na modelagem (ex: ligar `Pedidos` → `Clientes` → `Itens_Pedido` → `Produtos`).
 * **Filtros (`WHERE` vs. `ON`):**
-  * Condições no `ON` filtram o relacionamento antes ou durante a junção (crucial para manter a integridade de um `LEFT JOIN`).
-  * Condições no `WHERE` filtram o resultado final da query, podendo transformar acidentalmente um `LEFT JOIN` em um `INNER JOIN` se exigirem colunas da tabela opcional como não nulas.
+ * Condições no `ON` filtram o relacionamento antes ou durante a junção (crucial para manter a integridade de um `LEFT JOIN`).
+ * Condições no `WHERE` filtram o resultado final da query, podendo transformar acidentalmente um `LEFT JOIN` em um `INNER JOIN` se exigirem colunas da tabela opcional como não nulas.
 * **Agrupamento e Cálculos:** Uso de `GROUP BY` em conjunto com multiplicações de colunas (ex: `quantidade * preco_unitario` para subtotais) e funções de agregação (`SUM`, `COUNT`).
 
 ### 4. Relações com o Mercado e Prática Profissional
@@ -72,11 +72,11 @@ Os dados em sistemas relacionais são normalizados em múltiplos repositórios (
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 Apostila prática com o script de setup do banco (DDL + DML) e todos os exemplos resolvidos de JOINs e subconsultas em PostgreSQL — testados em *pgAdmin*, *DBeaver* ou *psql*.
 
-### 🛠️ Script de Preparação do Ambiente
+### Script de Preparação do Ambiente
 
 ```sql
 -- Removendo tabelas caso já existam (ordem inversa de dependência)
@@ -173,7 +173,7 @@ INSERT INTO funcionarios (id_funcionario, nome, cargo, id_supervisor) VALUES
 (3, 'João Pedro', 'Analista', 2);
 ```
 
-### 🔗 Guia Prático de JOINs
+### Guia Prático de JOINs
 
 **INNER JOIN (Apenas Correspondências):**
 ```sql
@@ -240,7 +240,7 @@ GROUP BY p.id_pedido, c.nome
 ORDER BY valor_total DESC;
 ```
 
-### 🔍 Módulo de Subconsultas (Subqueries)
+### Módulo de Subconsultas (Subqueries)
 
 **Subconsulta Escalar:**
 ```sql
@@ -275,7 +275,7 @@ WHERE EXISTS (
 );
 ```
 
-### 🏆 Atividade Prática Proposta: Sistema de Biblioteca
+### Atividade Prática Proposta: Sistema de Biblioteca
 
 ```sql
 CREATE TABLE autores (
@@ -337,51 +337,51 @@ GROUP BY a.id_autor, a.nome_autor;
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 Simulado com **10 questões de múltipla escolha** (gabarito comentado) e **5 questões discursivas / estudos de caso práticos**.
 
 ### Múltipla Escolha
 
 1. Qual operador de `JOIN` retorna **apenas** as linhas que possuem correspondência em ambas as tabelas?
-   A) `LEFT OUTER JOIN` · B) `FULL OUTER JOIN` · **C) `INNER JOIN`** · D) `CROSS JOIN` · E) `NATURAL JOIN`
-   > *`INNER JOIN` retorna estritamente a interseção entre as tabelas cruzadas.*
+ A) `LEFT OUTER JOIN` · B) `FULL OUTER JOIN` · **C) `INNER JOIN`** · D) `CROSS JOIN` · E) `NATURAL JOIN`
+ > *`INNER JOIN` retorna estritamente a interseção entre as tabelas cruzadas.*
 
 2. Um relatório deve listar todos os clientes, mesmo sem pedidos (colunas de pedido como `NULL`). Qual JOIN atende?
-   A) `INNER JOIN` · **B) `LEFT JOIN`** · C) `RIGHT JOIN` (pedidos à esquerda) · D) `CROSS JOIN` · E) `SELF JOIN`
-   > *`LEFT JOIN` preserva todos os registros da esquerda (clientes), preenchendo `NULL` quando não há pedido correspondente.*
+ A) `INNER JOIN` · **B) `LEFT JOIN`** · C) `RIGHT JOIN` (pedidos à esquerda) · D) `CROSS JOIN` · E) `SELF JOIN`
+ > *`LEFT JOIN` preserva todos os registros da esquerda (clientes), preenchendo `NULL` quando não há pedido correspondente.*
 
 3. `SELECT c.id_cliente, c.nome FROM clientes c LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente WHERE p.id_pedido IS NULL;` — qual o objetivo?
-   A) Clientes com pelo menos um pedido · B) Pedidos sem cliente · **C) Clientes que nunca fizeram pedido** · D) Produto cartesiano · E) Erro de sintaxe
-   > *Filtrar `IS NULL` após um `LEFT JOIN` isola exatamente os registros da tabela principal sem correspondência na secundária.*
+ A) Clientes com pelo menos um pedido · B) Pedidos sem cliente · **C) Clientes que nunca fizeram pedido** · D) Produto cartesiano · E) Erro de sintaxe
+ > *Filtrar `IS NULL` após um `LEFT JOIN` isola exatamente os registros da tabela principal sem correspondência na secundária.*
 
 4. Sobre `CROSS JOIN`: (1) gera produto cartesiano; (2) exige `ON`; (3) 10 linhas × 5 linhas = 50 linhas resultantes.
-   **A) Apenas 1 e 3** · B) Apenas 2 e 3 · C) Apenas 1 e 2 · D) Todas · E) Apenas 3
-   > *A afirmativa 2 é falsa — `CROSS JOIN` não usa `ON`.*
+ **A) Apenas 1 e 3** · B) Apenas 2 e 3 · C) Apenas 1 e 2 · D) Todas · E) Apenas 3
+ > *A afirmativa 2 é falsa — `CROSS JOIN` não usa `ON`.*
 
 5. Tabela `funcionarios(id_funcionario, nome, id_supervisor)` auto-referenciada. Para listar funcionário + nome do supervisor:
-   A) `CROSS JOIN` · B) `FULL OUTER JOIN` · **C) `SELF JOIN`** · D) `NATURAL JOIN` · E) `RIGHT JOIN` estrito
-   > *`SELF JOIN` é a técnica onde a tabela se relaciona consigo mesma, ideal para hierarquias.*
+ A) `CROSS JOIN` · B) `FULL OUTER JOIN` · **C) `SELF JOIN`** · D) `NATURAL JOIN` · E) `RIGHT JOIN` estrito
+ > *`SELF JOIN` é a técnica onde a tabela se relaciona consigo mesma, ideal para hierarquias.*
 
 6. Diferença entre filtro no `ON` e no `WHERE` em `LEFT JOIN`?
-   A) Não há diferença · B) `ON` é restrito a agregações · **C) Filtro no `WHERE` pode transformar em `INNER JOIN`** · D) `ON` elimina linhas da esquerda antes · E) `WHERE` não pode ser usado com `JOIN`
-   > *Filtro restritivo no `WHERE` sobre a tabela da direita descarta as linhas onde ela virou `NULL`, anulando o efeito do `LEFT JOIN`.*
+ A) Não há diferença · B) `ON` é restrito a agregações · **C) Filtro no `WHERE` pode transformar em `INNER JOIN`** · D) `ON` elimina linhas da esquerda antes · E) `WHERE` não pode ser usado com `JOIN`
+ > *Filtro restritivo no `WHERE` sobre a tabela da direita descarta as linhas onde ela virou `NULL`, anulando o efeito do `LEFT JOIN`.*
 
 7. O que faz `COALESCE` com `LEFT JOIN`?
-   A) Força `INNER JOIN` · **B) Substitui `NULL` por um valor padrão** · C) Soma colunas · D) Remove duplicatas · E) Converte tipos
-   > *`COALESCE(valor, 'Padrão')` retorna o segundo argumento quando o primeiro é `NULL`.*
+ A) Força `INNER JOIN` · **B) Substitui `NULL` por um valor padrão** · C) Soma colunas · D) Remove duplicatas · E) Converte tipos
+ > *`COALESCE(valor, 'Padrão')` retorna o segundo argumento quando o primeiro é `NULL`.*
 
 8. Sobre `NATURAL JOIN` e `USING`:
-   A) `NATURAL JOIN` é recomendado em produção · **B) `USING` exige mesmo nome de coluna nas duas tabelas, mais seguro que `NATURAL JOIN`** · C) `NATURAL JOIN` exige `ON` · D) `USING` só em `CROSS JOIN` · E) Ambos impedem agregação
-   > *`USING` é explícito o suficiente para ser seguro; `NATURAL JOIN` é implícito e desaconselhado em produção.*
+ A) `NATURAL JOIN` é recomendado em produção · **B) `USING` exige mesmo nome de coluna nas duas tabelas, mais seguro que `NATURAL JOIN`** · C) `NATURAL JOIN` exige `ON` · D) `USING` só em `CROSS JOIN` · E) Ambos impedem agregação
+ > *`USING` é explícito o suficiente para ser seguro; `NATURAL JOIN` é implícito e desaconselhado em produção.*
 
 9. Em consulta com `JOIN`s múltiplos e `SUM`, o que fazer com colunas não agregadas no `SELECT`?
-   **A) Inseri-las obrigatoriamente no `GROUP BY`** · B) Precedê-las de `DISTINCT` · C) Omiti-las · D) Converter com `CAST` · E) Envolvê-las em `COALESCE`
-   > *Regra padrão SQL: toda coluna não agregada no `SELECT` deve constar no `GROUP BY`.*
+ **A) Inseri-las obrigatoriamente no `GROUP BY`** · B) Precedê-las de `DISTINCT` · C) Omiti-las · D) Converter com `CAST` · E) Envolvê-las em `COALESCE`
+ > *Regra padrão SQL: toda coluna não agregada no `SELECT` deve constar no `GROUP BY`.*
 
 10. Cenário típico ideal para `FULL OUTER JOIN`?
-    A) Produtos ignorando órfãos · B) Combinações de tamanho/cor · **C) Auditoria entre duas bases, identificando registros só de um lado ou de ambos** · D) Hierarquia corporativa · E) Filtro por média de compras
-    > *`FULL OUTER JOIN` traz correspondências + sobras de ambos os lados — ideal para auditoria e reconciliação.*
+ A) Produtos ignorando órfãos · B) Combinações de tamanho/cor · **C) Auditoria entre duas bases, identificando registros só de um lado ou de ambos** · D) Hierarquia corporativa · E) Filtro por média de compras
+ > *`FULL OUTER JOIN` traz correspondências + sobras de ambos os lados — ideal para auditoria e reconciliação.*
 
 ### Questões Discursivas e Estudos de Caso
 
@@ -435,7 +435,7 @@ WHERE c.id_cliente IS NULL OR pm.id_pedido IS NULL;
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 ### Guia Visual dos JOINs
 
@@ -486,7 +486,7 @@ ORDER BY valor_total DESC;
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 ### 1. Diagrama de Classes UML (Domínio de Consultas Avançadas)
 
@@ -598,7 +598,7 @@ Conecta os tópicos teóricos e práticos (`Joins`, `Subselects`, `Views`) às r
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-[Prof. Welington Garcia] Tópicos Avançados em Banco de Dados.pptx`](./Slides-Revisao-%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados.pptx)
 
@@ -606,7 +606,7 @@ Deck de 5 slides em formato widescreen 16:9, com design dark mode (Slate/Navy/Te
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv) — 19 cartões pergunta/resposta cobrindo chaves primária/estrangeira, os seis tipos de JOIN e tratamento de nulos.
 
@@ -621,7 +621,7 @@ Qual JOIN retorna apenas as linhas que possuem correspondência nas duas tabelas
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl) — 14 pares de pergunta/resposta com metadados de tópico e dificuldade, no formato [JSON Lines](https://jsonlines.org/) (uma entrada por linha, pronta para consumo por scripts/ferramentas de estudo).
 

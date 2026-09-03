@@ -1,11 +1,11 @@
-# 🎓 Prof. Marcelo Boer - Engenharia de Software I
+# Engenharia de Software I
 > **Semestre:** 3º Semestre | UniFEF  
 > **Professor Responsável:** Prof. Esp. Marcelo Tadeu Boer  
 > **Projeto Base:** Aplicativo Móvel **Desapega Já**
 
 ---
 
-## 🎯 Objetivos de Aprendizagem e Ementa
+## Objetivos de Aprendizagem e Ementa
 
 A disciplina de **Engenharia de Software I** tem como objetivo capacitar o aluno nos fundamentos do ciclo de vida de desenvolvimento de sistemas (SDLC), aplicando técnicas de Engenharia e Modelagem de Software orientadas à prática de mercado. 
 
@@ -20,7 +20,7 @@ A disciplina de **Engenharia de Software I** tem como objetivo capacitar o aluno
 
 ---
 
-## 🏗️ Modelagem do Conhecimento
+## Modelagem do Conhecimento
 
 Abaixo está representado o Diagrama de Classes conceitual estruturado para o aplicativo **Desapega Já**, contemplando as entidades centrais mapeadas no processo de abstração da disciplina:
 
@@ -100,44 +100,44 @@ classDiagram
 
 ---
 
-## 📂 Estrutura de Pastas
+## Estrutura de Pastas
 
 Estrutura real deste repositório, alinhada ao padrão das demais matérias do acervo:
 
 ```text
 .
-├── 📂 Aulas/                          # Notas de aula, materiais do professor e recursos
-│   ├── 📄 2026-02-24 - Contexto do Aplicativo.md
-│   ├── 📄 2026-02-24 - Documento ESM1 do dia 24022026.md
-│   ├── 📄 2026-03-03 - Licença Astah UML.md
-│   ├── 📄 2026-03-24 - Forms contendo questões de revisão.md
-│   ├── 📄 2026-03-31 - Apresentação Métodos de Engenharia de S.md
-│   ├── 📄 2026-05-12 - Documento desenvolvido em sala de aula.md
-│   ├── 📄 2026-06-02 - Desenvolver a descrição dos seguintes.md
-│   ├── 📄 2026-06-02 - Exemplo Descrição de Caso de Uso.md
-│   ├── 📄 2026-06-09 - Modelo de Apresentação a ser seguido.md
-│   ├── 📄 links-recursos.md
-│   └── 📎 ENGENHARIA E MODELAGEM DE SOFTWARE I.docx/.pdf, ExemploDescriçãoDiagramaDCU.docx, ModeloEntregaAv2Final.docx, licença Astah UML (.zip)
-├── 📂 Trabalhos/                      # Atividades avaliativas resolvidas
-│   ├── 📂 APRESENTAÇÃO MÉTODOS DE PROCESSOS DE SOFTWARES/
-│   ├── 📂 ATIVIDADE AV2/
-│   ├── 📂 ATIVIDADE AVALIATIVA 01 - ESTUDO DE CASO/
-│   ├── 📂 Atividade Avaliativa Modelos de Processos de Software/
-│   └── 📂 Atividade Avaliativa Prática 02 - Atores e Diagrama de Classes Fase de Análise/
-├── 📂 Provas/                         # Avaliações e resoluções
-│   └── 📂 Avaliação Av1/
-└── 📂 Resumos-IA/                     # Material de apoio gerado por IA — tudo em um único README
-    ├── 📄 README.md                   # Resumo, exercícios, simulado, cheatsheet e diagramas
-    ├── 📊 Slides-Revisao-[Prof. Marcelo Boer] Engenharia de Software I.pptx
-    ├── 📇 flashcards-anki.tsv
-    └── 🤖 dataset-estudo-qa.jsonl
+├── Aulas/                     Notas de aula, materiais do professor e recursos
+│   ├── 2026-02-24 - Contexto do Aplicativo.md
+│   ├── 2026-02-24 - Documento ESM1 do dia 24022026.md
+│   ├── 2026-03-03 - Licença Astah UML.md
+│   ├── 2026-03-24 - Forms contendo questões de revisão.md
+│   ├── 2026-03-31 - Apresentação Métodos de Engenharia de S.md
+│   ├── 2026-05-12 - Documento desenvolvido em sala de aula.md
+│   ├── 2026-06-02 - Desenvolver a descrição dos seguintes.md
+│   ├── 2026-06-02 - Exemplo Descrição de Caso de Uso.md
+│   ├── 2026-06-09 - Modelo de Apresentação a ser seguido.md
+│   ├── links-recursos.md
+│   └── ENGENHARIA E MODELAGEM DE SOFTWARE I.docx/.pdf, ExemploDescriçãoDiagramaDCU.docx, ModeloEntregaAv2Final.docx, licença Astah UML (.zip)
+├── Trabalhos/                 Atividades avaliativas resolvidas
+│   ├── APRESENTAÇÃO MÉTODOS DE PROCESSOS DE SOFTWARES/
+│   ├── ATIVIDADE AV2/
+│   ├── ATIVIDADE AVALIATIVA 01 - ESTUDO DE CASO/
+│   ├── Atividade Avaliativa Modelos de Processos de Software/
+│   └── Atividade Avaliativa Prática 02 - Atores e Diagrama de Classes Fase de Análise/
+├── Provas/                    Avaliações e resoluções
+│   └── Avaliação Av1/
+└── Resumos-IA/                Material de apoio gerado por IA — tudo em um único README
+    ├── README.md               Resumo, exercícios, simulado, cheatsheet e diagramas
+    ├── Slides-Revisao-[Prof. Marcelo Boer] Engenharia de Software I.pptx
+    ├── flashcards-anki.tsv
+    └── dataset-estudo-qa.jsonl
 ```
 
 Cada subpasta de `Trabalhos/` e `Provas/` contém um `detalhes.md` com o enunciado/contexto original e os arquivos entregues.
 
 ---
 
-## 🚀 Guia de Estudos
+## Guia de Estudos
 
 Para obter sucesso na disciplina ministrada pelo **Prof. Marcelo Boer**, siga o roteiro de estudos recomendado:
 

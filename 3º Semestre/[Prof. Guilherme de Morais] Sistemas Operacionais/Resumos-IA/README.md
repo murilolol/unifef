@@ -1,4 +1,4 @@
-# 🤖 Resumos-IA · Sistemas Operacionais
+# Resumos-IA — Sistemas Operacionais
 **Professor:** Guilherme de Morais · **Semestre:** 3º Semestre · **Foco:** Gerenciamento de Processos, PCB, Interrupções, Memória e Deadlocks
 
 Material de apoio gerado por IA para revisão da disciplina, consolidado em um único
@@ -7,19 +7,19 @@ cheatsheet de revisão rápida e diagramas de arquitetura/UML.
 
 ---
 
-## 🧭 Índice
-1. [Resumo Executivo](#-resumo-executivo)
-2. [Exercícios Práticos Implementados](#-exercícios-práticos-implementados)
-3. [Simulado Comentado](#-simulado-comentado)
-4. [CheatSheet de Revisão Rápida](#-cheatsheet-de-revisão-rápida)
-5. [Diagramas e Modelagem](#️-diagramas-e-modelagem)
-6. [Apresentação de Revisão em Slides](#-apresentação-de-revisão-em-slides)
-7. [Flashcards para Anki](#-flashcards-para-anki)
-8. [Dataset de Perguntas e Respostas (JSONL)](#-dataset-de-perguntas-e-respostas-jsonl)
+## Índice
+1. [Resumo Executivo](#resumo-executivo)
+2. [Exercícios Práticos Implementados](#exercícios-práticos-implementados)
+3. [Simulado Comentado](#simulado-comentado)
+4. [CheatSheet de Revisão Rápida](#cheatsheet-de-revisão-rápida)
+5. [Diagramas e Modelagem](#diagramas-e-modelagem)
+6. [Apresentação de Revisão em Slides](#apresentação-de-revisão-em-slides)
+7. [Flashcards para Anki](#flashcards-para-anki)
+8. [Dataset de Perguntas e Respostas (JSONL)](#dataset-de-perguntas-e-respostas-jsonl)
 
 ---
 
-## 📖 Resumo Executivo
+## Resumo Executivo
 
 ### 1. Visão Geral e Objetivos da Matéria
 A disciplina de **Sistemas Operacionais**, ministrada pelo **Prof. Guilherme de
@@ -72,7 +72,7 @@ cuja destruição pode ou não cascatear para os filhos, dependendo da arquitetu
 
 ---
 
-## 💻 Exercícios Práticos Implementados
+## Exercícios Práticos Implementados
 
 Apostila prática que traduz os conceitos de Gerenciamento de Processos, Estados,
 Transições, PCB e Troca de Contexto em código executável em **C (padrão POSIX/Linux)**.
@@ -236,7 +236,7 @@ int main() {
 
 ---
 
-## 📝 Simulado Comentado
+## Simulado Comentado
 
 Simulado com 10 questões de múltipla escolha (gabarito comentado) e 5 discursivas/
 estudos de caso, cobrindo Gerenciamento de Processos, PCB e Interrupções.
@@ -314,7 +314,7 @@ estudos de caso, cobrindo Gerenciamento de Processos, PCB e Interrupções.
 
 ---
 
-## ⚡ CheatSheet de Revisão Rápida
+## CheatSheet de Revisão Rápida
 
 **1. Escalonamento e Estados**
 - **Despachante:** gerencia a fila de processos para uso da CPU.
@@ -338,7 +338,7 @@ estudos de caso, cobrindo Gerenciamento de Processos, PCB e Interrupções.
 
 ---
 
-## 🗺️ Diagramas e Modelagem
+## Diagramas e Modelagem
 
 ### 1. Diagrama de Classes UML (Domínio da Matéria)
 ```mermaid
@@ -458,7 +458,7 @@ graph TD
 
 ---
 
-## 🎞️ Apresentação de Revisão em Slides
+## Apresentação de Revisão em Slides
 
 [`Slides-Revisao-[Prof. Guilherme de Morais] Sistemas Operacionais.pptx`](./Slides-Revisao-%5BProf.%20Guilherme%20de%20Morais%5D%20Sistemas%20Operacionais.pptx) —
 deck de 5 slides em dark mode (Slate/Navy/Teal/Indigo), 16:9 widescreen, cobrindo
@@ -467,7 +467,7 @@ programático (zero overflow de texto garantido por medição real de fonte).
 
 ---
 
-## 🃏 Flashcards para Anki
+## Flashcards para Anki
 
 [`flashcards-anki.tsv`](./flashcards-anki.tsv) — baralho pergunta/resposta (formato
 TSV de 2 colunas) cobrindo estados de processo, PCB, interrupções e deadlocks. Para
@@ -476,7 +476,7 @@ para *Frente* e *Verso*.
 
 ---
 
-## 🤖 Dataset de Perguntas e Respostas (JSONL)
+## Dataset de Perguntas e Respostas (JSONL)
 
 [`dataset-estudo-qa.jsonl`](./dataset-estudo-qa.jsonl) — **14 pares** de
 pergunta/resposta estruturados (`id`, `topico`, `pergunta`, `resposta`,
