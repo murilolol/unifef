@@ -1,0 +1,36 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Chaveamento de contexto entre dois processos
+
+start
+:Evento dispara interrupção\n(fim de quantum, E/S ou chamada de sistema);
+:Núcleo assume o controle do processador;
+:Salva o contexto de execução do\nprocesso atual (registradores,\ncontador de programa) no seu PCB;
+:Atualiza o estado do processo atual\nno PCB (ex.: EXECUÇÃO -> PRONTO);
+:Despachante seleciona o próximo\nprocesso pronto na Tabela de Processos;
+:Carrega o contexto de execução\ndo próximo processo a partir do seu PCB;
+:Atualiza o estado do novo processo\npara EM EXECUÇÃO;
+:Processador retoma a execução\ncom o contexto do novo processo;
+stop
+
+@enduml

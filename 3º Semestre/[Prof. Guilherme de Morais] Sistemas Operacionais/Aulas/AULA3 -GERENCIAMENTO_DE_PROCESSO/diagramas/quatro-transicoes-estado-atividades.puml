@@ -1,0 +1,47 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title As quatro transições de estado de um processo
+
+start
+:Processo entra na lista de PRONTO;
+
+repeat
+  :DESPACHANTE designa o processador\nao primeiro processo da lista\n(PRONTO -> EM EXECUÇÃO);
+  :Processo executa até uma das\ntrês condições abaixo ocorrer;
+
+  if (Quantum expirou?) then (sim)
+    :Relógio de interrupção gera sinal;
+    :SO retoma o processador\n(EM EXECUÇÃO -> PRONTO);
+  elseif (Processo solicitou E/S?) then (sim)
+    :Processo entrega o processador\nvoluntariamente\n(EM EXECUÇÃO -> BLOQUEADO);
+    :SO aguarda conclusão do evento;
+    :Evento é concluído\n(BLOQUEADO -> PRONTO);
+  else (processo terminou)
+    :Processo é destruído;
+    stop
+  endif
+repeat while (Há mais processos\na despachar?) is (sim)
+->não;
+stop
+
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Formação de deadlock por espera circular (P1/R1, P2/R2)
+
+start
+:Processo P1 aloca o recurso R1;
+:Processo P2 aloca o recurso R2;
+:P1 requisita o recurso R2;
+if (R2 está disponível?) then (sim)
+  :P1 obtém R2 e conclui\nsua execução normalmente;
+  stop
+else (não, R2 está com P2)
+  :P1 entra em espera por R2;
+endif
+:P2 requisita o recurso R1;
+if (R1 está disponível?) then (sim)
+  :P2 obtém R1 e conclui\nsua execução normalmente;
+  stop
+else (não, R1 está com P1)
+  :P2 entra em espera por R1;
+endif
+:Grafo de alocação de recursos\nforma um ciclo P1 -> R2 -> P2 -> R1 -> P1;
+:DEADLOCK — nenhum processo\npode progredir;
+:Recursos permanecem bloqueados\nindefinidamente;
+stop
+
+@enduml

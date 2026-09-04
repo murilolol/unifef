@@ -89,7 +89,7 @@ end
 
 ## 3. Gerenciamento de Processos e Recursos do Hipervisor no Host
 
-Em sistemas operacionais baseados em Linux (que frequentemente hospedam ambientes de virtualização ou atuam como nós KVM/QEMU), a alocação de recursos pode ser monitorada através de comandos nativos do kernel.
+Em sistemas operacionais baseados in Linux (que frequentemente hospedam ambientes de virtualização ou atuam como nós KVM/QEMU), a alocação de recursos pode ser monitorada através de comandos nativos do kernel.
 
 O script em Bash abaixo simula a verificação do consumo de CPU e Memória alocados para instâncias de virtualização ativas no host, utilizando ferramentas padrão do POSIX.
 

@@ -1,0 +1,64 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Estrutura de um Monitor
+
+class Monitor {
+  - dadosPrivados : Object
+  - travaOcupada : boolean
+  + entrar()
+  + sair()
+  + procedimentoDeAcesso()
+}
+
+class FilaDeEspera {
+  + List<Thread> threadsEsperando
+  + enfileirar(thread)
+  + desenfileirarProximo()
+}
+
+class Thread {
+  + int idThread
+  + solicitarEntrada(monitor)
+}
+
+class RecursoCompartilhado {
+  + estado : Object
+}
+
+Monitor "1" *-- "1" FilaDeEspera : gerencia
+Monitor "1" o-- "1" RecursoCompartilhado : encapsula
+Thread "*" ..> Monitor : invoca entrar()/sair()
+FilaDeEspera "1" o-- "*" Thread : mantém em espera
+
+note right of Monitor
+  Garante exclusão mútua: apenas
+  uma thread por vez executa
+  dentro do monitor.
+end note
+
+note bottom of RecursoCompartilhado
+  Monitores isolados NÃO evitam
+  deadlock entre múltiplos
+  recursos distintos.
+end note
+
+@enduml

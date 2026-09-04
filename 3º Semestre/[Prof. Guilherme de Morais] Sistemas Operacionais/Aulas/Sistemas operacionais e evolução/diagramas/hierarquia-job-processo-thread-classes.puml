@@ -1,0 +1,75 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Job, Processo e Thread — e classificação dos Sistemas Operacionais
+
+class SistemaOperacional {
+  + tipoProgramacao : String
+  + tipoUsuario : String
+  + classificar()
+}
+
+class Job {
+  + blocoTrabalho : String
+  + executarSequencial()
+}
+
+class Processo {
+  + int pid
+  + espacoEndereco : String
+  + isolamentoMemoria : boolean
+}
+
+class Thread {
+  + int idThread
+  + compartilhaEnderecoDe : Processo
+  + executarConcorrente()
+}
+
+enum ClassificacaoProgramas {
+  MONOPROGRAMAVEL
+  MULTIPROGRAMAVEL
+}
+
+enum ClassificacaoUsuarios {
+  MONOUSUARIO
+  MULTIUSUARIO
+}
+
+enum ClassificacaoAcoplamento {
+  FORTEMENTE_ACOPLADO_SMP
+  FRACAMENTE_ACOPLADO_CLUSTER
+}
+
+SistemaOperacional "1" --> "*" Job : processa (modelo em lote)
+Job ..> Processo : evolui para
+Processo "1" *-- "*" Thread : contém
+SistemaOperacional --> ClassificacaoProgramas : classifica-se em
+SistemaOperacional --> ClassificacaoUsuarios : classifica-se em
+SistemaOperacional --> ClassificacaoAcoplamento : escalabilidade
+
+note right of Thread
+  Unidade de execução dentro do
+  processo; permite paralelismo
+  intrínseco e concorrência.
+end note
+
+@enduml

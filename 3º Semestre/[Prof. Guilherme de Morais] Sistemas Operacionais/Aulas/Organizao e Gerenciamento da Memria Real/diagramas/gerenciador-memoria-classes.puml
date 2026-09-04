@@ -1,0 +1,84 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Gerenciador de Memória — Paginação e Hierarquia
+
+class GerenciadorMemoria {
+  + EstrategiaBusca busca
+  + EstrategiaPosicionamento posicionamento
+  + EstrategiaSubstituicao substituicao
+  + alocar(processo)
+  + tratarFalhaPagina(pagina)
+}
+
+class MemoriaFisica {
+  + List<Frame> frames
+}
+
+class Frame {
+  + int enderecoFisico
+  + boolean ocupado
+}
+
+class TabelaDePaginas {
+  + Map<int, int> paginaParaFrame
+  + traduzir(enderecoLogico)
+}
+
+class Pagina {
+  + int numeroPagina
+  + boolean presente
+}
+
+class MemoriaVirtual {
+  + swap(pagina)
+  + tratarPageFault(pagina)
+}
+
+enum EstrategiaBusca {
+  SOB_DEMANDA
+  ANTECIPADA
+}
+
+enum EstrategiaPosicionamento {
+  FIRST_FIT
+  BEST_FIT
+  WORST_FIT
+}
+
+enum EstrategiaSubstituicao {
+  FIFO
+  LRU
+  LFU
+  OTIMA
+}
+
+GerenciadorMemoria "1" --> "1" MemoriaFisica : gerencia
+MemoriaFisica "1" *-- "*" Frame : compõe-se de
+GerenciadorMemoria "1" --> "1" TabelaDePaginas : consulta
+TabelaDePaginas "1" --> "*" Pagina : mapeia
+GerenciadorMemoria --> EstrategiaBusca : aplica
+GerenciadorMemoria --> EstrategiaPosicionamento : aplica
+GerenciadorMemoria --> EstrategiaSubstituicao : aplica
+MemoriaVirtual ..> MemoriaFisica : estende via disco
+Pagina "*" --> "1" MemoriaVirtual : reside em (quando ausente)
+
+@enduml

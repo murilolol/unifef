@@ -1,0 +1,49 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Tratamento de falha de página (page fault) — busca sob demanda
+
+start
+:Processo referencia um\nendereço lógico (página);
+:MMU consulta a Tabela de Páginas;
+if (Página presente na memória principal?) then (sim)
+  :Tradução para endereço físico\n(frame) é retornada;
+  :Processador acessa o dado\nno frame correspondente;
+else (não - falha de página)
+  :Falha de página (page fault)\né sinalizada ao SO;
+  if (Há frame livre na memória?) then (sim)
+    :Página é carregada do disco\npara o frame livre;
+  else (não)
+    :Estratégia de substituição\n(FIFO, LRU, LFU) escolhe\numa página vítima;
+    if (Página vítima foi modificada?) then (sim)
+      :Página vítima é gravada\nno disco antes de ser substituída;
+    else (não)
+      :Página vítima é descartada\ndiretamente;
+    endif
+    :Nova página é carregada\nno frame liberado;
+  endif
+  :Tabela de Páginas é atualizada;
+  :Processo é reescalonado para\nretomar a instrução que falhou;
+endif
+stop
+
+@enduml

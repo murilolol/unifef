@@ -1,0 +1,61 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Espaço de endereço de um Processo
+
+class Processo {
+  + int pid
+  + EstadoProcesso estado
+}
+
+class RegiaoTexto {
+  + codigoExecutavel : bytes
+}
+
+class RegiaoDados {
+  + variaveisGlobais : List
+  + memoriaAlocadaDinamicamente : List
+}
+
+class RegiaoPilha {
+  + chamadasAtivas : List
+  + empilhar()
+  + desempilhar()
+}
+
+enum EstadoProcesso {
+  EM_EXECUCAO
+  PRONTO
+  BLOQUEADO
+}
+
+Processo "1" *-- "1" RegiaoTexto : possui
+Processo "1" *-- "1" RegiaoDados : possui
+Processo "1" *-- "1" RegiaoPilha : possui
+Processo --> EstadoProcesso : encontra-se em
+
+note bottom of RegiaoPilha
+  Cresce a cada chamada aninhada
+  a procedimento; diminui quando
+  o procedimento chamado retorna.
+end note
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Ciclo básico de três estados de um processo
+
+start
+:Processo é criado e inserido\nna lista de PRONTO;
+repeat
+  if (Processador disponível?) then (sim)
+    :Processo transita para\nEM EXECUÇÃO;
+    if (Processo solicita evento\n(ex.: E/S)?) then (sim)
+      :Processo transita para\nBLOQUEADO;
+      :Aguarda conclusão do evento\n(adormecido);
+      :Evento é concluído;
+      :Processo retorna para\nPRONTO;
+    else (não, aguarda sua vez)
+      :Processo permanece em\nPRONTO, aguardando prioridade;
+    endif
+  else (não)
+    :Processo aguarda na fila\nde PRONTO (ordenada por prioridade);
+  endif
+repeat while (Processo ainda não terminou?) is (sim)
+->não;
+:Processo é destruído;
+stop
+
+@enduml

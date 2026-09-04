@@ -1,0 +1,46 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Fluxo de decisão: sistema monoprogramável x multiprogramável
+
+start
+:Processo A é despachado para a CPU;
+if (Sistema é multiprogramável?) then (não)
+  :CPU permanece ociosa durante\ntoda operação de E/S do Processo A;
+  :Ciclos de clock são desperdiçados;
+  stop
+else (sim)
+  if (Processo A solicita operação de E/S?) then (sim)
+    :Processo A entrega o processador\nvoluntariamente (bloqueia-se);
+    :SO realiza time-sharing e\ndespacha Processo B da fila de prontos;
+    :Processo B utiliza o processador\nenquanto A aguarda E/S;
+    :E/S do Processo A é concluída;
+    :SO promove Processo A\npara a lista de prontos;
+  else (não)
+    :Processo A continua em execução\naté o fim do seu quantum;
+  endif
+  :Throughput do sistema aumenta;
+  :Turnaround médio é reduzido;
+endif
+stop
+
+@enduml

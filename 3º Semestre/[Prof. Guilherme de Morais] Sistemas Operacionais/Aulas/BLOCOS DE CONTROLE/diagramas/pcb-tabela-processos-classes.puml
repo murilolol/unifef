@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Tabela de Processos e Bloco de Controle de Processo (PCB)
+
+class TabelaDeProcessos {
+  + Map<PID, PCB> entradas
+  + localizar(pid)
+}
+
+class PCB {
+  + int pid
+  + EstadoProcesso estado
+  + int contadorPrograma
+  + int prioridade
+  + Credenciais credenciais
+  + ContextoExecucao contexto
+  + PCB processoPai
+  + List<PCB> processosFilhos
+  + List arquivosAbertos
+}
+
+class ContextoExecucao {
+  + registradores : Map
+}
+
+class Credenciais {
+  + recursosPermitidos : List
+}
+
+enum EstadoProcesso {
+  EM_EXECUCAO
+  PRONTO
+  BLOQUEADO
+}
+
+TabelaDeProcessos "1" *-- "*" PCB : indexa por PID
+PCB "1" *-- "1" ContextoExecucao : armazena
+PCB "1" *-- "1" Credenciais : possui
+PCB --> EstadoProcesso : encontra-se em
+PCB "1" o-- "0..1" PCB : processoPai
+PCB "1" o-- "*" PCB : processosFilhos
+
+note right of ContextoExecucao
+  Salvo/restaurado a cada
+  chaveamento de contexto.
+end note
+
+@enduml
