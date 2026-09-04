@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam usecase {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+}
+
+skinparam actor {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Sistema de Vendas — Diagrama de Caso de Uso Geral
+
+left to right direction
+
+actor "Cliente Comum" as ClienteComum
+actor "Cliente Especial" as ClienteEspecial
+actor Cliente
+actor Funcionario as "Funcionário"
+actor Transportador
+actor Fornecedor
+
+ClienteComum --|> Cliente
+ClienteEspecial --|> Cliente
+
+rectangle "Sistema de Vendas" {
+  usecase "Fazer Pedido" as UC1
+  usecase "Pedido em Oferta" as UC2
+  usecase "Verificar Pedido" as UC3
+  usecase "Cancelar Pedido" as UC4
+  usecase "Procurar Pedido" as UC5
+  usecase "Realizar Pagamento" as UC6
+  usecase "Calcular Postagem" as UC7
+  usecase "Entregar Produto" as UC8
+  usecase "Fornecer Produto" as UC9
+}
+
+Cliente --> UC1
+Cliente --> UC3
+Cliente --> UC4
+Funcionario --> UC2
+Funcionario --> UC5
+
+UC2 .> UC1 : <<extend>>
+UC3 .> UC5 : <<include>>
+UC4 .> UC5 : <<include>>
+UC1 .> UC6 : <<include>>
+
+Transportador --> UC7
+Transportador --> UC8
+Fornecedor --> UC9
+
+@enduml

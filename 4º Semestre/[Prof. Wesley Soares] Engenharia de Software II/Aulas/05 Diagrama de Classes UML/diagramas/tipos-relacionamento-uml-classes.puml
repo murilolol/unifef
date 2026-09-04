@@ -1,0 +1,54 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Tipos de Relacionamento em Diagrama de Classes UML
+
+class Pessoa
+class Empresa
+Pessoa "1..*" -- "*" Empresa : trabalha para >
+
+class Pedido
+class Item
+Pedido "1" o-- "1..*" Item : agregação (parte existe\nsem o todo)
+
+class Casa
+class Comodo as "Cômodo"
+Casa "1" *-- "1..*" Comodo : composição (parte não\nexiste sem o todo)
+
+class Funcionario as "Funcionario"
+class Gerente
+class Desenvolvedor
+Funcionario <|-- Gerente : generalização
+Funcionario <|-- Desenvolvedor : generalização
+
+class RelatorioService
+class ExportadorPDF
+RelatorioService ..> ExportadorPDF : dependência (uso\ntemporário, sem vínculo)
+
+note bottom
+  Associação: conexão simples entre objetos.
+  Agregação (losango vazio): todo-parte fraca.
+  Composição (losango cheio): todo-parte forte.
+  Generalização (triângulo aberto): "é um / é um tipo de".
+  Dependência (seta tracejada): relacionamento mais fraco, uso temporário.
+end note
+
+@enduml

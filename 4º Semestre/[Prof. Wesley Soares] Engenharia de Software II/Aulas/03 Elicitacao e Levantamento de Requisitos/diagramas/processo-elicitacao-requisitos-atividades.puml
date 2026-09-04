@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Da Informação Coletada ao Requisito Validado
+
+start
+:Stakeholder relata uma necessidade\n(ex.: "quando eu receber um pedido, quero saber imediatamente");
+:Analista escolhe a técnica de elicitação\n(entrevista, observação, análise documental, workshop, prototipação);
+:Informação é coletada;
+
+repeat
+  :Análise da informação coletada;
+repeat while (Informação ambígua ou incompleta?) is (sim, esclarecer com o stakeholder)
+->não;
+
+:Classificação em Requisito Funcional (RF)\nou Requisito Não Funcional (RNF);
+:Requisito documentado formalmente;
+:Validação do requisito junto ao stakeholder;
+stop
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Ciclo de Vida de um Projeto de Software — Engenharia de Software II
+
+start
+:1. Identificação do Problema\n(qual necessidade, quem enfrenta, valor gerado);
+:2. Levantamento de Requisitos\n(elicitação junto aos stakeholders);
+:3. Análise e Especificação\n(requisitos funcionais e não funcionais);
+:4. Planejamento do Projeto\n(escopo, cronograma, riscos, equipe);
+:5. Arquitetura de Software\n(camadas, MVC, hexagonal, microsserviços);
+:6. Projeto Detalhado\n(classes, interfaces, SOLID, padrões de projeto);
+:7. Implementação\n(codificação, controle de versão, revisão de código);
+:8. Testes e Garantia da Qualidade\n(unitários, integração, end-to-end);
+:9. Integração, Configuração e Entrega\n(CI/CD: commit, build, testes, deploy);
+:10. Operação, Manutenção e Evolução\n(monitoramento, correções, novas entregas);
+if (Novo feedback ou novo requisito?) then (sim)
+  :Retorna ao Levantamento de Requisitos;
+  stop
+else (não)
+  :Ciclo do projeto encerrado nesta versão;
+  stop
+endif
+
+@enduml

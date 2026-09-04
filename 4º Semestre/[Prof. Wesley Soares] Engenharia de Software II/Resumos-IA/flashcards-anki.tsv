@@ -1,22 +1,17 @@
-Qual é o objetivo principal da elicitação de requisitos?	Descobrir, coletar, explorar e compreender informações sobre as necessidades dos usuários e do negócio.
-Qual é a diferença entre os tipos de entrevista na elicitação de requisitos?	Estruturada (perguntas previamente definidas), Semiestruturada (perguntas preparadas + liberdade para explorar) e Não estruturada (conversa aberta).
-O que a observação e a análise documental podem revelar durante o levantamento de requisitos?	Atividades não documentadas, atalhos, exceções, retrabalho, problemas do processo e informações que o usuário considera óbvias.
-Qual é a regra de ouro durante uma sessão de Brainstorming?	Quantidade primeiro, avaliação depois.
-Qual é a principal vantagem de utilizar protótipos (como no Figma ou Penpot) na elicitação de requisitos?	Revelar requisitos que uma entrevista tradicional não consegue descobrir, ajudando a esclarecer o que falta, comportamentos de erro e regras de tela.
-O que define um Requisito Funcional?	O que o sistema deve fazer (ex: notificar o vendedor quando um novo pedido for registrado).
-O que define um Requisito Não Funcional?	Como o sistema deve se comportar (ex: a notificação deve ser disponibilizada em até 5 segundos).
-Quais são as três principais categorias de tipos de entrevistas?	Estruturada, semiestruturada e não estruturada.
-O que significa a máxima da engenharia de software: "Faça a coisa certa e faça certo a coisa"?	Fazer a coisa certa refere-se à análise de requisitos; fazer certo a coisa refere-se ao projeto/arquitetura.
-Quais são os tipos de testes que verificam pequenas unidades de código?	Testes Unitários.
-Quais são os tipos de testes que validam o sistema de ponta a ponta?	Testes End-to-End (E2E).
-O que avaliam os Testes de Integração?	A comunicação entre componentes do sistema.
-Qual fase do ciclo de vida de software define as decisões estruturais, como organização de componentes, persistência e estilos arquiteturais?	Arquitetura de Software.
-O que significam, resumidamente, as fases de Análise e Projeto de Software?	Análise define o que fazer; Projeto define como fazer.
-O que caracteriza o princípio de Encapsulamento na Orientação a Objetos?	Proteger os dados internos de uma classe (atributos privados) e controlar o acesso por meio de métodos, garantindo regras de negócio.
-O que é o Polimorfismo na Orientação a Objetos?	A capacidade de um mesmo método ter comportamentos diferentes dependendo do objeto que o executa (ex: sobrescrita de métodos).
-O que é a Abstração na Orientação a Objetos?	Representar apenas as principais características de um objeto, ocultando detalhes irrelevantes.
-O que é a Herança na Orientação a Objetos?	Permitir que uma classe herde atributos e comportamentos de outra, evitando a repetição de código.
-Quais são alguns exemplos de Padrões de Projeto (Design Patterns) citados nas aulas do Prof. Wesley Soares?	Strategy, Factory, Observer, Adapter e Facade.
-Qual é o foco principal da fase de Identificação do Problema em um projeto de software?	Compreender qual problema existe, quem o enfrenta, como é resolvido atualmente e qual valor o software deve gerar antes de pensar em código.
-Quais ferramentas de design e prototipagem colaborativa foram indicadas para criar wireframes e protótipos navegáveis?	Figma e Penpot.
-O que compõe a fórmula de avaliação da disciplina Engenharia de Software II do Prof. Wesley Soares?	Média entre [(AV1 * 0.6) + (PJ * 0.4)] e [(AV2 * 0.6) + (PJ * 0.4)] dividido por 2.
+O que é a Elicitação de Requisitos?	É o processo de descobrir, coletar, explorar e compreender as necessidades dos usuários e do negócio.
+Por que o levantamento de requisitos é considerado difícil?	Porque os stakeholders nem sempre conseguem explicar claramente o que precisam, mudam de ideia e possuem prioridades conflitantes.
+Quais são as técnicas tradicionais de elicitação de requisitos?	Entrevista, questionário, observação, análise documental, workshop e brainstorming.
+Quais são as técnicas complementares de elicitação de requisitos?	Prototipação, cenários, storytelling e Event Storming.
+Qual é a diferença entre entrevista estruturada, semiestruturada e não estruturada?	A estruturada usa perguntas predefinidas; a semiestruturada combina perguntas prontas com liberdade de exploração; a não estruturada é uma conversa aberta.
+O que a técnica de observação pode revelar que o usuário costuma omitir?	Atividades não documentadas, atalhos, exceções, retrabalho e informações consideradas óbvias pelo usuário.
+Quais documentos são comumente investigados na análise documental?	Formulários, planilhas, relatórios, manuais, contratos, sistemas antigos e procedimentos internos.
+Qual é a regra de ouro durante a fase de geração de ideias no Brainstorming?	Focar na quantidade de ideias primeiro e deixar a avaliação para depois.
+Qual é o principal objetivo de um Workshop de requisitos?	Reunir diferentes stakeholders para discutir problemas coletivamente, resolver conflitos e priorizar funcionalidades.
+Qual é a vantagem de usar prototipação em vez de apenas fazer perguntas?	Um protótipo visual revela requisitos ocultos e comportamentos esperados que uma entrevista verbal não consegue descobrir.
+Quais são as duas ferramentas de prototipação citadas nas aulas do Prof. Wesley?	Figma e Penpot.
+Qual é a diferença entre requisito funcional e não funcional?	O funcional define o que o sistema deve fazer; o não funcional define como o sistema deve se comportar em termos de restrições e qualidades.
+No ciclo de vida do projeto, qual é a diferença clássica entre Análise e Projeto?	A análise foca em fazer a coisa certa (o que fazer); o projeto foca em fazer certo a coisa (como fazer).
+O que é o princípio da Abstração no projeto orientado a objetos?	Representar apenas as características essenciais de um objeto para o domínio, ocultando detalhes irrelevantes.
+O que é o princípio do Encapsulamento no projeto orientado a objetos?	Proteger os dados internos de uma classe, restringindo o acesso direto e permitindo modificações apenas por métodos controlados.
+O que é o princípio do Polimorfismo no projeto orientado a objetos?	A capacidade de um mesmo método apresentar comportamentos diferentes dependendo do objeto específico que o executa.
+O que significa buscar alta coesão e baixo acoplamento no projeto de software?	Criar módulos com responsabilidades únicas e

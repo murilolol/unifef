@@ -1,0 +1,58 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Princípios de Design OO — Cálculo de Bônus por Cargo
+
+abstract class Colaborador {
+  - nome : String
+  - salarioBase : double
+  + getNome() : String
+  + getSalarioBase() : double
+  + {abstract} calcularBonus() : double
+}
+
+class Gerente {
+  + calcularBonus() : double
+}
+
+class Vendedor {
+  - comissaoVendas : double
+  + calcularBonus() : double
+}
+
+Colaborador <|-- Gerente : herança
+Colaborador <|-- Vendedor : herança
+
+note right of Colaborador
+  Encapsulamento: atributos privados,
+  acesso somente via métodos públicos
+  (getNome, getSalarioBase).
+end note
+
+note right of Vendedor
+  Polimorfismo: calcularBonus() tem
+  implementação própria em cada
+  subclasse (Gerente = 20% do salário;
+  Vendedor = 10% do salário + 5% da
+  comissão de vendas).
+end note
+
+@enduml

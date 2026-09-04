@@ -1,0 +1,57 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Domínio Acadêmico — Turma, Aluno e Professor
+
+class Turma {
+  + codigo : Texto
+  + sala : Texto
+  + horario : Horario
+  --
+  + estaAberta() : boolean
+  + definirProfessor(professor)
+  + incluirAluno(aluno)
+}
+
+class Aluno {
+  + nome : Texto
+  + matricula : Inteiro
+  --
+  + definirNome(nome)
+  + obterNome() : Texto
+  + definirMatricula(matricula)
+  + obterMatricula() : Inteiro
+}
+
+class Professor {
+  + nome : Texto
+  + titulacao : Texto
+  --
+  + definirNome(nome)
+  + obterNome() : Texto
+  + definirTitulacao(titulo)
+  + obterTitulacao() : Texto
+}
+
+Turma "1" -- "0..*" Aluno : está-matriculado-em
+Turma "1" -- "1" Professor : é-ministrada-por
+
+@enduml
