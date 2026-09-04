@@ -1,0 +1,73 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Trabalho AV1 — Sistema de Atendimento de uma Clínica
+
+class Paciente {
+  - String nome
+  - int idade
+  - int numeroConsulta
+  + Paciente(nome, idade, numeroConsulta)
+  + getNome() String
+  + getNumeroConsulta() int
+}
+
+class "No<Paciente>" as No {
+  - Paciente dado
+  - No<Paciente> proximo
+}
+
+class "ListaLigada<Paciente>" as ListaLigada {
+  - No<Paciente> primeiro
+  - int tamanho
+  + inserirFim(paciente Paciente) void
+  + removerPrimeiro() Paciente
+  + buscarPorConsulta(numero int) Paciente
+  + removerPorConsulta(numero int) boolean
+  + imprimir() void
+}
+
+class SistemaAtendimento {
+  - ListaLigada<Paciente> fila
+  + adicionarPaciente(paciente Paciente) void
+  + chamarProximoPaciente() Paciente
+  + cancelarConsulta(numero int) boolean
+  + consultarPaciente(numero int) Paciente
+}
+
+class Main {
+  + main(args String[])
+}
+
+Main --> SistemaAtendimento : instancia e demonstra
+SistemaAtendimento "1" *-- "1" ListaLigada : fila
+ListaLigada "1" o-- "0..*" No : gerencia
+No --> Paciente : dado
+No --> No : proximo
+
+note right of SistemaAtendimento
+  adicionarPaciente(): insere no final (FIFO)
+  chamarProximoPaciente(): remove do início
+  cancelarConsulta(): busca e remove por
+    numeroConsulta (não pelo objeto inteiro)
+end note
+
+@enduml

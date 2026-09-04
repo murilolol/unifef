@@ -1,0 +1,71 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Memória: Referências, No e Alocação Dinâmica
+
+class Stack <<memoria>> {
+  + variaveisLocais
+  + referencias
+}
+
+class Heap <<memoria>> {
+  + objetos
+  + arrays
+}
+
+class Pessoa {
+  - String nome
+  - int idade
+  + setNome(nome)
+  + getNome()
+}
+
+class No {
+  - int valor
+  - No proximo
+  + No(valor)
+}
+
+class GarbageCollector {
+  + varrerHeap()
+  + liberarObjetosSemReferencia()
+}
+
+Stack ..> Heap : referências apontam para
+Heap "1" *-- "0..*" Pessoa : armazena
+Heap "1" *-- "0..*" No : armazena
+No --> No : proximo (encadeamento)
+GarbageCollector ..> Heap : varre e libera memória de
+
+note right of No
+  Cada No guarda um dado e uma
+  referência para o próximo No,
+  formando o início de uma
+  Lista Ligada (ver Aula 05).
+end note
+
+note right of GarbageCollector
+  Identifica objetos sem nenhuma
+  referência ativa na Stack e
+  libera a memória automaticamente.
+end note
+
+@enduml

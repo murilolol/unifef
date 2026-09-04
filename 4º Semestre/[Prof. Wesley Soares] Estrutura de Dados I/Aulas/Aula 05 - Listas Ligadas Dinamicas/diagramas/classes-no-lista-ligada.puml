@@ -1,0 +1,64 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Lista Ligada Dinâmica — No<T> e ListaLigada<T>
+
+class "No<T>" as No {
+  - T dado
+  - No<T> proximo
+  + No(dado T)
+  + getDado() T
+  + setDado(dado T) void
+  + getProximo() No<T>
+  + setProximo(proximo No<T>) void
+}
+
+class "ListaLigada<T>" as ListaLigada {
+  - No<T> primeiro
+  - int tamanho
+  + ListaLigada()
+  + estaVazia() boolean
+  + getTamanho() int
+  + inserirInicio(dado T) void
+  + inserirFim(dado T) void
+  + buscar(dado T) No<T>
+  + remover(dado T) boolean
+  + imprimir() void
+}
+
+ListaLigada "1" o-- "0..*" No : gerencia via primeiro
+No --> No : proximo (encadeamento)
+
+note right of No
+  Cada No é alocado individualmente
+  na Heap via new No<>(dado).
+  Não existe limite de capacidade
+  fixo, diferente da lista sequencial.
+end note
+
+note right of ListaLigada
+  inserirInicio(): O(1)
+  inserirFim(): O(n)
+  buscar(): O(n)
+  remover(): O(n)
+end note
+
+@enduml

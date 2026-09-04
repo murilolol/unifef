@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Processo de Análise Assintótica de um Algoritmo
+
+start
+:Ler o código do algoritmo;
+:Contar as operações executadas\nem função do tamanho da entrada (n);
+:Determinar a função de custo T(n)\n(ex: T(n) = 3n + 10);
+:Descartar constantes\ne termos de menor ordem;
+:Identificar o termo dominante\n(ex: n);
+:Classificar em uma notação Big-O\n(O(1), O(log n), O(n), O(n log n), O(n²), ...);
+if (Existe outro algoritmo\npara o mesmo problema?) then (sim)
+  :Comparar as classes de complexidade\ndos dois algoritmos;
+  :Escolher o algoritmo mais eficiente\npara entradas grandes;
+else (não)
+  :Registrar a complexidade\ncomo referência do algoritmo;
+endif
+stop
+
+@enduml

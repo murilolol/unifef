@@ -1,0 +1,35 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Refinamento Sucessivo — Do Problema à Solução
+
+start
+:Problema\n(ex: calcular a média de três notas);
+:Compreensão\n(entender o que é pedido);
+:Modelagem\n(nível 1 — abstração:\n"Calcular a média das notas");
+:Algoritmo\n(nível 2 — refinamento:\nobter notas, somar, dividir, exibir);
+:Estrutura de Dados\n(definir variáveis: nota1, nota2, nota3, soma, media);
+:Implementação\n(nível 3 — pseudocódigo executável);
+:Solução\n(programa funcional);
+stop
+
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Inserção em uma posição arbitrária de uma Lista Sequencial
+
+start
+:Recebe indice e valor a inserir;
+if (indice < 0 ou indice > tamanho?) then (sim)
+  :Lança IndexOutOfBoundsException;
+  stop
+else (não)
+endif
+if (tamanho == capacidade?) then (sim)
+  :Lança IllegalStateException\n("Lista cheia");
+  stop
+else (não)
+endif
+:Percorre do último elemento (tamanho)\naté a posição indice;
+:Desloca cada elemento\numa posição para a direita\n(elementos[i] = elementos[i-1]);
+:Insere valor na posição indice\n(elementos[indice] = valor);
+:Incrementa tamanho (tamanho++);
+stop
+
+@enduml

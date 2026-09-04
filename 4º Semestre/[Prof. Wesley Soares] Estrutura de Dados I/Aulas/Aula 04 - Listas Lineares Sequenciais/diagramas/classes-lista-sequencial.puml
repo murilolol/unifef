@@ -1,0 +1,53 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Lista Linear Sequencial (implementação sobre array)
+
+class ListaSequencial {
+  - int[] elementos
+  - int tamanho
+  + ListaSequencial(capacidade int)
+  + adicionar(valor int) void
+  + adicionar(indice int, valor int) void
+  + obter(indice int) int
+  + buscar(valor int) int
+  + remover(indice int) int
+  + imprimir() void
+}
+
+note right of ListaSequencial
+  capacidade = elementos.length (fixa)
+  tamanho = elementos em uso
+  Regra: 0 <= tamanho <= capacidade
+end note
+
+class Complexidade <<referência>> {
+  obter(indice): O(1)
+  buscar(valor): O(n)
+  adicionar(fim): O(1)
+  adicionar(inicio/meio): O(n)
+  remover(indice): O(n)
+}
+
+ListaSequencial "1" *-- "0..*" int : elementos[]
+ListaSequencial ..> Complexidade : custo de cada operação
+
+@enduml
