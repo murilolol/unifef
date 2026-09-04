@@ -1,0 +1,48 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Fluxo de trabalho diário — Git / GitHub (repositório suporteos2026)
+
+start
+:git pull origin main;
+:Editar/criar arquivos no working directory;
+:git status;
+if (Ha alteracoes relevantes para commitar?) then (sim)
+  :git add <arquivos>;
+  :git commit -m "mensagem descritiva";
+  :git push origin <branch>;
+  if (Push foi rejeitado por divergencia remota?) then (sim)
+    :git pull origin main;
+    if (Ha conflito de merge?) then (sim)
+      :Resolver marcadores <<<<<<< ======= >>>>>>>;
+      :git add <arquivo resolvido>;
+      :git commit;
+    endif
+    :git push origin <branch>;
+  else (nao)
+  endif
+else (nao)
+  :Continuar desenvolvendo;
+endif
+stop
+
+@enduml

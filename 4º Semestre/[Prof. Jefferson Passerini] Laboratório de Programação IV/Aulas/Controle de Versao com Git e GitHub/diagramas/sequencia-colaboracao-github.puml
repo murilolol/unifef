@@ -1,0 +1,55 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam sequence {
+  ArrowColor #34495E
+  ActorBorderColor #3498DB
+  LifeLineBorderColor #3498DB
+  LifeLineBackgroundColor #E8F4FD
+  ParticipantBorderColor #3498DB
+  ParticipantBackgroundColor #E8F4FD
+  ParticipantFontColor #2C3E50
+  ParticipantFontStyle bold
+  ActorBackgroundColor #E8F4FD
+  ActorFontColor #2C3E50
+}
+
+skinparam note {
+  BackgroundColor #F8F9FA
+  BorderColor #2C3E50
+}
+
+title Colaboracao entre dois alunos via repositorio remoto (GitHub)
+
+actor "Aluno A" as A
+participant "Repositorio Local A" as LA
+participant "GitHub\n(jeffersonarpasserini/suporteos2026)" as GH
+participant "Repositorio Local B" as LB
+actor "Aluno B" as B
+
+A -> LA: git commit -m "feat: cadastro de cliente"
+LA -> GH: git push origin feature/cadastro-cliente
+GH -->A: push aceito
+
+B -> LB: git commit -m "feat: cadastro de OS"
+LB -> GH: git push origin feature/cadastro-os
+GH --> B: push aceito
+
+A -> GH: git pull origin main
+GH --> LA: mescla alteracoes de B
+
+alt Mesma linha alterada por A e B
+  LA -> A: conflito de merge sinalizado
+  A -> A: resolve marcadores <<<<<<< / ======= / >>>>>>>
+  A -> LA: git add <arquivo> ; git commit
+  LA -> GH: git push origin main
+else Sem conflito
+  LA -> GH: git push origin main (fast-forward)
+end
+
+GH --> B: git pull origin main (recebe alteracoes de A)
+
+@enduml
