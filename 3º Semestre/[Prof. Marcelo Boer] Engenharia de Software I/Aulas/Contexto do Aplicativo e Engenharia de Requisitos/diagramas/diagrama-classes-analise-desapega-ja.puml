@@ -1,0 +1,95 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Diagrama de Classes (Fase de Análise) — Aplicativo Desapega Já
+
+class Anunciante {
+  + nomeCompleto : String
+  + email : String
+  + telefoneWhatsApp : String
+  + senhaAcesso : String
+  + cidade : String
+  + estado : String
+  + fotoPerfil : String
+  + cpf : String
+  + dataNascimento : Date
+  + bairro : String
+  + dataCadastro : Date
+  + cadastrarProduto()
+  + cadastrarAnuncio()
+}
+
+class Interessado {
+  + nomeCompleto : String
+  + email : String
+  + telefoneWhatsApp : String
+  + senhaAcesso : String
+  + cidade : String
+  + estado : String
+  + fotoPerfil : String
+  + cpf : String
+  + dataNascimento : Date
+  + bairro : String
+  + dataCadastro : Date
+  + realizarLogin()
+  + cadastrar()
+  + editarPerfil()
+}
+
+class Anuncio {
+  + fotos : String
+  + descricao : String
+  + preco : float
+  + cadastrarAnuncio()
+  + editarAnuncio()
+  + excluirAnuncio()
+}
+
+class Categoria {
+  + nomeCategoria : String
+}
+
+class Compra {
+  + dataCompra : Date
+  + valorCompra : float
+  + realizarCompra()
+}
+
+class HistoricoContatos {
+  + dataContato : Date
+  + trocarMensagens()
+}
+
+Anunciante "1" --> "*" Anuncio : cadastra / gerencia
+Anuncio "*" --> "1" Categoria : pertence a
+Compra "*" --> "1" Anuncio : contém produtos
+Compra "*" --> "1" Interessado : efetuada por
+Compra "*" --> "1" Anunciante : vendida por
+HistoricoContatos "*" --> "1" Interessado : envolve
+HistoricoContatos "*" --> "1" Anunciante : envolve
+
+note right of Anunciante
+  Não exige cadastro para anunciar
+  produtos (RF02) — apenas para
+  negociar e comprar (RF03).
+end note
+
+@enduml

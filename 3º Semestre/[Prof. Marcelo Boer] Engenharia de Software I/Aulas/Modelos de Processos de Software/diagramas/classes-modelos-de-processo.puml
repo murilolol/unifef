@@ -1,0 +1,73 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelos de Processo de Software — Visão Geral (Prescritivos x Ágeis)
+
+abstract class ModeloDeProcesso {
+  + nome : String
+  + tipo : String
+  + descreverFases()
+}
+
+class Cascata {
+  + fasesSequenciais : List<String>
+  + exigeRequisitosEstaveis : boolean
+}
+
+class Espiral {
+  + numeroDeCiclos : int
+  + analisarRiscos()
+}
+
+class ProcessoUnificado {
+  + fases : List<String>
+  + marcos : List<String>
+}
+
+class Scrum {
+  + duracaoSprint : int
+  + productBacklog : List<String>
+  + executarSprint()
+}
+
+class AtividadeDeArcabouco {
+  + nome : String
+}
+
+ModeloDeProcesso <|-- Cascata
+ModeloDeProcesso <|-- Espiral
+ModeloDeProcesso <|-- ProcessoUnificado
+ModeloDeProcesso <|-- Scrum
+ModeloDeProcesso "1" *-- "5" AtividadeDeArcabouco : organiza
+
+note right of Cascata
+  Comunicação, Planejamento, Modelagem,
+  Construção e Implantação ocorrem
+  uma única vez, em sequência rígida.
+end note
+
+note right of Scrum
+  As mesmas atividades de arcabouço
+  se repetem a cada Sprint, de forma
+  adaptativa e incremental.
+end note
+
+@enduml

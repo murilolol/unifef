@@ -1,0 +1,39 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelo Cascata — Atividades de Arcabouço (Framework Activities)
+
+start
+:Comunicação\n(levantamento de requisitos junto ao cliente);
+:Planejamento\n(cronograma, estimativas e riscos);
+:Modelagem\n(diagramas UML: Classes, Casos de Uso);
+:Construção\n(codificação e testes);
+:Implantação\n(entrega, suporte e feedback);
+if (Cliente solicitou mudança\napós a fase concluída?) then (sim)
+  :Reabrir fase anterior\n(alto custo de retrabalho);
+  stop
+else (não)
+  :Software em manutenção/operação;
+endif
+stop
+
+@enduml

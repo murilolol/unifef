@@ -1,5 +1,3 @@
-FILENAME: apresentacao_processos_software.md
----CODE_START---
 # Métodos de Processos de Desenvolvimento de Software
 > **Disciplina:** Engenharia de Software I (3º Semestre)  
 > **Professor:** Prof. Marcelo Boer  
@@ -29,6 +27,7 @@ Os modelos prescritivos defendem uma abordagem ordenada e estruturada para o des
 ### 2.1 Modelo Cascata (Waterfall / Clássico)
 Proposto originalmente por Winston Royce (1970), é um modelo sequencial e linear. Uma fase só se inicia quando a fase anterior estiver completamente concluída e documentada.
 
+```mermaid
 graph TD
     A[Engenharia de Requisitos] -->|Documento de Requisitos| B[Design / Arquitetura]
     B -->|Especificação Técnica| C[Implementação / Codificação]
@@ -40,6 +39,7 @@ graph TD
     style C fill:#dfd,stroke:#333,stroke-width:2px
     style D fill:#fdd,stroke:#333,stroke-width:2px
     style E fill:#ffb,stroke:#333,stroke-width:2px
+```
 
 *   **Vantagens:**
     *   Fácil de gerenciar devido à rigidez do modelo (marcos claros).
@@ -55,12 +55,14 @@ graph TD
 ### 2.2 Modelo de Prototipação
 Utilizado quando o cliente define os objetivos gerais do software, mas não consegue detalhar os requisitos de entrada, processamento ou saída. Consiste em construir uma versão rápida ("rascunho") para validação.
 
+```mermaid
 graph LR
     A[Comunicação] --> B[Projeto Rápido]
     B --> C[Construção do Protótipo]
     C --> D[Avaliação do Cliente]
     D -->|Feedback / Refinamento| A
     D -->|Aprovado| E[Desenvolvimento do Produto Final]
+```
 
 *   **Vantagens:**
     *   Excelente para elicitação de requisitos complexos ou interfaces de usuário (UI/UX).
@@ -75,6 +77,7 @@ graph LR
 ### 2.3 Modelo Espiral (Spiral Model)
 Desenvolvido por Barry Boehm (1988), é um modelo evolutivo que acopla a natureza iterativa da prototipação com os aspectos controlados e sistemáticos do modelo cascata, adicionando uma dimensão crucial: **Análise de Riscos**.
 
+```mermaid
 graph TD
     subgraph Quadrante 1: Determinar Objetivos
         Q1[Definição de Metas e Restrições]
@@ -93,6 +96,7 @@ graph TD
     Q2 --> Q3
     Q3 --> Q4
     Q4 --> Q1
+```
 
 *   **Vantagens:**
     *   Gerenciamento de riscos extremamente robusto e realista.
@@ -108,6 +112,7 @@ graph TD
 ### 2.4 Processo Unificado (RUP - Rational Unified Process)
 O RUP é um framework de processo de engenharia de software iterativo e incremental, centrado na arquitetura e guiado por casos de uso. Ele divide o projeto em quatro fases temporais distintas.
 
+```mermaid
 gantt
     title Fases do Processo Unificado (RUP)
     dateFormat  YYYY-MM-DD
@@ -119,6 +124,7 @@ gantt
     Desenvolvimento em Larga Escala :active, des3, 2026-02-16, 2026-04-01
     section Transição (Transition)
     Implantação, Treinamento e Entrega :active, des4, 2026-04-02, 2026-04-15
+```
 
 *   **Vantagens:**
     *   Forte foco na qualidade arquitetural (evita o colapso do sistema no longo prazo).
@@ -137,6 +143,7 @@ Surgidos formalmente com o **Manifesto Ágil (2001)**, estes modelos priorizam i
 ### 3.1 Scrum
 O framework ágil mais utilizado no mundo. Focado no gerenciamento de projetos através de ciclos iterativos curtos chamados **Sprints** (geralmente de 1 a 4 semanas).
 
+```mermaid
 graph TD
     PB[Product Backlog] -->|Planejamento da Sprint| SB[Sprint Backlog]
     SB --> S[Sprint: 1 a 4 semanas]
@@ -144,6 +151,7 @@ graph TD
     DS --> S
     S -->|Revisão da Sprint| INC[Incremento de Software Potencialmente Entregável]
     INC -->|Retrospectiva da Sprint| PB
+```
 
 *   **Papéis Principais:**
     *   **Product Owner (PO):** Representa o negócio, define e prioriza o Product Backlog.
@@ -157,6 +165,7 @@ graph TD
 ### 3.2 XP (Extreme Programming)
 Focado fortemente nas práticas de engenharia de software para garantir código de altíssima qualidade técnica e adaptabilidade a requisitos voláteis.
 
+```mermaid
 graph TD
     A[Planejamento do Jogo] --> B[Programação em Par / Pair Programming]
     B --> C[Desenvolvimento Guiado por Testes / TDD]
@@ -164,6 +173,7 @@ graph TD
     D --> E[Refatoração Constante]
     E --> F[Pequenas Entregas / Releases]
     F --> A
+```
 
 *   **Práticas Chave:**
     *   **TDD (Test-Driven Development):** Escrever o teste automatizado antes de escrever o código funcional.
@@ -177,6 +187,7 @@ graph TD
 
 O **DevOps** não é apenas um processo, mas uma cultura que une o Desenvolvimento de Software (Dev) com a Operação de TI (Ops). Ele estende os princípios ágeis para além da entrega do código, cobrindo a implantação, monitoramento e sustentação em produção de forma automatizada.
 
+```mermaid
 graph LR
     subgraph Desenvolvimento (Dev)
         A[Planejar] --> B[Codificar]
@@ -198,7 +209,17 @@ graph LR
     style F fill:#faa,stroke:#333
     style G fill:#faa,stroke:#333
     style H fill:#faa,stroke:#333
+```
 
-### Pilares do DevOps:
+### Pilares do DevOps e Ciclo CI/CD:
 1. **Integração Contínua (CI):** Desenvolvedores mesclam suas alterações de código no repositório principal constantemente. Cada mesclagem dispara builds e testes automatizados.
-2. **Entrega Contín
+2. **Entrega Contínua (CD):** Garantia de que o software pode ser liberado para produção a qualquer momento de maneira segura e automatizada.
+3. **Monitoramento Contínuo:** Coleta de métricas e logs em tempo real para detecção precoce de falhas de infraestrutura e aplicação.
+
+---
+
+## 5. Conclusão e Considerações do Professor
+
+> "Não existe bala de prata em Engenharia de Software." — *Fred Brooks*
+
+A escolha do processo de desenvolvimento de software deve ser guiada pelas características do projeto, maturidade da equipe, cultura organizacional e estabilidade dos requisitos. Compreender os modelos clássicos, ágeis e as práticas de DevOps capacita o Arquiteto e Desenvolvedor Sênior a tomar decisões assertivas, otimizando custos, prazos e entregando valor real aos usuários finais.

@@ -1,0 +1,66 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam usecase {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 12
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam actor {
+  BorderColor #3498DB
+  FontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Diagrama de Casos de Uso — Aplicativo Desapega Já
+
+left to right direction
+
+actor "Pessoa Anunciante" as Anunciante
+actor "Pessoa Cliente" as Cliente
+
+rectangle "Aplicativo Desapega Já" {
+  usecase "Realizar Login" as UC01
+  usecase "Cadastrar-se" as UC02
+  usecase "Listar / Editar Perfil" as UC03
+  usecase "Cadastrar Produto" as UC04
+  usecase "Cadastrar Anúncio" as UC05
+  usecase "Listar / Buscar Anúncios" as UC06
+  usecase "Carregar Detalhes do Anúncio" as UC07
+  usecase "Alterar Anúncio" as UC08
+  usecase "Excluir Anúncio" as UC09
+  usecase "Trocar Mensagens" as UC10
+}
+
+Anunciante --> UC01
+Anunciante --> UC02
+Anunciante --> UC03
+Anunciante --> UC04
+Anunciante --> UC05
+Anunciante --> UC08
+Anunciante --> UC09
+Anunciante --> UC10
+
+Cliente --> UC01
+Cliente --> UC02
+Cliente --> UC06
+Cliente --> UC07
+Cliente --> UC10
+
+UC05 ..> UC02 : <<include>>\n(exige cadastro prévio)
+UC08 ..> UC01 : <<include>>
+UC09 ..> UC01 : <<include>>
+
+@enduml

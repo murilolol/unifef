@@ -1,0 +1,49 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title DCU — Realizar Login (Usuário Cliente / Anunciante)
+
+start
+:Usuário acessa o aplicativo;
+:Aplicativo exibe a tela de login;
+if (Usuário possui cadastro?) then (não)
+  :Clica em "Não possui cadastro,\nclique aqui";
+  :Aplicativo executa o\nCaso de Uso Cadastrar;
+  stop
+else (sim)
+  :Informa e-mail e senha;
+  :Clica em "Logar";
+  if (E-mail/senha informados?) then (não)
+    :Exibe "E-mail/Senha não informados";
+    stop
+  else (sim)
+    if (Usuário está cadastrado\ne credenciais conferem?) then (não)
+      :Exibe "Usuário não cadastrado";
+      stop
+    else (sim)
+      :Aplicativo exibe a página\ninicial do usuário;
+      stop
+    endif
+  endif
+endif
+
+@enduml
