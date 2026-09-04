@@ -1,0 +1,45 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam package {
+  BackgroundColor #F8F9FA
+  BorderColor #2C3E50
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 14
+  BorderThickness 2
+}
+
+skinparam rectangle {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Estrutura do acervo — Sistemas de Informação (UniFEF)
+
+package "4º Semestre (2026/02)" {
+  rectangle "Lab. de Programação IV\nJefferson Passerini" as S4_Lab4
+  rectangle "Tópicos Avançados em BD\nWelington Garcia" as S4_TopBD
+  rectangle "Engenharia de Software II\nWesley Soares" as S4_EngSoft2
+  rectangle "Estrutura de Dados I\nWesley Soares" as S4_ED1
+}
+
+package "3º Semestre (2026/01)" {
+  rectangle "Sistemas Operacionais\nGuilherme de Morais" as S3_SO
+  rectangle "Banco de Dados II\nGuilherme de Morais" as S3_BD2
+  rectangle "Engenharia de Software I\nMarcelo Boer" as S3_EngSoft1
+  rectangle "Lab. de Programação III\nJefferson Passerini" as S3_Lab3
+}
+
+@enduml

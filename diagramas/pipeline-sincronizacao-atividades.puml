@@ -1,0 +1,34 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Pipeline de sincronização e geração de material de estudo
+
+start
+:Google Classroom API\n(OAuth2 somente-leitura);
+:classrom-api-sinc sincroniza\ncourses / courseWork / announcements;
+:Anexos originais baixados\nvia Google Drive (somente-leitura);
+:Conteúdo organizado em\nAulas/ + Trabalhos/ + Provas/;
+:Pipeline Gemini 3.5 gera\nresumo, simulado, cheatsheet, slides, flashcards, dataset;
+:Conteúdo consolidado no\nREADME.md único da matéria;
+:Curadoria manual escreve\ndetalhes.md + diagramas PlantUML por aula;
+stop
+
+@enduml
