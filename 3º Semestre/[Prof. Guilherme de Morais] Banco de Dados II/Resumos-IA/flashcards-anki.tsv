@@ -1,25 +1,29 @@
-O que representa o caractere especial % quando utilizado com o operador LIKE?	Qualquer sequência de zero ou mais caracteres.
-O que representa o caractere especial sublinhado (_) quando utilizado com o operador LIKE?	Qualquer caractere individual em uma posição específica.
-Qual é a principal diferença entre os operadores LIKE e ILIKE no PostgreSQL?	O LIKE diferencia maiúsculas de minúsculas (case-sensitive), enquanto o ILIKE ignora essa diferença (case-insensitive).
-É permitido utilizar funções agregadas diretamente na cláusula WHERE?	Não, as funções agregadas não podem ser utilizadas diretamente na cláusula WHERE.
-Se um SELECT possui funções agregadas e colunas normais, qual é a regra para essas colunas normais?	Todas as colunas não agregadas devem fazer parte da cláusula GROUP BY.
-Qual operador é utilizado para concatenar strings no PostgreSQL (ex: nome e cidade)?	O operador de barra dupla (||).
-Qual função do PostgreSQL calcula a diferença de tempo entre duas datas (ex: calcular idade)?	A função AGE().
-Como extrair apenas o ano de um campo do tipo DATE chamado "data_nascimento"?	EXTRACT(YEAR FROM data_nascimento)
-O que a função ASCII('A') retorna?	O código ASCII do primeiro caractere da string (no caso, 65).
-Qual função retorna o número de caracteres de uma string?	A função LENGTH().
-Qual a diferença entre as funções NOW() e DATE(NOW())?	NOW() retorna data e hora atual do sistema, enquanto DATE(NOW()) extrai apenas a data.
-Como filtrar registros onde o salário está entre 2000 e 4000 de forma inclusiva?	WHERE salario BETWEEN 2000 AND 4000
-Qual cláusula é usada para eliminar linhas duplicadas no resultado de uma consulta SELECT?	DISTINCT
-Como adicionar uma chave estrangeira (FK) na tabela "veiculos" referenciando "clientes(cpf)"?	ALTER TABLE veiculos ADD CONSTRAINT fk_cpf_cli FOREIGN KEY (cpf_cli) REFERENCES clientes (cpf);
-Qual função agregada calcula a média dos valores de uma coluna?	AVG()
-Qual função agregada calcula a soma total de uma coluna numérica?	SUM()
-Qual a diferença entre COUNT(*) e COUNT(coluna)?	COUNT(*) conta todas as linhas da tabela, enquanto COUNT(coluna) conta apenas os valores não nulos daquela coluna.
-Quais funções convertem uma string para minúsculo e maiúsculo, respectivamente?	LOWER() e UPPER()
-Como filtrar funcionários com mais de 30 anos usando a função AGE e INTERVAL?	WHERE AGE(NOW(), data_nascimento) > INTERVAL '30 years'
-Como ordenar uma consulta de clientes primeiro por estado (A-Z) e depois por idade (maior para menor)?	ORDER BY estado ASC, idade DESC
-Como exibir o preço de um produto com 25% de aumento em uma consulta SELECT?	SELECT preco * 1.25
-Por que é importante usar parênteses ao combinar operadores AND e OR na cláusula WHERE?	Para garantir a ordem correta de precedência na avaliação das condições lógicas.
-Qual padrão do LIKE seleciona nomes que começam com 'A', têm qualquer caractere na segunda posição e terminam com 'S'?	'A_%S'
-Como listar todos os pedidos com o nome do respectivo cliente relacionando as tabelas Clientes e Pedidos?	SELECT Clientes.Nome, Pedidos.PedidoID FROM Clientes INNER JOIN Pedidos ON Clientes.ClienteID = Pedidos.ClienteID;
-Como obter o código ASCII apenas da primeira letra do campo "nome"?	ASCII(SUBSTRING(nome FROM 1 FOR 1))
+Qual comando SQL é utilizado para buscar e consultar informações em um banco de dados sem modificá-las?	SELECT
+Qual operador SQL é usado após a cláusula WHERE para comparação de sequências de caracteres (strings)?	LIKE
+O que o caractere curinga '%' representa quando utilizado com o operador LIKE?	Qualquer sequência de 0 ou mais caracteres
+O que o caractere curinga '_' representa quando utilizado com o operador LIKE?	Qualquer caractere único
+Qual a diferença principal entre os operadores LIKE e ILIKE em bancos de dados como o PostgreSQL?	O LIKE é case sensitive (diferencia maiúsculas de minúsculas) e o ILIKE não é case sensitive
+Onde as funções agregadas (como AVG, SUM, COUNT) devem ser colocadas obrigatoriamente em uma instrução SQL?	Entre as cláusulas SELECT e FROM
+Qual função agregada é utilizada para calcular a média de um determinado campo?	AVG()
+Qual função agregada é utilizada para retornar o maior valor de uma coluna?	MAX()
+Qual função agregada é utilizada para retornar o menor valor de uma coluna?	MIN()
+Qual função agregada é utilizada para somar os valores de uma coluna numérica?	SUM()
+Qual função agregada é utilizada para contar a quantidade de registros em uma tabela ou coluna?	COUNT()
+Em uma consulta SQL que utiliza funções agregadas junto com outras colunas, o que deve ser feito com essas outras colunas?	Elas devem fazer parte da cláusula GROUP BY
+Qual função de data e hora retorna simultaneamente a data e a hora atual do sistema?	NOW()
+Qual função extrai apenas a parte da data (sem a hora) de um timestamp?	DATE()
+Qual função é utilizada para calcular a diferença exata entre duas datas?	AGE()
+Qual função SQL é utilizada para extrair partes específicas de uma data, como ano, mês ou dia?	EXTRACT()
+Qual operador é utilizado para fazer a concatenação de strings e textos em SQL (ex: unir nome e cidade)?	|| (duplo pipe)
+Qual função retorna o número de caracteres de uma string?	LENGTH()
+Qual função converte todos os caracteres de uma string para letras minúsculas?	LOWER()
+Qual função converte todos os caracteres de uma string para letras maiúsculas?	UPPER()
+Qual função retorna o código ASCII correspondente ao primeiro caractere de uma string?	ASCII()
+Qual cláusula é utilizada em consultas SQL para ordenar o resultado com base em uma ou mais colunas?	ORDER BY
+Qual cláusula é utilizada para filtrar registros com base em uma condição lógica antes de qualquer agrupamento?	WHERE
+Qual operador lógico é usado para garantir que múltiplas condições sejam atendidas simultaneamente em um filtro?	AND
+Qual operador lógico é usado para retornar registros se pelo menos uma das condições for verdadeira?	OR
+Qual comando ou cláusula é utilizado para retornar apenas valores únicos, eliminando duplicatas em uma consulta?	DISTINCT
+Qual operador SQL é utilizado para filtrar valores dentro de um intervalo específico (inclusivo)?	BETWEEN
+Qual operador é usado para verificar se um valor corresponde a qualquer elemento de uma lista ou conjunto fornecido?	IN
+Na modelagem relacional, qual tipo de restrição (constraint) garante a integridade referencial entre duas tabelas?	FOREIGN KEY (Chave Estrangeira)

@@ -1,0 +1,41 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelo relacional utilizado nos exercícios de JOIN (Clientes e Pedidos)
+
+entity "Clientes" as Clientes {
+  * ClienteID : INT <<PK>>
+  --
+  Nome : VARCHAR(100)
+  Cidade : VARCHAR(100)
+  Estado : VARCHAR(50)
+}
+
+entity "Pedidos" as Pedidos {
+  * PedidoID : INT <<PK>>
+  --
+  ClienteID : INT <<FK>>
+  DataPedido : DATE
+  Valor : DECIMAL(10,2)
+}
+
+Clientes ||--o{ Pedidos : realiza
+
+@enduml

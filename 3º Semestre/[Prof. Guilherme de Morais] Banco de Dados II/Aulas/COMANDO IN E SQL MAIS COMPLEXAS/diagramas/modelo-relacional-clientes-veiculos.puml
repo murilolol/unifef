@@ -1,0 +1,51 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelo relacional utilizado nos exemplos de IN e Junção de Tabelas
+
+entity "clientes" as clientes {
+  * cpf : INTEGER <<PK>>
+  --
+  cod_cli : INTEGER
+  nome : VARCHAR(50)
+  endereco : VARCHAR(50)
+  cidade : VARCHAR(50)
+  estado : VARCHAR(2)
+  salario : INTEGER
+  idade : INTEGER
+}
+
+entity "veiculos" as veiculos {
+  * placa : VARCHAR(10) <<PK>>
+  --
+  chassi : VARCHAR(50)
+  cor : VARCHAR(20)
+  modelo : VARCHAR(20)
+  marca : VARCHAR(20)
+  ano_fabricacao : INTEGER
+  preco_compra : INTEGER
+  preco_venda : INTEGER
+  motor : INTEGER
+  cpf_cli : INTEGER <<FK>>
+}
+
+clientes ||--o{ veiculos : possui
+
+@enduml

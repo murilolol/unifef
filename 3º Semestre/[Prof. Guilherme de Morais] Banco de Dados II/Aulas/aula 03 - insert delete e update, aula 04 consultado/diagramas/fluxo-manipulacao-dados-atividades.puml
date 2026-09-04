@@ -1,0 +1,51 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Ciclo de vida de um registro — INSERT, UPDATE e DELETE
+
+start
+:INSERT INTO funcionario (...) VALUES (...);
+:Registro passa a existir na tabela;
+if (É necessário alterar\num dado já cadastrado?) then (sim)
+  :UPDATE funcionario SET campo = valor;
+  if (Cláusula WHERE foi informada?) then (sim)
+    :Somente as linhas que satisfazem\na condição são atualizadas;
+  else (não)
+    :Todas as linhas da tabela\nsão atualizadas (risco!);
+  endif
+else (não)
+endif
+if (O registro deve ser removido?) then (sim)
+  :DELETE FROM funcionario WHERE condicao;
+  if (Cláusula WHERE foi informada?) then (sim)
+    :Somente as linhas que satisfazem\na condição são excluídas;
+  else (não)
+    :Todos os registros da tabela\nsão excluídos (risco!);
+  endif
+  stop
+else (não)
+  :SELECT * FROM funcionario;
+  :Registro consultado sem modificação;
+  stop
+endif
+
+@enduml

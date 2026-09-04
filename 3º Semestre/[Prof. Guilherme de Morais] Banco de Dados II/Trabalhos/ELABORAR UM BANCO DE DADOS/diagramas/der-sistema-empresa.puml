@@ -1,0 +1,86 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Exercício 1 — DER do Sistema Empresa (traduzido para modelo relacional)
+
+entity "departamento" as departamento {
+  * id_departamento : INT <<PK>>
+  --
+  numero_departamento : INT
+  nome_departamento : VARCHAR(100)
+  local_departamento : VARCHAR(100)
+  id_gerente : INT <<FK>>
+}
+
+entity "funcionario" as funcionario {
+  * id_funcionario : INT <<PK>>
+  --
+  primeiro_nome : VARCHAR(50)
+  segundo_nome : VARCHAR(50)
+  ultimo_nome : VARCHAR(50)
+  sexo : CHAR(1)
+  cpf : CHAR(11)
+  data_nascimento : DATE
+  id_departamento : INT <<FK>>
+  id_supervisor : INT <<FK>>
+}
+
+entity "telefone_funcionario" as telefone {
+  * id_telefone : INT <<PK>>
+  --
+  id_funcionario : INT <<FK>>
+  numero_telefone : VARCHAR(20)
+}
+
+entity "dependente" as dependente {
+  * id_dependente : INT <<PK>>
+  --
+  id_funcionario : INT <<FK>>
+  primeiro_nome : VARCHAR(50)
+  cpf : CHAR(11)
+  data_nascimento : DATE
+}
+
+entity "projeto" as projeto {
+  * id_projeto : INT <<PK>>
+  --
+  codigo_projeto : VARCHAR(20)
+  nome_projeto : VARCHAR(100)
+  data_projeto : DATE
+  id_departamento : INT <<FK>>
+}
+
+entity "alocacao_projeto" as alocacao {
+  * id_funcionario : INT <<PK,FK>>
+  * id_projeto : INT <<PK,FK>>
+  --
+  quantidade_horas : DECIMAL(5,2)
+}
+
+departamento ||--o{ funcionario : emprega
+departamento ||--o{ projeto : controla
+departamento ||--o| funcionario : gerencia
+funcionario ||--o{ telefone : possui
+funcionario ||--o{ dependente : possui
+funcionario ||--o{ funcionario : supervisiona
+funcionario ||--o{ alocacao : aloca
+projeto ||--o{ alocacao : recebe
+
+@enduml

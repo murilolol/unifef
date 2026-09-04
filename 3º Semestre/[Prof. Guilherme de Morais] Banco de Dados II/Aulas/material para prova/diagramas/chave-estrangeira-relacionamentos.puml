@@ -1,0 +1,54 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Exemplos de Chave Estrangeira (FOREIGN KEY)
+
+entity "DEPARTAMENTO" as DEPARTAMENTO {
+  * COD_DEP : INTEGER <<PK>>
+  --
+  NOME : VARCHAR(50)
+}
+
+entity "FUNCIONARIO" as FUNCIONARIO {
+  * CPF : INTEGER <<PK>>
+  --
+  NOME : VARCHAR(50)
+  CIDADE : VARCHAR(50)
+  COD_DEP : INTEGER <<FK>>
+}
+
+entity "LOTE" as LOTE {
+  * COD_LOTE : INTEGER <<PK>>
+  --
+  NOME_LOTE : VARCHAR(50)
+}
+
+entity "PRODUTO" as PRODUTO {
+  * COD_PRODUTO : INTEGER <<PK>>
+  --
+  NOME : VARCHAR(50)
+  DESCRICAO : VARCHAR(50)
+  COD_LOTE : INTEGER <<FK>>
+}
+
+DEPARTAMENTO ||--o{ FUNCIONARIO : trabalha
+LOTE ||--o{ PRODUTO : contem
+
+@enduml

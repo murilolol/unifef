@@ -1,0 +1,75 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Operadores de padrão (LIKE/ILIKE) e Funções Agregadas — SQL
+
+abstract class Consulta {
+  + tabela : String
+  + executar()
+}
+
+class FiltroPadrao {
+  + coluna : String
+  + padrao : String
+}
+
+class LIKE {
+  + caseSensitive : boolean = true
+}
+
+class ILIKE {
+  + caseSensitive : boolean = false
+}
+
+abstract class FuncaoAgregada {
+  + coluna : String
+  + calcular() : Numeric
+}
+
+class AVG
+class COUNT
+class MAX
+class MIN
+class SUM
+
+Consulta *-- FiltroPadrao : usa no WHERE
+FiltroPadrao <|-- LIKE
+FiltroPadrao <|-- ILIKE
+
+Consulta *-- FuncaoAgregada : usa entre SELECT e FROM
+FuncaoAgregada <|-- AVG
+FuncaoAgregada <|-- COUNT
+FuncaoAgregada <|-- MAX
+FuncaoAgregada <|-- MIN
+FuncaoAgregada <|-- SUM
+
+note right of LIKE
+  '%' = zero ou mais caracteres
+  '_' = exatamente um caractere
+end note
+
+note right of FuncaoAgregada
+  Não pode ser usada no WHERE.
+  Colunas não agregadas no SELECT
+  devem constar no GROUP BY.
+end note
+
+@enduml

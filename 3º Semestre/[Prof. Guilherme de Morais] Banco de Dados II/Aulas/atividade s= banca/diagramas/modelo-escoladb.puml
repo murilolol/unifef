@@ -1,0 +1,61 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelo de dados EscolaDB (entidades independentes usadas nos exercícios de SELECT)
+
+entity "CLIENTES" as CLIENTES {
+  * CodCliente : INT <<PK>>
+  --
+  NomeCliente : VARCHAR(100)
+  EndCliente : VARCHAR(150)
+  Estado : CHAR(2)
+  Idade : INT
+}
+
+entity "PRODUTO" as PRODUTO {
+  * CodigoProduto : INT <<PK>>
+  --
+  Descricao : VARCHAR(100)
+  Unidade : CHAR(2)
+  Val_Unit : DECIMAL(10,2)
+}
+
+entity "VENDEDOR" as VENDEDOR {
+  * CodigoVendedor : INT <<PK>>
+  --
+  NomeVendedor : VARCHAR(100)
+  Salario_Fixo : DECIMAL(10,2)
+}
+
+entity "ALUNO" as ALUNO {
+  * Matricula : INT <<PK>>
+  --
+  Nome_Aluno : VARCHAR(100)
+  Data_Nasc : DATE
+  Cidade : VARCHAR(50)
+}
+
+note bottom of CLIENTES
+  Entidades independentes no material
+  original: não há chave estrangeira
+  entre CLIENTES, PRODUTO, VENDEDOR e ALUNO.
+end note
+
+@enduml

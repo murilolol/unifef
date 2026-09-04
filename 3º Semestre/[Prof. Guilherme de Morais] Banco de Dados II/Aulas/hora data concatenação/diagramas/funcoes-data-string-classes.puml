@@ -1,0 +1,74 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Funções de Data/Hora e de String aplicadas sobre funcionarios
+
+class funcionarios {
+  + id : SERIAL
+  + nome : VARCHAR(100)
+  + data_nascimento : DATE
+  + cidade : VARCHAR(100)
+}
+
+abstract class FuncaoDataHora {
+  + calcular() : DateTime
+}
+
+class NOW
+class DATE
+class AGE
+class EXTRACT
+
+abstract class FuncaoString {
+  + aplicar(texto : String) : String
+}
+
+class ASCII
+class Concatenacao
+class LENGTH
+class LOWER
+class UPPER
+
+FuncaoDataHora <|-- NOW
+FuncaoDataHora <|-- DATE
+FuncaoDataHora <|-- AGE
+FuncaoDataHora <|-- EXTRACT
+
+FuncaoString <|-- ASCII
+FuncaoString <|-- Concatenacao
+FuncaoString <|-- LENGTH
+FuncaoString <|-- LOWER
+FuncaoString <|-- UPPER
+
+funcionarios ..> FuncaoDataHora : data_nascimento
+funcionarios ..> FuncaoString : nome, cidade
+
+note right of AGE
+  AGE(NOW(), data_nascimento)
+  calcula a idade do funcionário
+end note
+
+note right of Concatenacao
+  Operador || une textos:
+  nome || ' mora em ' || cidade
+end note
+
+@enduml
