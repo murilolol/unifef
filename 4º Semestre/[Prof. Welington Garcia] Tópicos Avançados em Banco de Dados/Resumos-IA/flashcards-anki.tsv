@@ -1,20 +1,20 @@
 O que é uma chave primária (PRIMARY KEY)?	Identifica cada registro de forma única em uma tabela.
-O que é uma chave estrangeira (FOREIGN KEY)?	Cria uma referência para a chave primária de outra tabela, garantindo integridade referencial.
-Qual JOIN retorna apenas as linhas que possuem correspondência nas duas tabelas?	INNER JOIN
-O que acontece com os registros da tabela esquerda em um LEFT JOIN que não possuem correspondência na tabela direita?	Eles aparecem no resultado, e as colunas correspondentes da tabela direita recebem o valor NULL.
-Como encontrar registros em uma tabela que não possuem correspondência em outra usando LEFT JOIN?	Utilizando um LEFT JOIN e filtrando no WHERE onde a chave da tabela direita é IS NULL.
-Qual função do PostgreSQL pode ser usada para substituir valores NULL por um valor padrão (ex: 'Sem categoria')?	COALESCE
-Qual é o comportamento de um FULL OUTER JOIN?	Retorna todos os registros das duas tabelas, incluindo correspondências e registros sem correspondência de ambos os lados.
-O que é um CROSS JOIN?	Realiza o produto cartesiano, combinando cada linha da primeira tabela com todas as linhas da segunda tabela.
-Quando um SELF JOIN é utilizado?	Quando uma tabela precisa ser relacionada com ela mesma, como em uma hierarquia de funcionários e supervisores.
-Qual é o perigo de omitir a condição de junção em um SELECT com múltiplas tabelas sem WHERE adequado?	Gera um produto cartesiano acidental, multiplicando desnecessariamente o número de linhas retornadas.
-Qual a diferença prática entre colocar um filtro no ON versus no WHERE ao usar um LEFT JOIN?	O filtro no ON restringe a junção mantendo a tabela esquerda intacta; o filtro no WHERE pode eliminar os registros com NULL da tabela esquerda, transformando o LEFT JOIN em um INNER JOIN.
-O que a cláusula USING faz em um JOIN?	Permite unir tabelas de forma simplificada quando a coluna de junção possui exatamente o mesmo nome em ambas.
-Por que o uso de NATURAL JOIN não é recomendado em sistemas de produção?	Porque ele relaciona automaticamente colunas com nomes iguais, tornando a consulta imprevisível se a estrutura da tabela mudar.
-Qual a principal desvantagem de utilizar SELECT * em consultas complexas com JOINs?	Retorna dados desnecessários, repete colunas de junção, causa ambiguidade e dificulta a manutenção do código.
-Como evitar ambiguidade quando duas tabelas possuem colunas com o mesmo nome em uma consulta SQL?	Utilizando prefixos com o nome ou alias da tabela (ex: c.id_cliente).
-Qual função de agregação é usada para contar a quantidade de registros em um agrupamento?	COUNT()
-Quando utilizamos funções de agregação junto com colunas normais em uma consulta com JOIN, o que deve constar na cláusula GROUP BY?	Todas as colunas presentes no SELECT que não estão envolvidas em funções de agregação.
-Qual JOIN é ideal para relatórios que precisam preservar todos os registros de uma tabela principal, mesmo que não haja correspondência na secundária?	LEFT JOIN
-Qual JOIN pode ser considerado equivalente a um LEFT JOIN apenas invertendo a ordem das tabelas na consulta?	RIGHT JOIN
-Para que servem os aliases (apelidos) nas tabelas durante um JOIN?	Para deixar a consulta mais legível, reduzir a repetição de código e evitar ambiguidades em nomes de colunas.
+O que é uma chave estrangeira (FOREIGN KEY)?	Cria uma referência para outra tabela, garantindo a integridade referencial.
+Qual é a principal função do operador INNER JOIN?	Retornar apenas as linhas que possuem correspondência nas duas tabelas envolvidas.
+O que acontece com os registros da tabela esquerda em um LEFT JOIN que não possuem correspondência na tabela direita?	Eles são mantidos no resultado, e as colunas da tabela direita recebem o valor NULL.
+Como encontrar registros órfãos (ex: clientes sem pedidos) usando LEFT JOIN?	Utilizando um LEFT JOIN e filtrando no WHERE onde a chave da tabela direita é IS NULL.
+Qual é a função da função COALESCE em um SELECT com JOIN?	Substituir valores NULL por um valor alternativo especificado.
+Qual é o comportamento do RIGHT JOIN?	Retorna todos os registros da tabela da direita e as correspondências da tabela da esquerda, preenchendo com NULL quando não há correspondência.
+O que o FULL OUTER JOIN retorna?	Todos os registros de ambas as tabelas, incluindo correspondências e linhas sem correspondência de ambos os lados.
+Qual é o efeito de um CROSS JOIN entre duas tabelas?	Gera o produto cartesiano, combinando cada linha da primeira tabela com todas as linhas da segunda tabela.
+O que é um SELF JOIN?	Uma junção em que uma tabela é relacionada com ela mesma, útil para hierarquias como funcionário e supervisor.
+Qual é a diferença entre colocar um filtro na cláusula ON versus na cláusula WHERE em um LEFT JOIN?	O filtro no ON restringe a junção mantendo a tabela esquerda intacta; o filtro no WHERE pode eliminar as linhas onde a tabela direita virou NULL, transformando a consulta em um INNER JOIN.
+Qual operador pode ser usado no lugar de ON quando a coluna de junção possui exatamente o mesmo nome nas duas tabelas?	USING.
+Por que o uso de NATURAL JOIN não é recomendado em sistemas de produção?	Porque ele relaciona automaticamente colunas de mesmo nome de forma implícita, tornando a consulta imprevisível e difícil de manter.
+O que é um produto cartesiano acidental e como ele ocorre?	Ocorre quando tabelas são listadas no FROM separadas por vírgula sem uma condição de junção, combinando todas as linhas entre si.
+Qual é o problema de utilizar SELECT * em consultas complexas com múltiplos JOINs?	Retorna dados desnecessários, consome mais rede, repete colunas e dificulta a manutenção do código.
+Por que devemos utilizar aliases (apelidos) para as tabelas em consultas com JOIN?	Para reduzir a repetição de código, tornar a consulta mais legível e evitar ambiguidades quando há colunas com o mesmo nome em tabelas diferentes.
+Quando utilizamos funções de agregação (como SUM ou COUNT) junto com um JOIN, qual cláusula é obrigatória para agrupar os resultados das colunas não agregadas?	GROUP BY.
+Qual JOIN é ideal para relatórios que precisam preservar absolutamente todos os registros da tabela principal (esquerda)?	LEFT JOIN.
+Qual JOIN deve ser utilizado para auditorias e comparação de bases para identificar inconsistências em ambos os lados?	FULL OUTER JOIN.
+Como o PostgreSQL interpreta a execução passo a passo de um INNER JOIN?	Lê uma linha da tabela base, busca o valor correspondente na chave estrangeira da outra tabela, combina as linhas se houver correspondência e descarta se não houver.

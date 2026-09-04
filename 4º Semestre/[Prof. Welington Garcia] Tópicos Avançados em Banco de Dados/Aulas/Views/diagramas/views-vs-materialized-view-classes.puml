@@ -1,0 +1,62 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title View x Materialized View — PostgreSQL
+
+abstract class ConsultaArmazenada {
+  + nome : String
+  + definicaoSQL : String
+  + consultar()
+}
+
+class Tabela {
+  + nome : String
+  + colunas : List<Coluna>
+}
+
+class View {
+  + withCheckOption : boolean
+  + consultar()
+  + atualizarViaView()
+}
+
+class MaterializedView {
+  + ultimoRefresh : DateTime
+  + consultar()
+  + refresh()
+}
+
+ConsultaArmazenada <|-- View
+ConsultaArmazenada <|-- MaterializedView
+View ..> Tabela : lê sob demanda
+MaterializedView ..> Tabela : armazena snapshot de
+
+note right of View
+  Não guarda dados: cada consulta
+  reexecuta o SELECT de origem.
+end note
+
+note right of MaterializedView
+  Guarda o resultado fisicamente;
+  precisa de REFRESH para atualizar.
+end note
+
+@enduml

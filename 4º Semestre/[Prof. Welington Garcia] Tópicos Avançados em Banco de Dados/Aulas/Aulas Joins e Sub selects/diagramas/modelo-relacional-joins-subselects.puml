@@ -1,0 +1,75 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam entity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelo relacional utilizado nos exemplos de Joins e Subconsultas
+
+entity "clientes" as clientes {
+  * id_cliente : SERIAL <<PK>>
+  --
+  nome : VARCHAR(100)
+  cidade : VARCHAR(100)
+  estado : CHAR(2)
+}
+
+entity "categorias" as categorias {
+  * id_categoria : SERIAL <<PK>>
+  --
+  nome_categoria : VARCHAR(100)
+}
+
+entity "produtos" as produtos {
+  * id_produto : SERIAL <<PK>>
+  --
+  nome_produto : VARCHAR(100)
+  preco : NUMERIC(10,2)
+  id_categoria : INTEGER <<FK>>
+}
+
+entity "pedidos" as pedidos {
+  * id_pedido : SERIAL <<PK>>
+  --
+  data_pedido : DATE
+  status : VARCHAR(30)
+  id_cliente : INTEGER <<FK>>
+}
+
+entity "itens_pedido" as itens_pedido {
+  * id_pedido : INTEGER <<PK,FK>>
+  * id_produto : INTEGER <<PK,FK>>
+  --
+  quantidade : INTEGER
+  preco_unitario : NUMERIC(10,2)
+}
+
+entity "funcionarios" as funcionarios {
+  * id_funcionario : SERIAL <<PK>>
+  --
+  nome : VARCHAR(100)
+  cargo : VARCHAR(50)
+  id_supervisor : INTEGER <<FK>>
+}
+
+clientes ||--o{ pedidos : realiza
+pedidos ||--|{ itens_pedido : contém
+produtos ||--o{ itens_pedido : compõe
+categorias ||--o{ produtos : classifica
+funcionarios ||--o{ funcionarios : supervisiona (SELF JOIN)
+
+@enduml

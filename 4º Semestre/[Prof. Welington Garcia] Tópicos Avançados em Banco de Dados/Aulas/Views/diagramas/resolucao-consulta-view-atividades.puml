@@ -1,0 +1,44 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Resolução de uma consulta sobre uma View comum
+
+start
+:Aplicação executa SELECT sobre a view;
+:PostgreSQL localiza a definição da view;
+:Definição da view é integrada ao plano de execução;
+:Tabelas reais são acessadas conforme o plano;
+if (View tem WITH CHECK OPTION\ne operação é INSERT/UPDATE?) then (sim)
+  :Verifica se a linha resultante\nainda satisfaz o filtro da view;
+  if (Satisfaz o filtro?) then (sim)
+    :Operação é aplicada na tabela base;
+  else (não)
+    :Operação é rejeitada;
+    stop
+  endif
+else (não)
+  :Resultado é retornado ao cliente;
+endif
+:Dados consolidados são exibidos ao usuário;
+stop
+
+@enduml
