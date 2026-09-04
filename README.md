@@ -68,22 +68,37 @@ graph TD
 
 ```text
 [Prof. Nome] Nome da Disciplina/
-├── README.md                  Guia da matéria + diagrama Mermaid
-├── Aulas/                     Anúncios, materiais didáticos e referências
-├── Trabalhos/                 Enunciado original + código-fonte resolvido
-├── Provas/                    Avaliações semestrais com gabaritos
-└── Resumos-IA/                Material de estudo — tudo em um único README
-    ├── README.md               Resumo, exercícios, simulado, cheatsheet, diagramas
+├── README.md                  Guia único da matéria — ementa, tabela de aulas/
+│                               avaliações, resumo executivo, simulado, cheatsheet
+│                               e diagramas Mermaid, tudo consolidado
+├── Aulas/
+│   └── <Nome da Aula>/
+│       ├── detalhes.md         Teoria completa + exemplos + exercícios com gabarito
+│       ├── diagramas/          Diagramas PlantUML (.puml fonte + .svg renderizado)
+│       └── (materiais originais: slides .html/.pdf/.pptx, posts do Classroom)
+├── Trabalhos/<Atividade>/      Enunciado real (extraído do .docx original) + código-fonte resolvido
+├── Provas/<Avaliação>/         Enunciado real + gabarito, quando existir localmente
+└── Resumos-IA/                 Só os formatos que exigem arquivo próprio pra funcionar
     ├── Slides-Revisao-*.pptx   Apresentação de revisão (dark mode, 16:9)
     ├── flashcards-anki.tsv     Baralho para importar no Anki
     └── dataset-estudo-qa.jsonl Dataset de perguntas e respostas
 ```
 
-`Resumos-IA/` é deliberadamente plana: resumo, exercícios comentados, simulado,
-cheatsheet e diagramas UML/Mermaid vivem dentro de um único `README.md` por matéria.
-Só ficam como arquivo separado os formatos que exigem isso pra funcionar — `.pptx`
-(PowerPoint), `.tsv` (importação no Anki) — e o `.jsonl` do dataset (formato de
-consumo por ferramenta, não de leitura em prosa).
+Cada matéria tem um único `README.md` — o antigo `Resumos-IA/README.md` foi
+incorporado a ele. Cada aula tem sua própria pasta com `detalhes.md` completo
+(não um resumo raso: teoria, exemplos práticos e exercícios com gabarito, extraídos
+do material original do professor) e uma subpasta `diagramas/` com diagramas
+PlantUML no padrão visual do acervo (skinparam customizado — cores `#3498DB` /
+`#2C3E50` / `#E8F4FD` / `#34495E`). Diagramas Mermaid pré-existentes nos READMEs
+foram preservados; PlantUML é usado para os diagramas novos, específicos de cada
+aula (ER, classes, sequência, atividades). Só ficam como arquivo separado os
+formatos que exigem isso pra funcionar — `.pptx` (PowerPoint), `.tsv` (importação
+no Anki) e o `.jsonl` do dataset (formato de consumo por ferramenta, não de leitura
+em prosa).
+
+Quando o material original de uma aula está incompleto ou indisponível localmente
+(por exemplo, um link externo que não pôde ser extraído), o `detalhes.md`
+correspondente sinaliza essa lacuna explicitamente em vez de inventar conteúdo.
 
 ---
 
@@ -95,7 +110,8 @@ consumo por ferramenta, não de leitura em prosa).
 | ![Java](https://img.shields.io/badge/Java%20%2F%20Spring-ED8B00?style=flat-square&logo=openjdk&logoColor=white) | Backend MVC, Servlets, JPA, Liquibase | Lab. de Programação III e IV |
 | ![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white) | Estruturas de dados, listas, pilhas, filas | Estrutura de Dados I |
 | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Automação e scripts de estudo | Ferramentas de apoio |
-| ![Mermaid](https://img.shields.io/badge/Mermaid-FF3670?style=flat-square&logo=mermaid&logoColor=white) | Diagramas de classe, sequência e ER | Engenharia de Software I e II |
+| ![Mermaid](https://img.shields.io/badge/Mermaid-FF3670?style=flat-square&logo=mermaid&logoColor=white) | Diagramas de classe, sequência e arquitetura (nos READMEs) | Todas as disciplinas |
+| ![PlantUML](https://img.shields.io/badge/PlantUML-925FA8?style=flat-square) | Diagramas ER, classes, sequência e atividades por aula | Todas as disciplinas |
 
 ---
 
@@ -112,10 +128,11 @@ graph LR
     Sync -- "Drive readonly" --> Files["Anexos originais"]
     Files --> Local
     Local --> AI["Pipeline Gemini 3.5"]
-    AI --> Resumo["Resumos-IA/README.md"]
+    AI --> Resumo["README.md único da matéria"]
     AI --> PPTX["Slides PPTX"]
     AI --> JSONL["Dataset JSONL"]
     AI --> Anki["Flashcards Anki"]
+    Resumo --> Curadoria["Curadoria manual: detalhes.md + diagramas PlantUML por aula"]
 ```
 
 ### Sincronização com o Google Classroom
@@ -155,9 +172,20 @@ funcionando mesmo sob limite de taxa. Por matéria, isso gera:
 | Flashcards Anki | 20–30 cartões `.tsv` prontos para importar |
 | Dataset JSONL | Pares pergunta/resposta estruturados (ver abaixo) |
 
-Os 6 primeiros itens ficam consolidados em um único `Resumos-IA/README.md` por
-matéria — só o PPTX, o TSV e o JSONL continuam como arquivo separado, por serem
-formatos que exigem isso pra funcionar.
+Os 6 primeiros itens ficam consolidados no `README.md` único de cada matéria — só
+o PPTX, o TSV e o JSONL continuam como arquivo separado, por serem formatos que
+exigem isso pra funcionar.
+
+### Curadoria manual complementar
+
+O pipeline automático gera o resumo executivo, o simulado e o cheatsheet — mas não
+substitui o `detalhes.md` de cada aula, que é escrito/revisado manualmente a partir
+dos materiais originais (slides, `.docx`, `.pdf`) para garantir conteúdo completo
+(teoria + exemplos + exercícios com gabarito) e os diagramas PlantUML específicos de
+cada aula. Essa camada de curadoria roda por fora do `classrom-api-sinc` e, como o
+gerador ainda recria as pastas fragmentadas do `Resumos-IA/` (`CheatSheets/`,
+`Resumos/`, `Simulados/`, etc.) a cada `sync`/`generate-ai`, é preciso reaplicá-la —
+ou consolidar manualmente de novo — depois de qualquer nova rodada de sincronização.
 
 ### O dataset JSONL — formato e exemplo real
 
