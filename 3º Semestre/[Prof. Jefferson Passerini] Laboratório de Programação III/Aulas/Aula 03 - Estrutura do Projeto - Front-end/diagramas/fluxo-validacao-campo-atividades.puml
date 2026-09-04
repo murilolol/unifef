@@ -1,0 +1,41 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Fluxo de validação de campo com máscara (app.js)
+
+start
+:Usuário posiciona o foco no campo "cpfcnpjpessoa" (evento focus);
+:trocaMascaraCpfCnpj("A") remove a máscara atual;
+:Usuário digita o valor sem máscara;
+:Usuário sai do campo (evento blur);
+:Valor é limpo com "unmask()";
+if (validarCpfCnpj(valor) retorna verdadeiro?) then (sim)
+  :trocaMascaraCpfCnpj(valor) aplica CPF (11 dígitos)\nou CNPJ (14 dígitos) conforme o tamanho;
+  :Campo exibido formatado;
+  stop
+else (não)
+  :Swal.fire exibe alerta "Verifique o CPF/CNPJ!";
+  :Campo permanece sem máscara para correção;
+  stop
+endif
+
+@enduml

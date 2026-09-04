@@ -1,0 +1,49 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam sequence {
+  ActorBackgroundColor #E8F4FD
+  ActorBorderColor #3498DB
+  ParticipantBackgroundColor #E8F4FD
+  ParticipantBorderColor #3498DB
+  ParticipantFontColor #2C3E50
+  LifeLineBorderColor #34495E
+  ArrowColor #34495E
+  ArrowFontColor #2C3E50
+}
+
+title Fluxo completo do CRUD de Usuário
+
+actor "Navegador" as Nav
+participant "UsuarioServlet" as Servlet
+participant "UsuarioDAO" as DAO
+database "Banco de Dados" as DB
+
+Nav -> Servlet : POST /usuarios (nome, email, id)
+alt id vazio ou "0" (novo registro)
+  Servlet -> DAO : inserir(usuario)
+  DAO -> DB : INSERT INTO usuario (nome, email) VALUES (?, ?)
+else id existente (edição)
+  Servlet -> DAO : alterar(usuario)
+  DAO -> DB : UPDATE usuario SET nome = ?, email = ? WHERE id = ?
+end
+DB --> DAO : linhas afetadas
+DAO --> Servlet : retorno da operação
+
+Nav -> Servlet : GET /usuarios?acao=excluir&id=5
+Servlet -> DAO : excluir(id)
+DAO -> DB : DELETE FROM usuario WHERE id = ?
+DB --> DAO : linhas afetadas
+DAO --> Servlet : retorno da operação
+
+Servlet -> DAO : listar()
+DAO -> DB : SELECT * FROM usuario
+DB --> DAO : ResultSet
+DAO --> Servlet : List<Usuario>
+Servlet -> Servlet : request.setAttribute("usuarios", lista)
+Servlet --> Nav : forward para listar.jsp (tabela atualizada)
+
+@enduml

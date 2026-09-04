@@ -1,0 +1,46 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam sequence {
+  ActorBackgroundColor #E8F4FD
+  ActorBorderColor #3498DB
+  ParticipantBackgroundColor #E8F4FD
+  ParticipantBorderColor #3498DB
+  ParticipantFontColor #2C3E50
+  LifeLineBorderColor #34495E
+  ArrowColor #34495E
+  ArrowFontColor #2C3E50
+}
+
+title Fluxo de abertura de conexão JDBC
+
+participant "DAO / Servlet" as DAO
+participant "Conexao.conectar()" as Conexao
+participant "Class.forName()" as Forname
+participant "DriverManager" as DM
+database "Banco de Dados" as DB
+
+DAO -> Conexao : conectar()
+Conexao -> Forname : Class.forName("com.mysql.cj.jdbc.Driver")
+alt Driver não encontrado no classpath
+  Forname --> Conexao : ClassNotFoundException
+  Conexao --> DAO : retorna null (erro tratado)
+else Driver carregado com sucesso
+  Forname --> Conexao : driver registrado
+  Conexao -> DM : getConnection(URL, USUARIO, SENHA)
+  DM -> DB : abre conexão de rede
+  alt Falha de rede ou credenciais inválidas
+    DB --> DM : erro de conexão
+    DM --> Conexao : SQLException
+    Conexao --> DAO : retorna null (erro tratado)
+  else Conexão estabelecida
+    DB --> DM : conexão ativa
+    DM --> Conexao : Connection
+    Conexao --> DAO : retorna Connection pronta para uso
+  end
+end
+
+@enduml

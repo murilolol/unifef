@@ -1,0 +1,46 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Fluxo de configuração do ambiente Java Web
+
+start
+:Instalar o JDK (17+);
+:Validar com "java -version" e "javac -version";
+:Instalar a IDE (Eclipse for Enterprise Java ou IntelliJ IDEA Ultimate);
+:Baixar e extrair o Apache Tomcat;
+:Registrar o Tomcat como servidor dentro da IDE;
+if (IDE reconhece o servidor?) then (sim)
+  :Criar projeto Web de teste (Dynamic Web Project);
+  :Publicar (Run on Server);
+  if (Página padrão carrega no navegador?) then (sim)
+    :Ambiente pronto para a Aula 02;
+    stop
+  else (não)
+    :Revisar associação do Target Runtime;
+    stop
+  endif
+else (não)
+  :Corrigir caminho de instalação do Tomcat na IDE;
+  stop
+endif
+
+@enduml

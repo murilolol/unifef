@@ -1,0 +1,45 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam activity {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontSize 12
+  BorderThickness 1.5
+  DiamondBackgroundColor #F8F9FA
+  DiamondBorderColor #2C3E50
+  DiamondFontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Fluxo de criação de um projeto Java Web
+
+start
+:File > New > Dynamic Web Project;
+:Definir nome do projeto e Target Runtime (Tomcat);
+:Gerar estrutura padrão (src/main/java, webapp, WEB-INF);
+if (Gerar web.xml automaticamente?) then (sim)
+  :Descritor de deployment criado;
+else (não)
+  :Usar apenas anotações "@WebServlet";
+endif
+:Criar pacotes "controller" e "model" em src/main/java;
+:Criar "index.jsp" em webapp/;
+:Run As > Run on Server;
+if (Página inicial responde sem erro?) then (sim)
+  :Projeto pronto para a Aula 03 (front-end);
+  stop
+else (não)
+  :Conferir Target Runtime e o web.xml;
+  stop
+endif
+
+@enduml

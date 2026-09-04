@@ -1,0 +1,53 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam class {
+  BackgroundColor #E8F4FD
+  BorderColor #3498DB
+  FontColor #2C3E50
+  FontStyle bold
+  FontSize 13
+  BorderThickness 1.5
+  ArrowColor #34495E
+}
+
+skinparam arrow {
+  Color #34495E
+  Thickness 1.2
+}
+
+title Modelo de classes — Listagem de Usuários (Aula 05)
+
+class Usuario {
+  - id : int
+  - nome : String
+  - email : String
+  + getId() : int
+  + setId(id : int)
+  + getNome() : String
+  + setNome(nome : String)
+  + getEmail() : String
+  + setEmail(email : String)
+}
+
+class UsuarioDAO {
+  + listar() : List<Usuario>
+}
+
+class Conexao {
+  + {static} conectar() : Connection
+}
+
+UsuarioDAO ..> Usuario : cria e preenche
+UsuarioDAO --> Conexao : usa para obter Connection
+
+note right of UsuarioDAO
+  listar() executa "SELECT * FROM usuario"
+  e mapeia cada linha do ResultSet
+  para um objeto Usuario.
+end note
+
+@enduml
