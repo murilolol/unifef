@@ -16,9 +16,9 @@
 
 | Aula | Tema | Código |
 | :--- | :--- | :---: |
-| [Aula 01 - Consultas Avançadas com Joins e Subselects](Aulas/Aula%2001%20-%20Consultas%20Avan%C3%A7adas%20com%20Joins%20e%20Subselects/detalhes.md) | Combinação de tabelas relacionais com JOINs e estruturação de lógica complexa com subconsultas (Subselects). | [codigo](Aulas/Aula%2001%20-%20Consultas%20Avan%C3%A7adas%20com%20Joins%20e%20Subselects/codigo) |
-| [Aula 02 - Views e Materialized Views em PostgreSQL](Aulas/Aula%2002%20-%20Views%20e%20Materialized%20Views%20em%20PostgreSQL/detalhes.md) | Consultas virtuais reutilizáveis, encapsulamento de lógica, segurança e otimização com Materialized Views | [codigo](Aulas/Aula%2002%20-%20Views%20e%20Materialized%20Views%20em%20PostgreSQL/codigo) |
-| [Aula 03 - Stored Procedures e Programacao PL pgSQL](Aulas/Aula%2003%20-%20Stored%20Procedures%20e%20Programacao%20PL%20pgSQL/detalhes.md) | Encapsulamento de regras de negocio e logica procedural no PostgreSQL utilizando PL/pgSQL. | [codigo](Aulas/Aula%2003%20-%20Stored%20Procedures%20e%20Programacao%20PL%20pgSQL/codigo) |
+| [Aula 02 - Views e Materialized Views em PostgreSQL](Aulas/Aula%2002%20-%20Views%20e%20Materialized%20Views%20em%20PostgreSQL/detalhes.md) | Construção de consultas virtuais reutilizáveis, integridade referencial com WITH CHECK OPTION, segurança de acesso e otimização física com Materialized Views no PostgreSQL. | [codigo](Aulas/Aula%2002%20-%20Views%20e%20Materialized%20Views%20em%20PostgreSQL/codigo) |
+| [Aula 03 - Stored Procedures no PostgreSQL com PL pgSQL](Aulas/Aula%2003%20-%20Stored%20Procedures%20no%20PostgreSQL%20com%20PL%20pgSQL/detalhes.md) | Programação procedural no PostgreSQL: criação de procedimentos armazenados, variáveis, controle de fluxo e gestão transacional com PL/pgSQL | [codigo](Aulas/Aula%2003%20-%20Stored%20Procedures%20no%20PostgreSQL%20com%20PL%20pgSQL/codigo) |
+| [Aula 04 - Junções e Subconsultas em PostgreSQL](Aulas/Aula%2004%20-%20Jun%C3%A7%C3%B5es%20e%20Subconsultas%20em%20PostgreSQL/detalhes.md) | Álgebra relacional aplicada, técnicas de junção de dados (JOINs), subconsultas escalares, correlacionadas e tabulares, expressões de tabela comuns (CTEs) e otimização de consultas no PostgreSQL. | [codigo](Aulas/Aula%2004%20-%20Jun%C3%A7%C3%B5es%20e%20Subconsultas%20em%20PostgreSQL/codigo) |
 
 ## Trabalhos
 
