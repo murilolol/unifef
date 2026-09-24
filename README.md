@@ -2,7 +2,7 @@
 
 > Material de estudo vivo do Bacharelado em Sistemas de Informação do Centro Universitário UniFEF: cada aula, trabalho e prova postados pelos professores no Google Classroom, documentados em profundidade, com diagramas, código resolvido e material de revisão.
 
-**Última sincronização:** 23 de setembro de 2026 às 21:58 (horário de Brasília)
+**Última sincronização:** 23 de setembro de 2026 às 22:09 (horário de Brasília)
 
 ## Sumário
 
@@ -46,13 +46,13 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 
 | Indicador | Total |
 | :--- | ---: |
-| Semestres | 1 |
-| Disciplinas | 1 |
-| Aulas documentadas | 3 |
+| Semestres | 2 |
+| Disciplinas | 8 |
+| Aulas documentadas | 6 |
 | Trabalhos e provas | 5 |
-| Arquivos de código resolvido | 16 |
-| Linhas de documentação (Markdown) | 5.712 |
-| Linguagens nos códigos | SQL |
+| Arquivos de código resolvido | 28 |
+| Linhas de documentação (Markdown) | 8.250 |
+| Linguagens nos códigos | Java, JavaScript, SQL |
 
 ## Disciplinas
 
@@ -60,13 +60,34 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 
 | Disciplina | Professor | Aulas | Trabalhos e provas | Código | Revisão |
 | :--- | :--- | :---: | :---: | :--- | :--- |
+| [Laboratório de Programação IV](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/README.md) | Jefferson Passerini | 1 | 0 | Java | - |
 | [Tópicos Avançados em Banco de Dados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/README.md) | Welington Garcia | 3 | 5 | SQL | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Simulados-Comentados.md) |
+| [Engenharia de Software II](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/README.md) | Wesley Soares | 0 | 0 | - | - |
+| [Estrutura de Dados I](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/README.md) | Wesley Soares | 0 | 0 | - | - |
+
+**Laboratório de Programação IV** - conteúdo das aulas:
+
+- [Aula 01 - Persistencia e Transacoes com Spring Data e Liquibase](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Aulas/Aula%2001%20-%20Persistencia%20e%20Transacoes%20com%20Spring%20Data%20e%20Liquibase/detalhes.md)
 
 **Tópicos Avançados em Banco de Dados** - conteúdo das aulas:
 
 - [Aula 01 - Consultas Avançadas com Joins e Subselects](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2001%20-%20Consultas%20Avan%C3%A7adas%20com%20Joins%20e%20Subselects/detalhes.md)
 - [Aula 02 - Views e Materialized Views em PostgreSQL](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2002%20-%20Views%20e%20Materialized%20Views%20em%20PostgreSQL/detalhes.md)
 - [Aula 03 - Stored Procedures e Programacao PL pgSQL](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2003%20-%20Stored%20Procedures%20e%20Programacao%20PL%20pgSQL/detalhes.md)
+
+### 3º Semestre
+
+| Disciplina | Professor | Aulas | Trabalhos e provas | Código | Revisão |
+| :--- | :--- | :---: | :---: | :--- | :--- |
+| [Banco de Dados II](3%C2%BA%20Semestre/%5BProf.%20Guilherme%20de%20Morais%5D%20Banco%20de%20Dados%20II/README.md) | Guilherme de Morais | 0 | 0 | - | - |
+| [Sistemas Operacionais](3%C2%BA%20Semestre/%5BProf.%20Guilherme%20de%20Morais%5D%20Sistemas%20Operacionais/README.md) | Guilherme de Morais | 0 | 0 | - | - |
+| [Laboratório de Programação III](3%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20III/README.md) | Jefferson Passerini | 2 | 0 | JavaScript, Java, SQL | - |
+| [Engenharia de Software I](3%C2%BA%20Semestre/%5BProf.%20Marcelo%20Boer%5D%20Engenharia%20de%20Software%20I/README.md) | Marcelo Boer | 0 | 0 | - | - |
+
+**Laboratório de Programação III** - conteúdo das aulas:
+
+- [Aula 02 - Estrutura de Projeto e Frontend em Java Web](3%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20III/Aulas/Aula%2002%20-%20Estrutura%20de%20Projeto%20e%20Frontend%20em%20Java%20Web/detalhes.md)
+- [Aula 03 - Conexão com Banco de Dados e Servlet Filters](3%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20III/Aulas/Aula%2003%20-%20Conex%C3%A3o%20com%20Banco%20de%20Dados%20e%20Servlet%20Filters/detalhes.md)
 
 ## Como estudar com este material
 
