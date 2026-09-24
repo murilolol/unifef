@@ -37,6 +37,8 @@
 
 ## Revisão
 
+- [Caderno Consolidado](Resumos-IA/Caderno-Consolidado.md): toda a matéria em um documento
+- [Simulados Comentados](Resumos-IA/Simulados-Comentados.md): questões objetivas e discursivas com gabarito
 - [Mural da Disciplina](Avisos.md): todas as postagens do Classroom em ordem cronológica
 
 ## Estrutura da pasta
