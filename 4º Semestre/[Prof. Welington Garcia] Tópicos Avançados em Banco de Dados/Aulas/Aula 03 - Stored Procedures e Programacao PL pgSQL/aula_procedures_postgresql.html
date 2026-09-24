@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula - Procedures no PostgreSQL</title>
+<style>
+    :root{
+        --bg:#f6f8fb;
+        --card:#ffffff;
+        --text:#172033;
+        --muted:#566176;
+        --accent:#2457d6;
+        --accent2:#153a9b;
+        --border:#dce3ef;
+        --code:#101827;
+        --codeText:#eaf2ff;
+        --success:#0b6b3a;
+        --warning:#8a5a00;
+    }
+    *{box-sizing:border-box}
+    body{
+        margin:0;
+        font-family:Arial, Helvetica, sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        overflow:hidden;
+    }
+    .topbar{
+        position:fixed;
+        top:0; left:0; right:0;
+        height:56px;
+        background:#fff;
+        border-bottom:1px solid var(--border);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 18px;
+        z-index:20;
+    }
+    .topbar strong{color:var(--accent2)}
+    .counter{
+        font-size:14px;
+        color:var(--muted);
+    }
+    .deck{
+        height:100vh;
+        padding-top:56px;
+    }
+    .slide{
+        display:none;
+        height:calc(100vh - 56px);
+        padding:38px 56px 90px;
+        overflow:auto;
+    }
+    .slide.active{display:block}
+    .slide-inner{
+        max-width:1200px;
+        margin:0 auto;
+    }
+    h1{
+        font-size:42px;
+        margin:0 0 18px;
+        color:var(--accent2);
+        line-height:1.15;
+    }
+    h2{
+        font-size:34px;
+        margin:0 0 20px;
+        color:var(--accent2);
+    }
+    h3{
+        font-size:24px;
+        margin:22px 0 10px;
+        color:#243a73;
+    }
+    p, li{
+        font-size:21px;
+        line-height:1.55;
+    }
+    ul{padding-left:28px}
+    .subtitle{
+        color:var(--muted);
+        font-size:24px;
+        max-width:900px;
+    }
+    .grid{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:20px;
+        margin-top:24px;
+    }
+    .card{
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:16px;
+        padding:22px;
+        box-shadow:0 4px 18px rgba(34,51,84,.06);
+    }
+    .card h3{margin-top:0}
+    .callout{
+        border-left:6px solid var(--accent);
+        background:#eef4ff;
+        padding:18px 20px;
+        border-radius:10px;
+        margin:20px 0;
+        font-size:20px;
+        line-height:1.5;
+    }
+    pre{
+        background:var(--code);
+        color:var(--codeText);
+        padding:20px;
+        border-radius:14px;
+        overflow:auto;
+        font-size:17px;
+        line-height:1.45;
+        border:1px solid #26354f;
+    }
+    code{font-family:Consolas, Monaco, monospace}
+    .diagram{
+        background:#fff;
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:20px;
+        font-family:Consolas, monospace;
+        font-size:20px;
+        line-height:1.5;
+        white-space:pre-wrap;
+    }
+    .badge{
+        display:inline-block;
+        background:#e7efff;
+        color:var(--accent2);
+        padding:7px 12px;
+        border-radius:999px;
+        font-weight:bold;
+        margin:4px 4px 4px 0;
+    }
+    .footer-controls{
+        position:fixed;
+        left:0; right:0; bottom:0;
+        background:#fff;
+        border-top:1px solid var(--border);
+        padding:12px 18px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        z-index:20;
+    }
+    .footer-controls button{
+        border:none;
+        background:var(--accent);
+        color:#fff;
+        padding:11px 18px;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:16px;
+        font-weight:bold;
+    }
+    .footer-controls button:hover{background:var(--accent2)}
+    .footer-controls button:disabled{
+        opacity:.4;
+        cursor:not-allowed;
+    }
+    .kbd{
+        font-family:Consolas,monospace;
+        background:#eef1f6;
+        border:1px solid #cfd6e2;
+        padding:3px 8px;
+        border-radius:6px;
+        font-size:14px;
+    }
+    .good{color:var(--success);font-weight:bold}
+    .warn{color:var(--warning);font-weight:bold}
+    @media(max-width:800px){
+        body{overflow:auto}
+        .slide{padding:24px 18px 100px}
+        .grid{grid-template-columns:1fr}
+        h1{font-size:32px}
+        h2{font-size:28px}
+        p,li{font-size:18px}
+        pre{font-size:14px}
+    }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <strong>Banco de Dados — PostgreSQL</strong>
+    <div class="counter"><span id="current">1</span> / <span id="total"></span></div>
+</div>
+
+<div class="deck">
+
+<section class="slide active">
+<div class="slide-inner">
+    <h1>Stored Procedures no PostgreSQL</h1>
+    <p class="subtitle">Introdução à programação no banco de dados com PL/pgSQL</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Objetivo da aula</h3>
+            <p>Compreender o conceito de procedure e aprender a criar procedimentos com parâmetros, variáveis, condições e comandos SQL.</p>
+        </div>
+        <div class="card">
+            <h3>Pré-requisitos</h3>
+            <p>SELECT, INSERT, UPDATE, DELETE, JOINs, subconsultas, views e noções básicas de modelagem relacional.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        A partir desta aula, o aluno começa a utilizar o PostgreSQL não apenas para consultar dados, mas também para implementar <strong>lógica procedural</strong> dentro do banco.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>1. O que é uma Stored Procedure?</h2>
+    <p>Uma <strong>Stored Procedure</strong> é um conjunto de instruções SQL armazenadas dentro do próprio banco de dados.</p>
+
+    <div class="diagram">
+Aplicação
+   ↓
+CALL realizar_venda(...)
+   ↓
+PostgreSQL executa
+   ├── validações
+   ├── INSERT
+   ├── UPDATE
+   ├── regras de negócio
+   └── controle da operação
+    </div>
+
+    <div class="callout">
+        Em vez de enviar vários comandos SQL separados, a aplicação pode chamar uma única procedure.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>2. Por que utilizar Procedures?</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Reutilização</h3>
+            <p>Uma mesma lógica pode ser executada diversas vezes por diferentes aplicações.</p>
+        </div>
+        <div class="card">
+            <h3>Organização</h3>
+            <p>Operações complexas podem ser centralizadas em um único procedimento.</p>
+        </div>
+        <div class="card">
+            <h3>Segurança</h3>
+            <p>É possível permitir a execução de uma procedure sem liberar acesso irrestrito às tabelas.</p>
+        </div>
+        <div class="card">
+            <h3>Regras de negócio</h3>
+            <p>Validações e operações relacionadas podem ser executadas dentro do banco.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>3. Banco utilizado na aula</h2>
+    <p>Será utilizado um pequeno banco de uma loja.</p>
+<pre><code>CREATE TABLE clientes (
+    id_cliente SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    ativo BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE produtos (
+    id_produto SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco NUMERIC(10,2) NOT NULL,
+    estoque INTEGER NOT NULL
+);</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>4. Inserindo dados de exemplo</h2>
+<pre><code>INSERT INTO clientes (nome, email)
+VALUES
+('Carlos Silva', 'carlos@email.com'),
+('Maria Souza', 'maria@email.com'),
+('João Pereira', 'joao@email.com');
+
+INSERT INTO produtos (nome, preco, estoque)
+VALUES
+('Teclado', 120.00, 20),
+('Mouse', 80.00, 30),
+('Monitor', 950.00, 10),
+('Notebook', 4500.00, 5);</code></pre>
+
+    <p>Esses registros serão utilizados para testar as procedures criadas durante a aula.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>5. Estrutura básica de uma Procedure</h2>
+<pre><code>CREATE PROCEDURE nome_da_procedure()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    -- comandos
+
+END;
+$$;</code></pre>
+
+    <div class="grid">
+        <div class="card">
+            <h3>CREATE PROCEDURE</h3>
+            <p>Cria o procedimento armazenado.</p>
+        </div>
+        <div class="card">
+            <h3>LANGUAGE plpgsql</h3>
+            <p>Define o uso da linguagem procedural do PostgreSQL.</p>
+        </div>
+        <div class="card">
+            <h3>BEGIN / END</h3>
+            <p>Delimitam o bloco de comandos.</p>
+        </div>
+        <div class="card">
+            <h3>$$</h3>
+            <p>Delimita o corpo da procedure.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>6. Primeira Procedure</h2>
+
+<pre><code>CREATE PROCEDURE cadastrar_cliente()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    INSERT INTO clientes(nome, email)
+    VALUES ('Pedro Alves', 'pedro@email.com');
+
+END;
+$$;</code></pre>
+
+    <p>Essa procedure cadastra sempre o mesmo cliente.</p>
+
+    <div class="callout">
+        É um exemplo propositalmente simples para mostrar primeiro a estrutura do procedimento.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>7. Executando com CALL</h2>
+
+<pre><code>CALL cadastrar_cliente();</code></pre>
+
+    <p>Depois da execução, podemos verificar os registros:</p>
+
+<pre><code>SELECT *
+FROM clientes;</code></pre>
+
+    <div class="callout">
+        Procedures são normalmente chamadas com <strong>CALL</strong>.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>8. Procedure com parâmetros</h2>
+
+    <p>Para tornar a procedure reutilizável, podemos receber valores como parâmetros.</p>
+
+<pre><code>CREATE PROCEDURE cadastrar_cliente(
+    p_nome VARCHAR,
+    p_email VARCHAR
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    INSERT INTO clientes(nome, email)
+    VALUES (p_nome, p_email);
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>9. Executando uma Procedure com parâmetros</h2>
+
+<pre><code>CALL cadastrar_cliente(
+    'Ana Martins',
+    'ana@email.com'
+);</code></pre>
+
+<pre><code>CALL cadastrar_cliente(
+    'Marcos Lima',
+    'marcos@email.com'
+);</code></pre>
+
+    <p class="good">Agora a mesma procedure pode cadastrar diferentes clientes.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>10. Convenção de nomes</h2>
+
+    <p>Uma prática comum é utilizar prefixos para facilitar a leitura do código.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Parâmetros</h3>
+            <p><span class="badge">p_nome</span><span class="badge">p_email</span><span class="badge">p_id_produto</span></p>
+        </div>
+        <div class="card">
+            <h3>Variáveis</h3>
+            <p><span class="badge">v_estoque</span><span class="badge">v_preco</span><span class="badge">v_total</span></p>
+        </div>
+    </div>
+
+    <div class="callout">
+        A convenção não é obrigatória, mas ajuda muito quando os nomes de colunas, parâmetros e variáveis são semelhantes.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>11. Procedure com UPDATE</h2>
+
+<pre><code>CREATE PROCEDURE alterar_preco(
+    p_id_produto INTEGER,
+    p_novo_preco NUMERIC
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    UPDATE produtos
+    SET preco = p_novo_preco
+    WHERE id_produto = p_id_produto;
+
+END;
+$$;</code></pre>
+
+<pre><code>CALL alterar_preco(1, 150.00);</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>12. Atualizando o estoque</h2>
+
+<pre><code>CREATE PROCEDURE adicionar_estoque(
+    p_id_produto INTEGER,
+    p_quantidade INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    UPDATE produtos
+    SET estoque = estoque + p_quantidade
+    WHERE id_produto = p_id_produto;
+
+END;
+$$;</code></pre>
+
+<pre><code>CALL adicionar_estoque(1, 10);</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>13. Utilizando DELETE</h2>
+
+<pre><code>CREATE PROCEDURE excluir_cliente(
+    p_id_cliente INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    DELETE FROM clientes
+    WHERE id_cliente = p_id_cliente;
+
+END;
+$$;</code></pre>
+
+<pre><code>CALL excluir_cliente(3);</code></pre>
+
+    <p class="warn">Em sistemas reais, exclusões físicas devem ser utilizadas com cuidado.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>14. Declarando variáveis</h2>
+
+    <p>O bloco <strong>DECLARE</strong> é utilizado para declarar variáveis locais.</p>
+
+<pre><code>CREATE PROCEDURE exemplo_variavel()
+LANGUAGE plpgsql
+AS $$
+DECLARE
+
+    v_quantidade INTEGER;
+
+BEGIN
+
+    SELECT COUNT(*)
+    INTO v_quantidade
+    FROM produtos;
+
+    RAISE NOTICE 'Quantidade de produtos: %',
+                 v_quantidade;
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>15. SELECT INTO</h2>
+
+    <p>O comando <strong>SELECT INTO</strong> armazena o resultado de uma consulta em uma variável.</p>
+
+<pre><code>SELECT estoque
+INTO v_estoque
+FROM produtos
+WHERE id_produto = 1;</code></pre>
+
+    <div class="diagram">
+coluna estoque
+      ↓
+SELECT
+      ↓
+v_estoque
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>16. RAISE NOTICE</h2>
+
+    <p>Utilizado para apresentar mensagens durante a execução.</p>
+
+<pre><code>RAISE NOTICE 'Olá!';</code></pre>
+
+<pre><code>RAISE NOTICE 'Estoque atual: %', v_estoque;</code></pre>
+
+    <p>O caractere <strong>%</strong> é substituído pelo valor informado.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>17. Estrutura IF</h2>
+
+<pre><code>IF condição THEN
+
+    comandos;
+
+END IF;</code></pre>
+
+    <p>Também é possível utilizar <strong>ELSE</strong>:</p>
+
+<pre><code>IF condição THEN
+
+    comandos;
+
+ELSE
+
+    comandos;
+
+END IF;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>18. Validando o estoque</h2>
+
+<pre><code>CREATE PROCEDURE retirar_estoque(
+    p_id_produto INTEGER,
+    p_quantidade INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_estoque INTEGER;
+BEGIN
+
+    SELECT estoque
+    INTO v_estoque
+    FROM produtos
+    WHERE id_produto = p_id_produto;
+
+    IF v_estoque >= p_quantidade THEN
+
+        UPDATE produtos
+        SET estoque = estoque - p_quantidade
+        WHERE id_produto = p_id_produto;
+
+        RAISE NOTICE 'Estoque atualizado.';
+
+    ELSE
+
+        RAISE NOTICE 'Estoque insuficiente.';
+
+    END IF;
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>19. Fluxo da validação</h2>
+
+    <div class="diagram">
+Receber produto e quantidade
+          ↓
+Consultar estoque atual
+          ↓
+    Estoque suficiente?
+       /         \
+     SIM         NÃO
+      ↓            ↓
+Atualizar      Mostrar
+estoque        mensagem
+    </div>
+
+    <div class="callout">
+        Aqui o banco já começa a executar uma lógica semelhante à encontrada em linguagens de programação.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>20. Utilizando ELSIF</h2>
+
+<pre><code>IF v_estoque = 0 THEN
+
+    RAISE NOTICE 'Produto sem estoque.';
+
+ELSIF v_estoque <= 5 THEN
+
+    RAISE NOTICE 'Estoque baixo.';
+
+ELSE
+
+    RAISE NOTICE 'Estoque normal.';
+
+END IF;</code></pre>
+
+    <p>O <strong>ELSIF</strong> permite testar várias condições em sequência.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>21. Atribuição de valores com :=</h2>
+
+<pre><code>v_total := v_preco * p_quantidade;</code></pre>
+
+    <p>No PL/pgSQL, o operador <strong>:=</strong> é utilizado para atribuir valores a variáveis.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Java</h3>
+<pre><code>total = preco * quantidade;</code></pre>
+        </div>
+        <div class="card">
+            <h3>PL/pgSQL</h3>
+<pre><code>v_total := v_preco * p_quantidade;</code></pre>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>22. RETURNING INTO</h2>
+
+    <p>O PostgreSQL pode retornar valores gerados por um INSERT.</p>
+
+<pre><code>INSERT INTO vendas(id_cliente, valor_total)
+VALUES (p_id_cliente, v_total)
+RETURNING id_venda INTO v_id_venda;</code></pre>
+
+    <p>Isso é particularmente útil para capturar IDs gerados automaticamente.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>23. Procedure x Function</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>FUNCTION</h3>
+            <p>Normalmente é utilizada quando se deseja calcular ou retornar algum resultado.</p>
+<pre><code>SELECT calcular_total(10, 20);</code></pre>
+        </div>
+        <div class="card">
+            <h3>PROCEDURE</h3>
+            <p>É usada principalmente para executar operações e sequências de comandos.</p>
+<pre><code>CALL registrar_venda(1, 2, 3);</code></pre>
+        </div>
+    </div>
+
+    <div class="callout">
+        Essa diferença será aprofundada posteriormente ao estudar Functions.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>24. CREATE OR REPLACE PROCEDURE</h2>
+
+    <p>Durante o desenvolvimento, podemos alterar o corpo de uma procedure sem recriá-la manualmente.</p>
+
+<pre><code>CREATE OR REPLACE PROCEDURE adicionar_estoque(
+    p_id_produto INTEGER,
+    p_quantidade INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    UPDATE produtos
+    SET estoque = estoque + p_quantidade
+    WHERE id_produto = p_id_produto;
+
+    RAISE NOTICE 'Estoque alterado.';
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>25. RAISE EXCEPTION</h2>
+
+    <p><strong>RAISE EXCEPTION</strong> gera um erro e interrompe a execução.</p>
+
+<pre><code>IF p_quantidade <= 0 THEN
+
+    RAISE EXCEPTION
+    'A quantidade deve ser maior que zero.';
+
+END IF;</code></pre>
+
+    <div class="grid">
+        <div class="card">
+            <h3>NOTICE</h3>
+            <p>Exibe uma mensagem.</p>
+        </div>
+        <div class="card">
+            <h3>EXCEPTION</h3>
+            <p>Gera erro e interrompe a operação.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>26. Validando parâmetros</h2>
+
+<pre><code>CREATE OR REPLACE PROCEDURE adicionar_estoque(
+    p_id_produto INTEGER,
+    p_quantidade INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    IF p_quantidade <= 0 THEN
+
+        RAISE EXCEPTION
+        'Quantidade inválida.';
+
+    END IF;
+
+    UPDATE produtos
+    SET estoque = estoque + p_quantidade
+    WHERE id_produto = p_id_produto;
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>27. Exemplo completo: verificar estoque</h2>
+
+<pre><code>CREATE PROCEDURE verificar_estoque(
+    p_id_produto INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_estoque INTEGER;
+BEGIN
+
+    SELECT estoque
+    INTO v_estoque
+    FROM produtos
+    WHERE id_produto = p_id_produto;
+
+    IF v_estoque = 0 THEN
+        RAISE NOTICE 'SEM ESTOQUE';
+    ELSIF v_estoque <= 5 THEN
+        RAISE NOTICE 'ESTOQUE BAIXO';
+    ELSE
+        RAISE NOTICE 'ESTOQUE NORMAL';
+    END IF;
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>28. Exemplo aplicado: transferência</h2>
+
+<pre><code>CREATE TABLE contas (
+    id_conta SERIAL PRIMARY KEY,
+    titular VARCHAR(100),
+    saldo NUMERIC(10,2)
+);</code></pre>
+
+<pre><code>INSERT INTO contas(titular, saldo)
+VALUES
+('Carlos', 2000),
+('Maria', 1000);</code></pre>
+
+    <p>Uma transferência exige que duas alterações relacionadas sejam realizadas corretamente.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>29. Procedure de transferência</h2>
+
+<pre><code>CREATE PROCEDURE transferir(
+    p_origem INTEGER,
+    p_destino INTEGER,
+    p_valor NUMERIC
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_saldo NUMERIC;
+BEGIN
+
+    SELECT saldo
+    INTO v_saldo
+    FROM contas
+    WHERE id_conta = p_origem;
+
+    IF v_saldo < p_valor THEN
+        RAISE EXCEPTION 'Saldo insuficiente.';
+    END IF;
+
+    UPDATE contas
+    SET saldo = saldo - p_valor
+    WHERE id_conta = p_origem;
+
+    UPDATE contas
+    SET saldo = saldo + p_valor
+    WHERE id_conta = p_destino;
+
+END;
+$$;</code></pre>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>30. Procedures e regras de negócio</h2>
+
+    <p>Podemos utilizar procedures para garantir regras relacionadas à consistência das operações.</p>
+
+<pre><code>IF p_quantidade <= 0 THEN
+    RAISE EXCEPTION 'Quantidade inválida.';
+END IF;
+
+IF v_estoque < p_quantidade THEN
+    RAISE EXCEPTION 'Estoque insuficiente.';
+END IF;</code></pre>
+
+    <div class="callout">
+        Isso ajuda a evitar que dados inválidos sejam gravados mesmo quando diferentes aplicações acessam o mesmo banco.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>31. Boas práticas iniciais</h2>
+
+    <ul>
+        <li>Utilizar nomes claros e descritivos.</li>
+        <li>Padronizar nomes de parâmetros e variáveis.</li>
+        <li>Validar entradas antes de alterar os dados.</li>
+        <li>Evitar procedures excessivamente grandes.</li>
+        <li>Usar <strong>RAISE EXCEPTION</strong> para situações realmente inválidas.</li>
+        <li>Testar cada procedure isoladamente.</li>
+    </ul>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>32. Exercício 1</h2>
+
+    <p>Crie uma procedure chamada:</p>
+
+<pre><code>cadastrar_produto</code></pre>
+
+    <p>Ela deverá receber:</p>
+
+    <ul>
+        <li>nome;</li>
+        <li>preço;</li>
+        <li>quantidade em estoque.</li>
+    </ul>
+
+    <p>Depois, execute a procedure e verifique o resultado com SELECT.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>33. Exercício 2</h2>
+
+    <p>Crie uma procedure chamada:</p>
+
+<pre><code>alterar_email_cliente</code></pre>
+
+    <p>Ela deverá receber:</p>
+
+    <ul>
+        <li>ID do cliente;</li>
+        <li>novo endereço de e-mail.</li>
+    </ul>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>34. Exercício 3</h2>
+
+    <p>Crie a procedure:</p>
+
+<pre><code>reduzir_preco</code></pre>
+
+    <p>Ela deverá receber o ID do produto e o percentual de desconto.</p>
+
+<pre><code>CALL reduzir_preco(1, 10);</code></pre>
+
+    <p>Se o produto custar R$ 100,00, deverá passar a custar R$ 90,00.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>35. Exercício 4</h2>
+
+    <p>Crie uma procedure chamada:</p>
+
+<pre><code>repor_estoque</code></pre>
+
+    <p>Ela deverá:</p>
+
+    <ul>
+        <li>receber o ID do produto;</li>
+        <li>receber uma quantidade;</li>
+        <li>somar a quantidade ao estoque atual;</li>
+        <li>não permitir quantidade menor ou igual a zero.</li>
+    </ul>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>36. Exercício 5</h2>
+
+    <p>Crie uma procedure:</p>
+
+<pre><code>aplicar_desconto</code></pre>
+
+    <p>Regras:</p>
+
+    <ul>
+        <li>receber ID do produto e percentual;</li>
+        <li>o percentual deve ser maior que zero;</li>
+        <li>o desconto não pode ultrapassar 50%;</li>
+        <li>utilizar <strong>RAISE EXCEPTION</strong> em caso de valor inválido.</li>
+    </ul>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>37. Desafio</h2>
+
+    <p>Crie uma procedure chamada <strong>realizar_venda</strong>.</p>
+
+    <p>Ela deverá:</p>
+
+    <ul>
+        <li>receber cliente, produto e quantidade;</li>
+        <li>validar se a quantidade é positiva;</li>
+        <li>verificar se há estoque;</li>
+        <li>calcular o total da venda;</li>
+        <li>diminuir o estoque;</li>
+        <li>apresentar uma mensagem de sucesso.</li>
+    </ul>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>38. Resumo</h2>
+
+    <div>
+        <span class="badge">CREATE PROCEDURE</span>
+        <span class="badge">CALL</span>
+        <span class="badge">PL/pgSQL</span>
+        <span class="badge">DECLARE</span>
+        <span class="badge">SELECT INTO</span>
+        <span class="badge">IF</span>
+        <span class="badge">ELSIF</span>
+        <span class="badge">RAISE NOTICE</span>
+        <span class="badge">RAISE EXCEPTION</span>
+        <span class="badge">INSERT</span>
+        <span class="badge">UPDATE</span>
+        <span class="badge">DELETE</span>
+    </div>
+
+    <div class="callout">
+        Procedures permitem transformar o PostgreSQL em um ambiente capaz de executar regras e operações complexas diretamente no banco de dados.
+    </div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+    <h2>39. Próxima aula</h2>
+
+    <h3>PL/pgSQL e Procedures — Parte 2</h3>
+
+    <ul>
+        <li>Parâmetros IN, OUT e INOUT</li>
+        <li>CASE</li>
+        <li>LOOP</li>
+        <li>WHILE</li>
+        <li>FOR</li>
+        <li>Tratamento de exceções</li>
+        <li>FOUND e ROW_COUNT</li>
+        <li>Controle transacional</li>
+        <li>COMMIT e ROLLBACK</li>
+        <li>Introdução a Functions e Triggers</li>
+    </ul>
+</div>
+</section>
+
+</div>
+
+<div class="footer-controls">
+    <button id="prev" onclick="changeSlide(-1)">← Anterior</button>
+    <div>
+        Navegação: <span class="kbd">←</span> <span class="kbd">→</span> ou <span class="kbd">Espaço</span>
+    </div>
+    <button id="next" onclick="changeSlide(1)">Próximo →</button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+let index = 0;
+
+document.getElementById('total').textContent = slides.length;
+
+function showSlide(i){
+    if(i < 0) i = 0;
+    if(i >= slides.length) i = slides.length - 1;
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    index = i;
+
+    document.getElementById('current').textContent = index + 1;
+    document.getElementById('prev').disabled = index === 0;
+    document.getElementById('next').disabled = index === slides.length - 1;
+
+    window.scrollTo(0,0);
+}
+
+function changeSlide(delta){
+    showSlide(index + delta);
+}
+
+document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' '){
+        e.preventDefault();
+        changeSlide(1);
+    }
+    if(e.key === 'ArrowLeft' || e.key === 'PageUp'){
+        e.preventDefault();
+        changeSlide(-1);
+    }
+    if(e.key === 'Home'){
+        showSlide(0);
+    }
+    if(e.key === 'End'){
+        showSlide(slides.length - 1);
+    }
+});
+
+showSlide(0);
+</script>
+
+</body>
+</html>
