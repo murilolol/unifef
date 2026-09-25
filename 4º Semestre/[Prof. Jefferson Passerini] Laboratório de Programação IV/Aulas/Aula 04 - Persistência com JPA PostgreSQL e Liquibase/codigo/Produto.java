@@ -27,10 +27,12 @@ import java.util.Objects;
  */
 @Entity
 @Table(
-        name = "produto",
-        uniqueConstraints = @UniqueConstraint(
-                name = "uk_produto_codigo_barras",
-                columnNames = "codigo_barras"))
+    name = "produto",
+    uniqueConstraints = @UniqueConstraint(
+        name = "uk_produto_codigo_barras",
+        columnNames = "codigo_barras"
+    )
+)
 public class Produto {
 
     @Id
@@ -61,9 +63,10 @@ public class Produto {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-            name = "grupo_produto_id",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "fk_produto_grupo_produto"))
+        name = "grupo_produto_id",
+        nullable = false,
+        foreignKey = @ForeignKey(name = "fk_produto_grupo_produto")
+    )
     private GrupoProduto grupo;
 
     protected Produto() {
@@ -77,12 +80,12 @@ public class Produto {
             BigDecimal valorUnitario,
             LocalDate dataCadastro) {
         this(
-                codigoBarras,
-                descricao,
-                saldoEstoque,
-                valorUnitario,
-                BigDecimal.ZERO,
-                dataCadastro);
+            codigoBarras,
+            descricao,
+            saldoEstoque,
+            valorUnitario,
+            BigDecimal.ZERO,
+            dataCadastro);
     }
 
     public Produto(
@@ -99,6 +102,20 @@ public class Produto {
         this.estoqueMinimo = validarNaoNegativo(estoqueMinimo, "Estoque mínimo não pode ser negativo");
         this.dataCadastro = Objects.requireNonNull(dataCadastro, "Data de cadastro é obrigatória");
         this.status = Status.ATIVO;
+    }
+
+    public Produto(
+            String codigoBarras,
+            String descricao,
+            BigDecimal saldoEstoque,
+            BigDecimal valorUnitario,
+            BigDecimal estoqueMinimo,
+            LocalDate dataCadastro,
+            GrupoProduto grupo) {
+        this(codigoBarras, descricao, saldoEstoque, valorUnitario, estoqueMinimo, dataCadastro);
+        if (grupo != null) {
+            associarAo(grupo);
+        }
     }
 
     public BigDecimal calcularValorEstoque() {
@@ -136,7 +153,7 @@ public class Produto {
         this.status = Status.INATIVO;
     }
 
-    void associarAo(GrupoProduto grupo) {
+    public void associarAo(GrupoProduto grupo) {
         Objects.requireNonNull(grupo, "Grupo de produto é obrigatório");
         if (this.grupo != null && this.grupo != grupo) {
             throw new IllegalStateException("Produto já pertence a outro grupo");
@@ -144,8 +161,8 @@ public class Produto {
         this.grupo = grupo;
     }
 
-    public String getCodigoBarras() { return codigoBarras; }
     public Long getId() { return id; }
+    public String getCodigoBarras() { return codigoBarras; }
     public String getDescricao() { return descricao; }
     public BigDecimal getSaldoEstoque() { return saldoEstoque; }
     public BigDecimal getValorUnitario() { return valorUnitario; }
@@ -153,6 +170,31 @@ public class Produto {
     public LocalDate getDataCadastro() { return dataCadastro; }
     public Status getStatus() { return status; }
     public GrupoProduto getGrupo() { return grupo; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produto produto = (Produto) o;
+        return Objects.equals(id, produto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", codigoBarras='" + codigoBarras + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", saldoEstoque=" + saldoEstoque +
+                ", valorUnitario=" + valorUnitario +
+                ", status=" + status +
+                '}';
+    }
 
     private static String validarTextoObrigatorio(String texto, String mensagem) {
         if (texto == null || texto.isBlank()) {

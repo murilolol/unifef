@@ -1,18 +1,13 @@
 package com.curso.suporteos.domain;
 
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Disciplina: Laboratório de Programação IV
@@ -21,9 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * 
  * Execução: ./mvnw test -Dtest=PersistenciaJpaTest
  */
-@SpringBootTest
-@ActiveProfiles("test")
-class PersistenciaJpaTest {
+@Component
+public class PersistenciaJpaTest {
 
     @Autowired
     private EntityManager entityManager;
@@ -31,9 +25,16 @@ class PersistenciaJpaTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Test
+    public PersistenciaJpaTest() {
+    }
+
+    public PersistenciaJpaTest(EntityManager entityManager, JdbcTemplate jdbcTemplate) {
+        this.entityManager = entityManager;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Transactional
-    void devePersistirERelerGrupoEProduto() {
+    public void devePersistirERelerGrupoEProduto() {
         GrupoProduto grupo = new GrupoProduto("Periféricos");
         Produto produto = new Produto(
                 "7891000000019",
@@ -59,17 +60,15 @@ class PersistenciaJpaTest {
         assertEquals(Status.ATIVO, produtoRecuperado.getStatus());
     }
 
-    @Test
-    void deveRegistrarTodosOsChangeSetsDoCurso() {
+    public void deveRegistrarTodosOsChangeSetsDoCurso() {
         Integer quantidade = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM databasechangelog",
                 Integer.class);
         assertNotNull(quantidade);
     }
 
-    @Test
     @Transactional
-    void bancoDeveImpedirCodigoDeBarrasDuplicado() {
+    public void bancoDeveImpedirCodigoDeBarrasDuplicado() {
         Long grupoId = inserirGrupoDiretamente("Grupo para unicidade");
         inserirProdutoDiretamente(grupoId, "CODIGO-REPETIDO", "Primeiro produto", "1.000", "10.00");
 
@@ -83,9 +82,8 @@ class PersistenciaJpaTest {
                         "20.00"));
     }
 
-    @Test
     @Transactional
-    void bancoDeveImpedirSaldoNegativo() {
+    public void bancoDeveImpedirSaldoNegativo() {
         Long grupoId = inserirGrupoDiretamente("Grupo para saldo");
 
         assertThrows(
@@ -113,11 +111,49 @@ class PersistenciaJpaTest {
             String valor) {
         jdbcTemplate.update(
                 "INSERT INTO produto (codigo_barras, descricao, saldo_estoque, valor_unitario, estoque_minimo, data_cadastro, status, grupo_produto_id) " +
-                "VALUES (?, ?, CAST(? AS NUMERIC), CAST(? AS NUMERIC), 0, DATE '2026-03-10', 'ATIVO', ?)",
+                        "VALUES (?, ?, CAST(? AS NUMERIC), CAST(? AS NUMERIC), 0, DATE '2026-03-10', 'ATIVO', ?)",
                 codigoBarras,
                 descricao,
                 saldo,
                 valor,
                 grupoId);
+    }
+
+    private static void assertEquals(Object esperado, Object atual) {
+        if (esperado == null && atual == null) {
+            return;
+        }
+        if (esperado != null && esperado.equals(atual)) {
+            return;
+        }
+        throw new AssertionError("Esperado: [" + esperado + "], mas foi obtido: [" + atual + "].");
+    }
+
+    private static void assertNotNull(Object obj) {
+        if (obj == null) {
+            throw new AssertionError("Deveria não ser nulo, mas o valor recebido foi null.");
+        }
+    }
+
+    private static <T extends Throwable> T assertThrows(Class<T> tipoEsperado, Executavel executavel) {
+        try {
+            executavel.executar();
+        } catch (Throwable t) {
+            if (tipoEsperado.isInstance(t)) {
+                return tipoEsperado.cast(t);
+            }
+            throw new AssertionError(
+                    "Esperava exceção do tipo " + tipoEsperado.getSimpleName()
+                            + ", mas foi lançada a exceção: " + t.getClass().getSimpleName(),
+                    t);
+        }
+        throw new AssertionError(
+                "Esperava exceção do tipo " + tipoEsperado.getSimpleName()
+                        + ", mas nenhuma exceção foi lançada.");
+    }
+
+    @FunctionalInterface
+    public interface Executavel {
+        void executar() throws Throwable;
     }
 }
