@@ -26,3 +26,8 @@ scratch/
 *.dll
 *.o
 *.obj
+
+# artefatos de compilação
+*.class
+*.o
+a.out
