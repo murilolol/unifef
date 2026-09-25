@@ -2,7 +2,7 @@
 
 > Material de estudo vivo do Bacharelado em Sistemas de Informação do Centro Universitário UniFEF: cada aula, trabalho e prova postados pelos professores no Google Classroom, documentados em profundidade, com diagramas, código resolvido e material de revisão.
 
-**Última sincronização:** 24 de setembro de 2026 às 15:53 (horário de Brasília)
+**Última sincronização:** 25 de setembro de 2026 às 00:07 (horário de Brasília)
 
 ## Sumário
 
@@ -48,10 +48,10 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 | :--- | ---: |
 | Semestres | 2 |
 | Disciplinas | 8 |
-| Aulas documentadas | 38 |
+| Aulas documentadas | 43 |
 | Trabalhos e provas | 27 |
-| Arquivos de código resolvido | 189 |
-| Linhas de documentação (Markdown) | 92.667 |
+| Arquivos de código resolvido | 201 |
+| Linhas de documentação (Markdown) | 106.743 |
 | Linguagens nos códigos | C, Java, SQL |
 
 ## Disciplinas
@@ -60,10 +60,18 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 
 | Disciplina | Professor | Aulas | Trabalhos e provas | Código | Revisão |
 | :--- | :--- | :---: | :---: | :--- | :--- |
-| [Laboratório de Programação IV](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/README.md) | Jefferson Passerini | 0 | 0 | - | - |
+| [Laboratório de Programação IV](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/README.md) | Jefferson Passerini | 5 | 0 | Java, SQL | - |
 | [Tópicos Avançados em Banco de Dados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/README.md) | Welington Garcia | 3 | 5 | SQL | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Simulados-Comentados.md) |
 | [Engenharia de Software II](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/README.md) | Wesley Soares | 7 | 3 | Java | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Resumos-IA/Simulados-Comentados.md) |
 | [Estrutura de Dados I](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/README.md) | Wesley Soares | 6 | 2 | Java | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Resumos-IA/Simulados-Comentados.md) |
+
+**Laboratório de Programação IV** - conteúdo das aulas:
+
+- [Aula 00 - GitHub e Início do Projeto Spring Boot](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Aulas/Aula%2000%20-%20GitHub%20e%20In%C3%ADcio%20do%20Projeto%20Spring%20Boot/detalhes.md)
+- [Aula 01 - Configuração de Ambiente Java Spring Boot](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Aulas/Aula%2001%20-%20Configura%C3%A7%C3%A3o%20de%20Ambiente%20Java%20Spring%20Boot/detalhes.md)
+- [Aula 02 - Spring Boot Criacao do Projeto e Fundamentos REST](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Aulas/Aula%2002%20-%20Spring%20Boot%20Criacao%20do%20Projeto%20e%20Fundamentos%20REST/detalhes.md)
+- [Aula 03 - Modelagem de Domínio com Java Puro](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Aulas/Aula%2003%20-%20Modelagem%20de%20Dom%C3%ADnio%20com%20Java%20Puro/detalhes.md)
+- [Aula 04 - Persistência com JPA PostgreSQL e Liquibase](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Aulas/Aula%2004%20-%20Persist%C3%AAncia%20com%20JPA%20PostgreSQL%20e%20Liquibase/detalhes.md)
 
 **Tópicos Avançados em Banco de Dados** - conteúdo das aulas:
 
