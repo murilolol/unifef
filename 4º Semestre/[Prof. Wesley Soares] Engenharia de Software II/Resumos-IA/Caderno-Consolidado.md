@@ -1,933 +1,184 @@
-# Engenharia de Software II: Manual Integrado de Engenharia de Software e Modelagem de Sistemas
+# Guia de Estudos Integrado: Engenharia de Software II
 
-**Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
-**Curso:** Bacharelado em Sistemas de Informação (4º Semestre)  
-**Disciplina:** Engenharia de Software II  
-**Docente Responsável:** Prof. Ms. Wesley Soares de Souza  
-**Finalidade:** Guia Exaustivo de Estudos, Referência Técnica e Caderno de Teoria e Prática
+## 1. Visão Geral da Disciplina, Avaliação e Ciclo de Vida do Projeto de Software
 
----
+### 1.1 Informações Institucionais e Corpo Docente
 
-## Apresentação da Disciplina e do Corpo Docente
+A disciplina de **Engenharia de Software II** integra a matriz curricular do 4º Semestre do curso de Bacharelado em Sistemas de Informação do Centro Universitário de Santa Fé do Sul (UniFEF). O componente curricular é conduzido pelo docente:
 
-A disciplina de Engenharia de Software II tem como missão consolidar a transição entre a compreensão analítica das necessidades de negócio e a concepção arquitetural e detalhada de soluções computacionais robustas, escaláveis e manuteníveis. O curso aborda desde os métodos formais de elicitação de requisitos e priorização de escopo até a modelagem estrutural orientada a objetos (UML 2.5), padrões de arquitetura clássicos e modernos, e princípios de qualidade de código.
+- **Professor:** Prof. Ms. Wesley Soares de Souza.
+- **Formação Acadêmica:** Bacharel em Sistemas de Informação pela Fundação Educacional de Fernandópolis (F.E.F - UniFEF), Pós-graduado em Gestão de Banco de Dados e Mestre em Engenharia de Software pela Universidade Federal do Pampa (UNIPAMPA - RS).
+- **Atuação Profissional:** Engenheiro de Software Sênior com mais de 15 anos de experiência prática na concepção, arquitetura e sustentação de sistemas corporativos escaláveis e de missão crítica, com atuação no ensino superior desde 2014.
 
-### Perfil do Docente
-A disciplina é estruturada e ministrada pelo **Prof. Ms. Wesley Soares de Souza**:
-- **Atuação na Indústria:** Engenheiro de Software Sênior com mais de 15 anos de experiência contínua no desenvolvimento de sistemas corporativos distribuídos, arquiteturas escaláveis e aplicações de missão crítica.
-- **Carreira Docente:** Professor no ensino superior desde 2014, acumulando passagens pelo Grupo Kroton (Anhanguera), Faculdade de Tecnologia (FATEC) de Jales e Instituto Federal de Educação, Ciência e Tecnologia de São Paulo (IFSP) – Câmpus Votuporanga.
-- **Formação Acadêmica:**
-  - Bacharel em Sistemas de Informação pelo Centro Universitário de Santa Fé do Sul (UniFEF).
-  - Pós-graduado em Gestão e Administração de Banco de Dados.
-  - Mestre em Engenharia de Software pela Universidade Federal do Pampa (UNIPAMPA - RS).
+A proposta pedagógica da disciplina estabelece um diálogo permanente entre o rigor conceitual da academia e os padrões técnicos consolidados na indústria de software, preparando o futuro bacharel para enfrentar a complexidade inerente ao ciclo de vida de aplicações corporativas.
 
-A sinergia entre o rigor acadêmico e as práticas consolidadas da indústria de software norteia todo o conteúdo programático, desmistificando abordagens puramente teóricas e enfatizando decisões de design justificáveis perante custos, prazos e atributos de qualidade.
+### 1.2 Conteúdo Programático Bimestral e Critérios de Avaliação
 
-### Estrutura do Projeto Integrador da Disciplina (PJ)
-Ao longo do semestre, os acadêmicos desenvolvem em equipes obrigatórias e fixas de **três integrantes** um projeto prático que simula a esteira de desenvolvimento de um produto corporativo:
+O programa de ensino distribui-se em dois blocos temáticos complementares:
+
+- **Primeiro Bimestre:** Fundamentos da fase de projeto; processos e engenharia de requisitos; técnicas de elicitação e levantamento; modelagem e especificação de requisitos; introdução à arquitetura de software e seus estilos/padrões; entrega da 1ª Etapa do Projeto Integrador.
+- **Segundo Bimestre:** Projeto detalhado de software e princípios de design orientado a objetos; padrões de projeto GoF (criacionais, estruturais e comportamentais); anomalias de código (*code smells*), métricas de acoplamento/coesão e técnicas de refatoração; componentização e reúso; garantia de qualidade através de testes automatizados (unitários, integração e ponta a ponta); integração contínua (CI), contêineres e pipelines de entrega contínua (CD); entrega da 2ª Etapa (Final) do Projeto Integrador.
+
+A avaliação do rendimento escolar balanceia a aferição individual teórica e conceitual com a capacidade de aplicação prática e colaborativa em equipe:
+
+- **AV1 (Avaliação 1):** Prova individual sem consulta sobre os tópicos do 1º bimestre.
+- **AV2 (Avaliação 2):** Prova individual sem consulta sobre os tópicos do 2º bimestre.
+- **PJ (Projeto de Software Integrador):** Trabalho prático desenvolvido em grupo ao longo do semestre.
+
+A Nota Final semestral é calculada pela média aritmética ponderada dos dois bimestres, atribuindo peso de 60% para as provas individuais e 40% para o projeto prático:
+
+```text
+Nota Bimestre 1 = (AV1 * 0.6) + (PJ * 0.4)
+Nota Bimestre 2 = (AV2 * 0.6) + (PJ * 0.4)
+
+Nota Final = (Nota Bimestre 1 + Nota Bimestre 2) / 2
+```
+
+### 1.3 Projeto Integrador da Disciplina (PJ)
+
+O Projeto Integrador consolida a espinha dorsal prática do curso. Os estudantes vivenciam a dinâmica real de times de desenvolvimento de software, operando sob restrições técnicas, prazos delimitados e divisão formal de responsabilidades.
+
+- **Formação de Equipes:** Grupos compostos obrigatoriamente por **3 integrantes**.
+- **Dinâmica de Papéis:** Cada integrante assume atribuições alinhadas a perfis da indústria: analista de requisitos/negócios, arquiteto de software e engenheiro de implementação/qualidade.
 
 ```mermaid
 flowchart TD
-    subgraph Fase1["Etapa 1: Engenharia de Requisitos"]
-        E1["Identificação do Problema e Contexto"] --> E2["Mapeamento e Classificação de Stakeholders"]
-        E2 --> E3["Elicitação Ativa de Requisitos"]
-        E3 --> E4["Especificação, MoSCoW e Casos de Uso"]
+    subgraph Fase1["1ª Etapa: Engenharia de Requisitos"]
+        E1["Identificação do Problema e Contexto"] --> E2["Mapeamento de Stakeholders"]
+        E2 --> E3["Elicitação e Técnicas de Coleta"]
+        E3 --> E4["Especificação e Modelagem de Requisitos"]
     end
 
-    subgraph Fase2["Etapa 2: Arquitetura e Projeto Detalhado"]
-        A1["Definição da Arquitetura do Sistema"] --> A2["Modelagem Estrutural: Classes e Relações"]
-        A2 --> A3["Aplicação de Padrões de Projeto GoF"]
-        A3 --> A4["Componentização, Qualidade e Refatoração"]
+    subgraph Fase2["2ª Etapa: Arquitetura e Projeto Detalhado"]
+        A1["Definição da Arquitetura do Sistema"] --> A2["Aplicação de Padrões de Projeto (GoF)"]
+        A2 --> A3["Estratégia de Componentização e Reúso"]
+        A3 --> A4["Detecção de Code Smells e Refatoração"]
     end
 
     Fase1 --> Fase2
 ```
 
-As áreas temáticas recomendadas para a concepção dos sistemas fictícios incluem:
-- **Comércio:** Marketplaces B2B/B2C, Order Management Systems (OMS), WMS e Gestão de Estoque.
-- **Serviços Públicos:** Portais de Ouvidoria, Gestão de Serviços Municipais e Iluminação Pública.
-- **Negócios:** Applicant Tracking Systems (ATS), ERPs financeiros e Gestão de Portfólio de Projetos.
-- **Saúde:** Prontuários Eletrônicos (PEP), Gestão Clínica e Logística Hospitalar Reversa.
-- **Educação:** Learning Management Systems (LMS) e Sistemas de Gestão Acadêmica (SGA).
-- **Logística:** Rastreamento de Frotas por Telemetria e Otimização de Rotas de Carga.
+#### Áreas Temáticas para Seleção do Escopo
 
-### Sistema de Avaliação e Composição de Notas
-A avaliação semestral combina a verificação individual de proficiência teórica e técnica com a capacidade de entrega e trabalho em equipe:
-- **AV1 (Avaliação 1):** Prova individual teórica e dissertativa sobre Engenharia de Requisitos, Elicitação, Priorização e Casos de Uso (1º Bimestre).
-- **AV2 (Avaliação 2):** Prova individual com ênfase em Projeto Orientado a Objetos, Diagrama de Classes, Padrões Arquiteturais e Padrões GoF (2º Bimestre).
-- **PJ (Projeto de Software):** Avaliação contínua dos artefatos técnicos de engenharia entregues pelo grupo nas Etapas 1 e 2.
+As equipes devem conceber um sistema fictício completo inserido em um dos seguintes domínios:
 
-A composição da média final do semestre obedece à equação canônica:
+| Domínio Temático | Exemplos de Sistemas | Escopo Típico de Requisitos |
+| :--- | :--- | :--- |
+| **Comércio** | Marketplace B2B/B2C, Gestão de Pedidos (OMS), Controle de Estoque (WMS). | Gestão de SKUs, checkout transacional, reserva de inventário e cálculo de frete. |
+| **Serviços Públicos** | Solicitação de Serviços Municipais, Iluminação Pública, Ouvidoria. | Triagem com geolocalização, SLAs de atendimento municipal e auditoria pública. |
+| **Negócios** | Plataforma de Gestão de Projetos, Recrutamento (ATS), ERP Financeiro. | Cronogramas dinâmicos, pipelines de triagem de candidatos e conciliação bancária. |
+| **Saúde** | Prontuário Eletrônico (PEP), Gestão de Clínicas, Telemedicina. | Conformidade regulatória, agendamento de consultas e sigilo de prescrições. |
+| **Educação** | Gestão de Aprendizagem (LMS), Gestão Acadêmica (SGA), Avaliação Contínua. | Matrículas, diário de classe eletrônico, submissão de tarefas e cálculo de médias. |
+| **Logística** | Rastreamento de Cargas em Tempo Real, Gestão de Frotas, Roteirização. | Roteamento em grafos, telemetria veicular e comprovação digital de entrega (POD). |
 
-$$\text{Nota Final} = \frac{[(\text{AV}_1 \times 0.6) + (\text{PJ} \times 0.4)] + [(\text{AV}_2 \times 0.6) + (\text{PJ} \times 0.4)]}{2}$$
+### 1.4 A Premissa Fundamental da Engenharia de Software
 
----
-
-## 1. O Ciclo de Vida do Projeto de Software e a Engenharia de Sistemas
-
-### O Paradoxo Análise versus Projeto: "Fazer a Coisa Certa" versus "Fazer Certo a Coisa"
-
-Na formação do engenheiro de software, a separação conceitual entre o domínio do problema e o domínio da solução é a primeira e mais determinante barreira técnica. O desenvolvimento de software é governado pelo equilíbrio de duas responsabilidades distintas:
+O professor Wesley Soares inicia a disciplina com um alerta paradigmático: **"Software não é feito em pastelaria"**. Na pastelaria tradicional, o cliente escolhe o recheio no balcão e aguarda a fritura imediata em poucos minutos. Tentar transferir essa mentalidade para o desenvolvimento de software corporativo resulta em sistemas disfuncionais, código espaguete, custos imprevistos e colapso operacional em produção.
 
 ```mermaid
 flowchart LR
-    subgraph Analise["Análise de Sistemas"]
-        A1["Fazer a Coisa Certa"]
-        A2["Domínio do Problema"]
-        A3["Foco nos Stakeholders e Negócio"]
-        A1 --- A2 --- A3
-    end
-
-    subgraph Projeto["Projeto de Software"]
-        P1["Fazer Certo a Coisa"]
-        P2["Domínio da Solução"]
-        P3["Foco em Arquitetura e Código"]
-        P1 --- P2 --- P3
-    end
-
-    Analise -->|"Alimenta com Requisitos Válidos"| Projeto
-```
-
-1. **Análise de Sistemas (Fazer a coisa certa):**
-   - **Definição:** Atividade investigativa que visa entender, isolar e formalizar as dores, restrições e objetivos do negócio sem se comprometer com decisões tecnológicas prematuras.
-   - **Motivação:** A entrega mais eficiente e elegante de um software não possui nenhum valor se o sistema resolver o problema errado ou atender a uma premissa operacional falsa.
-   - **Exemplo:** Descobrir que uma distribuidora de bebidas perde mercadorias não por falta de um aplicativo para os motoristas, mas pela ausência de conferência cega no carregamento das docas.
-   - **Contraexemplo:** Construir uma solução sofisticada baseada em microsserviços distribuídos para atender a uma necessidade inexistente de sincronização instantânea de estoque, quando os balanços são legalmente fechados em regime mensal.
-   - **Armadilha:** Deixar que as preferências técnicas da equipe de programadores (como a escolha de frameworks da moda) ditem o escopo e as regras do negócio do cliente.
-
-2. **Projeto de Software (Fazer certo a coisa):**
-   - **Definição:** Atividade de engenharia que concebe a estrutura interna, o modelo de classes, a persistência, os contratos de API, o tratamento de falhas e as características de qualidade (desempenho, escalabilidade, segurança e manutenibilidade) da solução.
-   - **Motivação:** Construir o sistema correto sem uma estrutura arquitetural disciplinada gera um monólito frágil e degradado, incapaz de evoluir sem quebrar funcionalidades consolidadas.
-   - **Exemplo:** Modelar o módulo de checkout de um comércio eletrônico isolando a lógica de negócio dos SDKs de gateways de pagamento por meio do padrão Strategy e de inversão de dependência.
-   - **Contraexemplo:** Codificar a validação de regras de faturamento e chamadas diretas a comandos SQL dentro dos eventos de clique dos botões de interface gráfica.
-   - **Armadilha:** Ignorar atributos de qualidade não funcionais (como concorrência e idempotência) sob a desculpa de entregar o escopo funcional mais rapidamente.
-
-### A Falácia da "Pastelaria" no Desenvolvimento de Software
-
-Uma das premissas introduzidas pelo Prof. Wesley Soares é a desconstrução da mentalidade de "pastelaria" no desenvolvimento corporativo:
-
-> *"Software não é feito em pastelaria, onde o cliente encosta no balcão, pede um pastel de carne, o cozinheiro joga na gordura quente e entrega em cinco minutos."*
-
-```mermaid
-flowchart TD
-    subgraph Pastelaria["Abordagem 'Pastelaria' (Antipadrão Crítico)"]
-        P1["Demanda Imediata do Cliente"] --> P2["Codificação Direta sem Análise"]
-        P2 --> P3["Acúmulo de Código Espaguete"]
-        P3 --> P4["Remendos Pontuais em Produção"]
-        P4 --> P5["Falência Estrutural e Colapso"]
+    subgraph Antipadrao["Abordagem Pastelaria (Fracasso Garantido)"]
+        direction TB
+        P1["Pedido Imediato do Cliente"] --> P2["Codificação Direta sem Análise"]
+        P2 --> P3["Remendos e Gambiarras Estruturais"]
+        P3 --> P4["Colapso e Inviabilidade Técnica"]
     end
 
     subgraph Engenharia["Abordagem da Engenharia de Software"]
-        E1["Investigação da Causa Raiz"] --> E2["Engenharia de Requisitos"]
-        E2 --> E3["Decisões Arquiteturais e Design"]
-        E3 --> E4["Construção, Testes e Integração"]
-        E4 --> E5["Evolução Contínua Sustentável"]
+        direction TB
+        E1["Diagnóstico do Negócio"] --> E2["Engenharia de Requisitos"]
+        E2 --> E3["Arquitetura e Projeto Estruturado"]
+        E3 --> E4["Construção, Testes e Qualidade"]
     end
 ```
 
-A abordagem artesanal ou de "pastelaria" ignora a natureza sistêmica do software. Enquanto um alimento frito é um bem descartável e isolado, o software corporativo opera como uma infraestrutura viva, compartilhada e cumulativa. Cada atalho de codificação sem projeto detalhado resulta em **débito técnico**, o qual gera juros na forma de bugs recorrentes, lentidão operacional e risco financeiro direto para a organização contratante.
+A engenharia de software sustenta-se no equilíbrio de duas responsabilidades complementares:
 
-### As Dez Fases do Projeto de Software
+- **Análise ("Fazer a coisa certa"):** Descobrir, refinar e validar a dor real do cliente. Um sistema construído com excelente técnica, mas que resolve o problema errado, é inútil.
+- **Projeto ("Fazer certo a coisa"):** Projetar a solução técnica de maneira modular, desacoplada, extensível, manutenível e performática. Resolver o problema certo utilizando uma arquitetura frágil gerará um passivo técnico impagável.
 
-O ciclo de vida integral de um ativo de software corporativo estrutura-se em dez etapas lógicas e iterativas:
+### 1.5 As Dez Fases do Ciclo de Vida do Projeto de Software
+
+Um projeto corporativo percorre dez fases interdependentes, sequenciais e iterativas:
 
 ```mermaid
 flowchart TD
-    F1["1. Identificação do Problema"] --> F2["2. Engenharia de Requisitos"]
-    F2 --> F3["3. Planejamento do Projeto"]
-    F3 --> F4["4. Arquitetura de Software"]
-    F4 --> F5["5. Projeto Detalhado (Design OO)"]
-    F5 --> F6["6. Implementação (Codificação)"]
-    F6 --> F7["7. Testes e Garantia da Qualidade"]
-    F7 --> F8["8. Integração e Configuração"]
-    F8 --> F9["9. Entrega e Implantação (Deploy)"]
-    F9 --> F10["10. Operação, Manutenção e Evolução"]
-    F10 -.->|"Ciclo de Feedback Contínuo"| F1
+    F1["1. Problema"] --> F2["2. Requisitos"]
+    F2 --> F3["3. Planejamento"]
+    F3 --> F4["4. Arquitetura"]
+    F4 --> F5["5. Projeto Detalhado"]
+    F5 --> F6["6. Implementação"]
+    F6 --> F7["7. Testes"]
+    F7 --> F8["8. Integração"]
+    F8 --> F9["9. Entrega (Deploy)"]
+    F9 --> F10["10. Manutenção e Evolução"]
+    F10 -.->|"Retroalimentação Contínua"| F1
 ```
 
-| Fase | Foco Técnico | Artefatos de Entrada | Artefatos Gerados |
+| Fase | Foco Central | Artefato de Entrada | Artefato de Saída |
 | :--- | :--- | :--- | :--- |
-| **1. Problema** | Isolar a dor real de negócio e demonstrar a viabilidade da intervenção computacional. | Dores de mercado, custos operacionais e ineficiências de processos manuais. | Declaração do Problema, Canvas de Proposta de Valor e Termo de Abertura. |
-| **2. Requisitos** | Elicitar, refinar, priorizar e formalizar o escopo comportamental e as restrições sistêmicas. | Entrevistas com stakeholders, observação direta e análise documental. | Documento de Especificação de Requisitos (SRS), Matriz MoSCoW e Casos de Uso. |
-| **3. Planejamento** | Estabelecer cronograma, marcos de entrega, estimativa de esforço, equipe e gestão de riscos. | Backlog priorizado de requisitos e métricas de velocidade da equipe. | Gráficos de Marcos (*Milestones*), Sprints planejadas e Matriz de Riscos. |
-| **4. Arquitetura** | Definir a estrutura macroscópica, estilos arquiteturais, tecnologias e padrões de comunicação. | Requisitos Não Funcionais críticos (SLA, escalabilidade, segurança). | Documento de Arquitetura de Software (SAD), Diagramas C4 e Visões de Componentes. |
-| **5. Projeto Detalhado** | Modelar as entidades estáticas, seus comportamentos dinâmicos, contratos e padrões de design. | Documento de arquitetura validado e requisitos funcionais detalhados. | Diagramas de Classes UML, Diagramas de Sequência e Interfaces de Serviço. |
-| **6. Implementação** | Traduzir as especificações de design em código-fonte executável, limpo e auditável. | Modelos de classes, especificações de APIs e diagramas comportamentais. | Código-fonte versionado em repositório (Git) e revisões de código (*Code Reviews*). |
-| **7. Testes** | Validar a conformidade das regras de negócio e testar limites de carga, segurança e falhas. | Código-fonte executável e critérios de aceitação formalizados. | Baterias de testes automatizados (unitários, integração e E2E) e relatórios de cobertura. |
-| **8. Integração** | Consolidar os módulos construídos em ambientes unificados e orquestrados. | Branches de código validadas e scripts de infraestrutura. | Pipelines de Integração Contínua (CI), builds automatizados e contêineres OCI. |
-| **9. Entrega** | Disponibilizar a aplicação em ambientes de homologação e produção com planos de contingência. | Imagens de contêineres aprovadas nos testes de qualidade. | Deploy automatizado (CD), changelog de release e documentação de operação. |
-| **10. Manutenção** | Monitorar o comportamento em produção, aplicar correções pontuais e suportar a evolução contínua. | Métricas de telemetria (APM), logs de erros e solicitações de melhoria. | Patches corretivos, planos de refatoração e novas demandas de requisitos. |
-
-### As Sete Etapas Sequenciais e Iterativas de Projeto
-
-Na transição direta entre os requisitos e a codificação, o conteúdo da disciplina preconiza sete etapas disciplinadas de engenharia de software:
-
-```mermaid
-flowchart LR
-    E1["1. Refinamento de Requisitos"] --> E2["2. Definição da Arquitetura"]
-    E2 --> E3["3. Casos de Uso"]
-    E3 --> E4["4. Modelagem de Classes"]
-    E4 --> E5["5. Modelagem de Interações"]
-    E5 --> E6["6. Definição de Interfaces"]
-    E6 --> E7["7. Padrões de Projeto"]
-```
-
-1. **Refinamento do Modelo de Análise e Requisitos:** Lapidação das necessidades brutas, separação estrita de regras de negócio e classificação de prioridades com técnicas ágeis.
-2. **Definição da Arquitetura:** Escolha fundamentada do estilo macroestrutural (Camadas, Hexagonal, Microsserviços, Monólito Modular) e infraestrutura de persistência.
-3. **Casos de Uso:** Representação externa do sistema pela ótica dos atores, delimitando a fronteira da aplicação e os serviços de valor mensurável.
-4. **Modelagem de Classes:** Mapeamento conceitual e físico das estruturas de dados, atributos, métodos, multiplicidades e associações estruturais.
-5. **Modelagem de Interações:** Representação temporal da colaboração entre os objetos através de diagramas de sequência para atender aos fluxos dos casos de uso.
-6. **Definição de Interfaces:** Formalização dos contratos estritos de comunicação, como interfaces de tipagem em código (Java Interfaces) e contratos de dados (APIs REST/JSON).
-7. **Aplicação de Padrões de Projeto (Design Patterns):** Refinamento do acoplamento e da coesão do código através dos padrões consolidados do Gang of Four (GoF).
+| **1. Problema** | Identificar a dor real do negócio e sua viabilidade. | Dores de mercado e ineficiências operacionais. | Declaração do Problema e Proposta de Valor. |
+| **2. Requisitos** | Elicitar o que o sistema deve e não deve fazer. | Declaração do Problema e entrevistas. | Especificação de Requisitos de Software (SRS). |
+| **3. Planejamento** | Estimar escopo, cronograma, recursos e riscos. | Requisitos priorizados e capacidade da equipe. | Backlog do Produto, Cronograma e Matriz de Riscos. |
+| **4. Arquitetura** | Definir estrutura macro e atributos de qualidade. | Requisitos Não Funcionais críticos. | Documento de Arquitetura de Software (SAD). |
+| **5. Projeto** | Modelar classes, interfaces, persistência e padrões. | Diretrizes arquiteturais consolidadas. | Diagramas de Classes, Sequência e Contratos de API. |
+| **6. Implementação** | Escrever código limpo, testável e auditável. | Modelos técnicos e critérios de aceitação. | Código-fonte versionado em repositório (Git). |
+| **7. Testes** | Validar conformidade funcional e limites técnicos. | Software executável compilado. | Relatórios de cobertura de testes e logs de QA. |
+| **8. Integração** | Compilar módulos em builds automatizados unificados. | Branches locais validados pelos desenvolvedores. | Builds estáveis e imagens de contêiner validadas. |
+| **9. Entrega** | Disponibilizar a versão em ambiente operacional. | Imagens de contêiner e scripts de migração. | Release em produção e changelog documentado. |
+| **10. Manutenção** | Monitorar métricas, corrigir falhas e evoluir. | Telemetria em tempo real e chamados de suporte. | Patches corretivos e novas demandas de escopo. |
 
 ---
 
-## 2. Engenharia e Técnicas de Elicitação de Requisitos
+## 2. Paradigma Orientado a Objetos e Princípios Estruturantes de Design
 
-### Levantamento versus Elicitação: Uma Distinção Epistemológica
+### 2.1 Transição da Análise para o Projeto Orientado a Objetos
 
-Na engenharia de software, o uso das palavras "levantamento" e "elicitação" reflete posturas metodológicas distintas perante o cliente:
+A passagem da análise para o projeto é a transição entre o domínio do problema e o domínio da solução. Na análise, o analista busca entender o negócio sem se preocupar com tecnologias de implementação. No projeto, o arquiteto e o desenvolvedor traduzem esses conceitos em componentes de software executáveis.
 
-- **Levantamento de Requisitos (Requirements Gathering):** Postura passiva. Assume-se que os requisitos já existem estruturados, lapidados e organizados na mente dos usuários, bastando que o analista compareça com um bloco de notas para "recolhê-los". Essa visão é ingênua e responsável direta pelo fracasso de projetos convencionais.
-- **Elicitação de Requisitos (Requirements Elicitation):** Postura ativa e investigativa. Do latim *elicitare*, significa "provocar", "fazer sair", "trazer à luz o que está latente". Reconhece que os stakeholders compreendem suas dores comerciais cotidianas, seus processos manuais e suas metas financeiras, mas raramente sabem formular requisitos de software não ambíguos. O analista atua como um investigador que desoculta regras tácitas, questiona inconsistências e modela as necessidades reais.
-
-```mermaid
-flowchart TD
-    subgraph Passiva["Abordagem Passiva: Mero Levantamento"]
-        P1["Usuário Expressa Vontades Superficiais"] --> P2["Analista Anota sem Questionar"]
-        P2 --> P3["Codificação de Desejos Conflitantes"]
-        P3 --> P4["Rejeição do Sistema em Produção"]
-    end
-
-    subgraph Ativa["Abordagem Ativa: Elicitação Rigorosa"]
-        A1["Usuário Expressa Dores e Rotinas"] --> A2["Investigação da Cadeia Causal"]
-        A2 --> A3["Descoberta de Regras Ocultas e Restrições"]
-        A3 --> A4["Modelagem, Validação e Formalização"]
-    end
-```
-
-### O Ciclo Causal: Necessidade, Problema, Contexto, Expectativa e Requisito
-
-A elicitação sistemática percorre uma cadeia causal inegociável para garantir que uma linha de código represente de fato uma solução para a empresa:
-
-```mermaid
-flowchart LR
-    N["Necessidade de Negócio"] --> P["Problema Factual"]
-    P --> C["Contexto Operacional"]
-    C --> E["Expectativa do Usuário"]
-    E --> R["Requisito de Engenharia"]
-```
-
-| Elemento da Cadeia | Conceito Técnico | Cenário Hospitalar Real (HealthTech Solutions) | Cenário de E-commerce |
-| :--- | :--- | :--- | :--- |
-| **Necessidade** | Carência primária de sustentabilidade ou evolução do negócio. | Assegurar a conformidade regulatória com a ANVISA e estancar perdas patrimoniais. | Reduzir o abandono de carrinhos de compras virtuais no momento do checkout. |
-| **Problema** | Obstáculo concreto que bloqueia a satisfação da necessidade. | Extravio de respiradores locados e equipamentos com laudo de calibração metrológica expirado. | O cliente é obrigado a preencher um formulário extenso de 30 campos antes de ver o valor do frete. |
-| **Contexto** | Cenário ambiental, tecnológico e humano onde a operação ocorre. | Atendentes recebem pedidos informais via WhatsApp e anexam ordens em planilhas manuais. | Usuários acessam via dispositivos móveis com conexões 4G instáveis em horários de pico. |
-| **Expectativa** | A imagem mental subjetiva que o usuário formula sobre o sistema. | "Gostaria de clicar em um botão e saber onde está cada aparelho na hora sem ligar para ninguém." | "Gostaria que o aplicativo calculasse a entrega automaticamente apenas digitando o CEP." |
-| **Requisito** | Especificação técnica inequívoca, mensurável, verificável e testável. | **RF04:** O sistema deve registrar a leitura de tags RFID na entrada e saída de equipamentos da quarentena. | **RF01:** O sistema deve consultar a API dos Correios e retornar as opções de frete em até 800ms após digitação de 8 dígitos de CEP. |
-
-### As Seis Perguntas Cardinais da Elicitação
-
-Diante de qualquer funcionalidade solicitada, o analista deve responder a seis questionamentos essenciais antes de abrir ferramentas de modelagem ou desenvolvimento:
-
-```mermaid
-flowchart TD
-    Q1["1. Qual problema existe? (Dor raiz vs Sintoma)"] --> Q2["2. Quem enfrenta o problema? (Mapeamento de Atores)"]
-    Q2 --> Q3["3. Como ele é resolvido hoje? (Processo As-Is)"]
-    Q3 --> Q4["4. O que o sistema deve fazer? (Comportamento To-Be)"]
-    Q4 --> Q5["5. Quais são as restrições? (Limitações Técnicas e Legais)"]
-    Q5 --> Q6["6. O que é prioridade? (Valor Imediato vs Desejo)"]
-```
-
-1. **Qual problema existe?** Foco na dor raiz. A perda de clientes é apenas um sintoma; a causa estrutural pode ser o tempo de 45 minutos para confirmar o faturamento do pedido.
-2. **Quem enfrenta o problema?** Identificação de atores primários (operadores que usam a interface), secundários (sistemas integrados de faturamento ou gateways) e terciários (auditores fiscais e gerentes).
-3. **Como ele é resolvido atualmente?** O estado atual (*As-Is*). Sistemas de software raramente nascem em um vácuo absoluto; eles substituem cadernos de papel carbonado, conversas de WhatsApp ou planilhas eletrônicas com macros frágeis.
-4. **O que o sistema precisa fazer?** As transformações de dados, validações e regras de negócio computacionais que compõem o estado futuro (*To-Be*).
-5. **Quais são as restrições?** Limites operacionais, orçamentários, de tempo e de conformidade (ex.: exigências da LGPD, normas tributárias da SEFAZ, ausência de conectividade constante nas áreas rurais).
-6. **O que é prioridade?** Separação entre o núcleo vital sem o qual a operação comercial é inviável e as funcionalidades de valor agregado ou conveniência cosmética.
-
-### Análise da Premissa de Desenvolvimento Prematuro
-
-Considere a clássica proposição analisada em sala de aula:
-> *"Se o cliente disser: 'Preciso de um sistema para melhorar meu negócio', isso é suficiente para começar a desenvolver?"*
-
-A resposta técnica da Engenharia de Software é categoricamente **não**. Iniciar a modelagem ou codificação a partir de tal declaração constitui imperícia por quatro motivos:
-1. **Inexistência de Critérios de Aceitação (*Acceptance Criteria*):** O termo "melhorar" é um conceito subjetivo. Sem métricas objetivas (ex.: "reduzir o tempo de emissão de pedidos de 12 para 2 minutos"), o projeto não possui critério de término formal nem garantia jurídica de entrega.
-2. **Propagação de Escopo Descontrolado (*Scope Creep*):** Na ausência de fronteiras explícitas, toda e qualquer funcionalidade imaginada pelo contratante nos meses subsequentes será justificada sob a premissa de que "faz parte de melhorar o negócio".
-3. **Assimetria de Conhecimento:** O cliente domina seu nicho econômico (panificação, logística hospitalar, varejo), mas desconhece regras de concorrência de banco de dados, transações ACID e integridade referencial. O desenvolvedor domina a tecnologia, mas desconhece a rotina tributária e operacional da empresa.
-4. **Automatização do Caos:** Informatizar um processo de trabalho desordenado, redundante e sem controles manuais resulta unicamente em um processo caótico automatizado, que propaga falhas e perdas financeiras em escala computacional.
-
-### Diagnóstico Estrutural: Sintoma versus Causa Raiz e os 5 Porquês
-
-A elicitação deve diagnosticar as causas profundas dos problemas organizacionais, evitando o desperdício de esforço na mitigação de sintomas superficiais.
-
-```mermaid
-flowchart TD
-    S["Sintoma Visível: Atraso de 8 dias no fechamento contábil mensal"]
-    P1["Por quê 1: Filiais demoram a enviar relatórios de despesas"]
-    P2["Por quê 2: Gerentes compilam notas físicas no último dia do mês"]
-    P3["Por quê 3: Comprovantes em papel ficam guardados em gavetas"]
-    P4["Por quê 4: Não há aplicativo corporativo de captura em tempo real"]
-    CR["Causa Raiz: Inexistência de um processo digital descentralizado com validação fiscal"]
-
-    S --> P1
-    P1 --> P2
-    P2 --> P3
-    P3 --> P4
-    P4 --> CR
-```
-
-### A Desconstrução da Ambiguidade: Transformando Termos Qualitativos em Requisitos Não Funcionais Formais
-
-Termos subjetivos frequentemente usados pelos usuários são considerados **anti-requisitos**. O trabalho do analista é refatorá-los em métricas físicas, observáveis e testáveis:
-
-| Expressão Subjetiva do Cliente | Interpretação Errada do Desenvolvedor | Refatoração em Requisito Não Funcional Formal (RNF) |
+| Critério de Comparação | Modelo de Análise | Modelo de Projeto Orientado a Objetos |
 | :--- | :--- | :--- |
-| "O sistema precisa ser rápido." | Adicionar um indicador de carregamento (spinner) na tela e achar que resolveu. | **RNF01 (Desempenho):** O tempo de resposta para a consulta paginada de produtos deve ser inferior a 1,2 segundos para o percentil 95 (p95) sob uma carga de 250 requisições simultâneas. |
-| "A interface precisa ser simples e intuitiva." | Utilizar um tema visual moderno com poucos botões. | **RNF02 (Usabilidade):** Um operador de caixa sem treinamento prévio deve concluir o registro de uma venda padrão em menos de 180 segundos após receber instruções em vídeo de 15 minutos, com taxa de erro menor que 1%. |
-| "O sistema deve ser seguro." | Proteger o acesso ao banco de dados com uma senha alfanumérica comum. | **RNF03 (Segurança):** O sistema deve implementar controle de acesso baseado em papéis (RBAC), autenticação multifator (MFA) para operações financeiras e criptografar credenciais usando Argon2id (memória de 64MB, custo de tempo 3). |
-
-### Técnicas Tradicionais e Ágeis de Elicitação
-
-```mermaid
-flowchart TD
-    T["Técnicas de Elicitação"]
-    T --> E["Entrevistas (Estruturada / Semiestruturada)"]
-    T --> Q["Questionários e Enquetes"]
-    T --> O["Observação Direta (Job Shadowing)"]
-    T --> AD["Análise Documental"]
-    T --> W["Workshops e Sessões JAD"]
-    T --> P["Prototipação Rápida"]
-```
-
-#### 1. Entrevistas
-- **Definição:** Conversação direta, formal ou informal, entre o analista e os atores do processo.
-- **Variações:**
-  - *Estruturada:* Roteiro de perguntas fechadas e sequenciais. Útil para consolidar dados quantitativos, mas inibe a descoberta de fatos imprevistos.
-  - *Semiestruturada (Padrão Recomendado):* O analista apoia-se em um conjunto de metas e tópicos essenciais, mantendo liberdade para formular perguntas investigativas conforme o entrevistado responde.
-  - *Não Estruturada:* Diálogo aberto e puramente exploratório. Indicada para fases preliminares em domínios completamente desconhecidos.
-- **A Arte das Perguntas Abertas Investigativas:**
-
-| Pergunta Fechada / Fraca (Antipadrão) | Consequência Negativa | Pergunta Aberta / Investigativa (Padrão Engenharia) | Valor Extraído para o Projeto |
-| :--- | :--- | :--- | :--- |
-| "Você precisa de um relatório de vendas?" | O cliente responde "Sim" por inércia, e a equipe gasta semanas desenvolvendo relatórios que jamais serão consultados. | "Quais decisões gerenciais você toma nas manhãs de segunda-feira e quais informações determinam essas escolhas?" | Descobre os indicadores reais (KPIs), agrupamentos de banco de dados e regras de cálculo necessárias. |
-| "O sistema pode permitir cancelamentos?" | O cliente responde afirmativamente, gerando exclusões descontroladas no banco de dados. | "Quando um pedido precisa ser cancelado, quem autoriza, quais documentos fiscais devem ser estornados e o que ocorre com o estoque?" | Revela máquinas de estados finitos, matrizes de autorização (RBAC), conciliação financeira e rastreabilidade de auditoria. |
-
-#### 2. Questionários (Surveys)
-- **Definição:** Formulação de questionários distribuídos digitalmente para coleta em larga escala.
-- **Indicação:** Populações massivas de usuários distribuídas geograficamente (ex.: 2.000 alunos de uma instituição de ensino).
-- **Vantagens:** Baixo custo marginal e quantificação estatística de tendências.
-- **Desvantagens:** Baixa taxa de retorno (tipicamente < 15%) e impossibilidade de esclarecer dúvidas ou aprofundar respostas vagas em tempo real.
-
-#### 3. Observação Direta (Etnografia e Job Shadowing)
-- **Definição:** O analista atua como uma "sombra" (*shadowing*) do operador, acompanhando o trabalho in loco sem interferir diretamente no fluxo da tarefa.
-- **O que a observação revela:**
-  - Passos automáticos e conhecimento tácito que o usuário executa por memória motora, mas esquece de relatar nas entrevistas.
-  - "Gambiarras" e atalhos operacionais (como post-its colados na moldura do monitor com códigos de exceção de produtos).
-- **Armadilha - Efeito Hawthorne:** O fenômeno psicológico em que o trabalhador altera temporariamente seu comportamento normal de trabalho simplesmente por saber que está sendo observado e cronometrado.
-
-#### 4. Análise Documental
-- **Definição:** Exame rigoroso de formulários físicos, planilhas eletrônicas, manuais de procedimentos, notas fiscais e relatórios gerados por sistemas legados.
-- **Utilidade:** Revela o modelo de dados real da empresa, formatos de campos, máscaras de validação e restrições regulatórias existentes antes de qualquer entrevista.
-
-#### 5. Workshops e JAD (Joint Application Design)
-- **Definição:** Sessões estruturadas e intensivas que reúnem no mesmo espaço analistas de sistemas, usuários operacionais e tomadores de decisão executiva.
-- **Objetivo Primário:** Mediar e arbitrar em tempo real conflitos de interesses entre departamentos distintos (ex.: o setor de Vendas exigindo cadastros com apenas dois campos para acelerar o atendimento versus o setor Financeiro exigindo validação cadastral rigorosa de CNPJ e Serasa).
-
-#### 6. Prototipação Rápida
-- **Definição:** Construção de maquetes visuais navegáveis de baixa ou média fidelidade (telas de wireframe) para validar a compreensão dos requisitos antes do início da codificação.
-- **Armadilha:** O cliente pode confundir um protótipo visual estático com um sistema funcional quase finalizado, cobrando prazos de entrega irreais para o backend.
-
-### Papéis e Comunicação: O Abismo entre Stakeholders e Analistas de Sistemas
-
-A comunicação entre o negócio e a engenharia de software exige a convivência disciplinada de duas personas complementares:
+| **Pergunta Central** | O que o sistema deve fazer? | Como o sistema fará tecnicamente? |
+| **Ponto de Vista** | Usuário, cliente e analista de negócio. | Arquiteto de software e desenvolvedor. |
+| **Nível de Abstração** | Conceitual e agnóstico de tecnologia. | Físico e lógico, atrelado a plataformas e bibliotecas. |
+| **Entregáveis Típicos** | Casos de uso, histórias de usuário e glossário. | Diagramas de classes, sequências, esquemas de banco e DTOs. |
+| **Vocabulário** | Termos do domínio (ex.: *Empréstimo*, *Reserva*). | Termos técnicos (ex.: *Controller*, *Repository*, *Pool*). |
 
 ```mermaid
 flowchart TD
-    subgraph Negocio["Visão de Negócio (Stakeholder)"]
-        S1["Dor Operacional e Financeira"]
-        S2["Vocabulário e Jargão Próprio"]
-        S3["Foco em 'O Que' Precisa Acontecer"]
+    subgraph DominioProblema["Domínio do Problema (Análise)"]
+        A1["Regras de Negócio"]
+        A2["Necessidades dos Usuários"]
+        A3["Restrições Regulatórias"]
     end
 
-    subgraph Fronteira["Canal de Engenharia de Requisitos"]
-        M1["Entrevistas, Observação e Prototipação"]
-        M2["Mediação, Desconstrução e Refatoração"]
+    subgraph DominioSolucao["Domínio da Solução (Projeto OO)"]
+        S1["Classes e Interfaces"]
+        S2["Camadas Arquiteturais e Padrões GoF"]
+        S3["Tabelas de Banco e APIs REST"]
     end
 
-    subgraph Tecnica["Visão Técnica (Analista de Sistemas)"]
-        T1["Modelagem Formal e Especificação"]
-        T2["Vocabulário Estruturado de Engenharia"]
-        T3["Foco em 'Como' o Software Garantirá a Regra"]
-    end
-
-    Negocio --> Fronteira --> Tecnica
+    DominioProblema -->|"Transição e Refinamento Técnico"| DominioSolucao
 ```
 
-- **Stakeholder (Parte Interessada):** Indivíduo ou entidade afetada direta ou indiretamente pela operação do software. Não é responsável por conceber arquiteturas nem especificar comandos técnicos; seu papel é descrever com fidelidade o processo e suas restrições operacionais.
-- **Analista de Sistemas / Engenheiro de Requisitos:** Profissional que atua como tradutor técnico. Sua responsabilidade é escutar ativamente o jargão do cliente, separar desejos supérfluos de necessidades reais e formalizar modelos claros e verificáveis que guiarão arquitetos, programadores e testadores de software.
+### 2.2 Os Pilares Fundamentais da Orientação a Objetos
 
----
+#### Abstração
 
-## 3. Priorização de Requisitos e Gerenciamento de Escopo com MoSCoW
+- **Definição:** Operação conceitual que isola aspectos essenciais de uma entidade do mundo real sob a perspectiva do sistema, descartando detalhes secundários ou irrelevantes para o contexto.
+- **Motivação:** Reduzir a complexidade cognitiva. Em um sistema de vendas, uma classe `Cliente` precisa conhecer nome, CPF e histórico financeiro, ignorando a cor dos olhos ou a altura do comprador.
+- **Exemplo:** A classe `ItemPedido` encapsula produto, quantidade e valor unitário, fornecendo a operação `calcularSubtotal()`. O consumidor dessa classe apenas requisita o cálculo, sem precisar saber se há algoritmos internos de arredondamento bancário.
+- **Contraexemplo:** Criar uma classe gigantesca `EntidadeGenerica` com centenas de atributos não filtrados, armazenando indistintamente dados cadastrais, logs de conexão de rede, parâmetros de socket e configurações de impressora.
+- **Armadilha:** Modelar detalhes transientes da interface gráfica dentro das classes do domínio de negócio (ex.: colocar o método `mudarCorDoBotao()` na classe `ContaBancaria`).
 
-### Fundamentos e Origem do Método MoSCoW
+#### Encapsulamento
 
-O método **MoSCoW** foi concebido por Dai Clegg no início da década de 1990 no âmbito do framework DSDM (*Dynamic Systems Development Method*), com o propósito de fornecer uma ferramenta ágil, rigorosa e transparente para arbitrar entregas em projetos com restrições fixas de prazo e orçamento.
-
-Em projetos de software tradicionais, prazos e custos costumam ser flexibilizados para acomodar 100% dos desejos iniciais dos clientes, resultando em estouros orçamentários crônicos. O método MoSCoW inverte essa lógica: fixa-se o tempo e a capacidade técnica da equipe, variando-se o escopo da entrega de forma planejada e priorizada.
-
-```mermaid
-flowchart TD
-    Req["Requisito Identificado"] --> Teste1{"O sistema pode operar<br/>sem este recurso?"}
-    Teste1 -- Não --> M["MUST HAVE (M)<br/>Mandatório / Vital para o MVP"]
-    Teste1 -- Sim --> Teste2{"Existe solução de contorno<br/>manual viável no curto prazo?"}
-    Teste2 -- "Sim, mas custosa/dolorosa" --> S["SHOULD HAVE (S)<br/>Alta prioridade, mas postergável"]
-    Teste2 -- "Sim, contorno simples" --> Teste3{"Gera valor incremental<br/>sem colocar em risco o prazo?"}
-    Teste3 -- Sim --> C["COULD HAVE (C)<br/>Desejável / Valor agregado"]
-    Teste3 -- Não --> W["WON'T HAVE (W)<br/>Fora do escopo da versão atual"]
-```
-
-### Categorização Rastreável: Must have, Should have, Could have, Won't have
-
-As quatro categorias do acrônimo MoSCoW possuem semântica estrita:
-
-1. **Must have (Deve ter - M):**
-   - **Definição:** Requisitos inegociáveis e vitais. Sem eles, o produto simplesmente não funciona do ponto de vista técnico ou torna-se inviável legal, regulatória e operacionalmente. Definem a espinha dorsal do **Produto Mínimo Viável (MVP)**.
-   - **Impacto da Ausência:** Cancelamento ou atraso obrigatório do lançamento do sistema.
-
-2. **Should have (Deveria ter - S):**
-   - **Definição:** Funcionalidades de altíssima prioridade e grande retorno operacional. Diferenciam-se do *Must have* porque, em caso de emergência ou limite de prazo, admitem uma alternativa temporária (contorno manual ou procedimento de retaguarda).
-   - **Impacto da Ausência:** Perda de eficiência ou atrito operacional, contornável no curto prazo até o próximo release.
-
-3. **Could have (Poderia ter - C):**
-   - **Definição:** Itens desejáveis, melhorias de conveniência ou diferenciais competitivos que causam baixo impacto no ecossistema central caso não sejam entregues na versão corrente.
-   - **Critério de Inclusão:** Apenas serão implementados se todos os itens *Must* e *Should* tiverem sido entregues e restarem tempo e capacidade ociosa na sprint.
-
-4. **Won't have this time (Não terá desta vez - W):**
-   - **Definição:** Requisitos reconhecidos pelas partes interessadas como valiosos, mas que foram conscientemente excluídos do escopo da iteração atual.
-   - **Finalidade Estratégica:** Blindar o projeto contra a corrupção de escopo (*scope creep*), estabelecendo um pacto claro de expectativas para versões futuras.
-
-### Prevenção do Scope Creep e Regras de Balanceamento
-Em termos de engenharia e esforço de desenvolvimento, uma distribuição de equipe saudável deve alocar aproximadamente:
-- **60% do esforço total em requisitos Must have;**
-- **20% do esforço em requisitos Should have;**
-- **20% do esforço distribuído em Could have.**
-
-Essa margem de 40% (Should + Could) atua como um colchão de segurança contra imprevistos técnicos, garantindo que o núcleo vital (*Must*) seja concluído e testado no prazo acordado.
-
-### Estudos de Caso Práticos e Matrizes de Decisão
-
-#### Caso 1: Plataforma Multilateral de Food Delivery
-
-| Requisito do Sistema | Categoria MoSCoW | Justificativa de Engenharia e Negócio |
-| :--- | :---: | :--- |
-| Cadastro e login de clientes, restaurantes e administradores. | **Must have** | Sem autenticação e segregação de papéis, o sistema não opera transações comerciais. |
-| Manutenção do cardápio e precificação de pratos pelo restaurante. | **Must have** | Inexistindo catálogo de produtos, o cliente não consegue selecionar pedidos. |
-| Montagem de carrinho e fechamento de pedido com cobrança digital. | **Must have** | Espinha dorsal transacional necessária para processar a conversão da compra. |
-| Atualização da máquina de estados do pedido (`Pendente` -> `Em Preparo` -> `Entregue`). | **Must have** | Sem status operacional, a cozinha não sincroniza o preparo nem o despacho. |
-| Rastreamento do pedido em tempo real via mapa (geolocalização). | **Should have** | Agrega valor crítico de usabilidade; contornável inicialmente via notificações de status de texto. |
-| Moderação de avaliações ofensivas no painel de administração. | **Should have** | Proteção jurídica da plataforma; na primeira semana, a moderação pode ser feita diretamente no banco. |
-| Chat em tempo real entre o cliente e a cozinha do restaurante. | **Could have** | Aumenta o engajamento; o contato pode ser suprido temporariamente via ligação telefônica. |
-| Programa de fidelidade gamificado com acúmulo de pontos. | **Could have** | Mecanismo de retenção excelente, mas desnecessário para viabilizar as primeiras vendas. |
-| Roteirização dinâmica por IA para múltiplos entregadores simultâneos. | **Won't have** | Complexidade matemática e de infraestrutura incompatível com o lançamento do MVP. |
-
-#### Caso 2: Sistema de Logística Reversa de Equipamentos Hospitalares (HealthTech Solutions)
-
-| Requisito do Sistema | Categoria MoSCoW | Justificativa de Engenharia e Negócio |
-| :--- | :---: | :--- |
-| Registro digital de coletas vinculando número de série e hospital. | **Must have** | Elimina a perda patrimonial de respiradores e bombas de infusão nas transferências. |
-| Bloqueio automático de liberação de equipamentos com calibração vencida. | **Must have** | Requisito regulatório sanitário mandatório pela ANVISA sob pena de interdição. |
-| Assinatura digital do recebedor na tela do aplicativo de coleta. | **Should have** | Substitui o canhoto físico; pode ser suprido temporariamente pela conferência de matrícula. |
-| Notificação automatizada de alertas de revisão metrológica por e-mail. | **Should have** | Previne o vencimento de laudos; contornável por checagem semanal em relatórios. |
-| Dashboard em tempo real com taxa de ocupação da frota de aparelhos. | **Could have** | Indicador gerencial valioso, mas compilável manualmente no fechamento da semana. |
-| Roteirização preditiva da frota de transporte com base no trânsito urbano. | **Won't have** | Exige integração avançada de tráfego, descartada na primeira release de rastreabilidade. |
-
----
-
-## 4. Modelagem de Casos de Uso com UML 2.5
-
-### Origem, Propósito e a Abordagem Caixa-Preta (Black-Box Modeling)
-
-Introduzido por Ivar Jacobson em 1986 e padronizado pela Object Management Group (OMG), o **Diagrama de Casos de Uso** compõe a visão comportamental estática da UML. Seu propósito fundamental é definir a fronteira do sistema e mapear o conjunto de serviços observáveis que o software fornece aos seus atores externos.
-
-```mermaid
-flowchart LR
-    subgraph Fora["Ambiente Externo"]
-        Ator["Ator: Usuário ou Sistema Terceiro"]
-    end
-
-    subgraph Dentro["Fronteira do Sistema (Caixa-Preta)"]
-        UC["Caso de Uso: Serviço de Negócio de Alto Nível"]
-    end
-
-    Ator ---|"Associação de Comunicação"| UC
-```
-
-- **A Abordagem Caixa-Preta (*Black-Box*):** O diagrama de casos de uso não deve expressar como o sistema faz internamente, mas **o que** ele faz da perspectiva de quem o opera. Não modela instruções SQL, laços condicionais, classes de persistência, telas específicas ou componentes de frontend.
-- **Motivação:** Estabelecer um contrato funcional compreensível tanto para diretores de empresas quanto para arquitetos e testadores de software, mitigando ambiguidades em nível de escopo.
-- **Exemplo Correto:** Um caso de uso denominado `Realizar Pedido` que expressa o objetivo completo de um consumidor em uma loja virtual.
-- **Contraexemplo:** Desenhar elipses interligadas intituladas `Abrir Janela de Login`, `Digitar Senha`, `Conectar no Oracle` e `Gravar na Tabela TB_PEDIDO`. Isso é uma decomposição procedimental que corrompe as diretrizes da UML.
-- **Armadilha:** Tratar o diagrama de casos de uso como se fosse um fluxograma de execução temporal de telas.
-
-### Elementos Estruturais da Modelagem
-
-```mermaid
-classDiagram
-    direction LR
-    class Ator {
-        <<Classifier Externo>>
-        +Papel de Negócio
-        +Origina ou Recebe Dados
-    }
-    class CasoDeUso {
-        <<Serviço Atômico>>
-        +Verbo no Infinitivo
-        +Resultado de Valor
-    }
-    class FronteiraDoSistema {
-        <<Subject Boundary>>
-        +Perímetro de Escopo
-    }
-```
-
-1. **Atores:**
-   - Representam papéis abstratos desempenhados por usuários humanos, dispositivos físicos ou sistemas de software externos.
-   - **Atores Primários:** Disparam o caso de uso para alcançar uma meta de negócio explícita (ex.: `Cliente`, `Médico`, `Operador de Caixa`).
-   - **Atores Secundários (Suporte):** Sistemas externos que respondem a requisições do sistema ou fornecem serviços de infraestrutura (ex.: `Gateway de Pagamento`, `Serviço de CEP`, `SEFAZ Autorizadora`).
-   - **Generalização de Atores:** Um ator especializado herda as associações do ator genérico e pode participar de casos de uso adicionais e exclusivos.
-
-```mermaid
-flowchart TD
-    Cliente["Ator: Cliente (Genérico)"]
-    ClienteVIP["Ator: Cliente VIP (Especializado)"]
-    ClienteVIP -->|Generalização| Cliente
-
-    UC1(["Consultar Catálogo"])
-    UC2(["Comprar Produto"])
-    UC3(["Solicitar Atendimento Exclusivo"])
-
-    Cliente --- UC1
-    Cliente --- UC2
-    ClienteVIP --- UC3
-```
-
-2. **Casos de Uso:**
-   - Unidades discretas de comportamento que representam um objetivo de usuário completo (*User Goal* segundo Alistair Cockburn).
-   - **Regra de Nomenclatura:** Iniciar obrigatoriamente com **verbo de ação no infinitivo** seguido de complemento direto contextual (ex.: `Efetuar Matrícula`, `Cancelar Assinatura`, `Aprovar Orçamento`).
-
-3. **Fronteira do Sistema (*Subject Boundary*):**
-   - Retângulo formal que circunscreve todos os casos de uso que pertencem ao escopo do software a ser construído, mantendo os atores na região externa.
-
-### Semântica e Direcionalidade dos Relacionamentos
-
-A correta aplicação das setas e estereótipos é o critério de maior peso na modelagem formal da UML:
-
-```mermaid
-flowchart TD
-    subgraph FronteiraUML["Relacionamentos entre Casos de Uso"]
-        Base(["Caso de Uso Base"])
-        Inc(["Caso de Uso Incluído"])
-        Ext(["Caso de Uso Extensor"])
-        Pai(["Caso de Uso Pai"])
-        Filho(["Caso de Uso Filho"])
-
-        Base -.->|"«include»"| Inc
-        Ext -.->|"«extend»"| Base
-        Filho -->|"Generalização"| Pai
-    end
-```
-
-#### 1. Associação Simples
-- **Definição:** Linha contínua conectando um ator a um caso de uso. Indica tráfego bidirecional de estímulos e dados.
-- **Regra:** Não utiliza pontas de seta, a menos que haja necessidade estrita de indicar fluxo unidirecional de dados.
-
-#### 2. Relacionamento Include (`<<include>>`)
-- **Semântica:** Inclusão **obrigatória e incondicional**. O caso de uso base não pode ser considerado completo sem a execução do caso incluído.
-- **Sentido da Seta:** Aponta do **Caso de Uso Base** para o **Caso de Uso Incluído** (`Base -.->|<<include>>| Incluído`).
-- **Motivação:** Fatoração de regras comuns compartilhadas por múltiplos casos de uso para evitar duplicação conceitual (princípio DRY - *Don't Repeat Yourself*).
-- **Exemplo:** `Emitir Pedido` inclui `Autenticar Usuário`.
-
-#### 3. Relacionamento Extend (`<<extend>>`)
-- **Semântica:** Extensão **opcional e condicional**. O comportamento do caso extensor é inserido no fluxo base apenas se determinadas regras de guarda forem satisfeitas.
-- **Ponto de Extensão (*Extension Point*):** Marcador declarado explicitamente no caso base indicando em qual ponto exato a lógica adicional será acoplada.
-- **Sentido da Seta:** Aponta do **Caso de Uso Extensor** para o **Caso de Uso Base** (`Extensor -.->|<<extend>>| Base`).
-- **Motivação:** Manter o fluxo principal limpo, isolando comportamentos opcionais e exceções complexas.
-- **Exemplo:** `Aplicar Cupom Promocional` estende `Finalizar Compra` no ponto de extensão `Revisão de Valores`.
-
-#### 4. Generalização / Especialização
-- **Semântica:** Semelhante à herança na orientação a objetos. O caso filho herda comportamentos e associações do caso pai, alterando ou especializando detalhes executivos.
-- **Notação:** Linha sólida com uma ponta triangular vazada apontando para o elemento genérico (pai).
-- **Exemplo:** `Pagar via Pix` e `Pagar via Cartão de Crédito` especializam o caso genérico `Pagar Pedido`.
-
-| Critério de Comparação | Inclusão (`<<include>>`) | Extensão (`<<extend>>`) | Generalização / Especialização |
-| :--- | :--- | :--- | :--- |
-| **Obrigatoriedade** | Mandatória e incondicional. | Opcional e condicional. | Herança estrutural e comportamental. |
-| **Direção do Vetor** | Da Base para o Incluído. | Do Extensor para a Base. | Do Filho para o Pai. |
-| **Ponto de Ancoragem** | Posição sequencial pré-definida. | Requer *Extension Point* explícito. | Polimorfismo / Substituição. |
-| **Autonomia do Caso Base** | Incompleto sem o incluído. | Autônomo e completo sem a extensão. | O pai define o contrato; filhos implementam. |
-
-### Granularidade: Casos de Uso Gerais versus Específicos
-
-Na modelagem de sistemas corporativos, utilizam-se dois níveis de granularidade:
-
-1. **Diagrama de Casos de Uso Geral (Visão Arquitetural Macro):**
-   - Apresenta as fronteiras do sistema, todos os atores primários e secundários, e os serviços de alto nível do negócio sem poluição de detalhes procedurais.
-   - **Objetivo:** Alinhamento estratégico e apresentação a executivos e clientes.
-
-2. **Diagrama de Casos de Uso Específico (Visão de Engenharia de Detalhe):**
-   - Focado em um subsistema ou módulo crítico (ex.: Módulo de Checkout e Faturamento).
-   - Detalha as inclusões obrigatórias (`<<include>>`), ramificações condicionais (`<<extend>>`), pontos de extensão e especializações polimórficas de pagamento.
-
-### Diagrama de Casos de Uso Geral: Plataforma Multilateral de Delivery
-
-O diagrama abaixo modela a visão macro do ecossistema de delivery de comida discutido nas Aulas 04 e 06:
-
-```mermaid
-flowchart LR
-    subgraph SistemaDelivery["Sistema de Food Delivery (Multilateral)"]
-        UC01(["UC01: Buscar Restaurantes e Pratos"])
-        UC02(["UC02: Fazer Pedido"])
-        UC03(["UC03: Acompanhar Entrega em Tempo Real"])
-        UC04(["UC04: Avaliar Pedido e Restaurante"])
-        UC05(["UC05: Manter Cardápio e Preços"])
-        UC06(["UC06: Gerenciar Comandas da Cozinha"])
-        UC07(["UC07: Despachar Pedido para Entrega"])
-        UC08(["UC08: Gerenciar Contas de Parceiros"])
-        UC09(["UC09: Moderar Avaliações"])
-        UC10(["UC10: Gerar Relatórios Financeiros e Faturamento"])
-    end
-
-    Cliente["Ator: Cliente"]
-    Restaurante["Ator: Restaurante"]
-    Admin["Ator: Administrador"]
-
-    Cliente --- UC01
-    Cliente --- UC02
-    Cliente --- UC03
-    Cliente --- UC04
-
-    Restaurante --- UC05
-    Restaurante --- UC06
-    Restaurante --- UC07
-
-    Admin --- UC08
-    Admin --- UC09
-    Admin --- UC10
-```
-
-### Diagrama de Casos de Uso Específico: Módulo de Checkout de E-Commerce
-
-O diagrama a seguir detalha as relações de dependência, inclusão e extensão do processo de fechamento de pedidos:
-
-```mermaid
-flowchart LR
-    subgraph ModuloCheckout["Subsistema de Fechamento de Vendas e Checkout"]
-        UC_Check(["UC03: Finalizar Compra"])
-        UC_Auth(["UC04: Autenticar Usuário"])
-        UC_Cupom(["UC05: Aplicar Cupom Promocional"])
-        UC_Frete(["UC11: Calcular Frete e Prazos"])
-        UC_Pag(["UC06: Realizar Pagamento"])
-        UC_Pix(["UC07: Pagar com Pix"])
-        UC_Card(["UC08: Pagar com Cartão de Crédito"])
-
-        UC_Check -.->|"«include»"| UC_Auth
-        UC_Check -.->|"«include»"| UC_Frete
-        UC_Check -.->|"«include»"| UC_Pag
-        UC_Cupom -.->|"«extend» [Ponto: Revisão]"| UC_Check
-
-        UC_Pix -->|Generalização| UC_Pag
-        UC_Card -->|Generalização| UC_Pag
-    end
-
-    Consumidor["Ator: Cliente"]
-    Gateway["Ator: Gateway de Pagamentos"]
-    Logistica["Ator: API dos Correios"]
-
-    Consumidor --- UC_Check
-    UC_Pag --- Gateway
-    UC_Frete --- Logistica
-```
-
-### Estrutura da Especificação Textual Canônica (Padrão Cockburn)
-
-O diagrama visual funciona como um índice topológico; a densidade técnica da engenharia reside na especificação textual padronizada.
-
-#### Especificação do Caso de Uso: UC03 — Finalizar Compra
-
-- **Identificador:** `UC03`
-- **Nome do Caso de Uso:** Finalizar Compra
-- **Ator Primário:** Cliente
-- **Atores Secundários:** Gateway de Pagamento, API de Logística/Correios
-- **Pré-condições:**
-  1. O cliente deve possuir uma sessão válida no aplicativo.
-  2. O carrinho de compras virtual deve conter pelo menos um produto ativo com quantidade superior a zero e saldo disponível no estoque central.
-- **Pós-condições (Garantias de Sucesso):**
-  1. O pedido é gravado no banco de dados com o estado inicial `Aguardando Pagamento`.
-  2. A reserva provisória de estoque para os itens é concretizada com tempo de vida útil (TTL) de 30 minutos.
-  3. Um código identificador alfanumérico do pedido é retornado na tela e despachado para o e-mail do cliente.
-- **Pontos de Extensão:**
-  - `Ponto de Extensão 1: Revisão de Valores` (acionado antes do cálculo final do total a pagar).
-- **Fluxo Principal (Caminho Feliz - Happy Path):**
-  1. O cliente aciona o comando "Concluir Checkout" no carrinho de compras.
-  2. O sistema verifica a identidade do cliente via inclusão obrigatória do caso de uso `UC04: Autenticar Usuário`.
-  3. O sistema solicita a seleção ou confirmação do endereço de entrega.
-  4. O cliente seleciona o endereço de entrega desejado.
-  5. O sistema aciona o caso de uso `UC11: Calcular Frete e Prazos` enviando o CEP de destino e o peso cubado total dos produtos.
-  6. O sistema exibe as opções de frete (Econômico, Expresso) e calcula o subtotal com o frete selecionado.
-  7. O sistema abre o Ponto de Extensão `Revisão de Valores`.
-  8. O sistema apresenta o resumo detalhado do pedido com valores discriminados e solicita a forma de pagamento.
-  9. O cliente opta por uma modalidade de pagamento e aciona `UC06: Realizar Pagamento`.
-  10. O sistema recebe a confirmação de transação aprovada pelo Gateway de Pagamentos.
-  11. O sistema baixa os itens do estoque físico, altera o status do pedido para `Pago - Em Separação` e emite o comprovante.
-- **Fluxos Alternativos:**
-  - **FA01: Aplicação de Cupom de Desconto (no Ponto de Extensão 1):**
-    1. O cliente digita um código promocional e clica em "Aplicar Cupom".
-    2. O sistema aciona o caso de uso estensor `UC05: Aplicar Cupom Promocional`.
-    3. O sistema valida as regras de vigência e teto mínimo do cupom.
-    4. O valor do desconto é deduzido do subtotal e a tela é atualizada.
-    5. O fluxo retorna ao passo 8 do Fluxo Principal.
-  - **FA02: Pagamento via Pix:**
-    1. No passo 9, o cliente seleciona a opção "Pix" (`UC07`).
-    2. O sistema requisita ao Gateway a geração do payload "Pix Copia e Cola" e o respectivo QRCode dinâmico.
-    3. O sistema exibe o QRCode com contador regressivo de 15 minutos e registra o pedido como `Aguardando Compensação Pix`.
-    4. O fluxo segue para a tela de monitoramento de pagamento.
-- **Fluxos de Exceção:**
-  - **FE01: Ruptura de Estoque Durante o Checkout:**
-    1. No passo 5, ao tentar realizar a reserva lógica de estoque, o sistema detecta que outro usuário comprou a última unidade do produto.
-    2. O sistema interrompe o fluxo de finalização, bloqueia a cobrança e exibe o alerta: *"O item X esgotou-se enquanto você concluía a compra"*.
-    3. O item indisponível é destacado no carrinho e o usuário é convidado a atualizar o pedido.
-  - **FE02: Recusa na Autorização de Pagamento com Cartão de Crédito:**
-    1. No passo 10, o Gateway de Pagamentos retorna status de transação negada (motivo: saldo insuficiente ou suspeita de fraude).
-    2. O sistema notifica o cliente da recusa sem registrar a baixa do estoque.
-    3. O sistema reabre a tela de escolha de formas de pagamento, permitindo trocar o cartão ou pagar via Pix.
-- **Regras de Negócio Vinculadas:**
-  - **RN01 (Cancelamento por Inatividade):** Se o pagamento de um pedido Pix não for liquidado em até 15 minutos, a reserva de estoque é desfeita e o pedido muda para `Cancelado por Expiracao`.
-  - **RN02 (Frete Grátis):** Compras com valor de produtos superior a R$ 250,00 recebem isenção de taxa de entrega para entregas no estado de São Paulo.
-
----
-
-## 5. Fundamentos do Projeto Orientado a Objetos e Diagrama de Classes
-
-### Transição da Análise para o Projeto: Da Linguagem Ubíqua às Estruturas Físicas
-
-A transição entre o modelo de análise e o modelo de projeto orientado a objetos é a mudança formal da perspectiva do problema para a perspectiva da engenharia de implementação:
-
-| Dimensão Técnica | Modelo de Análise (Requisitos / Domínio) | Modelo de Projeto Orientado a Objetos (Classes) |
-| :--- | :--- | :--- |
-| **Pergunta Central** | O que o sistema deve fornecer aos stakeholders? | Como a arquitetura de software implementará a solução? |
-| **Nível de Abstração** | Conceitual, independente de plataformas ou frameworks. | Físico e lógico, aderente à linguagem de programação e banco. |
-| **Entregáveis** | Casos de uso, matriz MoSCoW e regras de negócio. | Diagramas de Classes, contratos de interfaces e DTOs. |
-| **Vocabulário** | Termos do negócio (Ex.: `Empréstimo`, `Paciente`, `Comanda`). | Termos técnicos (Ex.: `Repository`, `Controller`, `Factory`, `ConnectionPool`). |
-
-### A UML como Linguagem de Notação versus Processos e Metodologias
-
-Uma das distinções estruturais enfatizadas pelo Prof. Wesley Soares é:
-- **A UML NÃO É:** Um processo de software, uma metodologia de gerenciamento ágil ou um guia procedimental de tarefas.
-- **A UML É:** Uma **linguagem gráfica padronizada** (vocabulário visual e regras sintáticas e semânticas formais) utilizada para visualizar, especificar, construir e documentar os artefatos de um sistema orientado a objetos.
-
-```mermaid
-flowchart LR
-    Processo["Processo de Software: Scrum / RUP / XP<br>(Define: QUEM faz, QUANDO faz e O QUE entregar)"] --> Projeto["Engenharia de Software"]
-    UML["Linguagem Notacional: UML 2.5<br>(Define: COMO desenhar e especificar a arquitetura)"] --> Projeto
-```
-
-### Modelagem Ágil no Scrum: Just-in-Time e Just-Enough versus BDUF
-
-A Engenharia de Software moderna superou a abordagem tradicional do modelo em cascata conhecida como **BDUF (Big Design Up Front)**, na qual equipes passavam meses produzindo centenas de páginas de diagramas estáticos antes de escrever o primeiro módulo de código.
-
-No desenvolvimento ágil com Scrum, a UML é utilizada segundo o princípio **Just-in-Time (JIT) e Just-Enough**:
-- Modela-se apenas o suficiente para alinhar a arquitetura da Sprint em execução.
-- Diagramas de classes atuam como plantas baixas rápidas desenhadas em quadros brancos ou no Visual Paradigm para orientar o pareamento de programadores e a construção de testes unitários.
-
-### Anatomia Estrutural do Diagrama de Classes
-
-O **Diagrama de Classes** é a espinha dorsal estática do sistema. Cada classe é representada por um retângulo dividido horizontalmente em **três compartimentos funcionais**:
-
-```mermaid
-classDiagram
-    class ContaBancaria {
-        -String numeroConta
-        #double saldo
-        +depositar(double valor) void
-        +sacar(double valor) boolean
-        ~notificarAuditoria() void
-    }
-```
-
-1. **Compartimento Superior (Nome da Classe):**
-   - Nome centralizado, substantivo no singular, grafado em **PascalCase** (ex.: `ContaCorrente`, `PedidoVenda`, `ProfissionalSaude`).
-2. **Compartimento Central (Atributos):**
-   - Expressa as variáveis que encapsulam o estado interno do objeto.
-   - Sintaxe formal: `[visibilidade] nomeAtributo : TipoDeDado [multiplicidade] = [valorPadrao]`.
-3. **Compartimento Inferior (Operações / Métodos):**
-   - Expressa o comportamento e os contratos de processamento executados pelas instâncias.
-   - Sintaxe formal: `[visibilidade] nomeMetodo([parametro : Tipo]) : TipoRetorno`.
-
-### Modificadores de Visibilidade e Mapeamento para Java
-
-A UML estabelece quatro símbolos formais de visibilidade, mapeados diretamente para modificadores de linguagens orientadas a objetos como Java:
-
-| Modificador UML | Símbolo | Palavra-chave Java | Escopo de Visibilidade e Acesso |
-| :--- | :---: | :--- | :--- |
-| **Público (Public)** | `+` | `public` | Acessível por qualquer classe em qualquer pacote da aplicação. |
-| **Protegido (Protected)**| `#` | `protected` | Acessível pela própria classe, suas subclasses (herança) e classes do mesmo pacote. |
-| **Privado (Private)** | `-` | `private` | Acessível estritamente dentro da própria classe onde foi declarado. |
-| **Pacote (Package)** | `~` | *(sem modificador)* | Acessível apenas por classes declaradas no mesmo pacote físico/lógico. |
-
-### Relacionamentos Estruturais e Comportamentais entre Classes
-
-O poder da modelagem orientada a objetos reside na capacidade de mapear conexões semânticas entre entidades com rigor técnico:
-
-```mermaid
-classDiagram
-    direction TD
-    class Motor
-    class Carro
-    class Livro
-    class Biblioteca
-    class Cliente
-    class Endereco
-    class RelatorioService
-    class DatabaseConnection
-
-    Carro *-- Motor : Composição (Todo-Parte Forte)
-    Biblioteca o-- Livro : Agregação (Todo-Parte Fraco)
-    Cliente --> Endereco : Associação Direta (1:1)
-    RelatorioService ..> DatabaseConnection : Dependência Transitória
-```
-
-#### 1. Associação Simples
-- **Definição:** Ligação estrutural entre classes onde instâncias de uma classe mantêm referências persistentes para instâncias de outra classe.
-- **Notação:** Linha sólida com indicadores de navegabilidade (setas abertas) e multiplicidades em ambas as extremidades.
-- **Multiplicidades Padronizadas:**
-  - `1`: Exatamente uma instância obrigatória.
-  - `0..1`: Zero ou uma instância (opcional).
-  - `*` ou `0..*`: Zero ou muitas instâncias (coleções: `List`, `Set`).
-  - `1..*`: Pelo menos uma instância obrigatória até muitas.
-  - `m..n`: Intervalo fixo (ex.: `2..4`).
-
-#### 2. Agregação Todo-Parte Fraca (Losango Vazio)
-- **Definição:** Relacionamento "todo-parte" onde as partes pertencem ao todo, mas **possuem ciclos de vida independentes**. Se o objeto "todo" for destruído ou excluído da memória, os objetos "parte" continuam existindo e podem ser associados a outros agregados.
-- **Exemplo Real:** Uma `Biblioteca` e seus `Livros`. Se a biblioteca for desativada, os livros continuam existindo fisicamente no acervo e podem ser doados ou transferidos para outra instituição.
-- **Notação:** Losango vazio no lado do "todo" (`Biblioteca o-- Livro`).
-
-#### 3. Composição Todo-Parte Forte (Losango Preenchido)
-- **Definição:** Relacionamento "todo-parte" de alta dependência ontológica onde **a parte depende estritamente do ciclo de vida do todo**. A parte não pode existir sem o todo; se o todo for destruído ou deletado, as partes associadas são compulsoriamente destruídas em cascata. Além disso, a parte só pode pertencer a um único todo por vez.
-- **Exemplo Real:** Um `Pedido` e seus `ItensDePedido`. Não faz nenhum sentido de negócio a existência de um "item de pedido" solto no banco de dados sem pertencer a um cabeçalho de pedido específico. Destruído o pedido, os itens extinguem-se juntos.
-- **Notação:** Losango preenchido no lado do "todo" (`Pedido *-- ItemPedido`).
-
-#### 4. Generalização / Especialização (Herança)
-- **Definição:** Relação que expressa a semântica "É UM" (*is-a*). Uma subclasse herda todos os atributos e métodos protegidos e públicos da superclasse, adicionando novas propriedades ou sobrescrevendo comportamentos polimorficamente.
-- **Notação:** Linha sólida com uma ponta triangular vazada apontando para a classe pai (`Subclasse --|> Superclasse`).
-
-#### 5. Dependência Transitória (Uso Temporário)
-- **Definição:** Relação de acoplamento fraco e efêmero. Ocorre quando uma classe consome serviços ou métodos de outra classe temporariamente durante a execução de uma operação, **sem reter uma referência de atributo em sua estrutura permanente**.
-- **Manifestação em Código:** Aparece quando uma classe recebe outra como **parâmetro de método**, instancia outra como **variável local de método** ou consome métodos estáticos.
-- **Notação:** Linha pontilhada com seta aberta (`ClasseCliente ..> ClasseServico`).
-
-| Relacionamento | Notação Gráfica UML | Força do Vínculo | Ciclo de Vida da Parte | Manifestação Típica em Java |
-| :--- | :--- | :--- | :--- | :--- |
-| **Associação** | Linha sólida (com ou sem seta) | Médio | Independente | Atributo de instância simples: `private Endereco endereco;` |
-| **Agregação** | Losango vazio no "Todo" | Moderado | Independente do Todo | Lista injetada via construtor: `this.livros = listaExterna;` |
-| **Composição** | Losango preenchido no "Todo" | Forte (Inseparável) | Morre junto com o Todo | Instanciação interna no Todo: `this.itens.add(new Item(...));` |
-| **Generalização** | Triângulo vazado apontando pro Pai | Estrutural | Herança de Tipo | Palavra-chave `extends` (ou `implements` para interfaces) |
-| **Dependência** | Linha tracejada com seta aberta | Transitório / Fraco | Efêmero (durante a execução) | Parâmetro de método: `public void gerar(PdfPrinter printer)` |
-
-### Diagrama de Classes Completo: Plataforma de Comércio Eletrônico e Vendas
-
-O diagrama a seguir consolida os conceitos estruturais da modelagem de classes para o estudo de caso de comércio eletrônico:
-
-```mermaid
-classDiagram
-    class Cliente {
-        -String cpf
-        -String nome
-        -String email
-        -LocalDate dataNascimento
-        +validarCpf() boolean
-        +getNome() String
-    }
-
-    class Endereco {
-        -String logradouro
-        -String numero
-        -String cep
-        -String cidade
-        -String estado
-        +getCepFormatado() String
-    }
-
-    class Pedido {
-        -String codigoIdentificador
-        -LocalDateTime dataHoraEmissao
-        -StatusPedido status
-        -double valorTotalCalculado
-        +adicionarItem(Produto produto, int quantidade) void
-        +calcularTotal() double
-        +cancelarPedido() void
-    }
-
-    class ItemPedido {
-        -int quantidade
-        -double precoUnitarioCongelado
-        +calcularSubtotal() double
-        +getQuantidade() int
-    }
-
-    class Produto {
-        -String sku
-        -String titulo
-        -double precoVenda
-        -int saldoEstoque
-        +reduzirEstoque(int qtd) void
-        +acrescentarEstoque(int qtd) void
-    }
-
-    class Pagamento {
-        <<Abstract>>
-        #String codigoTransacao
-        #double valorPago
-        #LocalDateTime dataProcessamento
-        +processarTransacao()* boolean
-    }
-
-    class PagamentoPix {
-        -String chavePixQRCode
-        -String payloadCopiaCola
-        +processarTransacao() boolean
-    }
-
-    class PagamentoCartao {
-        -String tokenCartaoAnonimizado
-        -int parcelas
-        +processarTransacao() boolean
-    }
-
-    class RelatorioFiscalService {
-        +emitirDanfe(Pedido pedido) byte[]
-    }
-
-    Cliente "1" --> "1..*" Endereco : possui
-    Cliente "1" <-- "0..*" Pedido : realizadoPor
-    Pedido "1" *-- "1..*" ItemPedido : compostoPor
-    ItemPedido "0..*" --> "1" Produto : referencia
-    Pedido "1" *-- "1" Pagamento : liquidadoPor
-    Pagamento <|-- PagamentoPix : especializa
-    Pagamento <|-- PagamentoCartao : especializa
-    RelatorioFiscalService ..> Pedido : consome
-```
-
-### Princípios Fundamentais de Design OO
-
-#### 1. Abstração e Encapsulamento Rigoroso (Modelo Rico versus Anêmico)
-- **Abstração:** Operação de engenharia que captura apenas os atributos e métodos essenciais para a regra de negócio, descartando minúcias operacionais irrelevantes.
-- **Encapsulamento:** Prática de blindar os estados internos de uma classe através de visibilidade privada (`private`), condicionando mutações a métodos que validam as invariantes de negócio.
-- **Armadilha do Modelo Anêmico:** Gerar métodos genéricos `getAtributo()` e `setAtributo()` para todos os campos da classe destrói o encapsulamento real, tornando os objetos meros sacos de dados abertos para manipulação descontrolada fora de seus métodos.
-- **Exemplo em Código Java (Modelo Rico com Proteção de Invariantes e Cópia Defensiva):**
+- **Definição:** Prática de agrupar o estado interno (atributos) e o comportamento (métodos) de um objeto, restringindo o acesso direto a variáveis estruturais por meio de modificadores de visibilidade para resguardar as invariantes de classe.
+- **Motivação:** Impedir que o estado interno atinja valores inválidos ou inconsistentes com as regras do negócio.
+- **Exemplo em Java:**
 
 ```java
-package br.unifef.engenharia.vendas;
+package br.unifef.engenharia.dominio;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -936,36 +187,26 @@ import java.util.List;
 public class Pedido {
     private final String codigoIdentificador;
     private double valorTotal;
-    private final List<ItemPedido> itens;
+    private final List<String> itens;
 
     public Pedido(String codigoIdentificador) {
         if (codigoIdentificador == null || codigoIdentificador.isBlank()) {
-            throw new IllegalArgumentException("Identificador de pedido e obrigatorio.");
+            throw new IllegalArgumentException("Identificador do pedido e obrigatorio.");
         }
         this.codigoIdentificador = codigoIdentificador;
         this.valorTotal = 0.0;
         this.itens = new ArrayList<>();
     }
 
-    public void registrarItem(Produto produto, int quantidade) {
-        if (produto == null) {
-            throw new IllegalArgumentException("Produto nao pode ser nulo.");
-        }
+    public void adicionarItem(String nomeProduto, double precoUnitario, int quantidade) {
         if (quantidade <= 0) {
-            throw new IllegalArgumentException("A quantidade requer valor positivo.");
+            throw new IllegalArgumentException("Quantidade deve ser superior a zero.");
         }
-
-        ItemPedido novoItem = new ItemPedido(produto, quantidade);
-        this.itens.add(novoItem);
-        this.recalcularTotais();
-    }
-
-    private void recalcularTotais() {
-        double acumulado = 0.0;
-        for (ItemPedido item : this.itens) {
-            acumulado += item.calcularSubtotal();
+        if (precoUnitario < 0.0) {
+            throw new IllegalArgumentException("Preco unitario nao pode ser negativo.");
         }
-        this.valorTotal = acumulado;
+        this.itens.add(nomeProduto + " x" + quantidade);
+        this.valorTotal += (precoUnitario * quantidade);
     }
 
     public double getValorTotal() {
@@ -976,545 +217,1517 @@ public class Pedido {
         return this.codigoIdentificador;
     }
 
-    // Protecao contra Vazamento de Referencias Mutaveis (Escaping References)
-    public List<ItemPedido> getItens() {
+    // Protecao contra mutacao externa da colecao (Escaping Reference)
+    public List<String> getItens() {
         return Collections.unmodifiableList(this.itens);
     }
 }
 ```
 
-#### 2. Herança versus Composição e Polimorfismo
-- **Princípio:** *"Favoreça a composição sobre a herança de classes"* (Princípio de Design GoF). A herança estática quebra o encapsulamento porque a subclasse fica dependente das implementações internas da classe pai (acoplamento forte).
-- **Polimorfismo:** Mecanismo pelo qual uma chamada de método é despachada dinamicamente em tempo de execução para a implementação concreta do objeto apontado pela referência polimórfica, substituindo comandos condicionais extensos (`switch/case` e `if/else`).
+- **Contraexemplo (Modelo Anêmico e Quebra de Encapsulamento):**
 
-#### 3. Baixo Acoplamento e Alta Coesão
-- **Alta Coesão:** Cada classe deve possuir uma responsabilidade única e bem definida. Uma classe que gerencia banco de dados, desenha telas e valida regras de faturamento é um antipadrão crítico conhecido como **God Class**.
-- **Baixo Acoplamento:** Módulos e classes devem minimizar o conhecimento mútuo de suas implementações internas, comunicando-se estritamente através de contratos formais e interfaces públicas.
+```java
+package br.unifef.engenharia.antipattern;
 
----
+import java.util.List;
 
-## 6. O Padrão Arquitetural Model-View-Controller no Smalltalk-80
+public class PedidoInseguro {
+    public String codigoIdentificador;
+    public double valorTotal; // Aberto para mutacao externa arbitraria: pedido.valorTotal = -9000.0;
+    public List<String> itens; // Qualquer cliente externo pode chamar pedido.itens.clear();
+}
+```
 
-### Contexto Histórico no Xerox PARC: Interfaces Multi-Janelas e o Fim da Pintura Monolítica com `Pen`
+- **Armadilhas Comuns:**
+  1. *Getters e Setters cegos:* Criar métodos get/set automáticos para todos os atributos sem validar regras de integridade equivale a tornar os campos públicos.
+  2. *Vazamento de Referências Mutáveis (Escaping References):* Retornar referências diretas de instâncias de listas (`List`), dicionários (`Map`) ou datas mutáveis (`Date`). Deve-se sempre retornar coleções imutáveis ou cópias defensivas.
 
-No final da década de 1970 e início da década de 1980, cientistas da computação no *Learning Research Group* do Xerox Palo Alto Research Center (PARC) — entre eles Alan Kay, Adele Goldberg, Dan Ingalls e Trygve Reenskaug — inventaram os elementos basilares da computação visual moderna:
-- O mouse de três botões como dispositivo primário de apontamento;
-- As interfaces gráficas de janelas sobrepostas (*bitmapped overlapping windows*);
-- A programação puramente orientada a objetos no ambiente Smalltalk-76 e Smalltalk-80.
+#### Herança (Generalização e Especialização)
 
-Antes dessa inovação, o paradigma predominante de computação era sequencial ou em lote (*batch*). Mesmo nos primeiros monitores gráficos baseados em mapa de bits, os programas desenhavam primitivas diretamente na totalidade da tela. No próprio Smalltalk, a classe de sistema primitivo `Pen` permitia que procedimentos desenhassem linhas e preenchimentos livremente pelo *framebuffer* global (`DisplayScreen`).
+- **Definição:** Mecanismo estrutural que permite a uma classe derivada (subclasse) herdar atributos e comportamentos de uma classe base (superclasse), estabelecendo uma relação conceitual de "É UM" (*is-a*).
+- **Motivação:** Compartilhar estruturas comuns e permitir a especialização gradativa de comportamento.
+- **Exemplo em Java:**
 
-**O Conflito de Tela:** Quando múltiplos programas precisam conviver simultaneamente no mesmo display — como um navegador de classes (*System Browser*), uma área de depuração interativa (*Workspace*) e um console de logs (*System Transcript*) —, a escrita irrestrita por classes como `Pen` corrompe a apresentação visual das demais janelas. Tornou-se imperativo conceber uma arquitetura onde aplicações pudessem compartilhar harmonicamente uma única tela, um único mouse e um único teclado.
+```java
+package br.unifef.engenharia.dominio;
 
-Conforme registrado pelo pesquisador Steve Burbeck em seu ensaio técnico sobre o Smalltalk-80:
-- Programas "malcomportados" ignoravam os limites visuais e pintavam a tela inteira sem controle;
-- Programas "bem-comportados" adotavam compulsoriamente a arquitetura **Model-View-Controller (MVC)**, respeitando a divisão de espaço e o modelo de despacho cooperativo de janelas.
+public abstract class ContaBancaria {
+    private final String numero;
+    protected double saldo;
+
+    public ContaBancaria(String numero, double saldoInicial) {
+        this.numero = numero;
+        this.saldo = Math.max(saldoInicial, 0.0);
+    }
+
+    public void depositar(double valor) {
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Valor de deposito deve ser positivo.");
+        }
+        this.saldo += valor;
+    }
+
+    public abstract boolean sacar(double valor);
+
+    public double getSaldo() {
+        return this.saldo;
+    }
+
+    public String getNumero() {
+        return this.numero;
+    }
+}
+
+public class ContaCorrente extends ContaBancaria {
+    private final double limiteChequeEspecial;
+
+    public ContaCorrente(String numero, double saldoInicial, double limiteChequeEspecial) {
+        super(numero, saldoInicial);
+        this.limiteChequeEspecial = limiteChequeEspecial;
+    }
+
+    @Override
+    public boolean sacar(double valor) {
+        if (valor > 0 && (saldo + limiteChequeEspecial) >= valor) {
+            saldo -= valor;
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+- **Contraexemplo:** Utilizar herança apenas para reaproveitar linhas de código de uma classe sem relação semântica (ex.: fazer `RelatorioFinanceiro` herdar de `ArrayList` apenas para usar métodos de lista).
+- **Armadilha:** Fragilidade da classe base (*Fragile Base Class Problem*). Alterações na superclasse propagam efeitos colaterais imprevistos sobre todas as subclasses da árvore hierárquica. Na dúvida, prefira composição a herança.
+
+#### Polimorfismo
+
+- **Definição:** Propriedade que permite tratar objetos de diferentes classes derivadas por meio de uma interface ou classe base comum, invocando comportamentos especializados em tempo de execução via despacho dinâmico.
+- **Motivação:** Eliminar estruturas condicionais ramificadas (`if/else` e `switch/case`) que tornam o código rígido à extensão de novas variantes de negócio.
+- **Exemplo em Java:**
+
+```java
+package br.unifef.engenharia.pagamento;
+
+public interface MeioPagamento {
+    boolean processar(double valor);
+}
+
+public class PagamentoPix implements MeioPagamento {
+    @Override
+    public boolean processar(double valor) {
+        // Logica para gerar Payload e QR Code instantaneo
+        return true;
+    }
+}
+
+public class PagamentoCartaoCredito implements MeioPagamento {
+    private final String tokenCartao;
+
+    public PagamentoCartaoCredito(String tokenCartao) {
+        this.tokenCartao = tokenCartao;
+    }
+
+    @Override
+    public boolean processar(double valor) {
+        // Comunicacao com Gateway adquirente
+        return true;
+    }
+}
+
+public class ProcessadorCheckout {
+    public void finalizarVenda(double valor, MeioPagamento meio) {
+        if (!meio.processar(valor)) {
+            throw new IllegalStateException("Falha no pagamento.");
+        }
+    }
+}
+```
+
+- **Contraexemplo:** Utilizar operadores de verificação de tipo (`instanceof` ou `switch` no tipo de objeto) dentro do cliente para executar lógicas distintas manualmente:
+
+```java
+// Antipadrao que destroi o polimorfismo
+if (tipo.equals("PIX")) {
+    processarPix();
+} else if (tipo.equals("CARTAO")) {
+    processarCartao();
+}
+```
+
+- **Armadilha:** Sobrescrita de métodos que quebram o contrato conceitual da superclasse (violação do Princípio da Substituição de Liskov - LSP).
+
+### 2.3 Baixo Acoplamento e Alta Coesão
+
+Estes dois princípios medem a qualidade arquitetural e a facilidade de manutenção de qualquer módulo orientado a objetos.
 
 ```mermaid
 flowchart TD
-    subgraph Antigo["Abordagem Primitiva Monolítica (Classe Pen)"]
-        P1["Programa Lê Dispositivo de Entrada"] --> P2["Executa Lógica Interna de Dados"]
-        P2 --> P3["Desenha Diretamente em Toda a Tela"]
-        P3 --> P4["Corrupção e Sobrescrita de Outras Janelas"]
+    subgraph AntipadraoDesign["Design Frágil (Alto Acoplamento / Baixa Coesão)"]
+        direction TB
+        GC["God Class (Faz-Tudo)"]
+        GC --> D1["Acessa UI Diretamente"]
+        GC --> D2["Gera SQL Cru no Banco"]
+        GC --> D3["Aplica Regras de Cálculo"]
+        GC --> D4["Envia E-mails e Logs"]
     end
 
-    subgraph MVC_Smalltalk["Arquitetura MVC Clássica (Smalltalk-80)"]
-        C["Controller: Traduz Teclado e Mouse da Janela"] --> M["Model: Manipula Dados do Domínio"]
-        C -.->|"Comando Operacional"| V["View: Renderiza Dentro de um Viewport"]
-        M -.->|"Notificação Reativa: changed/update"| V
-        V -->|"Desenho Delimitado"| S["Área Geográfica Alocada na Tela"]
+    subgraph BomDesign["Design Modular (Baixo Acoplamento / Alta Coesão)"]
+        direction TB
+        Svc["Serviço de Domínio"] -->|"Depende de Abstração"| Rep["Repository (Interface)"]
+        Svc -->|"Depende de Abstração"| Notif["Notificador (Interface)"]
     end
 ```
 
-### A Tríade Canônica: Responsabilidades de Model, View e Controller
+- **Baixo Acoplamento:** Grau de interdependência entre os módulos do sistema. Módulos com baixo acoplamento dependem de contratos abstratos (interfaces) em vez de classes concretas, permitindo que alterações internas em um componente não gerem falhas em cascata nos demais.
+- **Alta Coesão:** Grau em que as responsabilidades de uma classe ou módulo estão fortemente relacionadas a um único propósito de negócio. Uma classe coesa possui um único motivo para mudar (Princípio da Responsabilidade Única - SRP).
 
-O MVC clássico do Smalltalk-80 estabeleceu a separação tripartite da interação humana com o computador:
+| Métrica | Cenário Ruim | Cenário Excelente (Engenharia de Software) |
+| :--- | :--- | :--- |
+| **Acoplamento** | Classe `PedidoController` instancia diretamente `MySQLDatabaseDriver`. | Classe `PedidoService` recebe via injeção de dependência a interface `PedidoRepository`. |
+| **Coesão** | Classe `Cliente` valida CPF, desenha a tela de cadastro e grava na tabela `TB_CLIENTE`. | Classe `Cliente` armazena dados e invariantes; validação, persistência e UI operam em classes separadas. |
+
+### 2.4 Introdução aos Princípios SOLID e Padrões de Projeto (GoF)
+
+Na transição para o projeto detalhado, a estruturação de classes apoia-se nos princípios **SOLID**:
+
+- **S - Single Responsibility Principle (SRP):** Uma classe deve ter um único motivo para ser modificada.
+- **O - Open/Closed Principle (OCP):** Entidades de software devem estar abertas para extensão, mas fechadas para modificação direta em código estável.
+- **L - Liskov Substitution Principle (LSP):** Objetos de um programa devem ser substituíveis por instâncias de seus subtipos sem comprometer a consistência do sistema.
+- **I - Interface Segregation Principle (ISP):** Muitas interfaces específicas são melhores do que uma única interface genérica e inflada.
+- **D - Dependency Inversion Principle (DIP):** Módulos de alto nível não devem depender de módulos de baixo nível; ambos devem depender de abstrações.
+
+Paralelamente, os **Padrões de Projeto GoF** (*Gang of Four*) oferecem soluções consolidadas para desafios recorrentes:
+
+- **Strategy (Comportamental):** Define uma família de algoritmos intercambiáveis encapsulados por uma interface comum (ex.: diferentes algoritmos de frete ou cálculo de impostos).
+- **Factory Method (Criacional):** Fornece uma interface para criação de objetos, permitindo às subclasses decidirem qual classe concreta instanciar.
+- **Observer (Comportamental):** Estabelece uma dependência de um-para-muitos, notificando automaticamente múltiplos objetos sobre mudanças de estado ocorridas em outro objeto.
+- **Adapter (Estrutural):** Converte a interface de uma classe para outra esperada pelo cliente, viabilizando a integração entre componentes de interfaces incompatíveis.
+- **Facade (Estrutural):** Disponibiliza uma interface unificada e simplificada para um subsistema complexo composto por múltiplas classes internas.
+
+---
+
+## 3. Engenharia e Elicitação de Requisitos
+
+### 3.1 Fundamentos: Levantar versus Elicitar
+
+A literatura e as normas internacionais (como o SWEBOK da IEEE Computer Society) estabelecem uma distinção metodológica crucial entre os termos:
+
+- **Levantamento (Gathering):** Postura passiva na qual o analista assume que os requisitos já existem claros e lapidados na mente do cliente, cabendo apenas anotá-los. Essa presunção quase invariavelmente resulta no fracasso do projeto.
+- **Elicitação (Elicitation):** Do latim *elicitare* ("fazer sair", "trazer à tona"). Postura ativa, crítica e investigativa do analista de sistemas. O cliente expressa dores operacionais, expectativas confusas e processos manuais com vícios; cabe ao analista interrogar, desconstruir e modelar os requisitos reais de software.
+
+```mermaid
+flowchart TD
+    N["Necessidade do Negócio (Sobrevivência Financeira)"] --> P["Problema Operacional (Perda de Vendas)"]
+    P --> C["Contexto Organizacional (Processo Manual em Papel)"]
+    C --> E["Expectativa do Usuário (Ver Pedidos na Tela)"]
+    E --> R["Requisito Formal de Software (Verificável e Mensurável)"]
+```
+
+### 3.2 O Ciclo Causal e as Seis Perguntas Cardinais
+
+Antes de qualquer especificação técnica, o analista deve responder às seis perguntas cardinais:
+
+1. **Qual problema existe?** Isolar a causa raiz dos sintomas aparentes.
+2. **Quem enfrenta o problema?** Identificar atores primários, secundários e partes interessadas.
+3. **Como o processo é executado atualmente (As-Is)?** Analisar rotinas manuais, formulários em papel ou sistemas legados.
+4. **O que o sistema precisa fazer (To-Be)?** Definir o comportamento computacional esperado e as regras de transformação.
+5. **Quais são as restrições?** Mapear limitações de orçamento, prazos, tecnologias obrigatórias e normas jurídicas (LGPD, normas fiscais).
+6. **O que é prioridade?** Delimitar o núcleo essencial para o lançamento (MVP) em relação aos desejos secundários.
+
+### 3.3 A Premissa de Desenvolvimento Prematuro
+
+Considere a declaração clássica analisada em sala de aula:
+
+> *"Preciso de um sistema para melhorar meu negócio. Isso é suficiente para começar a desenvolver?"*
+
+A resposta da engenharia de software é terminantemente **não**. Iniciar o desenvolvimento sobre tal afirmação constitui falha grave de processo por quatro razões:
+
+1. **Ausência de Critérios de Aceite:** O termo "melhorar" é subjetivo e impede a verificação de conclusão do projeto.
+2. **Corrupção de Escopo (*Scope Creep*):** Sem fronteiras formais, qualquer nova exigência imaginada pelo cliente no futuro será cobrada como parte da promessa original de "melhorar o negócio".
+3. **Assimetria de Conhecimento:** O cliente domina seu ramo de atuação, mas ignora concorrência, consistência transacional e segurança computacional. O desenvolvedor domina a tecnologia, mas desconhece os termos do negócio.
+4. **Automatização do Caos:** Informatizar um processo corporativo desorganizado gera apenas um caos automatizado, multiplicando prejuízos em menor tempo.
+
+### 3.4 Desconstrução de Falas Incompletas e Refatoração de Ambiguidades
+
+Considere a demanda: *"Quero um sistema para controlar meus pedidos."*
+
+```mermaid
+mindmap
+    root("Quero controlar meus pedidos")
+        Atores e Origem
+            Quem digita? Operador, aplicativo ou cliente final?
+            Quem consulta? Estoque, faturamento ou diretoria?
+        Fluxo do Negocio
+            Pode haver cancelamento pos-envio?
+            Existe analise previa de risco de credito?
+            Ha categorias de pedido (balcao, entrega, encomenda)?
+        Financeiro e Fiscal
+            Quais formas de pagamento sao aceitas?
+            Como ocorre a liquidacao de parcelas?
+        Estoque e Logistica
+            A baixa ocorre no pedido ou na nota fiscal?
+            Ha bloqueio temporario de estoque com tempo de expiracao?
+```
+
+Termos qualitativos como "rápido", "fácil", "seguro" e "robusto" devem ser refatorados em métricas objetivas:
+
+| Fala Ambígua do Cliente | Interpretação Ingênua | Refatoração Formal da Engenharia (RNF) |
+| :--- | :--- | :--- |
+| "O sistema precisa ser rápido." | Adicionar paginação simples. | **RNF-001 (Desempenho):** A busca parametrizada de pedidos por cliente deve responder em até 1,2 segundos para o percentil 95 (p95) sob concorrência de 300 requisições simultâneas. |
+| "A tela deve ser simples e intuitiva." | Deixar a tela com fundo branco e poucos campos. | **RNF-002 (Usabilidade):** Um atendente recém-contratado deve completar a emissão de um pedido padrão em até 3 minutos após um treinamento prévio de 30 minutos, com taxa de erro operacional inferior a 2%. |
+| "O sistema deve ser seguro." | Gravar uma senha alfanumérica no banco. | **RNF-003 (Segurança):** O sistema deve exigir autenticação multifator (MFA) para operações financeiras e aplicar o algoritmo de hash Argon2id (com custo de memória de 64MB) sobre todas as senhas armazenadas. |
+
+### 3.5 Técnicas Tradicionais de Elicitação
+
+```mermaid
+flowchart TD
+    TT["Técnicas de Elicitação de Requisitos"]
+    TT --> E["Entrevistas"]
+    TT --> Q["Questionários"]
+    TT --> O["Observação Direta (Job Shadowing)"]
+    TT --> AD["Análise Documental"]
+    TT --> W["Workshops e JAD"]
+```
+
+- **Entrevistas:**
+  - *Estruturada:* Roteiro fechado e estritamente padronizado. Excelente para levantamentos comparativos entre filiais, mas rígida à descoberta de novas facetas do problema.
+  - *Semiestruturada (Recomendada):* Combina perguntas mestras prévias com flexibilidade para investigar desdobramentos operacionais revelados pelo entrevistado.
+  - *Não Estruturada:* Diálogo aberto de reconhecimento. Útil nas primeiras horas de contato com um domínio desconhecido.
+- **Questionários:** Aplicação de formulários estruturados em massa. Vantajoso para populações dispersas geograficamente e baixo custo; tem como desvantagens taxas históricas baixas de resposta (<15%) e impossibilidade de esclarecer ambiguidades em tempo real.
+- **Observação Direta (*Job Shadowing*):** O analista atua como uma "sombra" do operador, observando a rotina real de trabalho. Desmascara procedimentos tácitos que o usuário executa mecanicamente e "esquece" de mencionar em reuniões, além de evidenciar gambiarras e atalhos operacionais (como senhas anotadas no monitor). O cuidado reside no *Efeito Hawthorne* (mudança de comportamento do usuário ao se sentir observado).
+- **Análise Documental:** Inspeção de formulários físicos, planilhas legadas, contratos e regulamentações. Mapeia a estrutura real de dados e cálculos fiscais da empresa.
+- **Workshops / JAD (*Joint Application Design*):** Sessões de trabalho conjuntas e intensivas reunindo usuários operacionais, gestores e desenvolvedores para resolução ágil de conflitos de requisitos entre setores divergentes.
+
+### 3.6 Priorização de Requisitos pelo Método MoSCoW
+
+O método **MoSCoW** foi concebido por Dai Clegg no contexto do framework DSDM (*Dynamic Systems Development Method*) para viabilizar a entrega de software no prazo e custo contratados, definindo o Produto Mínimo Viável (MVP):
+
+```mermaid
+flowchart TD
+    Req["Novo Requisito Analisado"] --> M1{O sistema opera sem<br/>esta funcionalidade?}
+    M1 -- Não --> M["MUST HAVE<br/>Vital e Inegociável para o MVP"]
+    M1 -- Sim --> S1{Existe solução manual<br/>ou contorno viável?}
+    S1 -- Sim, dolorosa --> S["SHOULD HAVE<br/>Alta prioridade, contornável no curto prazo"]
+    S1 -- Sim, simples --> C1{Agrega valor rápido<br/>sem onerar o prazo?}
+    C1 -- Sim --> C["COULD HAVE<br/>Desejável / Conveniência"]
+    C1 -- Não / Alto Custo --> W["WON'T HAVE<br/>Fora do escopo da release atual"]
+```
+
+- **M - Must Have (Deve Ter):** Requisitos inegociáveis. Se qualquer item deste grupo não for entregue, o sistema é inviável técnica, legal ou operacionalmente.
+- **S - Should Have (Deveria Ter):** Requisitos de alta prioridade e valor expressivo. Devem ser implementados caso haja viabilidade, mas sua ausência no dia de lançamento pode ser suprida temporariamente por soluções manuais de contingência.
+- **C - Could Have (Poderia Ter):** Requisitos desejáveis de conveniência ou melhoria estética que só serão executados se sobrarem tempo e recursos da equipe após os itens Must e Should.
+- **W - Won't Have this time (Não Terá Desta Vez):** Requisitos formalmente acordados como fora do escopo da iteração atual, evitando a diluição do foco. Podem ser reavaliados em releases futuras.
+
+---
+
+## 4. Modelagem Comportamental com Diagrama de Casos de Uso UML
+
+### 4.1 Origem e Conceito Caixa-Preta (Black-Box)
+
+A técnica de Casos de Uso foi introduzida na engenharia de software por **Ivar Jacobson** em 1986 e padronizada pela Object Management Group (OMG) na Unified Modeling Language (UML).
+
+O diagrama de casos de uso modela o comportamento observável do sistema do ponto de vista do ambiente externo. Opera sob a premissa de **Modelagem Caixa-Preta**:
+- **O que documenta:** Quais serviços o sistema provê aos seus atores e quais objetivos de negócio podem ser alcançados.
+- **O que NÃO documenta:** Detalhes internos de algoritmos, classes, comandos SQL, tabelas de banco de dados ou navegação entre telas de interface.
+
+```mermaid
+flowchart LR
+    subgraph Sistema["Fronteira do Sistema: Gestão Escolar"]
+        UC1(["Matricular Aluno"])
+        UC2(["Lançar Frequência"])
+    end
+
+    Ator1["Ator: Secretaria"] --- UC1
+    Ator2["Ator: Professor"] --- UC2
+```
+
+### 4.2 Elementos Básicos da Notação
+
+1. **Fronteira do Sistema (*Subject Boundary*):** Retângulo que demarca os limites de responsabilidade do software em desenvolvimento. Casos de uso ficam dentro do retângulo; atores ficam obrigatoriamente do lado de fora.
+2. **Atores:** Papéis desempenhados por usuários humanos ou sistemas computacionais externos que trocam dados com a aplicação. Representados graficamente por bonecos palito (*stick men*) ou retângulos com o estereótipo `<<actor>>`.
+   - *Atores Primários:* Disparam a interação buscando atingir um objetivo de negócio (ex.: `Cliente`).
+   - *Atores Secundários:* Fornecem serviços de apoio ou respondem passivamente a requisições do sistema (ex.: `Gateway de Pagamento`, `Serviço de CEP`).
+3. **Casos de Uso:** Elipses posicionadas no interior da fronteira do sistema que representam uma funcionalidade completa e atômica geradora de valor observável para o ator. A nomenclatura deve conter **obrigatoriamente verbo no infinitivo seguido de complemento direto** (ex.: `Efetuar Pedido`, `Consultar Extrato`).
+
+### 4.3 Relacionamentos entre Casos de Uso e Atores
+
+```mermaid
+flowchart TD
+    subgraph Relacionamentos["Relacionamentos na UML"]
+        Base(["Caso de Uso Base"])
+        Inc(["Caso de Uso Incluído"])
+        Ext(["Caso de Uso Extensão"])
+        Pai(["Caso de Uso Pai"])
+        Filho(["Caso de Uso Especializado"])
+
+        Base -.->|"<<include>>"| Inc
+        Ext -.->|"<<extend>>"| Base
+        Filho -->|"Generalização"| Pai
+    end
+```
+
+#### 1. Associação Simples
+
+- **Definição:** Linha contínua que liga um ator a um caso de uso, denotando o canal de comunicação e tráfego de dados bidirecional.
+- **Regra:** Nunca conecte dois atores diretamente entre si por associação simples; atores só se relacionam entre si por generalização.
+
+#### 2. Inclusão (`<<include>>`)
+
+- **Definição:** Relacionamento de dependência no qual o caso de uso base incorpora obrigatoriamente o comportamento do caso de uso incluído como parte inseparável de sua execução.
+- **Motivação:** Reutilização de regras de negócio ou passos operacionais comuns a múltiplos casos de uso (princípio DRY em nível de requisitos).
+- **Sentido da Seta:** Tracejada, **do caso de uso base para o caso de uso incluído** (`Base -.->|<<include>>| Incluido`).
+- **Exemplo:** `Emitir Transferência Bancária` e `Pagar Boleto` incluem obrigatoriamente `Autenticar Correntista`.
+
+#### 3. Extensão (`<<extend>>`)
+
+- **Definição:** Relacionamento no qual o comportamento de um caso de uso opcional/acessório pode ser anexado ao caso de uso base em um ponto pré-definido (*extension point*), caso uma condição lógica de guarda seja atendida em tempo de execução.
+- **Motivação:** Desacoplar comportamentos excepcionais, fluxos condicionais ou módulos adicionais da rotina principal, mantendo o caso de uso base limpo.
+- **Sentido da Seta:** Tracejada, **do caso de uso de extensão para o caso de uso base** (`Extensao -.->|<<extend>>| Base`).
+- **Exemplo:** Ao `Finalizar Compra`, o cliente pode acionar condicionalmente `Aplicar Cupom Promocional`.
+
+#### 4. Generalização / Especialização
+
+- **Definição:** Equivalente ao conceito de herança em linguagens orientadas a objetos. O elemento filho herda a semântica, as associações e as características do elemento pai.
+- **Entre Atores:** O ator especializado acessa todos os casos de uso do ator pai, além de seus próprios casos exclusivos (ex.: `Gerente` herda de `Operador`).
+- **Entre Casos de Uso:** O caso de uso pai define a assinatura conceitual da ação, e os casos filhos implementam as variações específicas (ex.: `Pagar Pedido` generaliza `Pagar via Pix` e `Pagar via Cartão`).
+
+| Relacionamento | Notação UML | Execução | Direção da Seta | Finalidade Primária |
+| :--- | :--- | :--- | :--- | :--- |
+| **Associação** | Linha sólida contínua | Variável | Sem seta (bidirecional) | Comunicação e navegação básica entre ator e caso de uso. |
+| **Include** | Linha tracejada aberta | Obrigatória | Da Base para o Incluído | Reúso sistemático de comportamento compartilhado. |
+| **Extend** | Linha tracejada aberta | Condicional | Da Extensão para a Base | Isolamento de fluxos opcionais ou de exceção. |
+| **Generalização** | Linha sólida com triângulo vazado | Herança | Do Especializado para o Geral | Especialização polimórfica de comportamento ou papel. |
+
+### 4.4 Estrutura de Especificação Textual Canônica
+
+O diagrama gráfico é apenas o índice visual dos serviços; o contrato funcional de engenharia é documentado na **especificação textual detalhada**:
+
+```text
+Identificador: UC-001
+Nome do Caso de Uso: Realizar Pedido de Compra
+Ator Primário: Cliente Cadastrado
+Atores Secundários: Gateway de Pagamentos, Sistema de Logística
+Pré-condições: O cliente deve estar autenticado e possuir ao menos um item no carrinho de compras.
+Pós-condições: O pedido é persistido com status "Pendente", o estoque dos itens é reservado e a transação financeira é iniciada.
+
+Fluxo Principal (Caminho Feliz):
+1. O cliente acessa o carrinho de compras e solicita a finalização do pedido.
+2. O sistema calcula o valor total dos itens e solicita o endereço de entrega.
+3. O cliente seleciona um endereço cadastrado.
+4. O sistema consulta o Sistema de Logística, calcula o frete e exibe o valor consolidado.
+5. O cliente seleciona a opção de pagamento via Cartão de Crédito e submete a compra.
+6. O sistema executa o caso de uso <<include>> Autenticar Sessão Segura.
+7. O sistema envia a requisição de cobrança ao Gateway de Pagamentos.
+8. O Gateway de Pagamentos confirma a liquidação financeira com código de autorização.
+9. O sistema atualiza o status do pedido para "Confirmado", decrementa o estoque físico e envia recibo por e-mail.
+10. O sistema exibe o comprovante na tela e encerra o caso de uso.
+
+Fluxos Alternativos:
+- FA-01 (Aplicar Cupom Promocional - Ponto de Extensão no Passo 2):
+  1. O cliente insere o código do cupom.
+  2. O sistema executa o caso de uso <<extend>> Validar Cupom de Desconto.
+  3. O valor total é recalculado e o fluxo retorna ao Passo 3 do Fluxo Principal.
+
+Fluxos de Exceção:
+- FE-01 (Pagamento Recusado pela Operadora no Passo 8):
+  1. O Gateway de Pagamentos retorna recusa da transação.
+  2. O sistema cancela a reserva de estoque dos itens.
+  3. O sistema informa ao cliente o motivo da recusa e oferece a escolha de outro meio de pagamento.
+  4. O caso de uso é reiniciado a partir do Passo 5 ou abortado pelo cliente.
+```
+
+---
+
+## 5. Modelagem Estrutural com Diagrama de Classes UML
+
+### 5.1 Conceito, Princípios da UML e Distinção de Processos
+
+A **Unified Modeling Language (UML)** foi concebida na década de 1990 pela unificação dos trabalhos dos "Três Amigos": **Grady Booch** (método Booch), **James Rumbaugh** (OMT) e **Ivar Jacobson** (OOSE), sob a coordenação da Object Management Group (OMG).
+
+A UML é uma **linguagem gráfica de modelagem**, e não um processo ou metodologia:
+- Ela provê vocabulário visual e regras sintáticas para *visualizar*, *especificar*, *construir* e *documentar* artefatos de software.
+- Ela é agnóstica quanto ao modelo de gestão adotado. Pode ser utilizada tanto no tradicional modelo em Cascata (*Waterfall*) quanto em cerimônias de refinamento e planejamento de Sprints no **Scrum**.
+- Em times ágeis, aplica-se a modelagem *Just-in-Time* e *Just-Enough*, desenhando diagramas enxutos para alinhar a arquitetura da Sprint sem produzir documentação burocrática e obsoleta.
+
+### 5.2 Anatomia Estrutural da Classe e Sintaxe Formal
+
+Graficamente, uma classe na UML é representada por um retângulo dividido horizontalmente em três compartimentos obrigatórios:
 
 ```mermaid
 classDiagram
-    direction TB
+    class Usuario {
+        -String login
+        -String senhaHash
+        #boolean ativo
+        +autenticar(String senhaInformada) boolean
+        +alterarSenha(String novaSenha) void
+    }
+```
+
+1. **Compartimento Superior (Nome da Classe):** Substantivo no singular, grafado em **PascalCase** (ex.: `Cliente`, `NotaFiscal`).
+2. **Compartimento Central (Atributos):** Estado e dados mantidos pelos objetos.
+   - Sintaxe OMG: `[visibilidade] nome : tipo [multiplicidade] = [valorPadrao]`
+   - Exemplo: `- saldo : double = 0.0`
+3. **Compartimento Inferior (Operações / Métodos):** Comportamentos e serviços oferecidos.
+   - Sintaxe OMG: `[visibilidade] nomeMetodo([parametro : tipo]) : tipoRetorno`
+   - Exemplo: `+ transferir(destino : Conta, valor : double) : boolean`
+
+#### Modificadores de Visibilidade e Mapeamento para Java
+
+| Modificador UML | Símbolo | Palavra-chave Java | Escopo de Acesso Permitido |
+| :--- | :---: | :--- | :--- |
+| **Público** | `+` | `public` | Acessível por qualquer classe em qualquer pacote da aplicação. |
+| **Protegido** | `#` | `protected` | Acessível pela própria classe, subclasses e classes do mesmo pacote. |
+| **Privado** | `-` | `private` | Acessível estritamente pelo código interno da própria classe. |
+| **Pacote** | `~` | *(sem modificador)* | Acessível unicamente por classes residentes dentro do mesmo pacote. |
+
+### 5.3 Indicadores de Multiplicidade, Navegabilidade e Papéis
+
+Multiplicidades definem os limites numéricos de instâncias que podem participar da associação:
+
+- `1`: Exatamente uma instância obrigatória.
+- `0..1`: Opcional; zero ou uma instância.
+- `*` ou `0..*`: Zero ou muitas instâncias.
+- `1..*`: Ao menos uma instância obrigatória (uma ou muitas).
+- `m..n`: Intervalo explícito de instâncias (ex.: `2..4`).
+
+Navegabilidade é representada por pontas de seta abertas nas extremidades da linha de associação. Se uma linha não possui setas, a associação é bidirecional; se possui uma seta apontando de `A` para `B`, significa que os objetos de `A` conhecem e navegam até `B`, mas os objetos de `B` não possuem referência direta para `A`.
+
+### 5.4 Relacionamentos Estruturais e Comportamentais
+
+```mermaid
+classDiagram
+    class Cliente
+    class Pedido
+    class ItemPedido
+    class Departamento
+    class Professor
+    class RelatorioService
+    class GeradorPDF
+
+    Cliente "1" --> "0..*" Pedido : Realiza (Associacao Simples)
+    Pedido "1" *-- "1..*" ItemPedido : Composicao (Forte)
+    Departamento "1" o-- "0..*" Professor : Agregacao (Fraca)
+    RelatorioService ..> GeradorPDF : Dependencia (Uso)
+```
+
+#### 1. Associação Simples
+
+- **Conceito:** Vínculo estrutural entre classes independentes que trocam dados.
+- **Implementação em Java:** Atributo de referência na classe de origem:
+
+```java
+public class Pedido {
+    private Cliente cliente; // Associacao Simples unidirecional
+}
+```
+
+#### 2. Agregação (Todo-Parte Fraco)
+
+- **Conceito:** Representada por um **losango vazio (branco)** posicionado na classe "Todo". Indica que uma classe contém ou agrupa instâncias de outra, porém as partes possuem ciclo de vida independente. Se a classe "Todo" for destruída, as instâncias "Parte" continuam existindo na memória ou no banco de dados.
+- **Exemplo Real:** `Departamento` e `Professor`. Se a universidade fechar o Departamento de Computação, os professores não são deletados da instituição; eles são remanejados para outro departamento.
+- **Implementação em Java:** A classe Todo recebe as partes já instanciadas por meio de métodos ou construtores:
+
+```java
+public class Departamento {
+    private List<Professor> professores;
+
+    // Agregacao: os objetos Professor sao criados externamente
+    public void adicionarProfessor(Professor professor) {
+        this.professores.add(professor);
+    }
+}
+```
+
+#### 3. Composição (Todo-Parte Forte)
+
+- **Conceito:** Representada por um **losango preenchido (preto)** posicionado na classe "Todo". Relação de posse estrita com ciclo de vida acoplado. A "Parte" só pode pertencer a um único "Todo" e não tem razão de existir sem ele. Se a classe "Todo" for destruída, todas as suas "Partes" são obrigatoriamente eliminadas em cascata.
+- **Exemplo Real:** `Pedido` e `ItemPedido`. Não faz sentido manter em banco de dados uma linha de `ItemPedido` órfã desvinculada de um cabeçalho de pedido.
+- **Implementação em Java:** O próprio Todo gerencia o ciclo de vida da parte, instanciando-a e destruindo-a internamente:
+
+```java
+public class Pedido {
+    private final List<ItemPedido> itens = new ArrayList<>();
+
+    // Composicao: a criacao do item e controlada e encapsulada pelo Pedido
+    public void criarItem(String produto, double preco, int qtd) {
+        ItemPedido novoItem = new ItemPedido(produto, preco, qtd);
+        this.itens.add(novoItem);
+    }
+}
+```
+
+#### 4. Generalização
+
+- **Conceito:** Representada por uma **linha contínua com triângulo vazado** apontando para a superclasse. Estabelece herança pura de campos e operações, permitindo polimorfismo.
+
+#### 5. Dependência (Uso Transitório)
+
+- **Conceito:** Representada por uma **linha tracejada com seta simples aberta**. Indica que uma classe utiliza transitoriamente os serviços de outra classe apenas durante a execução de um método (como parâmetro, retorno de função ou variável local), sem manter uma referência permanente como variável de instância.
+- **Implementação em Java:**
+
+```java
+public class RelatorioService {
+    // Dependencia: GeradorPDF e usado pontualmente dentro do metodo
+    public void exportar(GeradorPDF gerador) {
+        gerador.renderizarDocumento();
+    }
+}
+```
+
+| Tipo de Relacionamento | Conector UML | Acoplamento de Ciclo de Vida | Exemplo de Código |
+| :--- | :--- | :--- | :--- |
+| **Associação Simples** | Linha com seta simples | Desacoplado | `private Cliente titular;` |
+| **Agregação** | Losango branco na ponta | Fraco (Parte sobrevive sem o Todo) | `departamento.vincular(professorExistente);` |
+| **Composição** | Losango preto na ponta | Forte (Parte morre com o Todo) | `itens.add(new ItemPedido(...));` |
+| **Generalização** | Linha com triângulo vazado | Herança de Tipagem | `public class Sub extends Super` |
+| **Dependência** | Linha tracejada com seta | Transitório / Operacional | `public void imprimir(Impressora imp)` |
+
+---
+
+## 6. Arquitetura de Software e Padrões Arquiteturais
+
+### 6.1 Definição Normativa: ISO/IEC/IEEE 42010:2022
+
+A norma internacional **ISO/IEC/IEEE 42010:2022** (*Systems and software engineering — Architecture description*) estabelece a definição formal de arquitetura de software:
+
+> *"Estrutura fundamental de um sistema de software, expressa por seus componentes, pelos relacionamentos entre si e com o ambiente, e pelos princípios que governam seu projeto e evolução contínua."*
+
+A arquitetura estabelece as restrições mestras que garantem a sustentabilidade do sistema ao longo dos anos, equilibrando atributos de qualidade (*Requisitos Não Funcionais*): desempenho, manutenibilidade, segurança, escalabilidade e tolerância a falhas.
+
+#### Analogia e Contrastes com a Engenharia Civil
+
+A comparação entre a arquitetura civil e a de software auxilia na compreensão do projeto estrutural:
+
+```mermaid
+flowchart TD
+    subgraph ArquiteturaCivil["Arquitetura Civil"]
+        C1["Materiais Físicos (Aço, Concreto)"]
+        C2["Deterioração Mecânica por Intempéries"]
+        C3["Imutabilidade das Fundações após Construído"]
+    end
+
+    subgraph ArquiteturaSoftware["Arquitetura de Software"]
+        S1["Construções Lógicas e Imateriais"]
+        S2["Envelhecimento por Degradação Conceitual (Drift)"]
+        S3["Evolução Contínua e Maleabilidade Estrutural"]
+    end
+```
+
+O software difere de edifícios por ser maleável e invisível. Se os desenvolvedores inserirem atalhos técnicos e quebras de camadas sem governança, a arquitetura sofre **erosão arquitetural (*architectural drift*)**, degradando sua manutenibilidade até tornar o sistema impossível de evoluir sem reescrita total.
+
+### 6.2 Padrões Arquiteturais versus Padrões de Projeto (GoF)
+
+Uma confusão frequente entre estudantes é misturar o nível de abstração dessas duas abordagens:
+
+```mermaid
+flowchart TD
+    subgraph MacroNivel["Padrões Arquiteturais (Nível de Sistema / Macro)"]
+        PA["Governam a divisão estrutural de subsistemas, limites de rede e dados"]
+        PA_Ex["Exemplos: Microsserviços, Arquitetura Hexagonal, SOA, Camadas (N-Tier)"]
+    end
+
+    subgraph MicroNivel["Padrões de Projeto - GoF (Nível de Código / Micro)"]
+        PP["Governam a relação tática entre classes e objetos na memória"]
+        PP_Ex["Exemplos: Strategy, Factory Method, Adapter, Observer, Facade"]
+    end
+
+    MacroNivel -->|"Delimita e organiza o contexto de"| MicroNivel
+```
+
+| Critério | Padrão Arquitetural | Padrão de Projeto (Design Pattern - GoF) |
+| :--- | :--- | :--- |
+| **Escopo** | Global. Envolve todo o sistema ou serviços distribuídos. | Local. Envolve pequenos grupos de classes e objetos. |
+| **Foco** | Divisão de responsabilidades macro, armazenamento e rede. | Organização de lógica de código, herança e polimorfismo. |
+| **Impacto de Mudança** | Altíssimo. Alterar um padrão arquitetural exige reescrever serviços. | Baixo a Médio. Refatorável cirurgicamente via testes unitários. |
+
+### 6.3 Modelos de Distribuição de Software: SaaS versus On-Premises
+
+A distribuição adotada impacta a arquitetura, a infraestrutura operacional e o modelo contábil/financeiro:
+
+```mermaid
+flowchart LR
+    subgraph OnPremises["Modelo On-Premises (Local)"]
+        direction TB
+        OP1["Infraestrutura Física Própria"]
+        OP2["Equipe Interna de TI para Backup e Patches"]
+        OP3["Modelo Financeiro CapEx (Investimento de Capital)"]
+    end
+
+    subgraph SaaS["Modelo SaaS (Software as a Service)"]
+        direction TB
+        SaaS1["Hospedagem em Nuvem pelo Provedor"]
+        SaaS2["Atualizações Contínuas e Uniformes"]
+        SaaS3["Modelo Financeiro OpEx (Despesa Operacional)"]
+    end
+```
+
+| Parâmetro de Comparação | SaaS (Software as a Service) | On-Premises (Instalação Local) |
+| :--- | :--- | :--- |
+| **Modelo Financeiro** | **OpEx** (*Operational Expenditure*): despesa mensal previsível. | **CapEx** (*Capital Expenditure*): alto investimento em servidores e licenças perpétuas. |
+| **Responsabilidade Operacional** | Do provedor (balanceamento, replicação, backups, segurança). | Da equipe interna de TI da empresa contratante. |
+| **Controle de Dados** | Custódia em data centers de nuvem gerenciados por terceiros. | Custódia física total nos servidores locais da empresa. |
+| **Elasticidade e Escala** | Quase infinita sob demanda (autoscaling de instâncias). | Limitada à capacidade física do hardware adquirido. |
+| **Homogeneidade de Versão** | Única base atualizada de forma contínua para todos os usuários. | Fragmentação; clientes podem rodar versões desatualizadas por anos. |
+
+### 6.4 Estilos e Padrões Arquiteturais em Detalhe
+
+#### 1. Arquitetura Cliente-Servidor Clássica
+
+- **Estrutura:** O cliente (geralmente uma aplicação desktop gorda — *Fat Client*) conecta-se diretamente a um servidor de banco de dados centralizado via rede local (LAN).
+- **Gargalos e Limitações:**
+  1. *Falta de Camada Intermediária:* Regras de negócio ficam espalhadas entre a interface do cliente e *stored procedures* do banco de dados.
+  2. *Gargalo de Conexões:* O SGBD precisa manter um socket aberto para cada usuário conectado, esgotando recursos rapidamente.
+  3. *Atualização Complexa:* Cada patch de correção exige reinstalar o executável em cada estação de trabalho física da empresa.
+
+#### 2. Arquitetura Orientada a Serviços (SOA)
+
+- **Estrutura:** Decompõe a aplicação corporativa em serviços de negócio autônomos, reutilizáveis e integrados por contratos formais de comunicação (SOAP, WSDL ou REST), tradicionalmente orquestrados por um Barramento Corporativo de Serviços (*Enterprise Service Bus* - ESB).
+- **Características:** Comunicação sem estado (*stateless*), desacoplamento de protocolos e interoperabilidade entre tecnologias heterogêneas (serviços legados em COBOL conversando com novos portais em Java).
+
+#### 3. Arquitetura Hexagonal (*Ports and Adapters*)
+
+Proposta por **Alistair Cockburn**, a Arquitetura Hexagonal tem por objetivo central isolar a lógica de negócio e as entidades de domínio de qualquer dependência tecnológica externa (frameworks, bancos de dados, interfaces Web, mensageria).
+
+```mermaid
+flowchart TD
+    subgraph AdaptadoresEntrada["Adaptadores de Entrada (Driving / Primários)"]
+        UI["Controller Web / REST"]
+        CLI["Interface Linha de Comando"]
+    end
+
+    subgraph NucleoHexagono["Núcleo da Aplicação (Independente de Frameworks)"]
+        PortIn["Porta de Entrada (Interface de Caso de Uso)"]
+        Service["Serviço de Domínio / Regras de Negócio"]
+        Entidades["Entidades de Domínio e Invariantes"]
+        PortOut["Porta de Saída (Interface de Persistência)"]
+
+        PortIn --> Service
+        Service --> Entidades
+        Service --> PortOut
+    end
+
+    subgraph AdaptadoresSaida["Adaptadores de Saída (Driven / Secundários)"]
+        DB["Adaptador PostgreSQL / JPA"]
+        Email["Adaptador Notificador SMTP"]
+    end
+
+    UI --> PortIn
+    CLI --> PortIn
+    PortOut --> DB
+    PortOut --> Email
+```
+
+- **Portas Condutoras (*Driving / Inbound Ports*):** Interfaces de entrada que expõem os casos de uso para o mundo externo. Adaptadores de UI (REST Controllers) chamam essas portas.
+- **Portas Conduzidas (*Driven / Outbound Ports*):** Interfaces de saída definidas pelo núcleo para expressar o que ele precisa do mundo externo (ex.: `SalvarPedidoPort`). Adaptadores de infraestrutura (JPA, DAOs, Gateways) implementam essas portas.
+- **Regra de Ouro:** A dependência aponta sempre para o centro. O núcleo do domínio desconhece a existência de frameworks, annotations de persistência ou sockets HTTP.
+
+#### 4. Arquitetura de Microsserviços
+
+Decompõe o sistema em um conjunto de serviços autônomos e independentes, organizados em torno de capacidades de negócio (*Bounded Contexts* do Domain-Driven Design).
+
+```mermaid
+flowchart TD
+    subgraph Gateway["Roteamento e Segurança"]
+        APIGateway["API Gateway"]
+    end
+
+    subgraph Servicos["Ecossistema de Microsserviços"]
+        direction TB
+        MS1["Microsserviço de Catálogo"] --> DB1[(Banco de Catálogo)]
+        MS2["Microsserviço de Pedidos"] --> DB2[(Banco de Pedidos)]
+        MS3["Microsserviço de Pagamentos"] --> DB3[(Banco de Pagamentos)]
+    end
+
+    APIGateway --> MS1
+    APIGateway --> MS2
+    APIGateway --> MS3
+```
+
+- **Características:**
+  1. *Gerenciamento Descentralizado de Dados:* Cada microsserviço possui e isola seu próprio banco de dados (*Database per Service*). É terminantemente proibido um serviço acessar diretamente as tabelas de outro serviço.
+  2. *Deploy Independente:* Um patch no serviço de pagamentos pode ser implantado em produção sem recompilar ou reiniciar o catálogo.
+  3. *Poliglotismo Tecnológico:* Cada serviço pode ser construído com a linguagem e o banco mais adequados para sua carga de trabalho.
+- **Trade-offs e Desafios:**
+  - *Consistência Eventual:* Como as transações ACID distribuídas (2PC) deterioram a performance, a consistência de dados entre serviços deve ser garantida por padrões assíncronos (como o padrão Saga).
+  - *Latência de Rede e Falhas Parciais:* Chamadas locais na memória são substituídas por requisições HTTP/gRPC sujeitas a timeout, exigindo padrões de resiliência (*Circuit Breaker*, *Retry* com backoff exponencial).
+  - *Sobrecarga de Observabilidade:* Monitorar a saúde de dezenas de processos exige telemetria distribuída, rastreamento unificado (*distributed tracing*) e agregação de logs.
+
+#### Antipadrão: Desenvolvimento Orientado a Modismos (*Hype-Driven Development*)
+
+O engenheiro de software deve selecionar a arquitetura baseando-se nas restrições reais de negócio e escala da empresa, e não pela popularidade do momento em fóruns e redes sociais. Adotar microsserviços em equipes pequenas e domínios simples cria complexidade operacional massiva antes de gerar qualquer ganho de escalabilidade.
+
+---
+
+## 7. Estudo Aprofundado do Padrão Arquitetural MVC no Smalltalk-80
+
+### 7.1 Origem Histórica e o Problema da Tela no Xerox PARC
+
+No final da década de 1970, cientistas da computação no **Xerox PARC** (*Palo Alto Research Center*) — incluindo Alan Kay, Dan Ingalls, Adele Goldberg e Trygve Reenskaug — conceberam a interface gráfica moderna (*GUI*), o mouse e o paradigma puramente orientado a objetos em **Smalltalk-76** e **Smalltalk-80**.
+
+Antes dessa inovação, computadores operavam por texto ou lotes lineares (*batch*). No próprio ambiente Smalltalk, a classe primitiva `Pen` permitia a qualquer programa escrever e desenhar diretamente no *framebuffer* global da tela (`DisplayScreen`). Contudo, com a criação do conceito de **múltiplas janelas sobrepostas** convivendo simultaneamente (Browsers de código, Workspaces e Transcripts), programas que desenhavam livremente causavam corrupção visual mútua.
+
+Conforme registrado pelo cientista Steve Burbeck, o padrão **Model-View-Controller (MVC)** nasceu não como mero capricho de design, mas como uma **infraestrutura mandatória para viabilizar o compartilhamento cooperativo da tela e dos periféricos de entrada (teclado e mouse de três botões)** entre múltiplos processos independentes.
+
+```mermaid
+flowchart TD
+    subgraph AntigoSmalltalk["Abordagem Antiga (Classe Pen)"]
+        direction TB
+        A1["Entrada Linear de Teclado"] --> A2["Lógica Interna do Programa"]
+        A2 --> A3["Desenho Desordenado no Framebuffer Global (Pen)"]
+        A3 --> A4["Corrupção Visual de Janelas Vizinhas"]
+    end
+
+    subgraph PadraoMVC["Padrão Arquitetural MVC (Smalltalk-80)"]
+        direction TB
+        C["Controller: Intercepta Mouse e Teclado"]
+        M["Model: Gerencia o Estado de Domínio"]
+        V["View: Renderiza Restrita ao seu Viewport"]
+
+        C -->|"Altera Estado"| M
+        C -.->|"Ajustes Operacionais"| V
+        M -.->|"Notificação Reativa (changed/update)"| V
+    end
+```
+
+### 7.2 A Tríade Model-View-Controller Clássica
+
+A divisão de responsabilidades no Smalltalk-80 organiza-se em três classes de objetos:
+
+1. **Model (Modelo):** Representa o domínio da aplicação, regras de negócio e dados. É agnóstico quanto à representação visual; desconhece a existência de janelas e telas. Notifica o sistema quando seu estado é modificado.
+2. **View (Visão):** Mapeia o estado do modelo na área gráfica da tela alocada para sua janela (*viewport*). Gerencia a estética, bordas e delega o desenho de áreas filhas para subvisões aninhadas.
+3. **Controller (Controlador):** Interpreta as ações físicas do usuário capturadas pelos dispositivos de entrada (posicionamento do mouse, cliques de botões e teclas pressionadas), traduzindo-as em requisições de comando para o Modelo ou para a Visão.
+
+```mermaid
+classDiagram
     class Model {
         +dependents : Collection
-        +addDependent(View aView)
-        +removeDependent(View aView)
+        +addDependent(aView)
+        +removeDependent(aView)
         +changed()
-        +changed(Object anAspect)
-        +getState()
+        +changed(anAspect)
     }
+
     class View {
         +model : Model
         +controller : Controller
         +superView : View
-        +subViews : OrderedCollection
+        +subViews : Collection
         +display()
         +displayView()
-        +update(Model aModel, Object anAspect)
+        +update(aModel, anAspect)
     }
+
     class Controller {
         +model : Model
         +view : View
         +controlLoop()
         +controlActivity()
-        +isControlActive() Boolean
+        +isControlActive() boolean
     }
 
-    View "1" o-- "1" Controller : Ligação Bilateral Rígida (1:1)
-    Controller "1" o-- "1" View : Ligação Bilateral Rígida (1:1)
-    View --> "1" Model : Consulta Estado (getState)
-    Controller --> "1" Model : Dispara Mutações de Domínio
-    Model ..> View : Notificação Indireta (update)
+    View "1" o-- "1" Controller : Ligação Bilateral Rígida
+    Controller "1" o-- "1" View : Ligação Bilateral Rígida
+    View --> "1" Model : Consulta de Estado (Leitura)
+    Controller --> "1" Model : Mutação de Estado (Escrita)
+    Model ..> View : Notificação Reativa via Observer
 ```
 
-1. **Model (Modelo de Domínio):**
-   - Encapsula as regras de negócio, os algoritmos e os dados de domínio da aplicação.
-   - É **completamente agnóstico quanto à interface gráfica**: desconhece janelas, pixels, menus, cursores e posições da tela.
-   - Qualquer objeto do Smalltalk pode ser um modelo — desde um número inteiro até um complexo modelo de faturamento empresarial.
-   - Fornece métodos de consulta pública de estado (consumidos pela View) e métodos de mutação (disparados pelo Controller).
+#### Anatomia do Acoplamento na Tríade
 
-2. **View (Visão Gráfica):**
-   - Responsável por renderizar a projeção visual dos dados do modelo dentro da área de tela que lhe foi delimitada (*viewport*).
-   - Gerencia a geometria da janela, bordas, fontes de texto e composição hierárquica de subvisões aninhadas.
-   - Consulta diretamente o estado interno do modelo durante suas rotinas de pintura e redesenho.
+Existe uma diferença fundamental nos canais de comunicação da tríade:
 
-3. **Controller (Controlador de Entrada):**
-   - Responsável pela interpretação física dos periféricos acoplados à janela (movimentos do cursor do mouse, cliques de botões e digitação no teclado).
-   - Converte os sinais brutos de entrada em mensagens semânticas compreensíveis para o modelo (ex.: "adicione este registro", "altere o saldo") ou para a visão (ex.: "role o texto 5 linhas para baixo").
+- **Canal Direto e Rígido (View-Controller):** A View possui uma referência de instância explícita para o seu Controller, e o Controller possui uma referência direta para a sua View (ligação 1:1 bilateral). O ciclo de vida de ambos é fortemente entrelaçado.
+- **Canal Indireto e Reativo (Model-View):** O Model **não** mantém referências nominais diretas às suas Views. Ele interage com a View unicamente através de uma lista abstrata de dependentes do padrão **Observer**, disparando notificações genéricas. O Modelo nunca é acoplado às classes visuais que o observam.
 
-### Anatomia de Acoplamento da Tríade
+### 7.3 Modelos Passivos versus Modelos Ativos
 
-A comunicação interna do padrão MVC clássico opera sobre dois eixos complementares:
-- **Eixo Forte / Bilateral (View-Controller):**
-  - Toda `View` possui um ponteiro direto para o seu respectivo `Controller`, e todo `Controller` possui um ponteiro direto para a sua respectiva `View`.
-  - Essa ligação é rígida e estabelecida na instanciação da janela (cardinalidade estrita de 1:1). O controlador precisa da visão para identificar limites geométricos da tela, e a visão precisa do controlador para gerenciar modos de seleção.
-- **Eixo Fraco / Desacoplado (Model-View):**
-  - O `Model` **não possui referências nominais diretas** às visões concretas. Ele se comunica com a camada de apresentação unicamente através da lista polimórfica de observadores implementada pelo padrão **Observer**.
-  - Esse desacoplamento permite que múltiplos componentes visuais independentes (como um velocímetro analógico e um mostrador digital de texto) observem e reflitam simultaneamente as alterações de um mesmo objeto de domínio sem que este precise ser modificado.
+Steve Burbeck classifica os modelos no Smalltalk em duas naturezas de operação:
 
-### Modelos Passivos versus Modelos Ativos
+#### Modelos Passivos
 
-Steve Burbeck classificou os modelos em duas categorias essenciais:
+O modelo é alterado **exclusivamente por ordens originadas do próprio Controller associado à sua tríade**.
+- *Exemplo:* Um editor de textos simples WYSIWYG cujo modelo subjacente é uma instância pura da classe `String`.
+- *Dinâmica:* O usuário digita uma letra -> o `Controller` intercepta o evento -> o `Controller` muta o objeto `String` -> o próprio `Controller` pode ordenar à `View` que se redesenhe.
+- *Propriedade:* O objeto de modelo não precisa manter lista de dependentes nem herdar de classes especiais; funciona como um repositório passivo de dados.
+
+#### Modelos Ativos
+
+O modelo tem seu estado mutado por **múltiplos controladores concorrentes ou por processos e threads em segundo plano (*background*)**.
+- *Exemplo Canônico:* A classe `SystemTranscript` (o console de logs do Smalltalk) ou relógios do sistema. Qualquer processo em execução pode emitir `Transcript show: 'Alerta'`.
+- *Dinâmica:* A alteração de estado ocorre de forma imprevisível para a View e para o Controller. Portanto, a responsabilidade de emitir a notificação recai compulsoriamente sobre o próprio Modelo.
+- *Propriedade:* O modelo herda de classes com capacidade reativa e dispara a mensagem `self changed`, fazendo com que todas as janelas que o observam recebam `update:` e se atualizem.
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Dev as Processo Externo / Background
+    actor Dev as Processo em Background
     participant M as Modelo Ativo (SystemTranscript)
     participant V as View (TextCollectorView)
     participant C as Controller (TextCollectorController)
 
-    Note over Dev,M: Mutação disparada fora da tríade UI
-    Dev->>M: appendText("Falha na Rede")
+    Dev->>M: show("Serviço Iniciado")
     activate M
+    M->>M: alterarBufferInterno()
     M->>M: self changed
-    Note over M,V: Notificação Reativa via Observer
-    M->>V: update: self with: #text
+    Note over M,V: Disparo Reativo via Observer
+    M->>V: update: self with: #append
     deactivate M
     activate V
-    V->>M: contents()
+    V->>M: consultarNovasLinhas()
     activate M
-    M-->>V: Retorna texto atualizado
+    M-->>V: retorna texto atualizado
     deactivate M
     V->>V: displayView()
     deactivate V
 ```
 
-1. **Modelo Passivo:**
-   - O estado do modelo é alterado **exclusivamente por ordens emitidas pelo Controller da própria tríade** na qual ele está inserido.
-   - *Exemplo Canônico:* Um campo de edição de texto comum onde o modelo subjacente é uma instância pura de `String`.
-   - *Comportamento:* Quando o usuário digita uma letra, o `Controller` recebe o evento físico, altera o conteúdo da `String` e pode comandar o redesenho imediato da `View`. O modelo atua como mero repositório de dados e não precisa gerenciar dependentes.
+### 7.4 O Mecanismo Reativo changed / update:
 
-2. **Modelo Ativo:**
-   - O estado do modelo é modificado por agentes externos, processos de segundo plano (*background threads*) ou por outras tríades concorrentes no sistema.
-   - *Exemplo Canônico:* O console global de log do sistema operacional (`SystemTranscript`). Qualquer processo em execução no ambiente pode emitir o comando `Transcript show: 'Log registrado.'`.
-   - *Comportamento:* Nem a visão nem o controlador da janela do Transcript têm como antecipar quando um processo de retaguarda registrará uma mensagem. Portanto, a responsabilidade de emitir o alerta de alteração recai compulsoriamente sobre o próprio modelo através do disparo de `self changed`.
+#### A Evolução: DependentFields versus Classe Model
 
-### O Mecanismo Reativo de Notificações: Da Tabela Global `DependentFields` à Classe `Model`
+- **Smalltalk-80 Versão 2.0:** Qualquer objeto podia ser observado. Para evitar que classes primitivas (como `Integer` ou `Array`) gastassem memória reservando ponteiros para visões, a linguagem utilizava uma variável de classe global em `Object` chamada `DependentFields`. Essa variável era um dicionário de identidade hash (`IdentityDictionary`). As chaves eram os modelos; os valores eram coleções de visões dependentes. O problema dessa abordagem era a contenção de concorrência e vazamentos de memória caso a desvinculação não fosse explícita.
+- **Smalltalk-80 Versão 2.5:** Introduziu a classe abstrata de base `Model`. A classe incorporou uma variável de instância dedicada chamada `dependents`. Para otimizar o consumo de memória, a variável `dependents` operava sob três estados:
+  1. `nil`: quando o modelo não possuía nenhum observador.
+  2. Referência direta ao próprio objeto observador: quando havia apenas uma única View cadastrada (economizando a alocação de uma lista).
+  3. Instância de `DependentsCollection`: quando dois ou mais dependentes estavam vinculados.
 
-A evolução do mecanismo reativo de eventos no Smalltalk-80 documenta um dos mais importantes marcos da otimização estrutural na engenharia de software:
+#### O Protocolo Reativo
 
-```mermaid
-classDiagram
-    class Object {
-        <<Smalltalk-80 v2.0>>
-        +DependentFields : IdentityDictionary
-        +addDependent(anObject)
-        +removeDependent(anObject)
-        +changed()
-        +changed(anAspect)
-    }
-
-    class Model {
-        <<Smalltalk-80 v2.5 Otimizado>>
-        +dependents : Object
-        +addDependent(anObject)
-        +removeDependent(anObject)
-        +changed()
-        +changed(anAspect)
-    }
-
-    Object <|-- Model : Especialização Estrutural
-```
-
-- **A Abordagem na Versão v2.0 (`DependentFields`):**
-  - No Smalltalk-80 v2.0, todo e qualquer objeto herdava de `Object` a capacidade potencial de atuar como modelo. Para evitar inflar o consumo de memória de objetos primitivos que nunca participariam de uma interface (como números inteiros ou booleanos), utilizou-se uma variável de classe em `Object` denominada `DependentFields`.
-  - `DependentFields` consistia em uma tabela hash global (`IdentityDictionary`) onde as chaves eram as instâncias de modelos e os valores eram coleções (`OrderedCollection`) contendo as visões observadoras.
-  - *Problema de Engenharia:* Sobrenrecarga de contenção de hash global, lentidão na busca em tempo de execução e risco crônico de vazamentos de memória (*memory leaks*) caso as janelas fossem fechadas sem que a chamada explícita de desregistro (`removeDependent:`) fosse executada.
-- **A Solução na Versão v2.5 (Classe Abstrata `Model`):**
-  - Para resolver o gargalo, a versão Smalltalk-80 v2.5 introduziu a classe abstrata de domínio `Model`.
-  - A classe `Model` passou a armazenar uma **variável de instância dedicada** denominada `dependents`.
-  - *Otimização de Memória Dinâmica:* A variável `dependents` assumia três estados possíveis:
-    1. Valor `nil`: caso o modelo não possuísse nenhum observador cadastrado (zero consumo de coleções auxiliares);
-    2. Referência direta a um único objeto: caso houvesse apenas uma visão acoplada (economizando a alocação de tabelas dinâmicas);
-    3. Instância de `DependentsCollection`: alocada exclusivamente quando dois ou mais dependentes estivessem registrados.
-
-#### O Protocolo Reativo Canônico
-O tráfego de atualização fundamenta-se na troca rigorosa de mensagens:
+A comunicação de atualização obedece a um protocolo formal:
 
 ```smalltalk
-"1. No Modelo de Domínio (Emissor):"
-self changed.                "Notificacao generica sem parametros"
-self changed: #saldoBancario. "Notificacao direcionada indicando o aspecto alterado"
+"Disparo no emissor (Model):"
+self changed.              "Notificacao generica"
+self changed: #aspecto.    "Notificacao parametrizada indicando o que mudou"
 
-"2. Na Visao (Receptor Dependente):"
+"Recepcao no receptor (View):"
 update: aModel
-    "Executado por padrao quando o modelo dispara 'changed'"
-    self displayView.
+    "Executado por padrao: redesenha a tela inteira"
+    self display.
 
 update: aModel with: anAspect
-    "Executado quando o modelo dispara 'changed: anAspect'"
-    (anAspect == #saldoBancario) ifTrue: [
-        self redesenharSaldo.
-    ].
+    "Executado quando o modelo passa um aspecto especifico"
+    (anAspect == #novoItem) ifTrue: [ self redesenharLista ].
 ```
 
-### Composição Visual Hierárquica e Visões Plugáveis (Pluggable Views)
-
-A renderização visual no Smalltalk-80 é governada pelo padrão de projeto **Composite**:
-- **`TopView` (Janela Raiz):** Representa a janela de nível superior enquadrada na tela do sistema operacional. Ela gerencia o título da janela, o colapso (*minimize*), a movimentação global e o fechamento.
-- **`SubViews` (Visões Aninhadas):** São componentes visuais inseridos no interior da `TopView` (ex.: caixas de listagem, campos de texto editáveis, painéis de botões de alternância). Uma subvisão pode, recursivamente, conter outras subvisões filhas.
+### 7.5 Hierarquia Visual e de Controle no Smalltalk-80
 
 ```mermaid
 flowchart TD
-    TopView["TopView (Janela Principal: System Browser)"]
-    TopView --> Sub1["SelectionView: Lista de Categorias de Classes"]
-    TopView --> Sub2["SelectionView: Lista de Nomes de Classes"]
-    TopView --> Sub3["SelectionView: Protocolos de Métodos"]
-    TopView --> Sub4["SelectionView: Lista de Métodos Individuais"]
-    TopView --> Sub5["CodeView (TextCollectorView): Editor de Código-Fonte"]
+    subgraph ArvoreVisual["Composição Visual (Padrão Composite)"]
+        TV["TopView (Janela Principal / Moldura Externa)"]
+        TV --> SV1["SubView 1 (Menu Superior de Ações)"]
+        TV --> SV2["SubView 2 (Área de Texto Principal)"]
+        TV --> SV3["SubView 3 (Barra de Rolagem / Scroll)"]
+    end
+
+    subgraph ArvoreControle["Controle Cooperativo de Eventos"]
+        SC["ScheduledControllers (Fila do ControlManager)"]
+        SC --> TC["TopController (Janela em Foco)"]
+        TC --> CC1["SubController 1 (Controlador do Menu)"]
+        TC --> CC2["SubController 2 (ParagraphEditor)"]
+    end
 ```
 
-#### Visões Plugáveis (*Pluggable Views*)
-Para evitar a necessidade de criar uma nova subclasse de `View` a cada nova tela concebida no sistema, o Smalltalk-80 introduziu as **Visões Plugáveis**.
-- Uma visão plugável (ex.: `PluggableListView`) é uma classe genérica e reutilizável.
-- Em vez de acoplar métodos estáticos, ela recebe na sua instanciação os **nomes de seletores de mensagens** (*symbols*) que deve enviar ao modelo para obter a lista de itens, consultar a seleção atual e gravar a nova escolha do usuário.
-- Esse mecanismo atua como uma aplicação prematura e engenhosa do padrão de projeto **Adapter**.
+#### Composição Visual: TopView e SubViews
 
-### Pipeline Canônico de Renderização Gráfica e Transformações de Coordenadas
+A montagem gráfica apoia-se no padrão **Composite**:
+- **TopView:** Instância de topo que representa a janela completa, contendo a moldura externa, título, botões de colapso e enquadramento de tela (*framing*).
+- **SubViews:** Componentes visuais aninhados no interior da `TopView` (caixas de listagem, painéis de texto, botões e barras de rolagem).
 
-O processo de pintura de uma janela segue um encadeamento rígido de delegações operacionais no método `display`:
+#### Pipeline de Renderização Gráfica
+
+A renderização na tela obedece a uma cascata hierárquica bem definida:
+
+1. `display`: Método de entrada principal que dispara o ciclo de desenho.
+2. `displayBorder`: Desenha a borda e os limites geométricos da visão.
+3. `displayView`: Desenha o conteúdo interno e elementos gráficos específicos alocados naquele viewport.
+4. `displaySubviews`: Itera sobre a coleção de subvisões filhas, disparando recursivamente a rotina de exibição em cada uma.
+
+#### Transformações Geométricas com WindowingTransformation
+
+A `View` desenha seus elementos utilizando coordenadas relativas internas (iniciando em `0@0`). A classe **`WindowingTransformation`** é a estrutura matemática responsável por traduzir bidirecionalmente essas coordenadas relativas internas para coordenadas absolutas da tela física (*Display Coordinates*), aplicando matrizes de escala e translação espacial.
+
+#### Controle Cooperativo de Eventos: ScheduledControllers e o Mouse de Três Botões
+
+O ambiente gráfico do Smalltalk-80 operava com um modelo de execução *unithread* cooperativo. A coordenação dos periféricos era conduzida pela classe **`ControlManager`** e sua lista de controladores agendados (**`ScheduledControllers`**):
+
+1. **Loop de Controle:** O `ControlManager` monitora continuamente a posição do cursor na tela física.
+2. **Transferência de Controle:** Quando o cursor entra nos limites delimitados da janela de uma `TopView`, o `ControlManager` transfere o laço de eventos para o controlador daquela janela (`TopController`).
+3. **Delegação Interna:** O `TopController` interroga seus subcontroladores para identificar qual elemento visual possui o foco, delegando o método `controlActivity`.
+4. **Semântica do Mouse de Três Botões do Smalltalk:**
+   - **Botão Vermelho (Red Button - Esquerdo):** Interação e manipulação direta sobre o conteúdo interno da visão (posicionar cursor de texto, selecionar linhas de uma lista, arrastar controles).
+   - **Botão Amarelo (Yellow Button - Central):** Abertura do menu de contexto específico da aplicação associada àquela visão particular (operações de editar, recortar, compilar código, buscar texto).
+   - **Botão Azul (Blue Button - Direito):** Abertura do menu global de gerenciamento de janelas da infraestrutura operacional (redimensionar janela, mover, minimizar, colapsar ou fechar).
+
+---
+
+## 8. Estudos de Caso Integradores e Atividades Práticas
+
+### 8.1 Estudo de Caso: Plataforma de Food Delivery (Aula 06)
+
+O estudo de caso aborda uma plataforma de entrega de comida operando como um mercado multifacetado (*multilateral marketplace*), integrando três papéis principais com expectativas distintas:
+
+1. **Cliente:** Busca comodidade, variedade gastronômica, rastreamento do pedido e pagamento seguro.
+2. **Restaurante:** Busca gestão de pedidos recebidos, controle do cardápio, aumento de receita e pontualidade na produção da cozinha.
+3. **Administrador:** Busca auditoria de segurança, sustentação de infraestrutura, moderação de avaliações abusivas e análise de lucratividade corporativa.
+
+#### Fluxo de Valor de Ponta a Ponta
 
 ```mermaid
-flowchart TD
-    D["display (Disparado pelo Sistema)"] --> B["1. displayBorder (Desenha a Moldura e Contornos)"]
-    B --> V["2. displayView (Renderiza o Conteúdo Próprio da Visão)"]
-    V --> S["3. displaySubviews (Percorre Recursivamente as Subvisões)"]
+sequenceDiagram
+    autonumber
+    actor C as Cliente
+    participant App as Aplicativo Delivery
+    actor R as Restaurante
+    actor A as Administrador
+
+    C->>App: Busca restaurantes e monta carrinho
+    App-->>C: Exibe resumo e cálculo de frete
+    C->>App: Conclui checkout e efetua pagamento
+    App->>App: Autoriza pagamento via Gateway
+    App->>R: Alerta de novo pedido (Pendente)
+    R->>App: Aceita pedido e inicia produção (Em Preparo)
+    App-->>C: Notifica início do preparo
+    R->>App: Despacha com entregador (A Caminho)
+    App-->>C: Notifica despacho do pedido
+    R->>App: Confirma conclusão da entrega (Entregue)
+    App-->>C: Solicita avaliação do serviço
+    C->>App: Envia nota (1 a 5) e comentário
+    App->>A: Registra métricas e atualiza dashboards
 ```
 
-#### Transformações Geométricas com `WindowingTransformation`
-Cada `View` opera em seu próprio **sistema de coordenadas locais relativas**, onde o ponto `(0, 0)` representa o canto superior esquerdo da sua própria área retangular.
-No entanto, os chips gráficos e o *framebuffer* global da tela física (`DisplayScreen`) operam em **coordenadas globais absolutas de tela**.
+#### Catálogo Estruturado de Requisitos
 
-A classe de infraestrutura `WindowingTransformation` calcula dinamicamente a matriz matemática de escala e translação bidirecional:
-- **Transformação Direta:** Converte coordenadas locais da visão em coordenadas globais físicas para permitir a rasterização de linhas e textos na tela.
-- **Transformação Inversa:** Converte o ponto físico do cursor do mouse `(X, Y)` retornado pelo hardware nos pontos relativos da área da visão, viabilizando testes de colisão e seleção de linhas de texto.
+- **Requisitos Funcionais (RF):**
+  - `RF-001:` O sistema deve permitir a busca de estabelecimentos filtrando por categoria culinária, faixa de preço e raio de distância.
+  - `RF-002:` O sistema deve permitir ao cliente a gestão de itens no carrinho de compras com inserção de observações de preparo.
+  - `RF-003:` O sistema deve processar pagamentos nas modalidades Pix, Cartão de Crédito e Dinheiro na entrega.
+  - `RF-004:` O sistema deve permitir ao restaurante manter o catálogo de pratos (CRUD completo com fotos e preços).
+  - `RF-005:` O restaurante deve transicionar os estados operacionais do pedido (`Pendente` -> `Em Preparo` -> `A Caminho` -> `Entregue` -> `Cancelado`).
+  - `RF-006:` O administrador deve poder auditar transações financeiras e moderar comentários públicos ofensivos.
+- **Requisitos Não Funcionais (RNF):**
+  - `RNF-001 (Desempenho):` A notificação de transição de status do pedido deve ser entregue na tela do cliente em até 500 milissegundos via WebSocket.
+  - `RNF-002 (Disponibilidade):` A infraestrutura central de recebimento de pedidos deve operar com nível de disponibilidade (SLA) de 99,9% durante os horários de pico (11h-14h e 18h-23h).
+  - `RNF-003 (Segurança):` Todos os dados de cartão e credenciais de login devem ser protegidos em trânsito com TLS 1.3 e armazenados com criptografia padrão AES-256.
 
-### Hierarquia de Controle Cooperativo e Despacho de Eventos
+#### Matriz MoSCoW do Delivery
 
-O Smalltalk-80 operava nativamente sob arquiteturas de processamento com núcleo único (*single-thread*). Por conseguinte, a convivência harmoniosa das janelas exigia um modelo de **multitarefa cooperativa**.
+| Categoria | Funcionalidades Incluídas | Justificativa de Engenharia |
+| :--- | :--- | :--- |
+| **Must Have** | Autenticação; Manutenção de Cardápio; Carrinho; Checkout; Pagamento; Transição básica de status do pedido. | Sem esse núcleo, a transação comercial de entrega é impossível. Compoe o MVP vital da plataforma. |
+| **Should Have** | Notificações push em tempo real; Rastreamento de pedidos via mapa; Moderação de avaliações pelo Administrador. | Críticos para retenção e governança. Podem ser substituídos por alertas simples e consulta manual no lançamento. |
+| **Could Have** | Chat síncrono entre Cliente e Restaurante; Programa gamificado de fidelidade e pontos; Cupons de desconto customizados. | Acrescentam conveniência e diferenciação competitiva, mas sua ausência não inviabiliza as entregas. |
+| **Won't Have** | Algoritmo de roteirização por IA preditiva; Entrega colaborativa por motoristas terceiros avulsos estilo Uber. | Complexidade matemática e de infraestrutura que desviaria o foco da estabilização da arquitetura central. |
 
-```mermaid
-flowchart TD
-    CM["ControlManager (ScheduledControllers)"]
-    CM --> Loop{"Laço de Varredura Ativo"}
-    Loop --> Check{"O Cursor está dentro da área de um ScheduledController?"}
-    Check -- Sim --> Passa["Transfere o Laço de Controle para o Controller Local"]
-    Passa --> Ativ["Controller Local executa controlActivity()"]
-    Ativ --> Libera{"Cursor saiu ou Ação encerrou?"}
-    Libera -- Sim --> CM
-    Check -- Não --> CM
-```
-
-- **`ControlManager` (`ScheduledControllers`):**
-  - Objeto global do sistema que mantém a lista ordenada de todos os controladores de janelas ativas na tela.
-  - Executa um laço contínuo consultando os controladores através da mensagem `isControlWanted`. O controlador cuja janela contiver a posição atual do cursor do mouse assume o controle do processador.
-- **Despacho Cooperativo:**
-  - O controlador ativo executa seu método `controlActivity` para processar eventos pendentes de hardware.
-  - Caso o usuário mova o mouse para fora dos limites da janela ou a rotina encerre, o controlador voluntariamente devolve a execução para o `ControlManager`. Se um programa entrasse em um laço infinito sem ceder controle, o ambiente operacional inteiro congelava.
-
-### O Tratamento de Eventos e o Mouse Clássico de Três Botões
-
-O ambiente do Smalltalk-80 padronizou o hardware do mouse estruturando-o em três botões físicos associados a convenções estritas de engenharia de interface:
+#### Diagrama de Casos de Uso Geral
 
 ```mermaid
 flowchart LR
-    Mouse["Mouse Clássico de 3 Botões"]
-    Mouse --> Red["Botão Vermelho (Red Button / Esquerdo)"]
-    Mouse --> Yellow["Botão Amarelo (Yellow Button / Meio)"]
-    Mouse --> Blue["Botão Azul (Blue Button / Direito)"]
+    subgraph AtoresClientes[" "]
+        Cliente((Cliente))
+    end
 
-    Red --> R_Act["Seleção de Conteúdo e Ações Diretas na View"]
-    Yellow --> Y_Act["Menu de Contexto Específico da Aplicação"]
-    Blue --> B_Act["Operações de Janela Globais (ScreenController)"]
+    subgraph FronteiraSistema["Sistema de Delivery de Comida"]
+        UC1(["Buscar Restaurantes"])
+        UC2(["Fazer Pedido"])
+        UC3(["Acompanhar Pedido"])
+        UC4(["Avaliar Estabelecimento"])
+        UC5(["Realizar Pagamento"])
+        UC6(["Interagir no Chat"])
+
+        UC7(["Gerenciar Cardápio"])
+        UC8(["Controlar Pedidos Recebidos"])
+        UC9(["Atualizar Status do Pedido"])
+
+        UC10(["Autenticar Usuário"])
+        UC11(["Gerenciar Contas"])
+        UC12(["Moderar Avaliações"])
+        UC13(["Visualizar Desempenho"])
+    end
+
+    subgraph AtoresOperacionais[" "]
+        Restaurante((Restaurante))
+        Admin((Administrador))
+        GatewayBank((Gateway Bancário))
+    end
+
+    Cliente --> UC1
+    Cliente --> UC2
+    Cliente --> UC3
+    Cliente --> UC4
+    Cliente --> UC6
+
+    Restaurante --> UC7
+    Restaurante --> UC8
+    Restaurante --> UC9
+    Restaurante --> UC6
+
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13
+
+    UC2 -.->|"<<include>>"| UC5
+    UC5 --- GatewayBank
+    UC2 -.->|"<<include>>"| UC10
+    UC7 -.->|"<<include>>"| UC10
+    UC11 -.->|"<<include>>"| UC10
+    UC8 -.->|"<<include>>"| UC9
 ```
 
-1. **Botão Vermelho (*Red Button* - Botão Esquerdo Primário):**
-   - Utilizado para **interação direta com o conteúdo** da visão. Seleciona caracteres de texto em editores, marca itens em caixas de listagem, posiciona o cursor de inserção e arrasta elementos internos.
-2. **Botão Amarelo (*Yellow Button* - Botão Central de Contexto):**
-   - Utilizado para disparar o **menu de contexto da aplicação local**. Abre opções operacionais dependentes da visão sob a qual o mouse repousa (ex.: no editor de código, abre o menu com `accept`, `cancel`, `format`, `find`).
-3. **Botão Azul (*Blue Button* - Botão Direito Global de Janela):**
-   - Reservado compulsoriamente para o **gerenciamento da infraestrutura de janelas**, delegado diretamente ao `ScreenController`.
-   - Abre o menu do sistema operacional para manipulação física da janela:
-     - `frame`: redimensionar a área da janela na tela;
-     - `move`: reposicionar a janela no display;
-     - `collapse`: minimizar a janela em um ícone compacto;
-     - `close`: destruir e desregistrar a tríade MVC da memória.
+#### Diagrama de Classes do Domínio de Delivery
 
-### Componentes de Suporte Especializados
-- **`ParagraphEditor`:** Subclasse especializada de `Controller` responsável por implementar a lógica avançada de navegação por setas, buffer de digitação de texto, comandos de cópia, recorte e colagem de texto.
-- **`ScreenController`:** Controlador de nível superior que gerencia a área da área de trabalho (*desktop background*), janelas inativas e ações globais de manutenção do sistema.
-- **`MVC Inspector`:** Ferramenta gráfica de metanível do ambiente Smalltalk que permite inspecionar simultaneamente os ponteiros em tempo de execução dos três vértices de uma tríade ativa, exibindo variáveis de instância e coleções de dependentes.
+```mermaid
+classDiagram
+    class Usuario {
+        -String id
+        -String nome
+        -String email
+        -String senhaHash
+        +autenticar(String senha) boolean
+    }
 
-### Transposição do MVC Smalltalk-80 para a Engenharia de Software Moderna (Java)
+    class Cliente {
+        -String telefone
+        -String enderecoPadrao
+        +fazerPedido() Pedido
+    }
 
-A implementação a seguir transcreve com rigor conceitual a tríade do Smalltalk-80 para a sintaxe corporativa da linguagem Java, demonstrando a aplicação do padrão Observer na relação Model-View e o acoplamento bilateral View-Controller:
+    class Restaurante {
+        -String cnpj
+        -String categoriaCulinaria
+        -double taxaEntregaBase
+        +adicionarPrato(Prato p) void
+    }
 
-#### 1. Infraestrutura do Mecanismo Reativo (Observer)
+    class Prato {
+        -String codigo
+        -String nome
+        -String descricao
+        -double preco
+        -boolean disponivel
+    }
+
+    class Pedido {
+        -String numeroIdentificador
+        -LocalDateTime dataHora
+        -String status
+        -double valorTotal
+        +adicionarItem(Prato p, int qtd) void
+        +calcularTotal() double
+        +transicionarStatus(String novoStatus) void
+    }
+
+    class ItemPedido {
+        -int quantidade
+        -double precoGravado
+        -String observacao
+        +calcularSubtotal() double
+    }
+
+    Usuario <|-- Cliente : Generalizacao
+    Usuario <|-- Restaurante : Generalizacao
+    Restaurante "1" *-- "0..*" Prato : Possui (Composicao)
+    Cliente "1" --> "0..*" Pedido : Realiza
+    Pedido "1" *-- "1..*" ItemPedido : Composicao
+    ItemPedido "0..*" --> "1" Prato : Referencia
+```
+
+### 8.2 Estudo de Caso: Atividade Aula 3 (Logística Hospitalar e Separação de Papéis)
+
+A Atividade 3 consolida a transição entre a dor do negócio e a especificação técnica formal, exigindo a segregação estrita de papéis:
+
+- **Stakeholder (Perspectiva de Negócio):** Focado nas dores operacionais, prejuízos financeiros, queixas de equipe e metas corporativas.
+- **Analista de Sistemas (Perspectiva de Engenharia):** Focado na escuta ativa, desconstrução em causas raiz, delimitação de escopo e formalização de requisitos funcionais, não funcionais e modelos UML.
+
+#### Simulação do Caso de Logística Reversa de Equipamentos Hospitalares
+
+- **Contexto:** Locadora de equipamentos de alta complexidade médica (ventiladores pulmonares, monitores e bombas de infusão contínua).
+- **Problema (Visão do Stakeholder):**
+  > *"Perdemos o controle dos ventiladores pulmonares. No último trimestre, 14 aparelhos sumiram sem sabermos se estão no caminhão de frete, no hospital cliente ou no conserto. Para piorar, fomos notificados pela Vigilância Sanitária porque equipamentos foram entregues com laudo de calibração metrológica expirado há 60 dias."*
+- **Diagnóstico da Causa Raiz (Técnica dos 5 Porquês pelo Analista):**
+  1. *Por que os aparelhos somem?* Porque a conferência na coleta é feita em papel carbonado com anotação ilegível.
+  2. *Por que a anotação é ilegível?* Porque os motoristas não validam os números de série no momento do recolhimento.
+  3. *Por que não validam?* Porque não possuem ferramenta móvel de leitura ótica de código de barras ou RFID.
+  4. *Por que as calibrações vencem sem aviso?* Porque os registros de validade ficam arquivados em fichários físicos no almoxarifado.
+  5. *Causa Raiz:* Inexistência de um sistema digital unificado com aplicativo móvel para leitura de ativos no ato da coleta e rotina automatizada de alerta de expiração metrológica.
+- **Solução Técnica Formalizada (Visão do Analista):**
+  - `RF-01 (Leitura Obrigatória na Coleta):` O aplicativo do motorista deve exigir a leitura do código de barras de cada equipamento para liberar o encerramento da ordem de coleta.
+  - `RF-02 (Alerta de Calibração):` O sistema deve bloquear a alocação de qualquer equipamento hospitalar cujo certificado de calibração esteja a menos de 15 dias do vencimento.
+  - `RNF-01 (Disponibilidade Offline):` O aplicativo de coleta deve permitir o registro das movimentações em modo offline, sincronizando os dados automaticamente assim que restabelecida a conexão móvel.
+
+---
+
+## 9. Caderno de Questões de Fixação e Preparação para Provas
+
+### Questão 1 (Fundamentos do Ciclo de Vida e Papéis de Engenharia)
+**Enunciado:** Um cliente da área industrial procura uma software house e afirma: *"Preciso urgentemente que sua equipe desenvolva um aplicativo móvel moderno para melhorar as vendas da minha fábrica, pois as planilhas atuais estão lentas."* O gerente do projeto aceita o contrato e determina que os programadores iniciem imediatamente a codificação das telas e das tabelas de banco de dados. 
+Avalie criticamente a conduta do gerente à luz do ditado enfatizado na disciplina (*"Software não é feito em pastelaria"*) e distinga o papel da Análise ("fazer a coisa certa") em relação ao Projeto ("fazer certo a coisa").
+
+**Resposta Explicada:**
+A atitude do gerente de projeto configura negligência metodológica grave. Ao iniciar a codificação direta a partir de uma fala genérica do cliente, a equipe comete o antipadrão da "pastelaria", confundindo a construção de software com uma linha de montagem instantânea. A fala do cliente contém apenas queixas subjetivas ("melhorar as vendas", "aplicativo moderno", "planilhas lentas") e não requisitos de software verificáveis. 
+A **Análise** tem como responsabilidade primordial **"fazer a coisa certa"**: ela deve investigar os processos atuais (*As-Is*), elicitar as necessidades reais dos operadores, desmascarar causas raiz de atraso e delimitar os requisitos funcionais e não funcionais que comporão o escopo do produto. Pular a análise implica construir um sistema que corre altíssimo risco de resolver o problema errado.
+O **Projeto**, por sua vez, foca em **"fazer certo a coisa"**: estruturar a arquitetura técnica, definir padrões de classes, diagramas de sequência, interfaces seguras e regras de banco de dados para que a solução seja performática e manutenível. Iniciar a codificação sem análise nem projeto gera débitos técnicos imediatos, retrabalho massivo e falhas operacionais em produção.
+
+---
+
+### Questão 2 (Técnicas de Elicitação e Ambiguidade)
+**Enunciado:** Durante uma reunião de levantamento de requisitos para um sistema bancário, o gerente de contas declara ao analista: *"O sistema de transferências precisa ser extremamente rápido e seguro."*
+a) Por que termos como "rápido" e "seguro" são considerados anti-requisitos enquanto não forem refatorados?
+b) Refatore ambas as declarações, estruturando dois Requisitos Não Funcionais (RNF) formais, verificáveis e passíveis de medição por testes de engenharia.
+
+**Resposta Explicada:**
+a) Termos como "rápido", "seguro", "intuitivo" e "robusto" são anti-requisitos porque expressam julgamentos de valor puramente subjetivos e qualitativos. Eles não fornecem limites computacionais objetivos, impedindo que a equipe de engenharia crie testes automatizados de aprovação/rejeição e gerando indefinição contratual quanto aos critérios de aceite da entrega.
+b) Refatoração formal em Requisitos Não Funcionais:
+- **RNF-001 (Desempenho):** *"O processamento de transferências Pix deve apresentar tempo de resposta de ponta a ponta inferior a 1,5 segundo para 99% das requisições (p99), suportando uma carga nominal contínua de 500 transações por segundo."*
+- **RNF-002 (Segurança):** *"Toda comunicação de transferência bancária deve trafegar sob protocolo criptográfico TLS 1.3 com cifras seguras, exigindo autenticação mútua (mTLS) entre os serviços de retaguarda e aplicação de hash criptográfico Argon2id para chaves transacionais."*
+
+---
+
+### Questão 3 (Modelagem de Casos de Uso: Include versus Extend)
+**Enunciado:** Analise o fragmento de requisitos de uma plataforma de comércio eletrônico:
+1. Ao realizar uma compra, o cliente obrigatoriamente precisa se autenticar no sistema.
+2. Durante o encerramento da compra, o cliente pode, caso possua um código promocional válido, inserir um cupom para abater o valor final.
+Modelado em UML:
+a) Qual relacionamento deve ser aplicado entre `Realizar Compra` e `Autenticar Usuário`? Justifique a escolha e indique a direção da seta.
+b) Qual relacionamento deve ser aplicado entre `Realizar Compra` e `Aplicar Cupom Promocional`? Justifique a escolha e indique a direção da seta.
+
+**Resposta Explicada:**
+a) Deve-se utilizar o relacionamento **`<<include>>` (Inclusão)**. A inclusão é obrigatória e incondicional: o caso de uso base (`Realizar Compra`) não pode ser concluído com sucesso sem executar as etapas de `Autenticar Usuário`. A direção da seta tracejada parte do caso de uso base em direção ao caso de uso incluído:
+`Realizar Compra -.->|<<include>>| Autenticar Usuário`.
+b) Deve-se utilizar o relacionamento **`<<extend>>` (Extensão)**. A extensão é condicional e opcional: a lógica de aplicar cupom só ocorre se o cliente desejar e satisfizer a condição de posse de um código válido; a compra pode prosseguir e ser finalizada normalmente sem a existência do cupom. A direção da seta tracejada parte do caso de uso acessório (extensão) em direção ao caso de uso base:
+`Aplicar Cupom Promocional -.->|<<extend>>| Realizar Compra`.
+
+---
+
+### Questão 4 (Diagrama de Classes: Agregação versus Composição)
+**Enunciado:** Explique a diferença semântica e estrutural entre uma Agregação e uma Composição no Diagrama de Classes da UML. Para cada um dos conceitos:
+a) Descreva a representação gráfica padronizada (símbolo).
+b) Explique o acoplamento do ciclo de vida entre a classe "Todo" e a classe "Parte".
+c) Apresente um exemplo do mundo real do domínio educacional ou comercial.
+
+**Resposta Explicada:**
+a) **Representação Gráfica:**
+- *Agregação:* Representada por uma linha de associação com um **losango vazio (branco)** na extremidade conectada à classe "Todo".
+- *Composição:* Representada por uma linha de associação com um **losango preenchido (preto)** na extremidade conectada à classe "Todo".
+b) **Ciclo de Vida:**
+- *Agregação (Todo-Parte Fraco):* O ciclo de vida da "Parte" é independente do ciclo de vida do "Todo". Se o objeto agregador for destruído ou removido do sistema, as instâncias que compunham a agregação continuam existindo de forma autônoma.
+- *Composição (Todo-Parte Forte):* O ciclo de vida da "Parte" é estritamente dependente e subordinado ao "Todo". A classe "Todo" possui a posse exclusiva das "Partes". Se o objeto proprietário for eliminado, todos os seus objetos componentes são compulsoriamente eliminados em cascata.
+c) **Exemplos:**
+- *Exemplo de Agregação:* `Universidade` e `Professor`. Se a instituição de ensino encerrar suas atividades, os professores continuam existindo como indivíduos no mercado.
+- *Exemplo de Composição:* `NotaFiscal` e `ItemNotaFiscal`. Se uma nota fiscal for cancelada ou excluída da base de dados, suas linhas individuais de itens perdem a razão de existir e são destruídas.
+
+---
+
+### Questão 5 (Arquitetura de Software: SaaS versus On-Premises)
+**Enunciado:** Um hospital regional avalia a modernização de seu sistema de Prontuário Eletrônico do Paciente (PEP). A diretoria financeira defende a adoção de um modelo SaaS na nuvem, enquanto o comitê de segurança médica e jurídica prefere uma solução On-Premises. 
+Analise comparativamente os dois modelos considerando:
+a) O modelo de desembolso financeiro (CapEx versus OpEx).
+b) A responsabilidade pela aplicação de correções (*patches*) e rotinas de salvaguarda (*backup*).
+c) O controle sobre a privacidade de dados e sigilo regulatório.
+
+**Resposta Explicada:**
+a) **Modelo Financeiro:**
+- *On-Premises:* Opera primordialmente sob **CapEx** (*Capital Expenditure*). Exige desembolso financeiro antecipado vultoso para a aquisição física de servidores de alta performance, switches, nobreaks, ar-condicionado de precisão para CPD e licenças perpétuas de software.
+- *SaaS:* Opera sob **OpEx** (*Operational Expenditure*). Elimina o investimento inicial em infraestrutura própria, transformando o custo em despesa operacional mensal ou anual previsível por usuário ativo ou volume de prontuários.
+b) **Correções e Backups:**
+- *On-Premises:* A responsabilidade é inteiramente da equipe técnica interna do hospital. Se os técnicos esquecerem de executar rotinas de backup ou tardarem a aplicar patches de segurança contra malwares, o hospital arcará com as perdas e paradas de serviço.
+- *SaaS:* A responsabilidade técnica é transferida contratualmente para o provedor do serviço de nuvem, que conta com equipes dedicadas, rotinas automatizadas de replicação geográfica de dados e atualizações transparentes.
+c) **Privacidade e Sigilo:**
+- *On-Premises:* Garante soberania física e lógica absoluta sobre a custódia das bases de dados, reduzindo riscos de quebra de sigilo por vazamentos em nuvens públicas compartilhadas (fator crítico para auditorias médicas e conformidade com a LGPD).
+- *SaaS:* Os dados de saúde residem em infraestruturas distribuídas de terceiros, exigindo rigoroso contrato de nível de serviço (SLA), auditorias de conformidade (SOC 2, ISO 27001) e garantias formais de isolamento (*multitenancy*) seguro.
+
+---
+
+### Questão 6 (Arquitetura Hexagonal: Ports and Adapters)
+**Enunciado:** A Arquitetura Hexagonal (Ports and Adapters), proposta por Alistair Cockburn, busca isolar o núcleo da aplicação.
+a) Qual é o objetivo de manter as entidades e regras de negócio agnósticas a frameworks e bibliotecas de interface?
+b) Diferencie Portas Condutoras (*Driving/Inbound Ports*) de Portas Conduzidas (*Driven/Outbound Ports*), exemplificando como um banco de dados relacional se encaixa nessa estrutura.
+
+**Resposta Explicada:**
+a) O objetivo central é proteger as regras essenciais do negócio contra a volatilidade tecnológica externa. Frameworks Web, bibliotecas ORM, protocolos de rede e bancos de dados mudam ou se tornam obsoletos com frequência muito maior do que as regras de negócio de uma empresa. Mantendo o domínio puro em classes POJO/Java sem dependências de infraestrutura, o sistema ganha alta testabilidade (permite testar todas as regras sem subir banco ou servidor Web) e facilidade de substituição tecnológica.
+b) **Diferenciação:**
+- *Portas Condutoras (Driving / Inbound):* São interfaces públicas providas pelo núcleo de domínio que expõem os casos de uso para o ambiente externo. São consumidas pelos adaptadores de entrada (ex.: um `PedidoController` REST que chama a interface `CriarPedidoUseCase`).
+- *Portas Conduzidas (Driven / Outbound):* São interfaces definidas pelo núcleo de domínio para declarar as operações que ele precisa requisitar ao mundo externo (ex.: salvar dados, disparar e-mail). 
+- *Encaixe do Banco de Dados:* O núcleo declara uma interface de saída como `PedidoRepositoryPort` contendo o método `salvar(Pedido p)`. Um adaptador de infraestrutura externo (`PostgresPedidoRepository`) implementa essa interface utilizando comandos JPA/Hibernate ou SQL. Dessa forma, a seta de dependência lógica aponta do banco de dados para o domínio, e não o inverso (Inversão de Dependências).
+
+---
+
+### Questão 7 (Smalltalk-80 e MVC: Origem e a Classe Pen)
+**Enunciado:** Por que o padrão arquitetural MVC precisou ser criado no ambiente Smalltalk-80 durante as pesquisas no Xerox PARC? Explique o papel da classe primitiva `Pen` e como o MVC solucionou o compartilhamento do espaço de tela entre múltiplas janelas.
+
+**Resposta Explicada:**
+No início das interfaces gráficas no Xerox PARC, aplicações desenhavam diretamente na memória de vídeo (*framebuffer*) por meio de comandos da classe primitiva `Pen`. Quando a computação interativa evoluiu para a existência de múltiplas janelas sobrepostas convivendo simultaneamente na tela (Browsers de código, Workspaces e consoles de sistema), programas que utilizavam a classe `Pen` de forma desordenada escreviam arbitrariamente sobre a tela inteira, corrompendo visualmente os dados e desenhos das janelas vizinhas. 
+O padrão MVC foi criado não apenas para separar lógica de apresentação, mas como uma **infraestrutura disciplinada de engenharia para viabilizar a cooperação espacial e o compartilhamento harmonioso do hardware gráfico e dos dispositivos de entrada**. Com o MVC, a `View` passou a ter sua área de desenho estritamente delimitada pelo seu próprio retângulo de visualização (*viewport*), enquanto o `Controller` coordenava a captura cooperativa dos cliques e digitações sob a supervisão do `ControlManager`, eliminando o caos visual provocado pela abordagem antiga.
+
+---
+
+### Questão 8 (Smalltalk-80: Modelos Ativos versus Passivos)
+**Enunciado:** Steve Burbeck, em seu ensaio técnico sobre o MVC no Smalltalk-80, divide os modelos em duas classes: Modelos Passivos e Modelos Ativos.
+a) Explique a dinâmica de funcionamento de um Modelo Passivo, citando um exemplo típico.
+b) Explique a dinâmica de funcionamento de um Modelo Ativo e justifique por que o exemplo do `SystemTranscript` exige a emissão do método `self changed`.
+
+**Resposta Explicada:**
+a) Um **Modelo Passivo** é aquele cujo estado interno é modificado única e exclusivamente por ordens diretas originadas do controlador da sua própria tríade MVC. Um exemplo clássico é uma instância pura de `String` que serve de modelo para um campo simples de digitação de texto. Como o controlador da janela foi o único agente causador da alteração, ele próprio tem conhecimento exato do que mudou e pode instruir diretamente a visão a se redesenhar. O modelo não precisa manter lista de observadores nem emitir notificações ativas.
+b) Um **Modelo Ativo** tem seu estado alterado por entidades externas à sua tríade imediata, tais como outros controladores, janelas concorrentes ou processos em segundo plano (*background*). O exemplo canônico é o `SystemTranscript` (console global de saída do sistema). Qualquer rotina no ambiente pode disparar uma mensagem de log (`Transcript show: '...'`). Como a visão e o controlador da janela do Transcript não têm como prever quando um processo concorrente enviará texto, a responsabilidade de avisar o sistema recai compulsoriamente sobre o próprio modelo. Assim que o buffer de texto recebe dados, o modelo executa `self changed`, acionando o mecanismo de dependências para que todas as visões abertas recebam a mensagem `update:` e redesenhem a tela com os novos registros.
+
+---
+
+### Questão 9 (Smalltalk-80: Acoplamento View-Controller versus Model-View)
+**Enunciado:** No padrão MVC clássico do Smalltalk-80, o acoplamento entre a Visão e o Controlador possui características estruturais profundamente diferentes do acoplamento entre o Modelo e a Visão. Compare esses dois relacionamentos detalhando os mecanismos de ligação e a proporção de instâncias.
+
+**Resposta Explicada:**
+- **Ligação View-Controller (Acoplamento Direto e Forte):** A relação entre a Visão e o Controlador é estrita, bilateral e direta na proporção de **1:1**. A `View` mantém uma variável de instância apontando explicitamente para seu `Controller`, e o `Controller` mantém um ponteiro explícito para sua `View`. Eles são criados e destruídos em conjunto; um controlador foi projetado para manipular especificamente os eventos daquela visão associada.
+- **Ligação Model-View (Acoplamento Fraco e Reativo via Observer):** A relação é indireta e baseada no desacoplamento da proporção **1:N**. O `Model` **não** conhece a identidade concreta das visões que o exibem. Ele mantém unicamente uma lista genérica de objetos dependentes (*dependents*). Quando ocorre mutação de dados, o modelo dispara uma notificação genérica (`changed`), e a infraestrutura se encarrega de chamar o método `update:` em cada dependente registrado. Isso permite que um mesmo modelo de domínio seja observado simultaneamente por múltiplas visões distintas (ex.: uma visão gráfica em pizza e uma visão tabular) sem que o modelo precise ser alterado ou acoplado à interface visual.
+
+---
+
+### Questão 10 (Evolução de Dependências: Smalltalk-80 v2.0 versus v2.5)
+**Enunciado:** O mecanismo de notificação de dependências do Smalltalk-80 passou por uma reformulação estrutural importante entre a versão v2.0 e a versão v2.5. Explique como funcionava o dicionário `DependentFields` na versão v2.0, quais problemas de performance ele provocava e como a introdução da classe abstrata `Model` na versão v2.5 solucionou esse gargalo de engenharia.
+
+**Resposta Explicada:**
+Na versão **Smalltalk-80 v2.0**, todo objeto no ambiente herdava de `Object` a capacidade de ser um modelo e ter dependentes. Para que instâncias de classes primitivas (como `Integer`, `String` e `Array`) pudessem atuar como modelos sem onerar a memória de instâncias comuns que nunca participariam de interfaces gráficas, o sistema implementava uma variável de classe global em `Object` denominada `DependentFields`. Esta variável era uma tabela hash de identidade global (`IdentityDictionary`), onde a chave era o objeto modelo e o valor era uma coleção (`OrderedCollection`) com seus observadores. O problema dessa abordagem residia na contenção de acesso à tabela global única, alto custo de processamento nas operações de busca por hash em sistemas com milhares de objetos e vazamentos de memória (*memory leaks*) caso instâncias mortas não fossem removidas explicitamente do dicionário global.
+Para sanar esse gargalo, a versão **Smalltalk-80 v2.5** introduziu a classe abstrata **`Model`**. O mecanismo de dependências foi movido para fora de `Object` genérico. A classe `Model` passou a carregar uma variável de instância dedicada chamada `dependents`. Para otimizar o uso da memória, essa variável podia assumir três estados otimizados: `nil` (sem nenhum dependente, ocupando apenas um ponteiro nulo), uma referência direta a um único objeto (quando havia apenas uma visão observando, sem gastar memória alocando listas) ou uma coleção `DependentsCollection` (quando duas ou mais visões estavam registradas). Isso eliminou o gargalo da tabela hash global e acelerou as notificações reativas.
+
+---
+
+### Questão 11 (Controle Cooperativo e Mouse de Três Botões no Smalltalk)
+**Enunciado:** O Smalltalk-80 utilizava um mouse clássico com três botões, formalmente referenciados por cores: Botão Vermelho (*Red Button*), Botão Amarelo (*Yellow Button*) e Botão Azul (*Blue Button*).
+a) Qual era a atribuição semântica de cada um desses botões no fluxo de trabalho de uma aplicação em MVC?
+b) Como o `ControlManager` e o `ScheduledControllers` gerenciavam a passagem de controle entre janelas em um ambiente unithread?
+
+**Resposta Explicada:**
+a) **Atribuição Semântica dos Botões:**
+- *Botão Vermelho (Red Button - Esquerdo):* Destinado à **manipulação direta de conteúdo e seleção**. Atua no domínio interno da visão, servindo para selecionar trechos de texto, acionar itens de formulário, desenhar ou clicar em botões operacionais.
+- *Botão Amarelo (Yellow Button - Central):* Destinado ao **menu de contexto da aplicação**. Abre um menu pop-up contendo comandos e ações pertinentes àquela visão específica (ex.: em uma janela de código, oferece opções como *accept*, *compile*, *find*, *format*).
+- *Botão Azul (Blue Button - Direito):* Destinado à **gestão da infraestrutura da janela**. Abre o menu global provido pelo sistema operacional para manusear a janela física (redimensionar, arrastar, colapsar em ícone, fechar ou colocar em segundo plano).
+b) **Gestão do Controle Cooperativo:**
+O Smalltalk-80 operava com laço cooperativo unithread. O componente **`ControlManager`** mantinha uma lista encadeada de controladores ativos denominada **`ScheduledControllers`**. O `ControlManager` monitorava o hardware do mouse e varria a tela; no momento em que as coordenadas do cursor cruzavam as fronteiras retangulares de uma janela ativa, o laço de eventos era delegado para o controlador de topo daquela janela (`TopController`). Este, por sua vez, assumia a execução via método `controlActivity`, distribuindo os cliques e eventos de teclado para os subcontroladores das visões filhas até que o cursor deixasse a área da janela.
+
+---
+
+### Questão 12 (Pipeline Gráfico e Transformação de Coordenadas)
+**Enunciado:** Dentro da hierarquia de composição visual no Smalltalk-80, explique:
+a) A sequência do pipeline canônico de renderização disparado pelo método `display`.
+b) A finalidade da classe `WindowingTransformation` no mapeamento entre coordenadas lógicas internas da `View` e as coordenadas físicas da tela.
+
+**Resposta Explicada:**
+a) **Sequência do Pipeline de Renderização:**
+O processo de exibição é hierárquico e recursivo:
+1. `display`: Método de entrada principal que dispara a cascata de desenho da visão.
+2. `displayBorder`: Desenha os contornos físicos, margens e molduras retangulares da janela.
+3. `displayView`: Executa a lógica de pintura e projeção dos dados e caracteres pertinentes àquela visão específica.
+4. `displaySubviews`: Itera sobre a coleção interna de subvisões aninhadas, disparando recursivamente o método `display` em cada componente filho para que eles desenhem seus conteúdos sobre as respectivas áreas.
+b) **Finalidade da `WindowingTransformation`:**
+A `View` projeta seus elementos gráficos internamente assumindo um espaço de coordenadas lógicas relativas (geralmente iniciando no ponto de origem `0@0`). Como as janelas no Smalltalk podem ser movidas, arrastadas e redimensionadas livremente pelo usuário na tela física, a classe **`WindowingTransformation`** atua como o conversor matemático vetorial que aplica translação espacial e escala bidirecional. Ela traduz dinamicamente qualquer coordenada lógica interna da visão para a coordenada absoluta real em pixels do *framebuffer* global da tela (`DisplayScreen`), garantindo que o desenho seja exibido com exatidão dentro dos limites do seu viewport.
+
+---
+
+### Questão 13 (Princípios SOLID: SRP e DIP)
+**Enunciado:** Analise o trecho de código Java abaixo extraído de um projeto corporativo:
+
 ```java
-package br.unifef.engenharia.mvc.smalltalk;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class Model {
-    private final List<View> dependentes = new ArrayList<>();
-
-    public synchronized void addDependent(View view) {
-        if (view != null && !dependentes.contains(view)) {
-            dependentes.add(view);
+public class PedidoController {
+    public void finalizarPedido(Pedido pedido) {
+        // Valida campos
+        if (pedido.getValorTotal() <= 0) {
+            throw new IllegalArgumentException();
         }
-    }
-
-    public synchronized void removeDependent(View view) {
-        dependentes.remove(view);
-    }
-
-    public void changed() {
-        this.changed(null);
-    }
-
-    public void changed(Object aspecto) {
-        for (View dep : dependentes) {
-            dep.update(this, aspecto);
-        }
+        // Conecta ao banco e grava
+        MySQLConnection conn = new MySQLConnection("jdbc:mysql://localhost:3306/db");
+        conn.executeUpdate("INSERT INTO pedidos VALUES (...)");
+        // Dispara e-mail de confirmacao
+        SMTPSender mail = new SMTPSender();
+        mail.sendEmail("cliente@email.com", "Pedido confirmado");
     }
 }
 ```
 
-#### 2. Modelo de Domínio Concreto (Modelo Ativo)
+Identifique e explique a violação de dois princípios do SOLID presentes nessa classe e apresente a refatoração conceitual para corrigir essas deficiências.
+
+**Resposta Explicada:**
+1. **Violação do Single Responsibility Principle (SRP - Princípio da Responsabilidade Única):** A classe `PedidoController` possui múltiplas responsabilidades desvinculadas: valida regras de negócio, gerencia conexão e execução de comandos SQL no banco de dados e orquestra envio de e-mails via SMTP. Ela possui pelo menos três motivos distintos para mudar, configurando baixa coesão.
+2. **Violação do Dependency Inversion Principle (DIP - Princípio da Inversão de Dependências):** A classe de alto nível (`PedidoController`) instancia e depende diretamente de classes concretas de baixo nível (`MySQLConnection` e `SMTPSender`), gerando altíssimo acoplamento estrutural. Se o banco de dados mudar para PostgreSQL ou o provedor de mensageria mudar para SES/SendGrid, o controlador terá que ser reescrito.
+3. **Refatoração Conceitual:**
+- A validação de negócio deve ser encapsulada dentro da própria entidade de domínio `Pedido`.
+- A persistência deve ser abstraída por uma interface `PedidoRepository`.
+- A notificação deve ser abstraída por uma interface `NotificadorService`.
+- A orquestração deve residir em um `PedidoService` que recebe as interfaces via Injeção de Dependências:
+
 ```java
-package br.unifef.engenharia.mvc.smalltalk;
+public class PedidoService {
+    private final PedidoRepository repository;
+    private final NotificadorService notificador;
 
-public class TermostatoModel extends Model {
-    private double temperaturaCelsius;
-
-    public TermostatoModel(double temperaturaInicial) {
-        this.temperaturaCelsius = temperaturaInicial;
+    public PedidoService(PedidoRepository repository, NotificadorService notificador) {
+        this.repository = repository;
+        this.notificador = notificador;
     }
 
-    public double getTemperatura() {
-        return this.temperaturaCelsius;
-    }
-
-    public void alterarTemperatura(double delta) {
-        this.temperaturaCelsius += delta;
-        // Disparo explicito da notificacao de mudanca de aspecto
-        this.changed("temperatura");
+    public void processar(Pedido pedido) {
+        pedido.validarInvariantes();
+        repository.salvar(pedido);
+        notificador.notificar(pedido.getCliente(), "Pedido confirmado");
     }
 }
 ```
 
-#### 3. Visão Canônica com Acoplamento Bilateral
+---
+
+### Questão 14 (Priorização MoSCoW aplicada a Sistemas Críticos)
+**Enunciado:** Uma equipe de engenharia concebe o módulo inicial de um software de Gestão de Prontuário Eletrônico (PEP) com prazo estrito de lançamento para 60 dias. Foram elicitadas as seguintes funcionalidades:
+1. Assinatura digital de prescrições médicas via certificado ICP-Brasil.
+2. Reconhecimento de voz para transcrição de laudos médicos por inteligência artificial.
+3. Registro de evolução clínica do paciente com histórico imutável.
+4. Modo de visualização de interface com suporte a tema escuro (*Dark Mode*).
+5. Envio de notificações de lembrete de consulta por SMS.
+Aplique o método **MoSCoW**, classificando cada funcionalidade em sua respectiva categoria (*Must Have*, *Should Have*, *Could Have*, *Won't Have*) e justifique sua decisão à luz do conceito de MVP.
+
+**Resposta Explicada:**
+- **Must Have (Deve Ter):**
+  - *Funcionalidade 3 (Registro de evolução clínica com histórico imutável):* É o núcleo funcional e legal indiscutível de um prontuário médico. Sem histórico imutável, o sistema é inútil e ilegal perante os conselhos de medicina.
+  - *Funcionalidade 1 (Assinatura digital via ICP-Brasil):* Exigência regulatória obrigatória para que a prescrição digital tenha validade jurídica e dispense o papel. Vital para a viabilidade do produto.
+- **Should Have (Deveria Ter):**
+  - *Funcionalidade 5 (Envio de lembretes de consulta via SMS):* Agrega alto valor à rotina da clínica e reduz abstenções de pacientes. É altamente recomendada, mas sua ausência temporária no primeiro mês pode ser contornada por contatos telefônicos manuais da recepção.
+- **Could Have (Poderia Ter):**
+  - *Funcionalidade 4 (Suporte a Dark Mode):* Melhoria puramente ergonômica e estética. Não interfere na precisão clínica nem na segurança do paciente; só deve ser desenvolvida se sobrarem horas da equipe.
+- **Won't Have this time (Não Terá Desta Vez):**
+  - *Funcionalidade 2 (Reconhecimento de voz com IA para transcrição de laudos):* Exige modelos computacionais pesados, calibração para jargões médicos e integração complexa. Consumiria o prazo de 60 dias da equipe e desviaria o foco da estabilização do núcleo seguro do prontuário. Deve ser postergada para versões futuras.
+
+---
+
+### Questão 15 (Modelagem UML e POO: Conversão de Requisitos em Código Java)
+**Enunciado:** Projete e implemente em linguagem Java o domínio de um sistema de Biblioteca universitária atendendo aos seguintes requisitos:
+1. Uma classe abstrata `Publicacao` contendo `titulo` (String) e `codigo` (String), com atributos encapsulados e construtor padronizado.
+2. A classe `Publicacao` deve definir a operação abstrata `calcularDiasEmprestimo() : int`.
+3. Uma subclasse concreta `Livro` que herda de `Publicacao` e implementa o prazo de 14 dias de empréstimo.
+4. Uma subclasse concreta `ArtigoPeriodico` que herda de `Publicacao` e implementa o prazo de 3 dias de empréstimo.
+5. Uma classe `Emprestimo` que possui composição com `Publicacao`, registrando a data do empréstimo e provendo o método `calcularDataDevolucao() : LocalDate`.
+
+**Resposta Explicada:**
+
 ```java
-package br.unifef.engenharia.mvc.smalltalk;
+package br.unifef.biblioteca.dominio;
 
-public class TermostatoConsoleView implements View {
-    private final TermostatoModel model;
-    private TermostatoController controller;
+import java.time.LocalDate;
 
-    public TermostatoConsoleView(TermostatoModel model) {
-        this.model = model;
-        this.model.addDependent(this); // Registro de observador
+// 1. Classe Abstrata Publicacao
+public abstract class Publicacao {
+    private final String codigo;
+    private final String titulo;
+
+    public Publicacao(String codigo, String titulo) {
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("Codigo e obrigatorio.");
+        }
+        if (titulo == null || titulo.isBlank()) {
+            throw new IllegalArgumentException("Titulo e obrigatorio.");
+        }
+        this.codigo = codigo;
+        this.titulo = titulo;
     }
 
-    public void setController(TermostatoController controller) {
-        this.controller = controller; // Ligacao bilateral com o Controller
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    // 2. Operacao Abstrata Polimorfica
+    public abstract int calcularDiasEmprestimo();
+}
+
+// 3. Subclasse Concreta Livro
+public class Livro extends Publicacao {
+    public Livro(String codigo, String titulo) {
+        super(codigo, titulo);
     }
 
     @Override
-    public void update(Model emissor, Object aspecto) {
-        if (emissor == this.model && "temperatura".equals(aspecto)) {
-            this.display();
+    public int calcularDiasEmprestimo() {
+        return 14; // Prazo de 14 dias
+    }
+}
+
+// 4. Subclasse Concreta ArtigoPeriodico
+public class ArtigoPeriodico extends Publicacao {
+    public ArtigoPeriodico(String codigo, String titulo) {
+        super(codigo, titulo);
+    }
+
+    @Override
+    public int calcularDiasEmprestimo() {
+        return 3; // Prazo restrito de 3 dias
+    }
+}
+
+// 5. Classe Emprestimo
+public class Emprestimo {
+    private final Publicacao publicacao;
+    private final LocalDate dataRetirada;
+
+    public Emprestimo(Publicacao publicacao, LocalDate dataRetirada) {
+        if (publicacao == null) {
+            throw new IllegalArgumentException("Publicacao nao pode ser nula.");
         }
+        if (dataRetirada == null) {
+            throw new IllegalArgumentException("Data de retirada e obrigatoria.");
+        }
+        this.publicacao = publicacao;
+        this.dataRetirada = dataRetirada;
     }
 
-    public void display() {
-        System.out.println(String.format("[Display da View] Temperatura Atual: %.2f °C", 
-            model.getTemperatura()));
-    }
-}
-```
-
-#### 4. Controlador de Entrada
-```java
-package br.unifef.engenharia.mvc.smalltalk;
-
-public class TermostatoController {
-    private final TermostatoModel model;
-    private final TermostatoConsoleView view;
-
-    public TermostatoController(TermostatoModel model, TermostatoConsoleView view) {
-        this.model = model;
-        this.view = view;
-        this.view.setController(this); // Fechamento da ligacao 1:1 bilateral
+    public LocalDate calcularDataDevolucao() {
+        // Polimorfismo dinâmico operando sobre a subclasse concreta
+        int diasPermitidos = this.publicacao.calcularDiasEmprestimo();
+        return this.dataRetirada.plusDays(diasPermitidos);
     }
 
-    // Traducao do evento fisico de entrada em comando semantico de negocio
-    public void simularAcaoUsuarioAumentar() {
-        System.out.println("[Controller] Usuario acionou o botao de incremento.");
-        this.model.alterarTemperatura(1.5);
+    public Publicacao getPublicacao() {
+        return publicacao;
     }
 
-    public void simularAcaoUsuarioDiminuir() {
-        System.out.println("[Controller] Usuario acionou o botao de decremento.");
-        this.model.alterarTemperatura(-1.0);
+    public LocalDate getDataRetirada() {
+        return dataRetirada;
     }
 }
 ```
 
 ---
 
-## 7. Matriz de Rastreabilidade e Síntese de Erros, Armadilhas e Boas Práticas
+## 10. Checklist de Revisão para Avaliação Semestral
 
-### Rastreabilidade Vertical de Engenharia: Do Problema ao Código
+Antes de realizar as avaliações teóricas e submeter a entrega dos artefatos do Projeto Integrador, certifique-se de dominar todos os tópicos listados:
 
-A engenharia de software disciplinada garante a rastreabilidade total de artefatos. Uma linha de código executável em produção deve possuir um elo causal direto com o problema elicitado na primeira semana de projeto:
-
-```mermaid
-flowchart TD
-    Prob["1. Dor do Negócio: Extravio de Equipamentos Hospitalares"]
-    Req["2. Requisito Funcional: RF04 - Rastreamento por Leitura de RFID"]
-    Prio["3. Priorização MoSCoW: Classificado como MUST HAVE"]
-    UC["4. Caso de Uso: UC08 - Registrar Coleta de Equipamento"]
-    ClassD["5. Diagrama de Classes: Equipamento, Quarentena, LeitorRFID"]
-    Code["6. Implementação em Código: Equipamento.registrarMovimentacao()"]
-
-    Prob --> Req --> Prio --> UC --> ClassD --> Code
-```
-
-### Catálogo de Erros Conceituais e Falhas Frequentes em Avaliações
-
-Abaixo estão listadas as principais armadilhas metodológicas identificadas pelo Prof. Wesley Soares em provas e bancas de projetos integradores:
-
-| Erro / Antipadrão Identificado | Natureza da Falha | Consequência no Projeto | Correção Rigorosa de Engenharia |
-| :--- | :--- | :--- | :--- |
-| **Confundir Requisito Funcional com Regra de Negócio** | Falha conceitual de engenharia de requisitos. | Tentar implementar regras de domínio fixas como se fossem opções técnicas configuráveis. | *Regra de Negócio:* "Descontos acima de 20% exigem aval do gerente". *Requisito Funcional:* "O sistema deve bloquear a venda e solicitar a senha do gerente se o desconto for > 20%". |
-| **Inverter a Direção das Setas em `<<include>>` e `<<extend>>`** | Falha de sintaxe formal na UML. | Inversão do significado da dependência arquitetural na documentação. | A seta do `<<include>>` aponta **da Base para o Incluído**. A seta do `<<extend>>` aponta **do Extensor para a Base**. |
-| **Decomposição Funcional / Procedimental em Casos de Uso** | Modelagem orientada a telas ou banco em vez de metas. | Explosão de micro-casos de uso inúteis (`Digitar Senha`, `Salvar no SQL`). | Agrupar passos atômicos dentro da especificação textual de um caso de uso que entregue um resultado de valor (*User Goal*). |
-| **Modelo Anêmico com Getters e Setters Cegos** | Quebra do encapsulamento na orientação a objetos. | Corrupção de estados por código externo; ausência de regras de validação. | Tornar atributos privados e expor métodos semânticos de domínio (`debitar()`, `matricular()`), eliminando setters públicos universais. |
-| **Confundir Agregação com Composição** | Erro de modelagem estrutural no Diagrama de Classes. | Falhas na gerência de memória e exclusões acidentais em cascata no banco de dados. | Perguntar: "Se o Todo for destruído, a Parte pode continuar existindo sozinha?" Se **sim** = Agregação (losango vazio). Se **não** = Composição (losango preenchido). |
-| **Considerar a UML como Metodologia ou Processo Ágil** | Confusão epistemológica entre notação e processo. | Falta de governança sobre cerimônias, entregáveis e responsabilidades de time. | Compreender que Scrum define o fluxo de trabalho (*quem* e *quando*); a UML é apenas a linguagem visual para documentar o design (*como*). |
-| **Associação Direta entre Atores no Diagrama de Casos de Uso** | Erro grave de notação formal na UML 2.5. | Conectar o boneco do `Cliente` diretamente ao boneco do `Vendedor` com linha simples. | Atores não interagem diretamente entre si no diagrama de casos de uso; se houver relação de especialização de papéis, deve-se usar **Generalização**. |
-
----
-
-## 8. Glossário Geral da Disciplina
-
-- **Actor (Ator):** Entidade externa ao perímetro do sistema que interage com este trocando informações ou estímulos. Pode ser humano, periférico de hardware ou sistema computacional terceiro.
-- **Analysis (Análise de Software):** Fase orientada à elucidação, refinamento e documentação do problema de negócio e necessidades dos clientes, sob o prisma "fazer a coisa certa".
-- **Association (Associação):** Relacionamento estrutural persistente entre classes ou canal de comunicação básico entre um ator e um caso de uso.
-- **Aggregation (Agregação):** Relacionamento do tipo todo-parte fraco, onde as partes possuem ciclo de vida independente da existência do objeto todo.
-- **Black-Box Modeling (Abordagem Caixa-Preta):** Técnica de modelagem comportamental que abstrai código interno, queries e algoritmos, documentando apenas estímulos e respostas observáveis.
-- **CamelCase:** Convenção tipográfica de nomenclatura onde a primeira letra da palavra inicial é minúscula e as iniciais das palavras subsequentes são maiúsculas (ex.: `calcularSubtotalLiquido`).
-- **Composition (Composição):** Relacionamento todo-parte forte, onde o objeto parte depende existencialmente do ciclo de vida do todo, extinguindo-se se o todo for destruído.
-- **Cohesion (Coesão):** Grau de afinidade e foco das responsabilidades alocadas a um determinado módulo ou classe.
-- **Coupling (Acoplamento):** Nível de interdependência e conhecimento mútuo entre dois ou mais componentes de software.
-- **Dependency (Dependência):** Relação de acoplamento fraco e transitório onde uma classe utiliza momentaneamente operações de outra (ex.: parâmetro de método).
-- **Domain (Domínio):** O ecossistema de negócio do mundo real onde a empresa atua e onde a intervenção de software gera impacto econômico ou operacional.
-- **Elicitation (Elicitação):** Processo ativo, investigativo e dialético de extrair, confrontar e formalizar necessidades e regras latentes de negócio junto aos stakeholders.
-- **Encapsulation (Encapsulamento):** Prática estrutural de ocultar detalhes de implementação e estados internos de uma classe, expondo apenas operações seguras.
-- **Extension Point (Ponto de Extensão):** Âncora declarada formalmente no fluxo de um caso de uso base onde comportamentos de extensão opcionais podem ser injetados condicionalmente.
-- **Extend (Extensão):** Relação condicional onde um caso de uso extensor expande o comportamento de um caso de uso base caso uma regra de guarda seja satisfeita.
-- **Generalization (Generalização):** Relacionamento de taxonomia ou herança entre classificadores (classes ou casos de uso), onde o elemento especializado herda atributos e contratos do elemento genérico.
-- **Include (Inclusão):** Relação obrigatória onde um caso de uso base delega e incorpora incondicionalmente a execução de um caso de uso acessório.
-- **Job Shadowing:** Modalidade de observação direta onde o analista atua como a "sombra" física do usuário, acompanhando em tempo real a execução das rotinas diárias.
-- **Model-View-Controller (MVC):** Padrão arquitetural tripartite concebido no Smalltalk-80 para desacoplar regras de domínio (Model), apresentação gráfica (View) e tratamento de periféricos (Controller).
-- **MoSCoW:** Técnica de priorização de requisitos que estrutura o escopo nas categorias *Must have*, *Should have*, *Could have* e *Won't have this time*.
-- **MVP (Minimum Viable Product):** Versão mínima funcional de um software composta exclusivamente pelos requisitos essenciais (*Must have*) para validar hipóteses de mercado ou sustentar a operação básica.
-- **PascalCase:** Convenção tipográfica onde todas as palavras de um identificador composto iniciam com letra maiúscula (ex.: `GerenciadorTransacional`).
-- **Polymorphism (Polimorfismo):** Capacidade de despachar uma invocação de método para implementações concretas diferentes dependendo do tipo da instância em tempo de execução.
-- **Requirements Gathering (Levantamento de Requisitos):** Postura passiva de coleta de solicitações do cliente, contrastando com a elicitação ativa.
-- **Scope Creep (Corrupção de Escopo):** Crescimento contínuo, caótico e desordenado dos requisitos de um projeto durante seu desenvolvimento, sem reajuste de prazo ou custo.
-- **ScheduledControllers:** Infraestrutura do `ControlManager` no Smalltalk-80 que mantém a lista encadeada de controladores ativos para despacho cooperativo de eventos.
-- **Single Responsibility Principle (SRP):** Princípio de design que estipula que uma classe ou módulo deve ter um, e apenas um, motivo para ser modificada.
-- **Stakeholder:** Parte interessada que pode afetar ou ser afetada direta ou indiretamente pela concepção e implantação do software.
-- **Subject Boundary (Fronteira do Sistema):** Caixa retangular no Diagrama de Casos de Uso que segrega os serviços internos sob responsabilidade do software dos atores externos.
-- **Unified Modeling Language (UML):** Linguagem visual padronizada pela OMG para especificação, construção e documentação de sistemas orientados a objetos.
-- **WindowingTransformation:** Classe matemática do Smalltalk-80 que realiza transformações de translação e escala entre coordenadas locais de uma janela e coordenadas globais de tela.
-
----
-
-## 9. Guia de Preparação e Pontos-Chave para as Avaliações Formais
-
-### Tópicos Críticos para a AV1 (1º Bimestre)
-1. **Diferença conceitual entre Análise e Projeto:** Foco do modelo conceitual (o que fazer) versus modelo de projeto (como fazer tecnicamente).
-2. **Ciclo de Vida:** Ordem lógica e finalidade das dez fases do ciclo de desenvolvimento de software e das sete etapas do projeto de software.
-3. **Elicitação:** Por que a declaração "Preciso de um sistema para melhorar meu negócio" não permite iniciar a codificação (falta de critérios de aceite, scope creep, automatização do caos).
-4. **Técnicas de Elicitação:** Comparativo entre entrevistas estruturadas versus semiestruturadas, observação direta (efeito Hawthorne) e análise documental.
-5. **Método MoSCoW:** Definição rigorosa e critérios de enquadramento de cada letra (Must, Should, Could, Won't) e impacto na definição do MVP.
-6. **Casos de Uso:**
-   - Sintaxe obrigatória (verbos no infinitivo + complemento direto);
-   - Diferenciação estrita de `<<include>>` (obrigatório, da base para o incluído) versus `<<extend>>` (opcional, do extensor para a base com Ponto de Extensão);
-   - Generalização de atores e de casos de uso;
-   - Especificação textual Cockburn (pré-condições, pós-condições, caminho feliz, fluxos alternativos e exceções).
-
-### Tópicos Críticos para a AV2 (2º Bimestre)
-1. **UML versus Metodologia:** Compreender categoricamente que a UML é linguagem de notação e não processo de desenvolvimento de software.
-2. **Diagrama de Classes:**
-   - Anatomia dos 3 compartimentos (Nome, Atributos, Operações);
-   - Símbolos de visibilidade (`+`, `#`, `-`, `~`) e correlação com Java;
-   - Multiplicidades e convenções de nomenclatura (PascalCase para classes, camelCase para métodos e atributos);
-   - Diferença fundamental entre Agregação (losango vazio, partes independentes) e Composição (losango preenchido, dependência existencial estrita de ciclo de vida);
-   - Dependência transitória (linha tracejada com seta aberta, passagem por parâmetro).
-3. **Pilares de Orientação a Objetos:**
-   - Encapsulamento real versus modelo anêmico (proteção de invariantes e cópias defensivas contra vazamento de referências mutáveis);
-   - Polimorfismo e eliminação de condicionais complexos (`switch/case`).
-4. **MVC Clássico no Smalltalk-80:**
-   - Contexto histórico no Xerox PARC (substituição da pintura destrutiva com `Pen` por janelas coordenadas);
-   - Papéis estritos de Model, View e Controller;
-   - Acoplamento direto 1:1 bilateral View-Controller versus acoplamento fraco e reativo Model-View (Observer);
-   - Modelos Passivos versus Modelos Ativos (Transcript);
-   - Evolução de `DependentFields` (tabela hash global em `Object`, contenção e memory leaks) para a classe `Model` com variável `dependents` dinâmica;
-   - Funções dos botões do mouse clássico: Vermelho (conteúdo), Amarelo (menu local da view) e Azul (operações globais de janela gerenciadas pelo `ScreenController`).
-
-### Diretrizes de Execução para a Entrega do Projeto Integrador (PJ)
-- **Equipes:** Rigorosamente 3 integrantes, com segregação explícita de papéis nas etapas preliminares (Stakeholders simulando a diretoria do negócio versus Analistas de Sistemas formalizando os modelos).
-- **Rastreabilidade Completa:** Todo caso de uso do sistema fictício deve obrigatoriamente estar mapeado para um requisito funcional classificado no MoSCoW, e suas entidades devem possuir correspondência direta nas classes de domínio.
-- **Rigor Notacional:** Diagramas UML com pontas de setas erradas, relacionamentos sem multiplicidade, atores desenhados dentro da fronteira do sistema ou ausência de verbos nos casos de uso acarretam deduções imediatas de pontuação na avaliação do projeto prático.
+- [ ] **Engenharia versus "Pastelaria":** Compreender que software exige modelagem prévia, validação contínua e arquitetura para prevenir o colapso estrutural.
+- [ ] **Análise versus Projeto:** Distinguir claramente "fazer a coisa certa" (domínio do problema) de "fazer certo a coisa" (domínio da solução técnica).
+- [ ] **As 10 Fases do Ciclo de Vida:** Mapear a progressão encadeada desde o Problema, Requisitos, Planejamento, Arquitetura, Projeto Detalhado, Implementação, Testes, Integração, Entrega até a Manutenção.
+- [ ] **Pilares de Orientação a Objetos:** Demonstrar domínio de Abstração, Encapsulamento de invariantes, Herança estrutural e Polimorfismo com despacho dinâmico.
+- [ ] **Métricas de Qualidade de Código:** Conceituar Baixo Acoplamento (depender de abstrações) e Alta Coesão (Princípio da Responsabilidade Única).
+- [ ] **SOLID e GoF:** Identificar o propósito fundamental de cada uma das cinco letras do SOLID e os padrões de projeto clássicos (Strategy, Factory Method, Observer, Adapter e Facade).
+- [ ] **Elicitação Ativa de Requisitos:** Saber que elicitar é trazer à tona necessidades ocultas através de postura investigativa, e não apenas coletar falas passivas do usuário.
+- [ ] **Refatoração de Ambiguidades:** Saber converter adjetivos subjetivos ("rápido", "fácil", "seguro") em métricas operacionais testáveis de Requisitos Não Funcionais.
+- [ ] **Método MoSCoW:** Classificar itens de backlog nas categorias Must, Should, Could e Won't com base na sustentabilidade do MVP.
+- [ ] **Diagrama de Casos de Uso:** Dominar fronteira do sistema, atores primários/secundários e a semântica estrita de Associação, `<<include>>`, `<<extend>>` e Generalização.
+- [ ] **Especificação Textual de Casos de Uso:** Escrever pré-condições, pós-condições, fluxo principal, alternativos e fluxos de exceção.
+- [ ] **Diagrama de Classes:** Dominar compartimentos de nome, atributos e métodos com sintaxe OMG, modificadores de acesso (`+`, `#`, `-`, `~`), multiplicidade e navegabilidade.
+- [ ] **Agregação versus Composição:** Explicar o acoplamento de ciclo de vida (losango vazio desacoplado versus losango preenchido com destruição em cascata).
+- [ ] **ISO/IEC/IEEE 42010:2022:** Citar a definição normativa de arquitetura de software (componentes, relacionamentos e princípios de evolução).
+- [ ] **Modelos de Distribuição:** Analisar comparativamente SaaS (OpEx, atualizações automáticas na nuvem) e On-Premises (CapEx, custódia local de dados).
+- [ ] **Estilos Arquiteturais:** Compreender as limitações do modelo Cliente-Servidor em duas camadas, os princípios do SOA, a independência do núcleo na Arquitetura Hexagonal e os trade-offs de consistência eventual em Microsserviços.
+- [ ] **O MVC Clássico no Smalltalk-80:** Conhecer a história do Xerox PARC, o problema da classe primitiva `Pen`, a separação entre Model, View e Controller, a ligação direta View-Controller (1:1) e indireta Model-View via Observer.
+- [ ] **Modelos Passivos versus Ativos no Smalltalk:** Diferenciar modelos mutados apenas pelo controller local de modelos globais e concorrentes (`SystemTranscript`) que exigem a notificação ativa `self changed`.
+- [ ] **Infraestrutura de Dependências do Smalltalk:** Explicar a evolução de `DependentFields` (tabela hash global em `Object` no Smalltalk-80 v2.0) para a classe abstrata `Model` (otimização de instâncias no Smalltalk-80 v2.5).
+- [ ] **Controle Cooperativo e Mouse de Três Botões:** Compreender o laço de eventos do `ControlManager`, a lista `ScheduledControllers` e a semântica funcional dos botões Vermelho (seleção), Amarelo (menu da visão) e Azul (menu de janelas).
 
 ---
 
 ## Fontes e Metadados
 
 - Turma no Classroom: Engenharia de Software 2 - 2026/02
-- Itens processados: 0 materiais, 3 tarefas, 7 avisos
-- Gerado em: 24/09/2026, 13:20:12 (BRT) via classroom-sync
+- Itens processados: 0 materiais, 3 tarefas, 8 avisos
+- Gerado em: 30/09/2026, 20:18:39 (BRT) via classroom-sync

@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 10 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 11 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -16,6 +16,7 @@
 | 01/09/2026 | Aviso | Material para aula |
 | 08/09/2026 | Aviso | Aula de revisão hoje! |
 | 22/09/2026 | Aviso | Aviso sem título |
+| 29/09/2026 | Aviso | Aula de hoje |
 
 ## 05/08/2026 - Aviso: Aula 001
 
@@ -79,3 +80,9 @@ Aula de revisão hoje!
 Aviso sem título
 
 - [Applications_programming_in_smalltalk-80_how_to_us.pdf](https://drive.google.com/file/d/18VsocxOlVHN1VVTsNJIIx9AZKJlUanva/view?usp=drive_web)
+
+## 29/09/2026 - Aviso: Aula de hoje
+
+Aula de hoje
+
+- [Aula 008.pdf](https://drive.google.com/file/d/1O3q-SSIS_TOPVX0F0CP5fyYuLB7zQqPz/view?usp=drive_web)

@@ -28,6 +28,7 @@
 | [Exercicios SubSelects - parte 01](Trabalhos/Exercicios%20SubSelects%20-%20parte%2001/detalhes.md) | sem prazo | 100 pontos |
 | [Exerciciso - SUbSelect - parte 2](Trabalhos/Exerciciso%20-%20SUbSelect%20-%20parte%202/detalhes.md) | 02/09/2026 às 23:59 | 100 pontos |
 | [Lista de exercícios](Trabalhos/Lista%20de%20exerc%C3%ADcios/detalhes.md) | 09/09/2026 às 19:59 | 100 pontos |
+| [LIsta de Procedures](Trabalhos/LIsta%20de%20Procedures/detalhes.md) | sem prazo | 100 pontos |
 
 ## Provas
 
