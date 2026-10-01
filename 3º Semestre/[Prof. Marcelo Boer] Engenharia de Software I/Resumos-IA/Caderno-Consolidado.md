@@ -295,7 +295,7 @@ A tabela a seguir sistematiza as métricas recomendadas para as principais dimen
 | **Eficiência de Desempenho** | Vazão (*Throughput*) | Capacidade de processar no mínimo 250 requisições/segundo ($RPS$). |
 | **Confiabilidade** | Disponibilidade Operacional | Uptime mínimo de 99,9% mensal (tempo de inatividade $\le 43$ min/mês). |
 | **Confiabilidade** | Tolerância a Falhas | Tempo Médio Para Reparo ($MTTR$) $\le 30$ minutos; $MTBF \ge 500$ horas. |
-| **Usabilidade** | Eficácia e Tempo de Tarefa | Taxa de conclusão de tarefas $\ge 95\%$ no primeiro uso sem consulta ao manual. |
+| **Usabilidade** | Eficácia e Tempo de Tarefa | Taxa de conclusão de tarefas $`\ge 95\%`$ no primeiro uso sem consulta ao manual. |
 | **Segurança** | Criptografia de Dados | Dados em trânsito protegidos com TLS 1.3; dados em repouso com AES-256. |
 | **Portabilidade** | Adaptabilidade de Plataforma | Renderização funcional responsiva em Android $\ge 10.0$ e iOS $\ge 15.0$. |
 

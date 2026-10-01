@@ -378,7 +378,7 @@ Recebe o identificador do funcionário (`p_id_funcionario`) e o percentual de au
 $$\text{Novo Salario} = \text{Salario Atual} \times \left(1 + \frac{\text{Percentual}}{100}\right)$$
 
 #### Tratamento de Erros e Validações
-1. Validar se o percentual é estritamente positivo ($p\_percentual > 0$).
+1. Validar se o percentual é estritamente positivo ($`p\_percentual > 0`$).
 2. Validar se o funcionário existe na base. Se `FOUND` for falso após o `UPDATE`, disparar exceção.
 
 #### Código da Procedure
@@ -427,7 +427,7 @@ CALL aumentar_salario_funcionario(999, 5.00);
 Recebe o identificador do produto (`p_id_produto`) e a quantidade absoluta do novo estoque (`p_novo_estoque`), atribuindo diretamente o novo valor à coluna `estoque`.
 
 #### Tratamento de Erros e Validações
-1. O estoque não pode assumir valores negativos ($p\_novo\_estoque \ge 0$).
+1. O estoque não pode assumir valores negativos ($`p\_novo\_estoque \ge 0`$).
 2. O identificador do produto deve existir na tabela `produtos`.
 
 #### Código da Procedure
@@ -475,7 +475,7 @@ CALL atualizar_estoque_produto(2, -10);
 Recebe o identificador do cliente (`p_id_cliente`) e o valor a ser creditado (`p_valor`), somando-o ao saldo atual do cliente na tabela `clientes`.
 
 #### Tratamento de Erros e Validações
-1. O valor a ser adicionado deve ser maior que zero ($p\_valor > 0$).
+1. O valor a ser adicionado deve ser maior que zero ($`p\_valor > 0`$).
 2. O cliente informado deve existir na base de dados.
 
 #### Código da Procedure
@@ -520,7 +520,7 @@ CALL adicionar_saldo_cliente(1, -50.00);
 ### Exercício 4: descontar_saldo_cliente
 
 #### Objetivo e Regra de Negócio
-Recebe o identificador do cliente (`p_id_cliente`) e o valor a ser debitado (`p_valor`). Deve abater o valor do saldo existente, **garantindo expressamente que o saldo final não se torne negativo** ($\text{saldo} - p\_valor \ge 0$).
+Recebe o identificador do cliente (`p_id_cliente`) e o valor a ser debitado (`p_valor`). Deve abater o valor do saldo existente, **garantindo expressamente que o saldo final não se torne negativo** ($`\text{saldo} - p\_valor \ge 0`$).
 
 #### Fluxograma de Decisão em Mermaid
 
@@ -596,7 +596,7 @@ Recebe os dados essenciais de um novo produto (`nome`, `categoria`, `preco`, `es
 
 #### Tratamento de Erros e Validações
 1. O `nome` não pode ser nulo ou uma cadeia de caracteres vazia.
-2. O `preco` deve ser estritamente maior que zero ($preco > 0$).
+2. O `preco` deve ser estritamente maior que zero ($`preco > 0`$).
 3. O `estoque` inicial não pode ser negativo ($estoque \ge 0$).
 
 #### Código da Procedure
@@ -813,8 +813,8 @@ Orquestra a inclusão completa de um item em um pedido existente. Recebe `p_id_p
 Deve obrigatoriamente executar as seguintes etapas atômicas:
 1. Validar se o pedido existe e se encontra com status `'ABERTO'`.
 2. Buscar o preço unitário e o estoque atual do produto na tabela `produtos`.
-3. Validar se a quantidade solicitada é positiva e se há estoque disponível no produto ($estoque \ge p\_quantidade$).
-4. Calcular o subtotal do item ($\text{subtotal} = p\_quantidade \times \text{preco\_unitario}$).
+3. Validar se a quantidade solicitada é positiva e se há estoque disponível no produto ($`estoque \ge p\_quantidade`$).
+4. Calcular o subtotal do item ($`\text{subtotal} = p\_quantidade \times \text{preco\_unitario}`$).
 5. Inserir o novo registro na tabela `itens_pedido`.
 6. Diminuir a quantidade do estoque na tabela `produtos`.
 7. Recalcular e atualizar o `valor_total` do pedido em `pedidos` (reutilizando a lógica do Exercício 8).

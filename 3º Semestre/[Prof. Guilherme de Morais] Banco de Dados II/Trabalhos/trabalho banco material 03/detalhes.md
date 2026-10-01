@@ -904,7 +904,7 @@ flowchart TD
 
 1. **A armadilha da comparação com NULL**: NUNCA utilize operadores de comparação tradicionais (`= NULL` ou `<> NULL`). Lembre-se de que a resposta em SQL é sempre `UNKNOWN`, e a cláusula `WHERE` só aceita expressões que avaliem rigorosamente como `TRUE`. Utilize invariavelmente `IS NULL` ou `IS NOT NULL`.
 2. **Sintaxe do comando UPDATE com múltiplos campos**: No comando `UPDATE`, ao alterar mais de uma coluna simultaneamente, as atribuições devem ser separadas exclusivamente por vírgulas (`SET col1 = v1, col2 = v2`). O uso da conjunção `AND` no `SET` constitui erro grave de sintaxe.
-3. **Cálculo percentual cumulativo**: Aumentar um atributo numérico em $X\%$ dentro de um `UPDATE` realiza-se multiplicando o campo por $(1 + X/100)$. Para um aumento de $10\%$, escreve-se `salario = salario * 1.10`.
+3. **Cálculo percentual cumulativo**: Aumentar um atributo numérico em $`X\%`$ dentro de um `UPDATE` realiza-se multiplicando o campo por $(1 + X/100)$. Para um aumento de $`10\%`$, escreve-se `salario = salario * 1.10`.
 4. **Diferença entre DELETE e DROP**:
    - `DELETE FROM TABELA;` remove todas as linhas, mas a tabela continua existindo no banco de dados.
    - `DROP TABLE TABELA;` remove tanto os dados quanto a estrutura da tabela do catálogo do SGBD.

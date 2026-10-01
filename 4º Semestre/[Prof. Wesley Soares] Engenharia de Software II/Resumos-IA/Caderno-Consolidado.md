@@ -455,19 +455,19 @@ Considere a demanda: *"Quero um sistema para controlar meus pedidos."*
 ```mermaid
 mindmap
     root("Quero controlar meus pedidos")
-        Atores e Origem
-            Quem digita? Operador, aplicativo ou cliente final?
-            Quem consulta? Estoque, faturamento ou diretoria?
-        Fluxo do Negocio
-            Pode haver cancelamento pos-envio?
-            Existe analise previa de risco de credito?
-            Ha categorias de pedido (balcao, entrega, encomenda)?
-        Financeiro e Fiscal
-            Quais formas de pagamento sao aceitas?
-            Como ocorre a liquidacao de parcelas?
-        Estoque e Logistica
-            A baixa ocorre no pedido ou na nota fiscal?
-            Ha bloqueio temporario de estoque com tempo de expiracao?
+        n1["Atores e Origem"]
+            n2["Quem digita? Operador, aplicativo ou cliente final?"]
+            n3["Quem consulta? Estoque, faturamento ou diretoria?"]
+        n4["Fluxo do Negocio"]
+            n5["Pode haver cancelamento pos-envio?"]
+            n6["Existe analise previa de risco de credito?"]
+            n7["Ha categorias de pedido (balcao, entrega, encomenda)?"]
+        n8["Financeiro e Fiscal"]
+            n9["Quais formas de pagamento sao aceitas?"]
+            n10["Como ocorre a liquidacao de parcelas?"]
+        n11["Estoque e Logistica"]
+            n12["A baixa ocorre no pedido ou na nota fiscal?"]
+            n13["Ha bloqueio temporario de estoque com tempo de expiracao?"]
 ```
 
 Termos qualitativos como "rápido", "fácil", "seguro" e "robusto" devem ser refatorados em métricas objetivas:

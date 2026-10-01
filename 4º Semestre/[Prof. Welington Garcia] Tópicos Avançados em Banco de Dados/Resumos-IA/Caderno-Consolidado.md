@@ -159,9 +159,11 @@ O modelo relacional proposto por Edgar F. Codd estrutura os dados em relações 
 
 A decomposição de dados em formas normais (especialmente 1FN, 2FN e 3FN) elimina redundâncias e anomalias de atualização, inserção e deleção. Em contrapartida, exige que a recuperação de contextos analíticos realize a reconstrução dessas associações por meio de operações de álgebra relacional.
 
-A operação de junção ($\Join_\theta$) consiste na aplicação de um produto cartesiano seguido pela projeção e pela seleção das tuplas que satisfazem a condição $\theta$:
+A operação de junção ($`\Join_\theta`$) consiste na aplicação de um produto cartesiano seguido pela projeção e pela seleção das tuplas que satisfazem a condição $\theta$:
 
-$$R \Join_\theta S = \sigma_\theta(R \times S)$$
+```math
+R \Join_\theta S = \sigma_\theta(R \times S)
+```
 
 Quando o operador de comparação em $\theta$ é estritamente a igualdade ($=$), a operação denomina-se equijunção. Caso a junção necessite preservar elementos de uma ou de ambas as relações que não possuem correspondentes no conjunto complementar, recorre-se às junções externas (*Outer Joins*).
 
@@ -312,15 +314,15 @@ sequenceDiagram
   participant App as Aplicação Cliente
   participant Parser as Parser / Analyzer
   participant Rewrite as Query Rewrite System
-  participant Opt as Optimizer (CBO)
+  participant Otimizador as Optimizer (CBO)
   participant Exec as Executor Engine
   participant Disk as Tabelas Base no Disco
 
   App->>Parser: Envia: SELECT * FROM vw_clientes_sp WHERE cidade = 'Campinas'
   Parser->>Rewrite: Árvore Sintática da Consulta
   Note over Rewrite: Consulta pg_rewrite e expande a definição da View
-  Rewrite->>Opt: Árvore Única Fundida (View + Filtro Externo)
-  Opt->>Exec: Plano Físico Otimizado (Index Scan / Seq Scan)
+  Rewrite->>Otimizador: Árvore Única Fundida (View + Filtro Externo)
+  Otimizador->>Exec: Plano Físico Otimizado (Index Scan / Seq Scan)
   Exec->>Disk: Lê tuplas físicas na tabela base
   Disk-->>Exec: Retorna blocos de dados
   Exec-->>App: Retorna resultado consolidado em memória
@@ -1116,8 +1118,10 @@ Considere a expressão lógica:
 ```sql
 WHERE c.id_cliente NOT IN (SELECT p.id_cliente FROM pedidos p)
 ```
-Se a subconsulta retornar o conjunto $\{1, 2, \text{NULL}\}$, a condição é desdobrada pela álgebra relacional como:
-$$(c.id\_cliente \ne 1) \text{ AND } (c.id\_cliente \ne 2) \text{ AND } (c.id\_cliente \ne \text{NULL})$$
+Se a subconsulta retornar o conjunto $`\{1, 2, \text{NULL}\}`$, a condição é desdobrada pela álgebra relacional como:
+```math
+(c.id\_cliente \ne 1) \text{ AND } (c.id\_cliente \ne 2) \text{ AND } (c.id\_cliente \ne \text{NULL})
+```
 
 De acordo com a Lógica Trivalente:
 - A comparação `c.id_cliente <> NULL` avalia obrigatoriamente para `UNKNOWN`.

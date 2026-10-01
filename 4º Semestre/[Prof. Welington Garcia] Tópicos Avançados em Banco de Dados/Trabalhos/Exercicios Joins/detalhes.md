@@ -261,9 +261,9 @@ flowchart TD
 
 #### Definições Formais
 - **Produto Cartesiano ($R \times S$):** Produz todas as combinações possíveis entre as tuplas de $R$ e $S$.
-- **Junção Teta ($R \bowtie_\theta S$):** Define-se como $\sigma_\theta(R \times S)$, onde $\theta$ é um predicado de comparação ($=, <, >, \le, \ge, \ne$).
+- **Junção Teta ($`R \bowtie_\theta S`$):** Define-se como $`\sigma_\theta(R \times S)`$, onde $\theta$ é um predicado de comparação ($`=, <, >, \le, \ge, \ne`$).
 - **Equijunção:** Caso particular onde o operador de comparação em $\theta$ é estritamente a igualdade ($=$).
-- **Junção Externa Esquerda ($R \ \sqsubset\!\bowtie_\theta \ S$):** Retorna todas as tuplas da junção interna e, para as tuplas de $R$ que não satisfizerem $\theta$ com nenhuma tupla de $S$, adiciona uma tupla estendida preenchida com valores nulos para todos os atributos de $S$.
+- **Junção Externa Esquerda ($`R \ \sqsubset\!\bowtie_\theta \ S`$):** Retorna todas as tuplas da junção interna e, para as tuplas de $R$ que não satisfizerem $\theta$ com nenhuma tupla de $S$, adiciona uma tupla estendida preenchida com valores nulos para todos os atributos de $S$.
 
 ### Modelo Conceitual e Entidade-Relacionamento do Banco loja_joins
 

@@ -1214,7 +1214,7 @@ flowchart TD
         P3["application-test.properties (Profile Test)"]
     end
 
-    ENV -->|Interpolação ${VAR}| P1
+    ENV -->|"Interpolação ${VAR}"| P1
     P1 --> P2
     P1 --> P3
 ```

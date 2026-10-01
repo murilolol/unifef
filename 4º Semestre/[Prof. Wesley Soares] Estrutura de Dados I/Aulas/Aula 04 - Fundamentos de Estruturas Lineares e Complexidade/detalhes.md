@@ -251,7 +251,7 @@ Na análise de desempenho para grandes entradas, constantes multiplicativas e te
 Considerando $T(n) = 2n$, à medida que $n$ atinge valores da ordem de milhões ou bilhões, o fator multiplicativo $2$ não altera o fato estrutural de que dobrar $n$ dobra o trabalho total. Portanto, abstraímos a constante e categorizamos a complexidade do algoritmo simplesmente como $O(n)$ (crescimento linear).
 
 Se uma função de custo for $T(n) = 3n + 10$:
-- Para $n = 1.000$: $3(1.000) + 10 = 3.010$. O termo $3n$ responde por mais de $99,6\%$ de todo o custo computacional. O termo $+10$ é desprezível.
+- Para $n = 1.000$: $3(1.000) + 10 = 3.010$. O termo $3n$ responde por mais de $`99,6\%`$ de todo o custo computacional. O termo $+10$ é desprezível.
 - Assim, $T(n) = 3n + 10$ pertence à classe assintótica $O(n)$.
 
 ```mermaid
@@ -307,7 +307,7 @@ public int obterPrimeiroElemento(int[] vetor) {
 
 O custo operacional cresce a uma taxa extremamente lenta em relação ao aumento de $n$. É a marca registrada de algoritmos que empregam a técnica de divisão e conquista, reduzindo pela metade o espaço de busca restante a cada passo executado.
 - **Exemplo clássico:** Busca binária em um vetor pré-ordenado.
-- **Comportamento:** Para pesquisar entre $1.000.000$ de itens, enquanto a busca linear pode exigir até $1.000.000$ de verificações, a busca logarítmica resolve a localização em no máximo $\approx 20$ comparações ($\log_2(1.000.000) \approx 19,93$).
+- **Comportamento:** Para pesquisar entre $1.000.000$ de itens, enquanto a busca linear pode exigir até $1.000.000$ de verificações, a busca logarítmica resolve a localização em no máximo $\approx 20$ comparações ($`\log_2(1.000.000) \approx 19,93`$).
 
 ### Complexidade linear: $O(n)$
 
@@ -353,7 +353,7 @@ public void compararPares(int[] vetor) {
 
 ### Tabela comparativa de explosão do custo assintótico
 
-| Entrada ($n$) | Constante $O(1)$ | Logarítmica $O(\log_2 n)$ | Linear $O(n)$ | Quadrática $O(n^2)$ |
+| Entrada ($n$) | Constante $O(1)$ | Logarítmica $`O(\log_2 n)`$ | Linear $O(n)$ | Quadrática $O(n^2)$ |
 | :--- | :--- | :--- | :--- | :--- |
 | **$10$** | $1$ | $\approx 3$ | $10$ | $100$ |
 | **$100$** | $1$ | $\approx 7$ | $100$ | $10.000$ |
@@ -648,7 +648,7 @@ $$\text{Endereço}(i) = \text{Endereço Base} + (i \times \text{Tamanho do Tipo}
 Como os dados não estão necessariamente ordenados, é imperativo inspecionar sequencialmente os itens de $0$ até $tamanho - 1$. No pior caso (elemento ausente ou no último índice), são necessárias $n$ verificações: complexidade $O(n)$.
 
 #### 3. Inserção no final
-Se $tamanho < capacidade$, basta colocar o novo item no índice indicado por `tamanho` e incrementá-lo:
+Se $`tamanho < capacidade`$, basta colocar o novo item no índice indicado por `tamanho` e incrementá-lo:
 ```java
 elementos[tamanho] = novoValor;
 tamanho++;
@@ -1208,7 +1208,7 @@ mindmap
 - [ ] Sei definir formalmente o que é um Tipo Abstrato de Dados (TAD) e discernir entre interface e implementação.
 - [ ] Entendo por que a avaliação assintótica com a contagem de instruções é o método científico correto para medir algoritmos.
 - [ ] Domino o cálculo da notação Big O simplificando funções de custo, descartando constantes e termos menores.
-- [ ] Sei ordenar as classes de complexidade fundamentais: $O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2)$.
+- [ ] Sei ordenar as classes de complexidade fundamentais: $`O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2)`$.
 - [ ] Reconheço que laços que processam frações da entrada (como $n \times \frac{n}{2}$) permanecem assintoticamente quadráticos $O(n^2)$.
 - [ ] Sei desenhar e mapear com precisão o estado das memórias Stack e Heap para qualquer bloco de código Java.
 - [ ] Diferencio o comportamento de cópia por valor de tipos primitivos da cópia de referências de ponteiros.

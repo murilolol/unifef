@@ -214,9 +214,11 @@ No projeto `suporteos2026`, mantemos construtores ricos que validam as invariant
 
 ### Conceito de migração estruturada
 
-Uma migração de banco de dados é um script versionado, autocontido e ordenado que descreve uma transição determinística do esquema de banco de dados do estado $S_{n-1}$ para o estado $S_n$. O estado final de um banco de dados relacional é obtido através da aplicação sequencial de todas as migrações desde a sua criação:
+Uma migração de banco de dados é um script versionado, autocontido e ordenado que descreve uma transição determinística do esquema de banco de dados do estado $`S_{n-1}`$ para o estado $`S_n`$. O estado final de um banco de dados relacional é obtido através da aplicação sequencial de todas as migrações desde a sua criação:
 
-$$\text{Esquema Atual} = S_0 + \Delta M_1 + \Delta M_2 + \dots + \Delta M_k$$
+```math
+\text{Esquema Atual} = S_0 + \Delta M_1 + \Delta M_2 + \dots + \Delta M_k
+```
 
 ### Tabelas de controle do Liquibase
 
@@ -329,9 +331,9 @@ flowchart LR
         BProd[("suporteos2026_prod")]
     end
 
-    Dev -->|Lê .env (DB_DEV_*)| BDev
-    Test -->|Lê .env (DB_TEST_*)| BTest
-    Prod -->|Lê Variáveis do SO| BProd
+    Dev -->|"Lê .env (DB_DEV_*)"| BDev
+    Test -->|"Lê .env (DB_TEST_*)"| BTest
+    Prod -->|"Lê Variáveis do SO"| BProd
 ```
 
 ### Matriz comparativa de configurações por perfil

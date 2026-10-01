@@ -107,19 +107,21 @@ E) As interrupções de hardware são síncronas com o fluxo de instruções da 
 ### Questão 05 - Evolução Arquitetural, Monoprogramação e Utilização da CPU
 Nos primórdios da computação comercial, predominavam os sistemas monoprogramáveis (*monotarefa*). A evolução para sistemas multiprogramáveis baseados em divisão de tempo (*time-sharing*) foi motivada pela necessidade de mitigar o severo gargalo de ociosidade da Unidade Central de Processamento (UCP) causado pelas operações de entrada e saída (E/S).
 
-Considere um sistema computacional monoprogramável executando um *job* contábil que demanda um tempo total de computação ativa em CPU de $T_{comp} = 15 \text{ segundos}$ e gasta um tempo total aguardando leitura e gravação em discos magnéticos de $T_{io} = 60 \text{ segundos}$.
+Considere um sistema computacional monoprogramável executando um *job* contábil que demanda um tempo total de computação ativa em CPU de $`T_{comp} = 15 \text{ segundos}`$ e gasta um tempo total aguardando leitura e gravação em discos magnéticos de $`T_{io} = 60 \text{ segundos}`$.
 
 Aplicando a métrica formal de taxa de utilização da UCP ($U$) para este ambiente:
 
-$$U = \frac{T_{comp}}{T_{comp} + T_{io}}$$
+```math
+U = \frac{T_{comp}}{T_{comp} + T_{io}}
+```
 
 Assinale a alternativa que indica, respectivamente, a taxa de utilização da UCP nesse sistema monoprogramável e a modificação estrutural introduzida pelos sistemas multiprogramáveis para elevar essa métrica:
 
-A) $U = 20\%$; adoção de memória cache L1 para reter todas as instruções do disco, eliminando integralmente as chamadas de E/S.  
-B) $U = 25\%$; manutenção de múltiplos processos em memória para que, no momento em que o processo ativo bloquear aguardando E/S, a CPU seja chaveada para um processo no estado Pronto.  
-C) $U = 20\%$; manutenção de múltiplos processos simultaneamente na memória principal para que a CPU seja transferida a outro processo executável sempre que o processo corrente entrar em espera por E/S.  
-D) $U = 80\%$; implementação da Lei de Moore por meio de circuitos integrados VLSI, forçando a controladora de E/S a operar na mesma frequência de clock da UCP.  
-E) $U = 15\%$; eliminação do Bloco de Controle de Processo (PCB), permitindo que periféricos mecânicos escrevam diretamente na Unidade Lógica e Aritmética (ULA).  
+A) $`U = 20\%`$; adoção de memória cache L1 para reter todas as instruções do disco, eliminando integralmente as chamadas de E/S.  
+B) $`U = 25\%`$; manutenção de múltiplos processos em memória para que, no momento em que o processo ativo bloquear aguardando E/S, a CPU seja chaveada para um processo no estado Pronto.  
+C) $`U = 20\%`$; manutenção de múltiplos processos simultaneamente na memória principal para que a CPU seja transferida a outro processo executável sempre que o processo corrente entrar em espera por E/S.  
+D) $`U = 80\%`$; implementação da Lei de Moore por meio de circuitos integrados VLSI, forçando a controladora de E/S a operar na mesma frequência de clock da UCP.  
+E) $`U = 15\%`$; eliminação do Bloco de Controle de Processo (PCB), permitindo que periféricos mecânicos escrevam diretamente na Unidade Lógica e Aritmética (ULA).  
 
 ---
 
@@ -130,7 +132,7 @@ Seja $P$ a fração de um algoritmo que pode ser executada de maneira estritamen
 
 $$S(N) = \frac{1}{(1 - P) + \frac{P}{N}}$$
 
-Considere um sistema corporativo cujo módulo de processamento de pagamentos possui $25\%$ de seu código estritamente serial (consultas atômicas e escrita em log transacional sequencial) e $75\%$ passível de paralelização integral ($P = 0{,}75$).
+Considere um sistema corporativo cujo módulo de processamento de pagamentos possui $`25\%`$ de seu código estritamente serial (consultas atômicas e escrita em log transacional sequencial) e $`75\%`$ passível de paralelização integral ($P = 0{,}75$).
 
 Sobre as arquiteturas de multiprocessamento e o limite de aceleração dessa aplicação, assinale a afirmativa correta:
 
@@ -165,20 +167,20 @@ Um gerenciador de memória real com suporte a particionamento dinâmico monitora
 - Lacuna E: 600 KB
 
 Quatro novos processos solicitam alocação consecutiva na seguinte ordem de chegada:
-1. Processo $P_1$ requisita 212 KB
-2. Processo $P_2$ requisita 417 KB
-3. Processo $P_3$ requisita 112 KB
-4. Processo $P_4$ requisita 426 KB
+1. Processo $`P_1`$ requisita 212 KB
+2. Processo $`P_2`$ requisita 417 KB
+3. Processo $`P_3`$ requisita 112 KB
+4. Processo $`P_4`$ requisita 426 KB
 
 Considere que não há liberação de memória entre as requisições e que cada partição alocada é dividida exatamente no tamanho do processo, restando o saldo como uma lacuna menor na mesma posição.
 
-Se o sistema utilizar o algoritmo **First-Fit** (Primeiro Encaixe), em quais lacunas originais os processos $P_1$, $P_2$ e $P_3$ serão alocados, e qual será o destino da requisição de $P_4$?
+Se o sistema utilizar o algoritmo **First-Fit** (Primeiro Encaixe), em quais lacunas originais os processos $`P_1`$, $`P_2`$ e $`P_3`$ serão alocados, e qual será o destino da requisição de $`P_4`$?
 
-A) $P_1$ na Lacuna B; $P_2$ na Lacuna E; $P_3$ na Lacuna B (saldo residual); e $P_4$ aguarda em fila de espera por ausência de bloco livre contíguo suficiente.  
-B) $P_1$ na Lacuna C; $P_2$ na Lacuna B; $P_3$ na Lacuna A; e $P_4$ na Lacuna E.  
-C) $P_1$ na Lacuna B; $P_2$ na Lacuna E; $P_3$ na Lacuna C; e $P_4$ aguarda em fila de espera, caracterizando falha por fragmentação externa.  
-D) $P_1$ na Lacuna E; $P_2$ na Lacuna B; $P_3$ na Lacuna D; e $P_4$ na Lacuna E (saldo residual).  
-E) $P_1$ na Lacuna D; $P_2$ na Lacuna B; $P_3$ na Lacuna A; e $P_4$ na Lacuna C.  
+A) $`P_1`$ na Lacuna B; $`P_2`$ na Lacuna E; $`P_3`$ na Lacuna B (saldo residual); e $`P_4`$ aguarda em fila de espera por ausência de bloco livre contíguo suficiente.  
+B) $`P_1`$ na Lacuna C; $`P_2`$ na Lacuna B; $`P_3`$ na Lacuna A; e $`P_4`$ na Lacuna E.  
+C) $`P_1`$ na Lacuna B; $`P_2`$ na Lacuna E; $`P_3`$ na Lacuna C; e $`P_4`$ aguarda em fila de espera, caracterizando falha por fragmentação externa.  
+D) $`P_1`$ na Lacuna E; $`P_2`$ na Lacuna B; $`P_3`$ na Lacuna D; e $`P_4`$ na Lacuna E (saldo residual).  
+E) $`P_1`$ na Lacuna D; $`P_2`$ na Lacuna B; $`P_3`$ na Lacuna A; e $`P_4`$ na Lacuna C.  
 
 ---
 
@@ -196,7 +198,7 @@ flowchart LR
     Soma --> RAM["Endereço Físico na RAM"]
 ```
 
-Suponha que um processo $P_A$ foi carregado na memória real com o registrador Base configurado pelo sistema operacional com o valor hexadecimal `0x4000` (16.384 em decimal) e o registrador Limite configurado com o valor `0x1800` (6.144 em decimal).
+Suponha que um processo $`P_A`$ foi carregado na memória real com o registrador Base configurado pelo sistema operacional com o valor hexadecimal `0x4000` (16.384 em decimal) e o registrador Limite configurado com o valor `0x1800` (6.144 em decimal).
 
 Caso a CPU tente executar uma instrução gerada pelo compilador que faz referência ao endereço lógico `0x1200`, e logo em seguida outra instrução que referencia o endereço lógico `0x1900`, o comportamento do hardware será:
 
@@ -233,15 +235,15 @@ O fenômeno do *Deadlock* (impasse) representa uma falha crítica em sistemas mu
 
 Em 1971, E. G. Coffman Jr. formalizou as quatro condições simultâneas necessárias e suficientes para a ocorrência de um deadlock. Além disso, o Grafo de Alocação de Recursos (*Resource Allocation Graph* - RAG) é amplamente utilizado para modelar dependências entre processos e recursos.
 
-Considere um sistema composto por dois processos ($P_1$ e $P_2$) e dois recursos distintos ($R_1$ e $R_2$), onde cada recurso possui **apenas uma instância física disponível**. O estado do sistema é expresso pelas seguintes relações no RAG:
-- O recurso $R_1$ está alocado para o processo $P_1$ ($R_1 \to P_1$);
-- O processo $P_1$ solicita e aguarda o recurso $R_2$ ($P_1 \to R_2$);
-- O recurso $R_2$ está alocado para o processo $P_2$ ($R_2 \to P_2$);
-- O processo $P_2$ solicita e aguarda o recurso $R_1$ ($P_2 \to R_1$).
+Considere um sistema composto por dois processos ($`P_1`$ e $`P_2`$) e dois recursos distintos ($`R_1`$ e $`R_2`$), onde cada recurso possui **apenas uma instância física disponível**. O estado do sistema é expresso pelas seguintes relações no RAG:
+- O recurso $`R_1`$ está alocado para o processo $`P_1`$ ($`R_1 \to P_1`$);
+- O processo $`P_1`$ solicita e aguarda o recurso $`R_2`$ ($`P_1 \to R_2`$);
+- O recurso $`R_2`$ está alocado para o processo $`P_2`$ ($`R_2 \to P_2`$);
+- O processo $`P_2`$ solicita e aguarda o recurso $`R_1`$ ($`P_2 \to R_1`$).
 
 Sobre esse cenário e a teoria formal de deadlocks, assinale a afirmação correta:
 
-A) O grafo de alocação de recursos contém um ciclo direcionado ($P_1 \to R_2 \to P_2 \to R_1 \to P_1$); como cada tipo de recurso conta com apenas uma instância disponível, a presença desse ciclo é condição necessária e suficiente para caracterizar a existência de um deadlock estrito.  
+A) O grafo de alocação de recursos contém um ciclo direcionado ($`P_1 \to R_2 \to P_2 \to R_1 \to P_1`$); como cada tipo de recurso conta com apenas uma instância disponível, a presença desse ciclo é condição necessária e suficiente para caracterizar a existência de um deadlock estrito.  
 B) A condição de *Não Preempção* afirma que o sistema operacional pode confiscar arbitrariamente qualquer recurso alocado a um processo de baixa prioridade e cedê-lo ao processo mais antigo da fila.  
 C) O sistema ilustrado não entrará em deadlock caso a condição de *Exclusão Mútua* seja mantida integralmente sobre ambos os recursos.  
 D) Em grafos onde os recursos possuem múltiplas instâncias físicas, a presença de um ciclo fechado no RAG garante, com certeza absoluta e sem necessidade de algoritmos de detecção, que o sistema encontra-se em estado de deadlock.  
@@ -270,12 +272,12 @@ O escalonador de processos de um sistema operacional de tempo compartilhado (*ti
 - Processo A: Aplicação de criptografia e processamento de matrizes puramente intensiva em processamento (*CPU-bound*), sem emissão de chamadas de entrada e saída.
 - Processo B: Servidor de aplicação web intensivo em entrada e saída (*I/O-bound*), que executa cálculos lógicos durante $2 \text{ milissegundos}$ e em seguida emite uma chamada de sistema síncrona de rede bloqueante (`recv()`), cujo atendimento pelo hardware leva $30 \text{ milissegundos}$.
 
-Considere que o custo temporal estrito de hardware e software para realizar um Chaveamento de Contexto completo (salvamento de registradores no PCB de saída, restauração do PCB de entrada, troca de tabelas de memória e descarga parcial de TLB) é de $T_{switch} = 1 \text{ milissegundo}$.
+Considere que o custo temporal estrito de hardware e software para realizar um Chaveamento de Contexto completo (salvamento de registradores no PCB de saída, restauração do PCB de entrada, troca de tabelas de memória e descarga parcial de TLB) é de $`T_{switch} = 1 \text{ milissegundo}`$.
 
 Com base no cenário apresentado:
 1. Explique detalhadamente o mecanismo operacional do Chaveamento de Contexto, citando explicitamente quatro informações cruciais manipuladas dentro do Bloco de Controle de Processo (PCB) durante essa transição.
 2. Descreva o comportamento do Processo A e do Processo B ao longo de seus respectivos ciclos de escalonamento, identificando quais transições de estado (Pronto, Execução, Bloqueado) cada um sofre e quais eventos (fim de *quantum* ou chamada de sistema) disparam tais transições.
-3. Avalie o impacto de desempenho e eficiência de uso da CPU caso o administrador do sistema configure o *quantum* com um valor excessivamente pequeno ($q = 1 \text{ milissegundo}$, igual ao tempo de chaveamento $T_{switch}$) versus um valor excessivamente grande ($q = 1000 \text{ milissegundos}$).
+3. Avalie o impacto de desempenho e eficiência de uso da CPU caso o administrador do sistema configure o *quantum* com um valor excessivamente pequeno ($q = 1 \text{ milissegundo}$, igual ao tempo de chaveamento $`T_{switch}`$) versus um valor excessivamente grande ($q = 1000 \text{ milissegundos}$).
 
 ---
 
@@ -286,9 +288,9 @@ Um arquiteto de sistemas operacionais foi contratado para reestruturar a infraes
 Com base nos fundamentos de arquitetura e evolução dos sistemas operacionais:
 1. Analise por que a monoprogramação introduz desperdício massivo de ciclos de processamento frente a operações de entrada e saída (E/S), apresentando a formulação matemática da taxa de utilização da UCP ($U$) e demonstrando analiticamente como a multiprogramação soluciona esse gargalo.
 2. Diferencie sistemas Fortemente Acoplados (SMP) de sistemas Fracamente Acoplados (*Clusters*), considerando o compartilhamento de memória física, barramentos e o modelo de comunicação entre processos.
-3. Considere que o software de cálculo acadêmico da universidade foi refatorado para execução paralela, mas possui uma parcela residual de $20\%$ de seu código que é estritamente serial e indivisível ($1 - P = 0{,}20$). Utilizando a Lei de Amdahl:
+3. Considere que o software de cálculo acadêmico da universidade foi refatorado para execução paralela, mas possui uma parcela residual de $`20\%`$ de seu código que é estritamente serial e indivisível ($1 - P = 0{,}20$). Utilizando a Lei de Amdahl:
    - Calcule o ganho de velocidade teórico (*speedup*) alcançado se o sistema for dotado de $N = 4$ núcleos de CPU.
-   - Determine o teto máximo teórico de aceleração ($S_{max}$) que essa aplicação pode atingir, mesmo que o sistema seja expandido para infinitos núcleos de processamento ($N \to \infty$). Interprete o resultado sob a ótica de engenharia.
+   - Determine o teto máximo teórico de aceleração ($`S_{max}`$) que essa aplicação pode atingir, mesmo que o sistema seja expandido para infinitos núcleos de processamento ($N \to \infty$). Interprete o resultado sob a ótica de engenharia.
 
 ---
 
@@ -310,7 +312,7 @@ Em uma aplicação bancária concorrente rodando sobre um servidor multiprocessa
 Com base nos conceitos de Monitores, Condições de Coffman e Grafos de Alocação de Recursos (RAG):
 1. Explique por que a abordagem de Monitores (proposta por Hoare e Hansen) provê maior robustez e menor propensão a erros de concorrência em comparação ao uso manual de primitivas de semáforos, detalhando os papéis dos procedimentos de acesso públicos, dos dados privados e das variáveis de condição (`wait` e `signal`).
 2. Enuncie as quatro condições necessárias e simultâneas formuladas por Coffman (1971) que produzem um impasse (*deadlock*).
-3. Considere que duas threads ($T_1$ e $T_2$) executam transferências concorrentes entre as contas $C_A$ e $C_B$. A thread $T_1$ adquire a trava de $C_A$ e tenta adquirir a trava de $C_B$; simultaneamente, a thread $T_2$ adquire a trava de $C_B$ e tenta adquirir a trava de $C_A$.  
+3. Considere que duas threads ($`T_1`$ e $`T_2`$) executam transferências concorrentes entre as contas $`C_A`$ e $`C_B`$. A thread $`T_1`$ adquire a trava de $`C_A`$ e tenta adquirir a trava de $`C_B`$; simultaneamente, a thread $`T_2`$ adquire a trava de $`C_B`$ e tenta adquirir a trava de $`C_A`$.  
    - Construa e represente em Mermaid o Grafo de Alocação de Recursos (RAG) resultante dessa colisão.
    - Apresente uma solução arquitetural baseada em **Prevenção de Deadlock (*Deadlock Prevention*)** que quebre formalmente a condição de *Espera Circular*, garantindo que impasses sejam matematicamente impossíveis nessa operação de transferência.
 
@@ -391,13 +393,15 @@ Com base na teoria da virtualização e na infraestrutura de hipervisores modern
 - **Alternativa Correta:** **C**
 - **Justificativa Técnica Aprofundada:**  
   Aplicando a equação da taxa de utilização:
-  $$U = \frac{T_{comp}}{T_{comp} + T_{io}} = \frac{15}{15 + 60} = \frac{15}{75} = \frac{1}{5} = 20\%$$
-  Em sistemas monoprogramáveis, a UCP opera com apenas $20\%$ de sua capacidade de trabalho, permanecendo ociosa durante $80\%$ do tempo enquanto o programa espera o retorno mecânico dos discos.  
-  A solução implementada pelos sistemas **multiprogramáveis** consiste em manter múltiplos processos carregados simultaneamente na memória principal. Quando o Processo 1 emite uma solicitação de E/S e bloqueia, o sistema operacional realiza uma troca de contexto e transfere o processador para o Processo 2 que está no estado Pronto, preenchendo o tempo ocioso e aproximando a utilização da UCP de $100\%$.
+  ```math
+  U = \frac{T_{comp}}{T_{comp} + T_{io}} = \frac{15}{15 + 60} = \frac{15}{75} = \frac{1}{5} = 20\%
+  ```
+  Em sistemas monoprogramáveis, a UCP opera com apenas $`20\%`$ de sua capacidade de trabalho, permanecendo ociosa durante $`80\%`$ do tempo enquanto o programa espera o retorno mecânico dos discos.  
+  A solução implementada pelos sistemas **multiprogramáveis** consiste em manter múltiplos processos carregados simultaneamente na memória principal. Quando o Processo 1 emite uma solicitação de E/S e bloqueia, o sistema operacional realiza uma troca de contexto e transfere o processador para o Processo 2 que está no estado Pronto, preenchendo o tempo ocioso e aproximando a utilização da UCP de $`100\%`$.
 - **Análise das Alternativas Distratoras (Por que estão erradas?):**
-  - **A está incorreta:** O valor de $U = 20\%$ está matematicamente correto, mas a memória cache L1 não tem capacidade (ordem de kilobytes) nem função arquitetural para armazenar o conteúdo completo de dados persistentes de discos secundários.
-  - **B está incorreta:** O cálculo resulta em $20\%$, e não $25\%$ ($15 / 75 = 0{,}20$).
-  - **D está incorreta:** A utilização da CPU é $20\%$, e a Lei de Moore refere-se à densidade de transistores em circuitos integrados, não forçando periféricos mecânicos a operarem na velocidade de nanossegundos de um processador.
+  - **A está incorreta:** O valor de $`U = 20\%`$ está matematicamente correto, mas a memória cache L1 não tem capacidade (ordem de kilobytes) nem função arquitetural para armazenar o conteúdo completo de dados persistentes de discos secundários.
+  - **B está incorreta:** O cálculo resulta em $`20\%`$, e não $`25\%`$ ($15 / 75 = 0{,}20$).
+  - **D está incorreta:** A utilização da CPU é $`20\%`$, e a Lei de Moore refere-se à densidade de transistores em circuitos integrados, não forçando periféricos mecânicos a operarem na velocidade de nanossegundos de um processador.
   - **E está incorreta:** O PCB é a estrutura essencial criada exatamente para *viabilizar* a multiprogramação; sem ele, seria impossível salvar e restaurar o estado dos processos intercalados.
 
 ---
@@ -409,8 +413,10 @@ Com base na teoria da virtualização e na infraestrutura de hipervisores modern
   Dado $P = 0{,}75$, a fração serial obrigatória é:
   $$1 - P = 1 - 0{,}75 = 0{,}25$$
   Calculando o limite teórico com infinitos processadores ($N \to \infty$):
-  $$S_{max} = \lim_{N \to \infty} \frac{1}{(1 - P) + \frac{P}{N}} = \frac{1}{(1 - P) + 0} = \frac{1}{0{,}25} = 4$$
-  Mesmo que a empresa invista milhões de reais em um supercomputador com centenas de milhares de núcleos de processamento, a aplicação jamais executará mais de 4 vezes mais rápida do que sua versão mononucleada, pois os $25\%$ seriais ditam o gargalo temporal inflexível.
+  ```math
+  S_{max} = \lim_{N \to \infty} \frac{1}{(1 - P) + \frac{P}{N}} = \frac{1}{(1 - P) + 0} = \frac{1}{0{,}25} = 4
+  ```
+  Mesmo que a empresa invista milhões de reais em um supercomputador com centenas de milhares de núcleos de processamento, a aplicação jamais executará mais de 4 vezes mais rápida do que sua versão mononucleada, pois os $`25\%`$ seriais ditam o gargalo temporal inflexível.
 - **Análise das Alternativas Distratoras (Por que estão erradas?):**
   - **A está incorreta:** Em sistemas SMP (Fortemente Acoplados), todos os núcleos compartilham um **mesmo espaço de endereçamento de memória RAM unificado** sobre um barramento comum ou interconexão de alta velocidade, executando uma única instância do sistema operacional. O isolamento de memória física e passagem de mensagens por rede são características de *Clusters* (Sistemas Fracamente Acoplados).
   - **C está incorreta:** Inverteu a taxonomia: em *Clusters*, cada nó possui sua própria placa-mãe, memória física privativa e sistema operacional individual; a comunicação é intermediada por interfaces de rede.
@@ -438,29 +444,29 @@ Com base na teoria da virtualização e na infraestrutura de hipervisores modern
 - **Justificativa Técnica Aprofundada:**  
   O algoritmo **First-Fit** percorre a lista de lacunas a partir do início e aloca a requisição na **primeira lacuna livre** que possua tamanho maior ou igual à solicitação:
   1. **Estado Inicial:** Lacuna A (100 KB), Lacuna B (500 KB), Lacuna C (200 KB), Lacuna D (300 KB), Lacuna E (600 KB).
-  2. **Alocação de $P_1$ (212 KB):**
+  2. **Alocação de $`P_1`$ (212 KB):**
      - Testa Lacuna A (100 KB): insuficiente.
      - Testa Lacuna B (500 KB): cabe ($500 \ge 212$).
-     - $P_1$ é alocado em **B**. Saldo residual de B: $500 - 212 = 288 \text{ KB}$.
+     - $`P_1`$ é alocado em **B**. Saldo residual de B: $500 - 212 = 288 \text{ KB}$.
      - Lista atualizada: A (100 KB), B (288 KB), C (200 KB), D (300 KB), E (600 KB).
-  3. **Alocação de $P_2$ (417 KB):**
+  3. **Alocação de $`P_2`$ (417 KB):**
      - Testa Lacuna A (100 KB): insuficiente.
      - Testa Lacuna B (288 KB): insuficiente.
      - Testa Lacuna C (200 KB): insuficiente.
      - Testa Lacuna D (300 KB): insuficiente.
      - Testa Lacuna E (600 KB): cabe ($600 \ge 417$).
-     - $P_2$ é alocado em **E**. Saldo residual de E: $600 - 417 = 183 \text{ KB}$.
+     - $`P_2`$ é alocado em **E**. Saldo residual de E: $600 - 417 = 183 \text{ KB}$.
      - Lista atualizada: A (100 KB), B (288 KB), C (200 KB), D (300 KB), E (183 KB).
-  4. **Alocação de $P_3$ (112 KB):**
+  4. **Alocação de $`P_3`$ (112 KB):**
      - Testa Lacuna A (100 KB): insuficiente.
      - Testa Lacuna B (288 KB): cabe ($288 \ge 112$).
-     - $P_3$ é alocado em **B (no saldo residual)**. Novo saldo de B: $288 - 112 = 176 \text{ KB}$.
+     - $`P_3`$ é alocado em **B (no saldo residual)**. Novo saldo de B: $288 - 112 = 176 \text{ KB}$.
      - Lista atualizada: A (100 KB), B (176 KB), C (200 KB), D (300 KB), E (183 KB).
-  5. **Tentativa de alocação de $P_4$ (426 KB):**
+  5. **Tentativa de alocação de $`P_4`$ (426 KB):**
      - Testa todas as lacunas: A (100), B (176), C (200), D (300), E (183). Nenhuma lacuna individual possui $\ge 426 \text{ KB}$.
-     - Conclusão: $P_4$ não pode ser alocado e aguarda em fila, apesar de a memória livre total acumulada ser de $100 + 176 + 200 + 300 + 183 = 959 \text{ KB}$ (caso emblemático de fragmentação externa).
+     - Conclusão: $`P_4`$ não pode ser alocado e aguarda em fila, apesar de a memória livre total acumulada ser de $100 + 176 + 200 + 300 + 183 = 959 \text{ KB}$ (caso emblemático de fragmentação externa).
 - **Análise das Alternativas Distratoras (Por que estão erradas?):**
-  - **B, C, D e E estão incorretas:** Falham ao aplicar a regra sequencial do First-Fit, trocando a alocação por Best-Fit (que alocaria em lacunas mais justas) ou ignorando a atualização dos saldos residuais das lacunas divididas. Em C, a afirmativa erra ao dizer que $P_3$ vai para C, pois o saldo de B (288 KB) surge antes de C e é maior que 112 KB.
+  - **B, C, D e E estão incorretas:** Falham ao aplicar a regra sequencial do First-Fit, trocando a alocação por Best-Fit (que alocaria em lacunas mais justas) ou ignorando a atualização dos saldos residuais das lacunas divididas. Em C, a afirmativa erra ao dizer que $`P_3`$ vai para C, pois o saldo de B (288 KB) surge antes de C e é maior que 112 KB.
 
 ---
 
@@ -469,7 +475,9 @@ Com base na teoria da virtualização e na infraestrutura de hipervisores modern
 - **Justificativa Técnica Aprofundada:**  
   O mecanismo de hardware com Registradores Base e Limite funciona em duas etapas obrigatórias:
   1. **Validação de Limite:** O endereço lógico gerado pela CPU é comparado com o valor contido no Registrador Limite. Para ser válido, o endereço deve cumprir a condição:
-     $$0 \le \text{Endereço Lógico} < \text{Limite}$$
+     ```math
+     0 \le \text{Endereço Lógico} < \text{Limite}
+     ```
      Se $\text{Endereço Lógico} \ge \text{Limite}$, o circuito lógico rejeita o acesso e dispara um *trap* de hardware para o kernel (violação de acesso/falta de memória).
   2. **Realocação Física:** Se válido, o hardware soma o endereço lógico ao Registrador Base:
      $$\text{Endereço Físico} = \text{Base} + \text{Endereço Lógico}$$
@@ -503,14 +511,16 @@ Com base na teoria da virtualização e na infraestrutura de hipervisores modern
 - **Alternativa Correta:** **A**
 - **Justificativa Técnica Aprofundada:**  
   No Grafo de Alocação de Recursos (RAG):
-  - Um arco de Recurso para Processo ($R_j \to P_i$) denota **atribuição** (posse).
-  - Um arco de Processo para Recurso ($P_i \to R_j$) denota **solicitação** (espera).
+  - Um arco de Recurso para Processo ($`R_j \to P_i`$) denota **atribuição** (posse).
+  - Um arco de Processo para Recurso ($`P_i \to R_j`$) denota **solicitação** (espera).
   No cenário dado:
-  $$P_1 \to R_2 \to P_2 \to R_1 \to P_1$$
-  Existe um ciclo direcionado fechado ligando $P_1$, $R_2$, $P_2$ e $R_1$.  
+  ```math
+  P_1 \to R_2 \to P_2 \to R_1 \to P_1
+  ```
+  Existe um ciclo direcionado fechado ligando $`P_1`$, $`R_2`$, $`P_2`$ e $`R_1`$.  
   **Teorema Fundamental do RAG:**
   - Se cada tipo de recurso no sistema possui **estritamente uma única instância**, a existência de um ciclo no grafo de alocação de recursos é **condição necessária e suficiente** para a caracterização de um *Deadlock*.
-  Neste caso, $P_1$ segura $R_1$ e aguarda $R_2$, enquanto $P_2$ segura $R_2$ e aguarda $R_1$. Nenhum processo progride e nenhum libera seu recurso, travando o sistema em espera circular.
+  Neste caso, $`P_1`$ segura $`R_1`$ e aguarda $`R_2`$, enquanto $`P_2`$ segura $`R_2`$ e aguarda $`R_1`$. Nenhum processo progride e nenhum libera seu recurso, travando o sistema em espera circular.
 - **Análise das Alternativas Distratoras (Por que estão erradas?):**
   - **B está incorreta:** A condição de *Não Preempção* (*No Preemption*) estipula exatamente o oposto: os recursos não podem sofrer preempção forçada; eles só podem ser liberados voluntariamente pelo processo que os detém após a conclusão de sua tarefa.
   - **C está incorreta:** A condição de exclusão mútua é uma das causas essenciais do deadlock; mantê-la sobre recursos disputados viabiliza o impasse.
@@ -578,12 +588,14 @@ sequenceDiagram
 ```
 
 3. **Avaliação dos Limites de Dimensionamento do Quantum:**  
-   - **Quantum excessivamente pequeno ($q = 1 \text{ ms}$, com $T_{switch} = 1 \text{ ms}$):**  
+   - **Quantum excessivamente pequeno ($q = 1 \text{ ms}$, com $`T_{switch} = 1 \text{ ms}`$):**  
      A eficiência útil da CPU ($\eta$) cai drasticamente:
-     $$\eta = \frac{q}{q + T_{switch}} = \frac{1}{1 + 1} = 50\%$$
+     ```math
+     \eta = \frac{q}{q + T_{switch}} = \frac{1}{1 + 1} = 50\%
+     ```
      A metade de todo o poder de processamento do computador é completamente desperdiçada executando salvamento de registradores, trocas de tabelas e perdas de cache de memória (*thrashing* de CPU), gerando colapso de rendimento global.
    - **Quantum excessivamente grande ($q = 1000 \text{ ms}$):**  
-     A sobrecarga de chaveamento de contexto torna-se desprezível ($\eta \approx 99{,}9\%$), otimizando a vazão (*throughput*) de processos puramente CPU-bound. Contudo, a interatividade e o tempo de resposta do sistema são gravemente prejudicados. Se o Processo A ocupar a CPU por 1 segundo ininterrupto, o Processo B (ou processos interativos de interface de usuário) sofrerá atrasos visíveis (*lag* de teclado/rede), degradando a experiência de tempo compartilhado e aproximando o sistema de um modelo em lote (*batch*).
+     A sobrecarga de chaveamento de contexto torna-se desprezível ($`\eta \approx 99{,}9\%`$), otimizando a vazão (*throughput*) de processos puramente CPU-bound. Contudo, a interatividade e o tempo de resposta do sistema são gravemente prejudicados. Se o Processo A ocupar a CPU por 1 segundo ininterrupto, o Processo B (ou processos interativos de interface de usuário) sofrerá atrasos visíveis (*lag* de teclado/rede), degradando a experiência de tempo compartilhado e aproximando o sistema de um modelo em lote (*batch*).
 
 ##### Rubrica de Avaliação Detalhada (Pontuação Máxima: 100%)
 - **Mecanismo Operacional e Campos do PCB (35%):**
@@ -593,7 +605,7 @@ sequenceDiagram
   - Explicou o esgotamento do *quantum* (20 ms) e preempção Execução $\to$ Pronto em A (15%).
   - Explicou o abandono antecipado da CPU (2 ms), chamada `recv()` e ciclo Execução $\to$ Bloqueado $\to$ Pronto em B (20%).
 - **Análise dos Extremos de Quantum (30%):**
-  - Demonstrou matematicamente a perda de $50\%$ da capacidade da CPU no quantum mínimo ($q=1\text{ ms}$) devido ao custo de $T_{switch}$ (15%).
+  - Demonstrou matematicamente a perda de $`50\%`$ da capacidade da CPU no quantum mínimo ($q=1\text{ ms}$) devido ao custo de $`T_{switch}`$ (15%).
   - Analisou a degradação da responsividade/interatividade no quantum de 1000 ms (15%).
 - **Penalizações:** Afirmar que I/O-bound transita direto de Bloqueado para Execução (-15%); considerar que chaveamento de contexto ocorre sem custo de ciclos (-20%).
 
@@ -605,8 +617,10 @@ sequenceDiagram
 ##### Resposta Modelo Padrão
 1. **Gargalo da Monoprogramação e Solução pela Multiprogramação:**  
    Em um sistema monoprogramado, apenas um programa reside na memória e detém o controle do computador. A taxa de utilização da UCP ($U$) é modelada por:
-   $$U = \frac{T_{comp}}{T_{comp} + T_{io}}$$
-   Como os dispositivos periféricos mecânicos ou de rede possuem tempos de resposta que superam a velocidade de clock da CPU em ordens de grandeza (milissegundos contra nanossegundos), o tempo gasto em E/S ($T_{io}$) costuma ser muito superior ao tempo de cálculo ($T_{comp}$). Consequentemente, a UCP permanece ociosa durante a vasta maioria de seu ciclo de vida.  
+   ```math
+   U = \frac{T_{comp}}{T_{comp} + T_{io}}
+   ```
+   Como os dispositivos periféricos mecânicos ou de rede possuem tempos de resposta que superam a velocidade de clock da CPU em ordens de grandeza (milissegundos contra nanossegundos), o tempo gasto em E/S ($`T_{io}`$) costuma ser muito superior ao tempo de cálculo ($`T_{comp}`$). Consequentemente, a UCP permanece ociosa durante a vasta maioria de seu ciclo de vida.  
    A multiprogramação supera esse gargalo mantendo múltiplos processos residentes simultaneamente no espaço de memória real. Quando o processo em execução requisita uma operação de E/S, o sistema operacional suspende sua alocação na CPU e imediatamente despacha outro processo que esteja pronto. Isso sobrepõe o tempo de computação de um processo ao tempo de espera de E/S de outro, elevando a taxa de utilização e o *throughput* do sistema.
 
 2. **Diferenças entre Sistemas Fortemente Acoplados (SMP) e Fracamente Acoplados (Clusters):**  
@@ -617,11 +631,13 @@ sequenceDiagram
    Dados do enunciado: Parcela serial $(1 - P) = 0{,}20$; Parcela paralela $P = 0{,}80$.  
    - **Cálculo do Speedup com $N = 4$ núcleos:**  
      $$S(4) = \frac{1}{(1 - P) + \frac{P}{N}} = \frac{1}{0{,}20 + \frac{0{,}80}{4}} = \frac{1}{0{,}20 + 0{,}20} = \frac{1}{0{,}40} = 2{,}5\times$$
-     O ganho prático de velocidade ao aplicar 4 processadores dedicados sobre o sistema é de $2{,}5$ vezes (uma eficiência de paralelização de $\frac{2{,}5}{4} = 62{,}5\%$).  
+     O ganho prático de velocidade ao aplicar 4 processadores dedicados sobre o sistema é de $2{,}5$ vezes (uma eficiência de paralelização de $`\frac{2{,}5}{4} = 62{,}5\%`$).  
    - **Cálculo do Limite Teórico Máximo ($N \to \infty$):**  
-     $$S_{max} = \lim_{N \to \infty} \frac{1}{(1 - P) + \frac{P}{N}} = \frac{1}{(1 - P)} = \frac{1}{0{,}20} = 5\times$$  
+     ```math
+     S_{max} = \lim_{N \to \infty} \frac{1}{(1 - P) + \frac{P}{N}} = \frac{1}{(1 - P)} = \frac{1}{0{,}20} = 5\times
+     ```
    - **Interpretação sob a Ótica de Engenharia:**  
-     O resultado demonstra que a fração serial residual de $20\%$ impõe um teto rígido e intransponível de $5\times$ de aceleração para a aplicação. A partir de um determinado número de núcleos, a alocação de mais hardware de processamento traz retornos decrescentes marginais nulos (*rendimentos decrescentes*), servindo apenas para encarecer o sistema e consumir energia. Para obter ganhos superiores a $5\times$, a equipe de engenharia não deve adicionar CPUs, mas sim refatorar o algoritmo central para reduzir a fração de código serial estrito ($1 - P$).
+     O resultado demonstra que a fração serial residual de $`20\%`$ impõe um teto rígido e intransponível de $5\times$ de aceleração para a aplicação. A partir de um determinado número de núcleos, a alocação de mais hardware de processamento traz retornos decrescentes marginais nulos (*rendimentos decrescentes*), servindo apenas para encarecer o sistema e consumir energia. Para obter ganhos superiores a $5\times$, a equipe de engenharia não deve adicionar CPUs, mas sim refatorar o algoritmo central para reduzir a fração de código serial estrito ($1 - P$).
 
 ##### Rubrica de Avaliação Detalhada (Pontuação Máxima: 100%)
 - **Análise da Monoprogramação e Utilização da CPU (30%):**
@@ -632,7 +648,7 @@ sequenceDiagram
   - Definiu Clusters: memória distribuída, nós autônomos, múltiplos SOs, comunicação via rede (17.5%).
 - **Cálculos e Interpretação da Lei de Amdahl (35%):**
   - Apresentou a dedução e cálculo exato de $S(4) = 2{,}5\times$ (15%).
-  - Apresentou o cálculo correto do limite assintótico $S_{max} = 5\times$ (10%).
+  - Apresentou o cálculo correto do limite assintótico $`S_{max} = 5\times`$ (10%).
   - Interpretou criticamente os retornos decrescentes sob a ótica de engenharia de software (10%).
 - **Penalizações:** Inverter as definições de memória entre SMP e Cluster (-20%); errar os cálculos aritméticos básicos da Lei de Amdahl (-15%).
 
@@ -659,7 +675,7 @@ sequenceDiagram
 2. **Mecânica da Lista Encadeada e Fusão de Lacunas:**  
    A Lista Encadeada de memória mantém uma lista linear duplamente ligada de nós, onde cada nó descreve um segmento contíguo de memória. Cada nó armazena obrigatoriamente: uma bandeira identificadora (`P` para Processo ou `H` para *Hole*/Lacuna Livre), o endereço físico inicial, a extensão do segmento e o ponteiro para o próximo elemento.  
    - **Mecânica de Fusão de Lacunas (*Coalescing*):**  
-     Quando um processo $P_k$ encerra sua execução, o kernel altera seu nó de `P` para `H`. Imediatamente, o algoritmo verifica os vizinhos adjacentes na lista:
+     Quando um processo $`P_k`$ encerra sua execução, o kernel altera seu nó de `P` para `H`. Imediatamente, o algoritmo verifica os vizinhos adjacentes na lista:
      - Se o nó anterior for uma lacuna livre (`H`), os dois blocos são fundidos em um único nó, somando seus comprimentos.
      - Se o nó seguinte for uma lacuna livre (`H`), funde-se o nó corrente com o posterior.
      Essa consolidação imediata $O(1)$ reconstrói lacunas maiores sem necessidade de varredura global.
@@ -714,11 +730,11 @@ flowchart LR
    - **Exclusão Mútua:** Cada recurso compartilhado só pode estar alocado a no máximo um processo por vez.
    - **Posse e Espera (*Hold and Wait*):** Processos que já detêm a posse exclusiva de recursos podem solicitar ativamente e aguardar a alocação de novos recursos que estejam ocupados.
    - **Não Preempção (*No Preemption*):** Um recurso não pode ser retirado forçadamente de um processo; ele deve ser liberado apenas de forma explícita e voluntária pelo processo detentor após o término de sua utilização.
-   - **Espera Circular (*Circular Wait*):** Deve existir uma cadeia fechada de processos $\{P_0, P_1, \dots, P_n\}$, onde $P_0$ aguarda um recurso detido por $P_1$, $P_1$ aguarda recurso detido por $P_2$, e $P_n$ aguarda recurso detido por $P_0$.
+   - **Espera Circular (*Circular Wait*):** Deve existir uma cadeia fechada de processos $`\{P_0, P_1, \dots, P_n\}`$, onde $`P_0`$ aguarda um recurso detido por $`P_1`$, $`P_1`$ aguarda recurso detido por $`P_2`$, e $`P_n`$ aguarda recurso detido por $`P_0`$.
 
 3. **Análise do Deadlock nas Transferências Bancárias:**  
    - **Grafo de Alocação de Recursos (RAG):**  
-     O cenário descreve uma colisão circular direta entre as threads $T_1$ e $T_2$ e os recursos das contas $C_A$ e $C_B$:
+     O cenário descreve uma colisão circular direta entre as threads $`T_1`$ e $`T_2`$ e os recursos das contas $`C_A`$ e $`C_B`$:
 
 ```mermaid
 flowchart LR
@@ -730,7 +746,7 @@ flowchart LR
 
    - **Solução Arquitetural por Prevenção de Deadlock (Quebra da Espera Circular):**  
      Para eliminar matematicamente a possibilidade de impasse, o sistema deve quebrar a condição de **Espera Circular** impondo uma **Ordenação Global Estrita de Recursos**.  
-     - Atribui-se a cada conta bancária um identificador numérico único e imutável (ex: $ID_{conta}$).  
+     - Atribui-se a cada conta bancária um identificador numérico único e imutável (ex: $`ID_{conta}`$).  
      - Define-se como regra arquitetural inviolável que qualquer procedimento de transferência deve adquirir as travas de exclusão mútua das contas sempre em **ordem crescente de seus identificadores**, independentemente de quem seja a conta origem ou destino:
 
 ```c
@@ -751,7 +767,7 @@ void transferir(Conta *origem, Conta *destino, double valor) {
 }
 ```
 
-   Com essa imposição, se $T_1$ e $T_2$ tentarem operar entre as contas $A$ e $B$ simultaneamente, ambas as threads tentarão disputar a mesma primeira trava (a conta com o menor ID). Uma das threads obterá a primeira trava e a outra ficará bloqueada na porta de entrada *antes* de adquirir qualquer recurso. A espera circular torna-se matematicamente impossível, prevenindo o deadlock.
+   Com essa imposição, se $`T_1`$ e $`T_2`$ tentarem operar entre as contas $A$ e $B$ simultaneamente, ambas as threads tentarão disputar a mesma primeira trava (a conta com o menor ID). Uma das threads obterá a primeira trava e a outra ficará bloqueada na porta de entrada *antes* de adquirir qualquer recurso. A espera circular torna-se matematicamente impossível, prevenindo o deadlock.
 
 ##### Rubrica de Avaliação Detalhada (Pontuação Máxima: 100%)
 - **Monitores versus Semáforos (30%):**

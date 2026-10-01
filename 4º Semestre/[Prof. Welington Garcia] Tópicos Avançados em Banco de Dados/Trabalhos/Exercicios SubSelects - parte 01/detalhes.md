@@ -362,20 +362,24 @@ Uma propriedade fundamental do `EXISTS` é que ele utiliza avaliação em curto-
 
 ### Operadores Quantificados: ANY (SOME) e ALL
 
-Os operadores `ANY` (sinônimo exato de `SOME` no padrão ANSI/ISO SQL) e `ALL` permitem comparar um valor escalar com cada elemento retornado por uma subconsulta de uma coluna, utilizando um operador de comparação relacional ($=, <>, <, <=, >, >=$).
+Os operadores `ANY` (sinônimo exato de `SOME` no padrão ANSI/ISO SQL) e `ALL` permitem comparar um valor escalar com cada elemento retornado por uma subconsulta de uma coluna, utilizando um operador de comparação relacional ($`=, <>, <, <=, >, >=`$).
 
 1. **Operador `ANY`:**
    A condição `expressao OP ANY (subconsulta)` será `TRUE` se houver **pelo menos um** valor $s$ no conjunto para o qual `expressao OP s` seja verdadeiro.
    - `= ANY (subquery)` é estritamente equivalente a `IN (subquery)`.
    - `> ANY (subquery)` significa ser maior do que o **menor** elemento do conjunto:
-     $$x > \text{ANY}(S) \iff x > \min(S)$$
+     ```math
+     x > \text{ANY}(S) \iff x > \min(S)
+     ```
      (desde que $S$ não seja vazio).
 
 2. **Operador `ALL`:**
    A condição `expressao OP ALL (subconsulta)` será `TRUE` se a comparação `expressao OP s` for verdadeira para **todos** os valores $s$ do conjunto.
    - `<> ALL (subquery)` é estritamente equivalente a `NOT IN (subquery)`.
    - `> ALL (subquery)` significa ser maior do que o **maior** elemento do conjunto:
-     $$x > \text{ALL}(S) \iff x > \max(S)$$
+     ```math
+     x > \text{ALL}(S) \iff x > \max(S)
+     ```
      (desde que $S$ não seja vazio).
    - Se a subconsulta retornar um conjunto vazio, `expressao OP ALL (vazio)` avalia vacuamente para `TRUE` para qualquer expressão!
 
@@ -387,22 +391,22 @@ A distinção arquitetural e operacional entre subconsultas correlacionadas e in
 sequenceDiagram
     autonumber
     participant Ext as Consulta Externa (Outer Query)
-    participant Opt as PostgreSQL Optimizer / Executor
+    participant Otimizador as PostgreSQL Optimizer / Executor
     participant Sub as Subconsulta Interna (Inner Query)
 
     Note over Ext,Sub: Execução Conceitual de Subconsulta Não-Correlacionada
-    Opt->>Sub: Executa subconsulta interna isolada
-    Sub-->>Opt: Retorna conjunto fechado ou valor escalar
+    Otimizador->>Sub: Executa subconsulta interna isolada
+    Sub-->>Otimizador: Retorna conjunto fechado ou valor escalar
     loop Para cada tupla da tabela externa
-        Opt->>Ext: Avalia predicado usando o resultado pré-computado
+        Otimizador->>Ext: Avalia predicado usando o resultado pré-computado
     end
 
     Note over Ext,Sub: Execução Conceitual de Subconsulta Correlacionada
     loop Para cada tupla da tabela externa
-        Opt->>Ext: Lê tupla corrente (ex: p.id_categoria = 1)
-        Opt->>Sub: Passa parâmetro externo para a subconsulta
-        Sub-->>Opt: Computa e retorna resultado específico para aquela tupla
-        Opt->>Ext: Avalia se tupla externa atende ao predicado
+        Otimizador->>Ext: Lê tupla corrente (ex: p.id_categoria = 1)
+        Otimizador->>Sub: Passa parâmetro externo para a subconsulta
+        Sub-->>Otimizador: Computa e retorna resultado específico para aquela tupla
+        Otimizador->>Ext: Avalia se tupla externa atende ao predicado
     end
 ```
 
@@ -480,19 +484,19 @@ A árvore de decisão para a escolha de operadores em filtros com subconsultas s
 flowchart TD
     Inicio["Necessidade de Filtragem com Outra Tabela"] --> TipoRetorno{"O critério baseia-se em quê?"}
     
-    TipoRetorno -->|Métrica Escalar Agregada| EscalarDecisao{"A agregação depende da tupla externa?"}
-    EscalarDecisao -->|Não (Global)| OpRelacionalGlobal["Subconsulta Escalar Isolada (AVG, MAX, MIN)"]
-    EscalarDecisao -->|Sim (Por Grupo/Categoria)| OpCorrelacionado["Subconsulta Escalar Correlacionada"]
+    TipoRetorno -->|"Métrica Escalar Agregada"| EscalarDecisao{"A agregação depende da tupla externa?"}
+    EscalarDecisao -->|"Não (Global)"| OpRelacionalGlobal["Subconsulta Escalar Isolada (AVG, MAX, MIN)"]
+    EscalarDecisao -->|"Sim (Por Grupo/Categoria)"| OpCorrelacionado["Subconsulta Escalar Correlacionada"]
     
-    TipoRetorno -->|Pertencimento a Conjunto| ConjuntoDecisao{"Deseja inclusão ou exclusão?"}
-    ConjuntoDecisao -->|Inclusão| TesteIn["Operador IN ou EXISTS"]
-    ConjuntoDecisao -->|Exclusão| Nulos{"A coluna da subconsulta pode conter NULL?"}
-    Nulos -->|Sim ou Risco Desconhecido| UseNotExists["Usar NOT EXISTS (Seguro)"]
-    Nulos -->|Não (NOT NULL garantido)| UseNotExistsOuNotIn["NOT IN ou NOT EXISTS"]
+    TipoRetorno -->|"Pertencimento a Conjunto"| ConjuntoDecisao{"Deseja inclusão ou exclusão?"}
+    ConjuntoDecisao -->|"Inclusão"| TesteIn["Operador IN ou EXISTS"]
+    ConjuntoDecisao -->|"Exclusão"| Nulos{"A coluna da subconsulta pode conter NULL?"}
+    Nulos -->|"Sim ou Risco Desconhecido"| UseNotExists["Usar NOT EXISTS (Seguro)"]
+    Nulos -->|"Não (NOT NULL garantido)"| UseNotExistsOuNotIn["NOT IN ou NOT EXISTS"]
     
-    TipoRetorno -->|Comparação Quantificada com Conjunto| QuantDecisao{"A condição deve valer para:"}
-    QuantDecisao -->|Pelo menos um elemento| UseAny["Operador relacional + ANY"]
-    QuantDecisao -->|Todos os elementos| UseAll["Operador relacional + ALL"]
+    TipoRetorno -->|"Comparação Quantificada com Conjunto"| QuantDecisao{"A condição deve valer para:"}
+    QuantDecisao -->|"Pelo menos um elemento"| UseAny["Operador relacional + ANY"]
+    QuantDecisao -->|"Todos os elementos"| UseAll["Operador relacional + ALL"]
 ```
 
 ## Resolução proposta

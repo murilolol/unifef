@@ -53,7 +53,7 @@ flowchart TD
 
 ### Fundamentos Algébricos do Modelo
 
-1. **Relação (Tabela):** Subconjunto do produto cartesiano de uma lista de domínios: $R \subseteq D_1 \times D_2 \times \dots \times D_n$. Trata-se de um multiconjunto (*bag*) na implementação SQL prática, admitindo tuplas idênticas caso não haja uma chave primária explicitamente configurada.
+1. **Relação (Tabela):** Subconjunto do produto cartesiano de uma lista de domínios: $`R \subseteq D_1 \times D_2 \times \dots \times D_n`$. Trata-se de um multiconjunto (*bag*) na implementação SQL prática, admitindo tuplas idênticas caso não haja uma chave primária explicitamente configurada.
 2. **Tupla (Linha/Registro):** Uma coleção ordenada de valores escalares onde cada valor pertence estritamente ao domínio do respectivo atributo.
 3. **Atributo (Coluna):** O identificador semântico de uma dimensão da relação.
 4. **Domínio:** O conjunto de valores atômicos válidos para um atributo específico (exemplo: inteiros de 32 bits, cadeias de caracteres de tamanho fixo ou representações cronológicas).
@@ -595,11 +595,15 @@ ORDER BY estado ASC, idade DESC;
 
 O predicado `BETWEEN` avalia se um valor reside em um intervalo contínuo fechado (inclusivo).
 
-$$\text{expressao BETWEEN limite\_inferior AND limite\_superior}$$
+```math
+\text{expressao BETWEEN limite\_inferior AND limite\_superior}
+```
 
 Equivale algebricamente a:
 
-$$(\text{expressao} \ge \text{limite\_inferior}) \land (\text{expressao} \le \text{limite\_superior})$$
+```math
+(\text{expressao} \ge \text{limite\_inferior}) \land (\text{expressao} \le \text{limite\_superior})
+```
 
 ```sql
 -- Produtos com valor entre R$ 5,00 e R$ 20,00 (inclusive)
@@ -638,11 +642,15 @@ $$x \neq \text{NULL} \implies \text{UNKNOWN}$$
 
 A expressão `NOT IN (v1, v2, ..., vn)` é expandida internamente pelo otimizador como:
 
-$$(\text{campo} \neq v_1) \land (\text{campo} \neq v_2) \land \dots \land (\text{campo} \neq v_n)$$
+```math
+(\text{campo} \neq v_1) \land (\text{campo} \neq v_2) \land \dots \land (\text{campo} \neq v_n)
+```
 
 Se a lista contiver um único elemento `NULL`:
 
-$$(\text{campo} \neq v_1) \land \dots \land (\text{campo} \neq \text{NULL}) \implies \text{TRUE} \land \dots \land \text{UNKNOWN} \implies \text{UNKNOWN}$$
+```math
+(\text{campo} \neq v_1) \land \dots \land (\text{campo} \neq \text{NULL}) \implies \text{TRUE} \land \dots \land \text{UNKNOWN} \implies \text{UNKNOWN}
+```
 
 Como a cláusula `WHERE` só aprova linhas com avaliação estritamente `TRUE`, **se houver um valor NULL na lista do NOT IN, toda a consulta retornará um conjunto vazio (zero tuplas)**.
 

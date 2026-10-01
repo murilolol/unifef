@@ -96,21 +96,23 @@ flowchart TD
 
 ### Critérios e métrica de avaliação
 
-O sistema de avaliação do aprendizado é semestral e composto por dois módulos avaliativos principais (Módulo 1 e Módulo 2), resultando em duas notas parciais denominadas Avaliação 1 (composta por $AV_1$ e $T_1$) e Avaliação 2 (composta por $AV_2$ e $T_2$):
+O sistema de avaliação do aprendizado é semestral e composto por dois módulos avaliativos principais (Módulo 1 e Módulo 2), resultando em duas notas parciais denominadas Avaliação 1 (composta por $`AV_1`$ e $`T_1`$) e Avaliação 2 (composta por $`AV_2`$ e $`T_2`$):
 
-- **Avaliação 1 ($AV_1$ e $T_1$)**: Uma prova individual sem consulta ($AV_1$) valendo de 0 a 10 pontos com peso 0,8 (contribuição máxima de 8,0 pontos), somada a um trabalho prático ($T_1$) valendo de 0 a 10 pontos com peso 0,2 (contribuição máxima de 2,0 pontos).
-- **Avaliação 2 ($AV_2$ e $T_2$)**: Uma prova individual sem consulta ($AV_2$) valendo de 0 a 10 pontos com peso 0,8 (contribuição máxima de 8,0 pontos), somada a um trabalho prático ($T_2$) valendo de 0 a 10 pontos com peso 0,2 (contribuição máxima de 2,0 pontos).
+- **Avaliação 1 ($`AV_1`$ e $`T_1`$)**: Uma prova individual sem consulta ($`AV_1`$) valendo de 0 a 10 pontos com peso 0,8 (contribuição máxima de 8,0 pontos), somada a um trabalho prático ($`T_1`$) valendo de 0 a 10 pontos com peso 0,2 (contribuição máxima de 2,0 pontos).
+- **Avaliação 2 ($`AV_2`$ e $`T_2`$)**: Uma prova individual sem consulta ($`AV_2`$) valendo de 0 a 10 pontos com peso 0,8 (contribuição máxima de 8,0 pontos), somada a um trabalho prático ($`T_2`$) valendo de 0 a 10 pontos com peso 0,2 (contribuição máxima de 2,0 pontos).
 
 A média semestral final ($MS$) é regida pela fórmula canônica apresentada em aula:
 
-$$MS = \frac{[(AV_1 \times 0.8) + (T_1 \times 0.2)] + [(AV_2 \times 0.8) + (T_2 \times 0.2)]}{2}$$
+```math
+MS = \frac{[(AV_1 \times 0.8) + (T_1 \times 0.2)] + [(AV_2 \times 0.8) + (T_2 \times 0.2)]}{2}
+```
 
 | Componente | Descrição | Escala | Peso Relativo no Módulo | Contribuição na Nota do Módulo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Trabalho 1 ($T_1$)** | Projeto prático / exercícios aplicados | 0,0 a 10,0 | 20% (0,2) | Até 2,0 pontos |
-| **Prova 1 ($AV_1$)** | Avaliação teórica e escrita de código | 0,0 a 10,0 | 80% (0,8) | Até 8,0 pontos |
-| **Trabalho 2 ($T_2$)** | Implementação de estruturas avançadas | 0,0 a 10,0 | 20% (0,2) | Até 2,0 pontos |
-| **Prova 2 ($AV_2$)** | Avaliação formal integradora | 0,0 a 10,0 | 80% (0,8) | Até 8,0 pontos |
+| **Trabalho 1 ($`T_1`$)** | Projeto prático / exercícios aplicados | 0,0 a 10,0 | 20% (0,2) | Até 2,0 pontos |
+| **Prova 1 ($`AV_1`$)** | Avaliação teórica e escrita de código | 0,0 a 10,0 | 80% (0,8) | Até 8,0 pontos |
+| **Trabalho 2 ($`T_2`$)** | Implementação de estruturas avançadas | 0,0 a 10,0 | 20% (0,2) | Até 2,0 pontos |
+| **Prova 2 ($`AV_2`$)** | Avaliação formal integradora | 0,0 a 10,0 | 80% (0,8) | Até 8,0 pontos |
 
 ### Bibliografia oficial e leituras recomendadas
 
@@ -420,7 +422,7 @@ O objetivo é inspecionar uma coleção finita de números inteiros desordenados
 
 #### Etapa 3: Decompor o problema
 A decomposição divide a operação em quatro módulos sequenciais:
-1. Validar se a lista possui elementos suficientes para processamento ($N > 0$).
+1. Validar se a lista possui elementos suficientes para processamento ($`N > 0`$).
 2. Estabelecer um referencial inicial para comparação.
 3. Varrer sistematicamente os elementos restantes da coleção comparando-os com o referencial corrente.
 4. Atualizar o referencial sempre que um elemento estritamente maior for detectado e retornar o resultado final após a varredura integral.
@@ -495,11 +497,11 @@ Submetemos a especificação a testes de mesa rigorosos para validar seu comport
 | Passo | Índice `i` | Elemento `V[i]` | Condição `V[i] > maiorValor` | Ação Realizada | Valor Corrente de `maiorValor` |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | Inicial | - | - | - | Atribuição `maiorValor <- V[0]` | 12 |
-| 1 | 1 | 45 | $45 > 12$ (Verdadeiro) | Atualiza: `maiorValor <- 45` | 45 |
-| 2 | 2 | 7 | $7 > 45$ (Falso) | Nenhuma alteração | 45 |
-| 3 | 3 | 89 | $89 > 45$ (Verdadeiro) | Atualiza: `maiorValor <- 89` | 89 |
-| 4 | 4 | 23 | $23 > 89$ (Falso) | Nenhuma alteração | 89 |
-| Fim | 5 | - | $5 < 5$ (Falso: Fim de Laço) | Retorna `maiorValor` | **89** |
+| 1 | 1 | 45 | $`45 > 12`$ (Verdadeiro) | Atualiza: `maiorValor <- 45` | 45 |
+| 2 | 2 | 7 | $`7 > 45`$ (Falso) | Nenhuma alteração | 45 |
+| 3 | 3 | 89 | $`89 > 45`$ (Verdadeiro) | Atualiza: `maiorValor <- 89` | 89 |
+| 4 | 4 | 23 | $`23 > 89`$ (Falso) | Nenhuma alteração | 89 |
+| Fim | 5 | - | $`5 < 5`$ (Falso: Fim de Laço) | Retorna `maiorValor` | **89** |
 
 *Resultado*: 89 (Correto).
 
@@ -509,10 +511,10 @@ Submetemos a especificação a testes de mesa rigorosos para validar seu comport
 | Passo | Índice `i` | Elemento `V[i]` | Condição `V[i] > maiorValor` | Ação Realizada | Valor Corrente de `maiorValor` |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | Inicial | - | - | - | Atribuição `maiorValor <- V[0]` | -34 |
-| 1 | 1 | -12 | $-12 > -34$ (Verdadeiro) | Atualiza: `maiorValor <- -12` | -12 |
-| 2 | 2 | -89 | $-89 > -12$ (Falso) | Nenhuma alteração | -12 |
-| 3 | 3 | -5 | $-5 > -12$ (Verdadeiro) | Atualiza: `maiorValor <- -5` | -5 |
-| Fim | 4 | - | $4 < 4$ (Falso: Fim de Laço) | Retorna `maiorValor` | **-5** |
+| 1 | 1 | -12 | $`-12 > -34`$ (Verdadeiro) | Atualiza: `maiorValor <- -12` | -12 |
+| 2 | 2 | -89 | $`-89 > -12`$ (Falso) | Nenhuma alteração | -12 |
+| 3 | 3 | -5 | $`-5 > -12`$ (Verdadeiro) | Atualiza: `maiorValor <- -5` | -5 |
+| Fim | 4 | - | $`4 < 4`$ (Falso: Fim de Laço) | Retorna `maiorValor` | **-5** |
 
 *Resultado*: -5 (Correto). Se `maiorValor` tivesse sido inicializado com zero, o algoritmo teria falhado catastroficamente ao retornar 0.
 
@@ -522,9 +524,9 @@ Submetemos a especificação a testes de mesa rigorosos para validar seu comport
 | Passo | Índice `i` | Elemento `V[i]` | Condição `V[i] > maiorValor` | Ação Realizada | Valor Corrente de `maiorValor` |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | Inicial | - | - | - | Atribuição `maiorValor <- V[0]` | 42 |
-| 1 | 1 | 42 | $42 > 42$ (Falso) | Nenhuma alteração | 42 |
-| 2 | 2 | 42 | $42 > 42$ (Falso) | Nenhuma alteração | 42 |
-| Fim | 3 | - | $3 < 3$ (Falso: Fim de Laço) | Retorna `maiorValor` | **42** |
+| 1 | 1 | 42 | $`42 > 42`$ (Falso) | Nenhuma alteração | 42 |
+| 2 | 2 | 42 | $`42 > 42`$ (Falso) | Nenhuma alteração | 42 |
+| Fim | 3 | - | $`3 < 3`$ (Falso: Fim de Laço) | Retorna `maiorValor` | **42** |
 
 *Resultado*: 42 (Correto).
 
@@ -535,7 +537,7 @@ A prova formal de correção matemática de algoritmos iterativos fundamenta-se 
 > *"No início de cada iteração do laço `Para`, indexado por `i`, a variável `maiorValor` armazena o maior elemento presente no subvetor $V[0 \dots i - 1]$."*
 
 - **Inicialização**: Antes da primeira iteração ($i = 1$), o subvetor considerado é composto apenas pelo elemento $V[0]$. Como `maiorValor` foi inicializado exatamente com $V[0]$, a invariante é trivialmente verdadeira.
-- **Manutenção**: Durante a iteração $i$, se $V[i] > maiorValor$, a variável é atualizada para $V[i]$, passando a representar o máximo de $V[0 \dots i]$. Caso contrário, o valor atual de `maiorValor` já é maior ou igual a $V[i]$, mantendo-se como o maior elemento de $V[0 \dots i]$. Ao avançar o contador para $i + 1$, a invariante se preserva para a próxima iteração.
+- **Manutenção**: Durante a iteração $i$, se $`V[i] > maiorValor`$, a variável é atualizada para $V[i]$, passando a representar o máximo de $V[0 \dots i]$. Caso contrário, o valor atual de `maiorValor` já é maior ou igual a $V[i]$, mantendo-se como o maior elemento de $V[0 \dots i]$. Ao avançar o contador para $i + 1$, a invariante se preserva para a próxima iteração.
 - **Término**: O laço termina quando $i = N$. Pela invariante, a variável `maiorValor` contém o valor máximo presente no subvetor $V[0 \dots N - 1]$, que é a totalidade dos dados de entrada. Logo, o algoritmo é formalmente correto.
 
 Quanto à complexidade de tempo, o algoritmo realiza exatamente $N - 1$ comparações no pior, no melhor e no caso médio, uma vez que a lista não é ordenada. Sua complexidade é linear:
@@ -697,7 +699,7 @@ Fim
 ```
 
 #### Justificativa formal das características
-- **Finitude**: O algoritmo encerra garantidamente após um número finito de passos. As duas estruturas de repetição dependem de gradientes físicos decrescentes: a temperatura da água sobe monotonicamente até atingir o limiar de 92°C devido ao fornecimento constante de energia térmica, e o volume de água contido no filtro de 300ml esgota-se gravitacionalmente em tempo finito ($t < 4$ minutos). Não há recursão sem base nem condições de laço divergentes.
+- **Finitude**: O algoritmo encerra garantidamente após um número finito de passos. As duas estruturas de repetição dependem de gradientes físicos decrescentes: a temperatura da água sobe monotonicamente até atingir o limiar de 92°C devido ao fornecimento constante de energia térmica, e o volume de água contido no filtro de 300ml esgota-se gravitacionalmente em tempo finito ($`t < 4`$ minutos). Não há recursão sem base nem condições de laço divergentes.
 - **Precisão**: Todas as ações utilizam verbos imperativos unívocos associados a grandezas escalares rigorosamente mensuráveis ($20\text{ g}$, $300\text{ ml}$, $92^\circ\text{C}$, $30\text{ s}$). Não existem instruções abertas ou subjetivas como "coloque pó a gosto" ou "espere um tempinho".
 - **Executabilidade**: Cada instrução unitária é passível de realização no mundo físico real com ferramentas e recursos domésticos acessíveis. Não há operações contraditórias, como exigir a dissolução instantânea sem solvente ou divisões térmicas impossíveis pelas leis da termodinâmica.
 
@@ -839,7 +841,7 @@ A entidade física "cliente" é modelada computacionalmente como uma estrutura d
 *Relação com o pipeline*: Pertence à fase de **Modelagem**, onde as propriedades irrelevantes do mundo real são descartadas via abstração e apenas os atributos necessários para resolver o problema são codificados.
 
 ##### 2. Ordem de atendimento (Fase: Compreensão e Regra de Negócio)
-A política adotada é a estrita ordem cronológica de chegada: **FIFO** (*First-In, First-Out*). O cliente cuja transação foi registrada no tempo $t_0$ será chamado obrigatoriamente antes do cliente registrado em $t_1$, onde $t_0 < t_1$.
+A política adotada é a estrita ordem cronológica de chegada: **FIFO** (*First-In, First-Out*). O cliente cuja transação foi registrada no tempo $`t_0`$ será chamado obrigatoriamente antes do cliente registrado em $`t_1`$, onde $`t_0 < t_1`$.
 
 *Relação com o pipeline*: Vinculada à **Compreensão**. O engenheiro entende que desrespeitar essa política quebra a regra de negócio da agência, gerando conflitos interpessoais e ineficiência operacional.
 
@@ -885,21 +887,21 @@ O sistema precisa varrer uma sequência finita de $N$ números inteiros desorden
   - $V$: Arranjo contíguo contendo números inteiros.
   - $N$: Número inteiro que indica a quantidade total de elementos em $V$.
 - **Saídas**:
-  - $M_{max}$: Valor inteiro tal que $M_{max} \ge V[i], \forall i \in [0, N-1]$.
-  - $M_{min}$: Valor inteiro tal que $M_{min} \le V[i], \forall i \in [0, N-1]$.
+  - $`M_{max}`$: Valor inteiro tal que $`M_{max} \ge V[i], \forall i \in [0, N-1]`$.
+  - $`M_{min}`$: Valor inteiro tal que $`M_{min} \le V[i], \forall i \in [0, N-1]`$.
 - **Pré-condição mandatória**: $N \ge 1$ (a lista deve conter pelo menos um elemento válido).
 
 ##### Etapa 3: Decompor o problema
-1. **Validador de Entrada**: Interromper a execução se $N < 1$.
+1. **Validador de Entrada**: Interromper a execução se $`N < 1`$.
 2. **Inicializador de Referências**: Inicializar tanto `maiorValor` quanto `menorValor` com o conteúdo de $V[0]$.
 3. **Iterador de Varredura**: Percorrer os índices de $1$ até $N-1$.
 4. **Comparador Duplo**:
    - Se o elemento atual for maior que `maiorValor`, atualiza `maiorValor`.
    - Se o elemento atual for menor que `menorValor`, atualiza `menorValor`.
-5. **Retorno de Estrutura**: Retornar o par ordenado $(M_{max}, M_{min})$.
+5. **Retorno de Estrutura**: Retornar o par ordenado $`(M_{max}, M_{min})`$.
 
 ##### Etapa 4: Definir a estratégia de solução
-A estratégia ótima para uma lista desordenada é a busca linear exaustiva simultânea. A cada iteração sobre $V[i]$, compara-se o elemento com os referenciais correntes. Caso $V[i] > maiorValor$, não há necessidade matemática de testar se $V[i] < menorValor$ (a menos que a coleção tenha tamanho unitário inicial, o que já foi equalizado na inicialização), gerando uma economia de comparações com uma estrutura condicional encadeada (`Se ... Senão Se`).
+A estratégia ótima para uma lista desordenada é a busca linear exaustiva simultânea. A cada iteração sobre $V[i]$, compara-se o elemento com os referenciais correntes. Caso $`V[i] > maiorValor`$, não há necessidade matemática de testar se $`V[i] < menorValor`$ (a menos que a coleção tenha tamanho unitário inicial, o que já foi equalizado na inicialização), gerando uma economia de comparações com uma estrutura condicional encadeada (`Se ... Senão Se`).
 
 ##### Etapa 5: Especificar o algoritmo
 ```text
@@ -947,11 +949,11 @@ Fim
 | Passo | Índice `i` | Elemento `V[i]` | Teste `V[i] > maior` | Teste `V[i] < menor` | Ação Realizada | Estado `(maior, menor)` |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Inicial | - | - | - | - | Atribuição $V[0]$ | $(18, 18)$ |
-| 1 | 1 | 5 | $5 > 18$ (F) | $5 < 18$ (V) | `menor <- 5` | $(18, 5)$ |
-| 2 | 2 | 42 | $42 > 18$ (V) | Não executado | `maior <- 42` | $(42, 5)$ |
-| 3 | 3 | 9 | $9 > 42$ (F) | $9 < 5$ (F) | Nenhuma | $(42, 5)$ |
-| 4 | 4 | 31 | $31 > 42$ (F) | $31 < 5$ (F) | Nenhuma | $(42, 5)$ |
-| Fim | 5 | - | $5 < 5$ (Falso) | - | Retorna tupla | **Maior: 42, Menor: 5** |
+| 1 | 1 | 5 | $`5 > 18`$ (F) | $`5 < 18`$ (V) | `menor <- 5` | $(18, 5)$ |
+| 2 | 2 | 42 | $`42 > 18`$ (V) | Não executado | `maior <- 42` | $(42, 5)$ |
+| 3 | 3 | 9 | $`9 > 42`$ (F) | $`9 < 5`$ (F) | Nenhuma | $(42, 5)$ |
+| 4 | 4 | 31 | $`31 > 42`$ (F) | $`31 < 5`$ (F) | Nenhuma | $(42, 5)$ |
+| Fim | 5 | - | $`5 < 5`$ (Falso) | - | Retorna tupla | **Maior: 42, Menor: 5** |
 
 ###### Teste de Mesa 2: Lista com Números Estritamente Negativos
 - Entrada: $V = [-8, -25, -3, -14]$, $N = 4$
@@ -959,10 +961,10 @@ Fim
 | Passo | Índice `i` | Elemento `V[i]` | Teste `V[i] > maior` | Teste `V[i] < menor` | Ação Realizada | Estado `(maior, menor)` |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Inicial | - | - | - | - | Atribuição $V[0]$ | $(-8, -8)$ |
-| 1 | 1 | -25 | $-25 > -8$ (F) | $-25 < -8$ (V) | `menor <- -25` | $(-8, -25)$ |
-| 2 | 2 | -3 | $-3 > -8$ (V) | Não executado | `maior <- -3` | $(-3, -25)$ |
-| 3 | 3 | -14 | $-14 > -3$ (F) | $-14 < -25$ (F) | Nenhuma | $(-3, -25)$ |
-| Fim | 4 | - | $4 < 4$ (Falso) | - | Retorna tupla | **Maior: -3, Menor: -25** |
+| 1 | 1 | -25 | $`-25 > -8`$ (F) | $`-25 < -8`$ (V) | `menor <- -25` | $(-8, -25)$ |
+| 2 | 2 | -3 | $`-3 > -8`$ (V) | Não executado | `maior <- -3` | $(-3, -25)$ |
+| 3 | 3 | -14 | $`-14 > -3`$ (F) | $`-14 < -25`$ (F) | Nenhuma | $(-3, -25)$ |
+| Fim | 4 | - | $`4 < 4`$ (Falso) | - | Retorna tupla | **Maior: -3, Menor: -25** |
 
 ###### Teste de Mesa 3: Lista Contendo Elementos Duplicados e Repetidos
 - Entrada: $V = [7, 15, 7, 15, 7]$, $N = 5$
@@ -970,11 +972,11 @@ Fim
 | Passo | Índice `i` | Elemento `V[i]` | Teste `V[i] > maior` | Teste `V[i] < menor` | Ação Realizada | Estado `(maior, menor)` |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Inicial | - | - | - | - | Atribuição $V[0]$ | $(7, 7)$ |
-| 1 | 1 | 15 | $15 > 7$ (V) | Não executado | `maior <- 15` | $(15, 7)$ |
-| 2 | 2 | 7 | $7 > 15$ (F) | $7 < 7$ (F) | Nenhuma | $(15, 7)$ |
-| 3 | 3 | 15 | $15 > 15$ (F) | $15 < 7$ (F) | Nenhuma | $(15, 7)$ |
-| 4 | 4 | 7 | $7 > 15$ (F) | $7 < 7$ (F) | Nenhuma | $(15, 7)$ |
-| Fim | 5 | - | $5 < 5$ (Falso) | - | Retorna tupla | **Maior: 15, Menor: 7** |
+| 1 | 1 | 15 | $`15 > 7`$ (V) | Não executado | `maior <- 15` | $(15, 7)$ |
+| 2 | 2 | 7 | $`7 > 15`$ (F) | $`7 < 7`$ (F) | Nenhuma | $(15, 7)$ |
+| 3 | 3 | 15 | $`15 > 15`$ (F) | $`15 < 7`$ (F) | Nenhuma | $(15, 7)$ |
+| 4 | 4 | 7 | $`7 > 15`$ (F) | $`7 < 7`$ (F) | Nenhuma | $(15, 7)$ |
+| Fim | 5 | - | $`5 < 5`$ (Falso) | - | Retorna tupla | **Maior: 15, Menor: 7** |
 
 ###### Tratamento Formal para Lista Vazia
 Diante de uma lista vazia ($N = 0$), o conceito matemático de "maior" ou "menor" elemento deixa de ter sentido semântico dentro do conjunto dos números inteiros. Um algoritmo de engenharia não deve retornar números arbitrários como zero ou lixo de memória residual. 
@@ -1081,7 +1083,9 @@ mindmap
 ## Pontos-chave para a prova
 
 - **Fórmula Exata de Cálculo da Média Semestral**: Lembre-se com precisão da ponderação 0,8 para prova teórica e 0,2 para trabalhos práticos em cada módulo:
-  $$MS = \frac{[(AV_1 \times 0.8) + (T_1 \times 0.2)] + [(AV_2 \times 0.8) + (T_2 \times 0.2)]}{2}$$
+  ```math
+  MS = \frac{[(AV_1 \times 0.8) + (T_1 \times 0.2)] + [(AV_2 \times 0.8) + (T_2 \times 0.2)]}{2}
+  ```
 - **As 6 Características Obrigatórias de um Algoritmo**: Memorize e saiba explicar conceitualmente a tríade de processamento (Entrada, Passos Ordenados, Saída) somada às três garantias formais (Finitude, Precisão, Executabilidade). Questões de prova costumam apresentar trechos narrativos e exigir a identificação de qual propriedade foi violada.
 - **Axioma de Niklaus Wirth**: Compreenda a sinergia insolúvel de que "Algoritmos + Estruturas de Dados = Programas". Um bom algoritmo falha se a estrutura for incompatível; uma boa estrutura é inútil sem um algoritmo adequado.
 - **Diferenciação Estrita: Algoritmo vs. Programa**: Saiba articular que o algoritmo é a solução lógica e abstrata (independente de linguagem e hardware), enquanto o programa é a implementação concreta sujeita às regras de sintaxe, tipos primitivos, compilação e execução mecânica.

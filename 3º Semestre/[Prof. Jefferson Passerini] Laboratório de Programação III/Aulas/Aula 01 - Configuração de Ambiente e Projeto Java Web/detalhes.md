@@ -690,7 +690,9 @@ flowchart TD
 
 Em conformidade com a convenção oficial da linguagem Java documentada pela Sun/Oracle, os nomes de pacotes devem ser obrigatoriamente escritos em **letras minúsculas**, utilizando a inversão do nome de domínio da organização proprietária do software para garantir unicidade global:
 
-$$\text{Formato Padrão:} \quad \text{prefixo\_pais} \,.\, \text{organizacao} \,.\, \text{sistema} \,.\, \text{modulo}$$
+```math
+\text{Formato Padrão:} \quad \text{prefixo\_pais} \,.\, \text{organizacao} \,.\, \text{sistema} \,.\, \text{modulo}
+```
 
 No contexto da aplicação acadêmica da UniFEF desenvolvida nas aulas, adota-se o prefixo base `br.com.aplcurso.*`.
 

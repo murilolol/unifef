@@ -59,7 +59,9 @@ Para acompanhar o conteúdo desta aula, o estudante deve dominar os seguintes co
 
 O operador `IN` é um predicado de pertinência a conjuntos. Em termos de teoria dos conjuntos e lógica relacional, ele avalia se o valor retornado por uma expressão escalar à esquerda pertence a um conjunto explícito de valores literais listados entre parênteses à direita:
 
-$$\text{expressao} \in \{v_1, v_2, v_3, \dots, v_n\}$$
+```math
+\text{expressao} \in \{v_1, v_2, v_3, \dots, v_n\}
+```
 
 Sua sintaxe canônica é:
 
@@ -147,7 +149,9 @@ flowchart TD
 
 O operador `NOT IN` é o complemento booleano estrito do operador `IN`. Ele testa a não pertinência de um valor escalar em relação a um conjunto finito de literais:
 
-$$\text{expressao} \notin \{v_1, v_2, v_3, \dots, v_n\}$$
+```math
+\text{expressao} \notin \{v_1, v_2, v_3, \dots, v_n\}
+```
 
 Sintaxe canônica:
 
@@ -165,7 +169,9 @@ Uma linha será selecionada se, e somente se, o valor da coluna avaliada for dif
 
 Nos bancos de dados relacionais que operam sob a lógica trivalente (*Three-Valued Logic* - 3VL), um predicado pode resultar em `TRUE`, `FALSE` ou `UNKNOWN`. A avaliação de `NOT IN` expande-se internamente em uma cadeia de inequações unidas pelo operador `AND`:
 
-$$\text{coluna} \text{ NOT IN } (v_1, v_2) \iff (\text{coluna} \neq v_1) \text{ AND } (\text{coluna} \neq v_2)$$
+```math
+\text{coluna} \text{ NOT IN } (v_1, v_2) \iff (\text{coluna} \neq v_1) \text{ AND } (\text{coluna} \neq v_2)
+```
 
 Se o conjunto contiver um valor `NULL`, ou se a coluna comparada for nula, o comportamento lógico pode surpreender o programador desatento. Por definição:
 
@@ -1040,7 +1046,7 @@ flowchart TD
 2. **Equivalência do NOT IN:** Saber demonstrar que `campo NOT IN ('A', 'B')` é estritamente equivalente a `(campo <> 'A' AND campo <> 'B')`.
 3. **Cuidado com NULL no NOT IN:** Questões teóricas costumam cobrar o que ocorre quando a lista de literais do `NOT IN` contém um valor nulo. Resposta: toda a cláusula avalia para `UNKNOWN`, resultando em 0 linhas retornadas.
 4. **Mecanismo da Junção Tradicional (SQL-89):** O estudante deve saber explicar que a junção tradicional ocorre em duas fases conceituais:
-   - Formação do Produto Cartesiano das tabelas no `FROM` ($L_1 \times L_2$).
+   - Formação do Produto Cartesiano das tabelas no `FROM` ($`L_1 \times L_2`$).
    - Eliminação das tuplas falsas via restrição `WHERE tabela1.pk = tabela2.fk`.
 5. **Precedência de AND sobre OR:** Lembrar sempre que o `AND` é avaliado antes do `OR`. O uso de parênteses é obrigatório quando se deseja impor a avaliação do `OR` prioritariamente.
 6. **Sintaxe de Ambiguidade:** Em tabelas unidas com nomes de colunas idênticos, a omissão do prefixo da tabela gera erro de sintaxe.

@@ -259,7 +259,9 @@ $$\text{Speedup}(N) = \frac{1}{S + \frac{P}{N}} = \frac{1}{(1 - P) + \frac{P}{N}
 
 Quando o número de processadores tende ao infinito ($N \to \infty$), o ganho máximo atinge um teto assimptótico intransponível:
 
-$$\lim_{N \to \infty} \text{Speedup}(N) = \frac{1}{S}$$
+```math
+\lim_{N \to \infty} \text{Speedup}(N) = \frac{1}{S}
+```
 
 *Exemplo:* Se uma aplicação possui 10% de código intrinsecamente sequencial (como inicialização, sincronização de arquivos e gravação de logs), mesmo que o sistema disponha de 10.000 núcleos de CPU, a aceleração total máxima jamais ultrapassará $1 / 0{,}10 = 10\times$.
 
@@ -579,11 +581,15 @@ flowchart TD
 #### 1. Fragmentação Interna ($FI$)
 - **Definição:** Ocorre quando o bloco de memória alocado pelo sistema operacional a um processo é dimensionalmente maior do que a memória que o processo efetivamente demanda. A folga resultante fica compreendida *dentro* das fronteiras da partição alocada àquele processo, mas torna-se totalmente inalocável para qualquer outro processo da fila.
 - **Causa Primordial:** Adoção de modelos de alocação de blocos em tamanhos fixos pré-determinados (como particionamento estático e a alocação de páginas de tamanho fixo em paginação).
-- **Formalização Matemática:** Para um conjunto de $M$ partições ativas, onde cada partição $i$ possui capacidade $S_{part}(i)$ e o processo nela alocado demanda $S_{proc}(i)$:
+- **Formalização Matemática:** Para um conjunto de $M$ partições ativas, onde cada partição $i$ possui capacidade $`S_{part}(i)`$ e o processo nela alocado demanda $`S_{proc}(i)`$:
 
-$$FI(i) = S_{part}(i) - S_{proc}(i), \quad \text{onde } S_{part}(i) \ge S_{proc}(i)$$
+```math
+FI(i) = S_{part}(i) - S_{proc}(i), \quad \text{onde } S_{part}(i) \ge S_{proc}(i)
+```
 
-$$FI_{total} = \sum_{i=1}^{M} FI(i) = \sum_{i=1}^{M} \left( S_{part}(i) - S_{proc}(i) \right)$$
+```math
+FI_{total} = \sum_{i=1}^{M} FI(i) = \sum_{i=1}^{M} \left( S_{part}(i) - S_{proc}(i) \right)
+```
 
 #### 2. Fragmentação Externa ($FE$)
 - **Definição:** Ocorre quando a memória livre disponível total do sistema seria suficiente para acomodar a requisição de um novo processo, mas esse espaço livre encontra-se disperso em múltiplos fragmentos e "buracos" não contíguos ao longo da RAM. Como o modelo clássico de memória real exige alocação contígua, o processo é impedido de executar.
@@ -611,11 +617,11 @@ flowchart LR
 Quando um processo chega solicitando $K$ kilobytes de memória contígua e existem múltiplos blocos livres de tamanhos variados na RAM, o kernel adota uma de quatro políticas clássicas de varredura:
 
 1. **Primeiro Encaixe (*First-Fit*):**
-   - O algoritmo percorre a estrutura de controle a partir do início da memória e aloca o **primeiro buraco livre** que possua tamanho suficiente ($S_{buraco} \ge K$).
+   - O algoritmo percorre a estrutura de controle a partir do início da memória e aloca o **primeiro buraco livre** que possua tamanho suficiente ($`S_{buraco} \ge K`$).
    - O bloco é subdividido: $K$ bytes são entregues ao processo e o restante torna-se um buraco menor.
    - *Vantagem:* É o algoritmo mais rápido e computacionalmente mais leve.
 2. **Melhor Encaixe (*Best-Fit*):**
-   - Percorre a estrutura inteira de memória para localizar o buraco que melhor se ajuste ao tamanho $K$, ou seja, aquele cujo tamanho seja maior ou igual a $K$, mas gere a **menor sobra residual possível** ($S_{buraco} - K \to \min$).
+   - Percorre a estrutura inteira de memória para localizar o buraco que melhor se ajuste ao tamanho $K$, ou seja, aquele cujo tamanho seja maior ou igual a $K$, mas gere a **menor sobra residual possível** ($`S_{buraco} - K \to \min`$).
    - *Desvantagem:* Gera uma profusão de fragmentos minúsculos ("poeira de memória") que dificilmente poderão ser aproveitados por qualquer outro processo.
 3. **Pior Encaixe (*Worst-Fit*):**
    - Varre toda a memória e aloca o **maior buraco livre disponível**, sob a premissa de que a sobra residual resultante será volumosa o suficiente para acomodar confortavelmente outros processos futuros.
@@ -657,7 +663,7 @@ flowchart LR
 #### Dinâmica de Tradução em Tempo de Execução
 - Todo o código do programa é compilado assumindo um espaço de endereçamento que se inicia virtualmente no endereço lógico `0x00000000`.
 - Quando a CPU despacha uma instrução para ler o endereço lógico $L$:
-  1. O hardware da MMU compara se $L < \text{Limite}$. Se $L \ge \text{Limite}$, a instrução é abortada e a CPU gera imediatamente uma interrupção síncrona de falha de proteção de memória (*Trap* de violação de segmento).
+  1. O hardware da MMU compara se $`L < \text{Limite}`$. Se $L \ge \text{Limite}$, a instrução é abortada e a CPU gera imediatamente uma interrupção síncrona de falha de proteção de memória (*Trap* de violação de segmento).
   2. Se $L$ for válido, a MMU soma o deslocamento à base física: $\text{Endereço Físico Real} = L + \text{Base}$.
 - Durante o chaveamento de contexto, o sistema operacional atualiza os valores dos registradores de Base e Limite na CPU a partir das informações armazenadas no PCB do processo que assumirá o processador.
 
@@ -688,7 +694,9 @@ sequenceDiagram
 #### Impacto no Desempenho do Sistema
 O swapping de processos completos gera uma penalidade severa de tempo. Se um processo de 512 MB de dados precisa sofrer *swap-out* para um disco rígido convencional com taxa sustentada de transferência de 100 MB/s:
 
-$$T_{\text{swap-out}} = \frac{512\text{ MB}}{100\text{ MB/s}} \approx 5{,}12\text{ segundos}$$
+```math
+T_{\text{swap-out}} = \frac{512\text{ MB}}{100\text{ MB/s}} \approx 5{,}12\text{ segundos}
+```
 
 Nesse intervalo de mais de cinco segundos, a operação de E/S consome os barramentos de armazenamento, tornando o swapping de processos inteiros uma medida emergencial de contenção para evitar colapso de memória, em contraste com a paginação moderna sob demanda, que movimenta apenas pequenas páginas discretas de 4 KB.
 
@@ -795,7 +803,7 @@ Para que um deadlock se estabeleça em um sistema computacional, **todas as quat
 1. **Exclusão Mútua (*Mutual Exclusion*):** Os recursos disputados não são compartilháveis; cada recurso só pode ser atribuído a um único processo por vez.
 2. **Posse e Espera (*Hold and Wait*):** Um processo que já detém a posse exclusiva de recursos alocados previamente tem permissão para solicitar novos recursos adicionais e entrar em espera bloqueada caso eles estejam ocupados, sem abrir mão dos recursos que já possui.
 3. **Não Preempção (*No Preemption*):** Recursos alocados a um processo não podem ser tomados dele à força pelo sistema operacional. Eles só podem ser liberados de forma voluntária e consciente pelo processo titular após o término da tarefa.
-4. **Espera Circular (*Circular Wait*):** Deve existir uma cadeia fechada de processos $\{P_0, P_1, P_2, \dots, P_n\}$ tal que $P_0$ aguarda um recurso retido por $P_1$, $P_1$ aguarda um recurso retido por $P_2$, e $P_n$ aguarda um recurso retido por $P_0$.
+4. **Espera Circular (*Circular Wait*):** Deve existir uma cadeia fechada de processos $`\{P_0, P_1, P_2, \dots, P_n\}`$ tal que $`P_0`$ aguarda um recurso retido por $`P_1`$, $`P_1`$ aguarda um recurso retido por $`P_2`$, e $`P_n`$ aguarda um recurso retido por $`P_0`$.
 
 ---
 
@@ -804,11 +812,11 @@ Para que um deadlock se estabeleça em um sistema computacional, **todas as quat
 #### Definição
 O **Grafo de Alocação de Recursos (RAG - *Resource Allocation Graph*)** é um grafo direcionado bipartido formal $G = (V, E)$ utilizado pelo sistema operacional para modelar matematicamente o estado global de alocação de dispositivos, arquivos e travas.
 - **Conjunto de Vértices ($V$):** Dividido em duas classes disjuntas:
-  - $P = \{P_1, P_2, \dots, P_n\}$: Conjunto de processos ativos no sistema (representados visualmente por círculos).
-  - $R = \{R_1, R_2, \dots, R_m\}$: Conjunto de recursos do sistema (representados por retângulos, com pontos internos denotando as instâncias disponíveis de cada recurso).
+  - $`P = \{P_1, P_2, \dots, P_n\}`$: Conjunto de processos ativos no sistema (representados visualmente por círculos).
+  - $`R = \{R_1, R_2, \dots, R_m\}`$: Conjunto de recursos do sistema (representados por retângulos, com pontos internos denotando as instâncias disponíveis de cada recurso).
 - **Conjunto de Arestas Direcionadas ($E$):**
-  - **Aresta de Solicitação ($P_i \to R_j$):** Origina-se em um processo e aponta para um recurso, indicando que o processo $P_i$ solicitou o recurso $R_j$ e está bloqueado aguardando sua atribuição.
-  - **Aresta de Alocação ($R_j \to P_i$):** Origina-se em uma instância do recurso e aponta para um processo, indicando que a titularidade do recurso $R_j$ foi formalmente concedida a $P_i$.
+  - **Aresta de Solicitação ($`P_i \to R_j`$):** Origina-se em um processo e aponta para um recurso, indicando que o processo $`P_i`$ solicitou o recurso $`R_j`$ e está bloqueado aguardando sua atribuição.
+  - **Aresta de Alocação ($`R_j \to P_i`$):** Origina-se em uma instância do recurso e aponta para um processo, indicando que a titularidade do recurso $`R_j`$ foi formalmente concedida a $`P_i`$.
 
 ```mermaid
 flowchart TD
@@ -1304,27 +1312,33 @@ int main() {
 ### Formalização Matemática de Métricas de Desempenho
 
 #### 1. Taxa de Utilização da UCP em Sistemas Monoprogramados ($U$)
-Em sistemas monoprogramados, se $T_{comp}$ for o tempo de cálculo da CPU e $T_{io}$ for o tempo em que a CPU permanece paralisada aguardando periféricos de E/S:
+Em sistemas monoprogramados, se $`T_{comp}`$ for o tempo de cálculo da CPU e $`T_{io}`$ for o tempo em que a CPU permanece paralisada aguardando periféricos de E/S:
 
-$$U = \frac{T_{comp}}{T_{comp} + T_{io}}$$
+```math
+U = \frac{T_{comp}}{T_{comp} + T_{io}}
+```
 
 *Exemplo Numérico:* Se um processo consome 15 segundos calculando dados e 85 segundos lendo setores mecânicos de disco:
 
-$$U = \frac{15}{15 + 85} = \frac{15}{100} = 15\% \quad (85\% \text{ de desperdício em ociosidade})$$
+```math
+U = \frac{15}{15 + 85} = \frac{15}{100} = 15\% \quad (85\% \text{ de desperdício em ociosidade})
+```
 
-#### 2. Fragmentação Interna Média ($FI_{med}$)
-Para um sistema com particionamento fixo contendo $M$ partições de tamanho homogêneo $S_{part}$, onde a demanda dos processos $S_{proc}$ distribui-se uniformemente entre $1$ byte e $S_{part}$:
+#### 2. Fragmentação Interna Média ($`FI_{med}`$)
+Para um sistema com particionamento fixo contendo $M$ partições de tamanho homogêneo $`S_{part}`$, onde a demanda dos processos $`S_{proc}`$ distribui-se uniformemente entre $1$ byte e $`S_{part}`$:
 
-$$FI_{med} \approx \frac{S_{part}}{2}$$
+```math
+FI_{med} \approx \frac{S_{part}}{2}
+```
 
-Se $S_{part} = 64\text{ KB}$, a perda média esperada por partição ocupada é de aproximadamente $32\text{ KB}$.
+Se $`S_{part} = 64\text{ KB}`$, a perda média esperada por partição ocupada é de aproximadamente $32\text{ KB}$.
 
 #### 3. Lei de Amdahl para Ganho de Velocidade (*Speedup*)
 Se $S$ é a proporção do programa que é intrinsecamente serial e $P = (1 - S)$ é a porção passível de paralelização em $N$ núcleos físicos:
 
 $$\text{Speedup}(N) = \frac{1}{S + \frac{1 - S}{N}}$$
 
-Se uma aplicação contábil possui $20\%$ de rotinas estritamente seriais ($S = 0{,}20$) e roda em uma máquina com $N = 8$ núcleos de CPU:
+Se uma aplicação contábil possui $`20\%`$ de rotinas estritamente seriais ($S = 0{,}20$) e roda em uma máquina com $N = 8$ núcleos de CPU:
 
 $$\text{Speedup}(8) = \frac{1}{0{,}20 + \frac{0{,}80}{8}} = \frac{1}{0{,}20 + 0{,}10} = \frac{1}{0{,}30} \approx 3{,}33\times$$
 

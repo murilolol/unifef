@@ -588,7 +588,7 @@ INSERT INTO veiculos(chassi, placa, cor, modelo, marca, ano_fabricacao, preco_co
   FROM clientes 
   WHERE cidade = 'FERNANDOPOLIS';
   ```
-- **Explicação Técnica:** Demonstra o fluxo lógico do SQL: primeiro a cláusula `WHERE` atua como filtro de seleção horizontal ($\sigma_{\text{cidade}='FERNANDOPOLIS'}$), reduzindo o conjunto de trabalho. Em seguida, o `COUNT(*)` atua como agregação sobre o subconjunto restante.
+- **Explicação Técnica:** Demonstra o fluxo lógico do SQL: primeiro a cláusula `WHERE` atua como filtro de seleção horizontal ($`\sigma_{\text{cidade}='FERNANDOPOLIS'}`$), reduzindo o conjunto de trabalho. Em seguida, o `COUNT(*)` atua como agregação sobre o subconjunto restante.
 - **Resultado Esperado:**
   - 2 clientes (`BEATRIZ` e `AMANDA`). Resultado escalar: `2`.
 

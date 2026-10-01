@@ -557,16 +557,24 @@ Um CPF possui 11 dígitos, dispostos no formato `ABC.DEF.GHI-JK`, onde `JK` são
 1. **Eliminação de Inválidos Conhecidos**: Sequências formadas por 11 dígitos repetidos (ex: `"00000000000"`, `"11111111111"`, ..., `"99999999999"`) produzem somas válidas pelo algoritmo clássico do Módulo 11, mas são declaradas sumariamente inválidas pela Receita Federal. O algoritmo deve rejeitá-las no início.
 2. **Cálculo do Primeiro Dígito Verificador (`J`)**:
    - Multiplicam-se os primeiros 9 dígitos pelos pesos decrescentes de 10 até 2:
-     $$\text{Soma}_1 = (A \times 10) + (B \times 9) + (C \times 8) + (D \times 7) + (E \times 6) + (F \times 5) + (G \times 4) + (H \times 3) + (I \times 2)$$
+     ```math
+     \text{Soma}_1 = (A \times 10) + (B \times 9) + (C \times 8) + (D \times 7) + (E \times 6) + (F \times 5) + (G \times 4) + (H \times 3) + (I \times 2)
+     ```
    - Calcula-se o resto da divisão por 11:
-     $$\text{Resto}_1 = 11 - (\text{Soma}_1 \pmod{11})$$
-   - Se o resultado for 10 ou 11, o primeiro dígito verificador é considerado `0`. Caso contrário, o dígito é o próprio $\text{Resto}_1$.
+     ```math
+     \text{Resto}_1 = 11 - (\text{Soma}_1 \pmod{11})
+     ```
+   - Se o resultado for 10 ou 11, o primeiro dígito verificador é considerado `0`. Caso contrário, o dígito é o próprio $`\text{Resto}_1`$.
 3. **Cálculo do Segundo Dígito Verificador (`K`)**:
    - Inclui-se o primeiro DV (`J`) no cálculo. Multiplicam-se os 10 primeiros dígitos pelos pesos decrescentes de 11 até 2:
-     $$\text{Soma}_2 = (A \times 11) + (B \times 10) + \dots + (I \times 3) + (J \times 2)$$
+     ```math
+     \text{Soma}_2 = (A \times 11) + (B \times 10) + \dots + (I \times 3) + (J \times 2)
+     ```
    - Calcula-se o resto da divisão por 11:
-     $$\text{Resto}_2 = 11 - (\text{Soma}_2 \pmod{11})$$
-   - Se o resultado for 10 ou 11, o segundo dígito verificador é considerado `0`. Caso contrário, é o próprio $\text{Resto}_2$.
+     ```math
+     \text{Resto}_2 = 11 - (\text{Soma}_2 \pmod{11})
+     ```
+   - Se o resultado for 10 ou 11, o segundo dígito verificador é considerado `0`. Caso contrário, é o próprio $`\text{Resto}_2`$.
 
 #### 2. Algoritmo de Validação do CNPJ (Cadastro Nacional da Pessoa Jurídica)
 Um CNPJ possui 14 dígitos, no formato `AA.BBB.CCC/DDDD-EF`, onde `EF` são os dois dígitos verificadores.
@@ -576,10 +584,10 @@ O cálculo utiliza pesos decrescentes que se reiniciam no valor 9 após atingire
 2. **Cálculo do Primeiro Dígito Verificador (`E`)**:
    - Pesos aplicados aos 12 primeiros dígitos: `5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2`.
    - Soma-se o produto de cada dígito pelo seu peso correspondente.
-   - Resto: se $\text{Soma}_1 \pmod{11} < 2$, o dígito é `0`. Senão, o dígito é $11 - (\text{Soma}_1 \pmod{11})$.
+   - Resto: se $`\text{Soma}_1 \pmod{11} < 2`$, o dígito é `0`. Senão, o dígito é $`11 - (\text{Soma}_1 \pmod{11})`$.
 3. **Cálculo do Segundo Dígito Verificador (`F`)**:
    - Pesos aplicados aos 13 dígitos (incluindo o primeiro DV `E`): `6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2`.
-   - Resto: se $\text{Soma}_2 \pmod{11} < 2$, o dígito é `0`. Senão, o dígito é $11 - (\text{Soma}_2 \pmod{11})$.
+   - Resto: se $`\text{Soma}_2 \pmod{11} < 2`$, o dígito é `0`. Senão, o dígito é $`11 - (\text{Soma}_2 \pmod{11})`$.
 
 ### Análise Crítica dos Algoritmos Presentes no Arquivo app.js
 

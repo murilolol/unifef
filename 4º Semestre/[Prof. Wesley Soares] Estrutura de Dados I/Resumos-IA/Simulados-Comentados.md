@@ -138,7 +138,7 @@ Com base na dedução matemática formal da quantidade de comparações e nas re
 
 - [A] Correta, pois a soma de repetições decrescentes anula o expoente quadrático da variável $n$, convergindo para uma progressão geométrica de ordem linear.
 - [B] Incorreta, pois o laço interno executa uma divisão binária do vetor a cada passo, resultando em uma complexidade assintótica estrita de $O(n \log n)$.
-- [C] Incorreta, pois a quantidade de comparações é expressa pela soma de uma Progressão Aritmética: $\sum_{k=1}^{n-1} k = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n$, que pertence estritamente à classe $O(n^2)$ após o descarte de constantes multiplicativas e termos de menor ordem.
+- [C] Incorreta, pois a quantidade de comparações é expressa pela soma de uma Progressão Aritmética: $`\sum_{k=1}^{n-1} k = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n`$, que pertence estritamente à classe $O(n^2)$ após o descarte de constantes multiplicativas e termos de menor ordem.
 - [D] Correta no melhor caso, pois se o vetor não contiver elementos duplicados, o laço interno é imediatamente abortado pelo coletor de lixo, operando em tempo $O(1)$.
 - [E] Incorreta, pois a presença da estrutura condicional `if (valores[i] == valores[j])` dentro do aninhamento eleva o custo computacional para a classe exponencial $O(2^n)$.
 
@@ -161,7 +161,7 @@ Assuma que $n$ é um número inteiro positivo fornecido como parâmetro de entra
 - [A] $O(n)$, pois o laço executa uma operação aritmética simples de divisão para cada unidade inteira contida no valor inicial de $n$.
 - [B] $O(1)$, pois independentemente do valor de $n$, a variável é reduzida até o número 1, o que caracteriza um processamento com término constante no registrador da CPU.
 - [C] $O(n^2)$, pois a operação de divisão sucessiva exige conversões de ponto flutuante em nível de microcódigo de máquina, dobrando o custo por iteração.
-- [D] $O(\log n)$, pois o tamanho do problema é dividido sistematicamente por 2 a cada iteração, exigindo $k$ passos tais que $2^k \ge n \implies k = \lceil \log_2 n \rceil$.
+- [D] $O(\log n)$, pois o tamanho do problema é dividido sistematicamente por 2 a cada iteração, exigindo $k$ passos tais que $`2^k \ge n \implies k = \lceil \log_2 n \rceil`$.
 - [E] $O(n \log n)$, pois o algoritmo combina uma estrutura linear de repetição com uma decomposição polinomial de base 2.
 
 ---
@@ -476,7 +476,9 @@ O arquiteto refutou a generalização, afirmando que a decisão depende de dois 
   - Para $i = n - 1$, $j$ executa $0$ vezes.
   
   O total de comparações é a soma de uma Progressão Aritmética:
-  $$S = (n-1) + (n-2) + \dots + 1 = \sum_{k=1}^{n-1} k = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n$$
+  ```math
+  S = (n-1) + (n-2) + \dots + 1 = \sum_{k=1}^{n-1} k = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n
+  ```
   
   Pelas regras fundamentais da análise assintótica, descarta-se o termo de menor ordem ($-\frac{1}{2}n$) e elimina-se a constante multiplicativa ($\frac{1}{2}$), resultando estritamente em $O(n^2)$.
 - **Análise das Alternativas Distratoras:**
@@ -496,8 +498,10 @@ O arquiteto refutou a generalização, afirmando que a decisão depende de dois 
   - Após iteração $k$: $\frac{n}{2^k}$
   
   O laço encerra quando a variável atinge um valor menor ou igual a 1:
-  $$\frac{n}{2^k} \le 1 \implies 2^k \ge n \implies k = \lceil \log_2 n \rceil$$
-  Portanto, o número total de repetições é proporcional a $\log_2 n$, caracterizando complexidade estrita $O(\log n)$.
+  ```math
+  \frac{n}{2^k} \le 1 \implies 2^k \ge n \implies k = \lceil \log_2 n \rceil
+  ```
+  Portanto, o número total de repetições é proporcional a $`\log_2 n`$, caracterizando complexidade estrita $O(\log n)$.
 - **Análise das Alternativas Distratoras:**
   - *A está errada:* Para ser linear $O(n)$, o passo deveria subtrair uma constante (`n = n - 1`), e não dividir sucessivamente por 2.
   - *B está errada:* O número de passos varia conforme o valor de $n$; por exemplo, para $n = 1.024$ são 10 passos, para $n = 1.048.576$ são 20 passos.
@@ -780,7 +784,9 @@ Considere a inserção consecutiva de $m$ novos elementos na primeira posição 
 
 A quantidade total de cópias de memória $S(m)$ executadas é o somatório dos termos de uma Progressão Aritmética de razão 1:
 
-$$S(m) = \sum_{k=0}^{m-1} k = 0 + 1 + 2 + \dots + (m - 1)$$
+```math
+S(m) = \sum_{k=0}^{m-1} k = 0 + 1 + 2 + \dots + (m - 1)
+```
 
 Aplicando a fórmula da soma dos termos de uma PA:
 
@@ -801,7 +807,9 @@ Essa rotina não exige cópia nem remanejamento de nenhum elemento preexistente.
 
 - Cada inserção unitária custa rigorosamente **$O(1)$** (tempo constante).
 - Consequentemente, para inserir $m$ elementos sucessivos no início da lista ligada, o custo total é:
-  $$\sum_{k=1}^{m} O(1) = m \times O(1) = O(m) \quad \text{(linear)}$$
+  ```math
+  \sum_{k=1}^{m} O(1) = m \times O(1) = O(m) \quad \text{(linear)}
+  ```
 
 **Conclusão de Engenharia:** Para inserções no início, a lista ligada é assintoticamente superior à lista sequencial por ordens de magnitude ($O(m)$ versus $O(m^2)$). A contiguidade física do array na memória RAM cobra um preço proibitivo de movimentação de blocos na CPU a cada nova inserção na cabeça.
 

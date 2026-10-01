@@ -162,7 +162,9 @@ A composição da nota semestral equilibra o desempenho teórico-prático indivi
 
 A nota final é calculada pela média ponderada dos dois bimestres, atribuindo peso 60% à avaliação individual e peso 40% ao projeto prático:
 
-$$\text{Nota Final} = \frac{[(\text{AV}_1 \times 0.6) + (\text{PJ} \times 0.4)] + [(\text{AV}_2 \times 0.6) + (\text{PJ} \times 0.4)]}{2}$$
+```math
+\text{Nota Final} = \frac{[(\text{AV}_1 \times 0.6) + (\text{PJ} \times 0.4)] + [(\text{AV}_2 \times 0.6) + (\text{PJ} \times 0.4)]}{2}
+```
 
 Essa fórmula premia tanto o domínio conceitual individual quanto a capacidade de cooperar e entregar um produto de engenharia estruturado coletivamente.
 
@@ -871,7 +873,7 @@ flowchart TD
 
 1. **A premissa da pastelaria:** Compreender por que o desenvolvimento profissional de software rejeita soluções improvisadas sem modelagem e planejamento prévio.
 2. **Análise vs. Projeto:** Saber explicar com precisão a distinção entre "fazer a coisa certa" (análise de requisitos e validação do problema) e "fazer certo a coisa" (arquitetura robusta, design limpo e padrões adequados).
-3. **Fórmula e dinâmica da avaliação:** Lembrar a composição da nota final ($60\%$ prova individual AV1/AV2 e $40\%$ projeto em grupo PJ em cada bimestre).
+3. **Fórmula e dinâmica da avaliação:** Lembrar a composição da nota final ($`60\%`$ prova individual AV1/AV2 e $`40\%`$ projeto em grupo PJ em cada bimestre).
 4. **As dez fases do ciclo de vida:** Conhecer a sequência lógica, os objetivos e os artefatos de entrada e saída das fases (Problema, Requisitos, Planejamento, Arquitetura, Projeto, Implementação, Testes, Integração, Entrega e Manutenção).
 5. **Diferenciação clara de requisitos:** Saber classificar em cenários reais um Requisito Funcional versus um Requisito Não Funcional, identificando a necessidade de métricas nos RNFs.
 6. **Técnicas de elicitação:** Conhecer as situações adequadas para uso de entrevistas, questionários, observação (*shadowing*), prototipação e workshops.
@@ -916,7 +918,7 @@ flowchart TD
 - [ ] Revisar os pilares do SOLID, em especial a Responsabilidade Única (SRP) e o Princípio Aberto/Fechado (OCP).
 - [ ] Revisar os fundamentos do padrão de projeto Strategy e sua representação em diagrama de classes UML.
 - [ ] Compreender a função dos testes automatizados e o papel da esteira de Integração Contínua (CI).
-- [ ] Compreender a fórmula de cálculo da nota da disciplina (composição $60\%$ AV e $40\%$ PJ).
+- [ ] Compreender a fórmula de cálculo da nota da disciplina (composição $`60\%`$ AV e $`40\%`$ PJ).
 
 ## Código prático de apoio
 

@@ -495,7 +495,7 @@ E) A Abordagem 2 é mais lenta porque o PostgreSQL não consegue utilizar índic
    - Nome do supervisor imediato (ou a cadeia literal `'Diretoria Executiva'` caso o vendedor não tenha supervisor).
    - Quantidade total de pedidos atendidos pelo vendedor.
    - Faturamento bruto total faturado pelo vendedor.
-   - Faturamento líquido total (deduzindo a taxa percentual de desconto concedida em cada item: $\text{subtotal\_liquido} = \text{quantidade} \times \text{preco\_unitario} \times (1 - \frac{\text{desconto}}{100})$).
+   - Faturamento líquido total (deduzindo a taxa percentual de desconto concedida em cada item: $`\text{subtotal\_liquido} = \text{quantidade} \times \text{preco\_unitario} \times (1 - \frac{\text{desconto}}{100})`$).
 2. A consulta deve preservar **todos** os vendedores cadastrados, exibindo valor zero nas métricas financeiras e de volume para aqueles que ainda não concretizaram nenhuma venda (como supervisores seniores).
 3. Considere apenas pedidos com status `'Pago'` ou `'Enviado'` para o cômputo dos valores de venda.
 4. Explique o papel do `LEFT JOIN` e da função `COALESCE` para garantir a integridade dos cálculos e a não eliminação de registros na agregação.
@@ -588,8 +588,10 @@ WHERE p.preco > medias.media_preco;
 - **Alternativa Correta:** **B** (O motor retornará zero linhas (conjunto vazio), porque qualquer comparação de desigualdade com `NULL` resulta em `UNKNOWN`, fazendo com que a conjunção lógica de avaliações com `AND` da cláusula `NOT IN` nunca atinja o valor booleano estrito `TRUE`).
 - **Justificativa Técnica:**
   - No padrão ANSI SQL e no PostgreSQL, a expressão `v NOT IN (v1, v2, ..., vn)` é expandida semanticamente para:
-    $$\left(v \neq v_1\right) \text{ AND } \left(v \neq v_2\right) \text{ AND } \dots \text{ AND } \left(v \neq v_n\right)$$
-  - Se qualquer valor $v_i$ do conjunto retornado for `NULL`, a expressão $(v \neq \text{NULL})$ avalia obrigatoriamente para `UNKNOWN` (Desconhecido).
+    ```math
+    \left(v \neq v_1\right) \text{ AND } \left(v \neq v_2\right) \text{ AND } \dots \text{ AND } \left(v \neq v_n\right)
+    ```
+  - Se qualquer valor $`v_i`$ do conjunto retornado for `NULL`, a expressão $(v \neq \text{NULL})$ avalia obrigatoriamente para `UNKNOWN` (Desconhecido).
   - Pela tabela-verdade do conectivo lógico `AND`:
     - $\text{TRUE AND UNKNOWN} \implies \text{UNKNOWN}$
     - $\text{FALSE AND UNKNOWN} \implies \text{FALSE}$
@@ -681,7 +683,7 @@ WHERE p.preco > medias.media_preco;
 - **Alternativa Correta:** **B** (Se a subconsulta retornar zero linhas (conjunto vazio), a Instrução 1 avaliará a condição como `TRUE` para todos os produtos (retornando a tabela inteira), enquanto a Instrução 2 avaliará a expressão como `preco > NULL` (resultando em `UNKNOWN` e retornando zero linhas)).
 - **Justificativa Técnica:**
   - Esta é uma das distinções semânticas mais sutis e avançadas da álgebra relacional SQL:
-    1. **Comportamento do `> ALL` (Quantificador Universal):** A lógica booleana do predicado $v > \text{ALL } (S)$ dita que a condição é verdadeira se $v$ for maior que todo elemento pertencente a $S$. Caso o conjunto $S$ seja **vazio**, a afirmação é satisfeita por vacuidade matemática (*vacuous truth*). Logo, se a categoria 5 não possuir nenhum produto, a Instrução 1 avalia como `TRUE` para todas as linhas da tabela `produtos`, retornando todos os registros.
+    1. **Comportamento do `> ALL` (Quantificador Universal):** A lógica booleana do predicado $`v > \text{ALL } (S)`$ dita que a condição é verdadeira se $v$ for maior que todo elemento pertencente a $S$. Caso o conjunto $S$ seja **vazio**, a afirmação é satisfeita por vacuidade matemática (*vacuous truth*). Logo, se a categoria 5 não possuir nenhum produto, a Instrução 1 avalia como `TRUE` para todas as linhas da tabela `produtos`, retornando todos os registros.
     2. **Comportamento da subconsulta escalar com `MAX()`:** Se a categoria 5 não possuir produtos, a função agregadora `MAX(preco)` sobre um conjunto vazio retorna obrigatoriamente `NULL`. A expressão externa torna-se `preco > NULL`. Na lógica trivalente, qualquer comparação com `NULL` resulta em `UNKNOWN`. Como o `WHERE` descarta linhas que não sejam `TRUE`, a Instrução 2 retorna **zero linhas**.
 - **Análise dos Distratores:**
   - **A:** Incorreta. Conforme demonstrado, a equivalência quebra categoricamente quando a subconsulta é vazia.
@@ -798,15 +800,19 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY mv_vendas_consolidada;
 ##### Resposta Modelo
 
 ###### 1. Demonstração Formal da Falha do NOT IN sob Lógica Trivalente (3VL)
-A norma SQL opera sobre a Lógica Trivalente (*Three-Valued Logic* - 3VL), cujos valores de verdade são $\mathcal{V} = \{\text{TRUE}, \text{FALSE}, \text{UNKNOWN}\}$. O valor `UNKNOWN` decorre invariavelmente de qualquer operação de comparação que envolva uma variável nula (`NULL`), pois o nulo relacional representa ausência de informação ou dado desconhecido.
+A norma SQL opera sobre a Lógica Trivalente (*Three-Valued Logic* - 3VL), cujos valores de verdade são $`\mathcal{V} = \{\text{TRUE}, \text{FALSE}, \text{UNKNOWN}\}`$. O valor `UNKNOWN` decorre invariavelmente de qualquer operação de comparação que envolva uma variável nula (`NULL`), pois o nulo relacional representa ausência de informação ou dado desconhecido.
 
 Considere a expressão:
-$$c.\text{id\_cliente} \text{ NOT IN } (p_1, p_2, \dots, p_k, \text{NULL})$$
+```math
+c.\text{id\_cliente} \text{ NOT IN } (p_1, p_2, \dots, p_k, \text{NULL})
+```
 
 Por definição algébrica do padrão SQL, a cláusula `NOT IN` expande-se formalmente em uma conjunção encadeada de desigualdades:
-$$(c.\text{id\_cliente} \neq p_1) \land (c.\text{id\_cliente} \neq p_2) \land \dots \land (c.\text{id\_cliente} \neq \text{NULL})$$
+```math
+(c.\text{id\_cliente} \neq p_1) \land (c.\text{id\_cliente} \neq p_2) \land \dots \land (c.\text{id\_cliente} \neq \text{NULL})
+```
 
-Avaliando o termo residual $(c.\text{id\_cliente} \neq \text{NULL})$:
+Avaliando o termo residual $`(c.\text{id\_cliente} \neq \text{NULL})`$:
 $$(x \neq \text{NULL}) \equiv \text{UNKNOWN}, \quad \forall x$$
 
 Pela tabela-verdade fundamental do operador booleano de conjunção ($\land$ / `AND`):

@@ -524,14 +524,14 @@ Uma `WindowingTransformation` conecta um **Window** (retângulo definido no espa
 - Um vetor de escala (`scale`): razão matemática entre as dimensões do viewport e da janela;
 - Um vetor de translação (`translation`): deslocamento da origem entre os dois espaços.
 
-$$\text{Ponto}_{\text{Viewport}} = (\text{Ponto}_{\text{Window}} \times \text{Escala}) + \text{Translação}$$
+```math
+\text{Ponto}_{\text{Viewport}} = (\text{Ponto}_{\text{Window}} \times \text{Escala}) + \text{Translação}
+```
 
 ```mermaid
 flowchart LR
-    A["Espaço Abstrato do Modelo (Window)<br/>ex: X: 0..100, Y: 0..1000"] 
-    -->|displayTransform:| 
-    B["Espaço da Tela Física (Viewport)<br/>ex: X: 250..450 px, Y: 100..300 px"]
-    B -->|inverseDisplayTransformation:| A
+    A["Espaço Abstrato do Modelo (Window)<br/>ex: X: 0..100, Y: 0..1000"] -->|"displayTransform:"| B["Espaço da Tela Física (Viewport)<br/>ex: X: 250..450 px, Y: 100..300 px"]
+    B -->|"inverseDisplayTransformation:"| A
 ```
 
 ### Composição e inversão de transformações

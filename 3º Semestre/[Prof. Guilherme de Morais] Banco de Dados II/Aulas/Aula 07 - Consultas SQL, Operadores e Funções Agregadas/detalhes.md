@@ -689,8 +689,8 @@ WHERE unidade IN ('M', 'G', 'L') AND val_unit <= 1.05;
 
 | Abordagem | Clareza de Código | Extensibilidade | Equivalência Matemática |
 | :--- | :--- | :--- | :--- |
-| `IN (v1, v2, v3)` | Concisa e direta | Adicionar itens basta incluir uma vírgula | $x \in \{v_1, v_2, v_3\}$ |
-| `OR (col = v1 OR ...)` | Repetitiva e sujeita a erros | Exige repetir o nome do campo e do operador | $(x = v_1) \lor (x = v_2) \lor (x = v_3)$ |
+| `IN (v1, v2, v3)` | Concisa e direta | Adicionar itens basta incluir uma vírgula | $`x \in \{v_1, v_2, v_3\}`$ |
+| `OR (col = v1 OR ...)` | Repetitiva e sujeita a erros | Exige repetir o nome do campo e do operador | $`(x = v_1) \lor (x = v_2) \lor (x = v_3)`$ |
 
 ### Diagrama de Pertinência de Conjuntos
 

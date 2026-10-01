@@ -585,7 +585,9 @@ public void removerMeio(int indice) {
 
 A manipulação de referências `atual.proximo = removido.proximo;` custa rigorosamente $O(1)$ de tempo de processamento. No entanto, a necessidade incontornável de **encontrar o nó antecessor** através de um laço linear que parte da cabeça impõe um custo de varredura prévio proporcional ao índice buscado. Pela regra de análise de algoritmos:
 
-$$\text{Tempo Total} = \underbrace{O(n)}_{\text{Busca do antecessor}} + \underbrace{O(1)}_{\text{Desvio de elo}} = O(n)$$
+```math
+\text{Tempo Total} = \underbrace{O(n)}_{\text{Busca do antecessor}} + \underbrace{O(1)}_{\text{Desvio de elo}} = O(n)
+```
 
 ---
 

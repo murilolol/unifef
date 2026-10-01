@@ -262,20 +262,32 @@ A motivação de criar a classe `DocumentoValidador` dentro do pacote `br.com.ap
 Um CPF possui 11 dígitos, dispostos na forma `ABC.DEF.GHI-JK`, onde `J` e `K` são os dígitos verificadores (DV):
 1. **Higienização:** Remoção de pontuações via expressão regular `replaceAll("[^\\d]", "")`.
 2. **Rejeição de Triviais:** Eliminação de cadeias com menos/mais de 11 dígitos e CPFs com dígitos idênticos repetidos (ex.: `111.111.111-11`, `222.222.222-22`), validados via regex `(\\d)\\1{10}`.
-3. **Primeiro Dígito ($d_1$):**
+3. **Primeiro Dígito ($`d_1`$):**
    - Somatório dos 9 primeiros dígitos multiplicados por pesos decrescentes de 10 até 2:
-     $$S_1 = \sum_{i=0}^{8} \text{dígito}[i] \times (10 - i)$$
+     ```math
+     S_1 = \sum_{i=0}^{8} \text{dígito}[i] \times (10 - i)
+     ```
    - Cálculo do resto:
-     $$R_1 = S_1 \pmod{11}$$
+     ```math
+     R_1 = S_1 \pmod{11}
+     ```
    - Regra do dígito:
-     $$d_1 = (11 - R_1) > 9 \;?\; 0 : (11 - R_1)$$
-4. **Segundo Dígito ($d_2$):**
-   - Somatório dos 9 dígitos iniciais multiplicados pelos pesos de 11 até 3, acrescido do dobro de $d_1$:
-     $$S_2 = \left(\sum_{i=0}^{8} \text{dígito}[i] \times (11 - i)\right) + (d_1 \times 2)$$
+     ```math
+     d_1 = (11 - R_1) > 9 \;?\; 0 : (11 - R_1)
+     ```
+4. **Segundo Dígito ($`d_2`$):**
+   - Somatório dos 9 dígitos iniciais multiplicados pelos pesos de 11 até 3, acrescido do dobro de $`d_1`$:
+     ```math
+     S_2 = \left(\sum_{i=0}^{8} \text{dígito}[i] \times (11 - i)\right) + (d_1 \times 2)
+     ```
    - Cálculo do resto e aplicação da regra:
-     $$R_2 = S_2 \pmod{11}$$
-     $$d_2 = (11 - R_2) > 9 \;?\; 0 : (11 - R_2)$$
-5. **Conferência Final:** O cálculo é válido se $d_1 == \text{dígito}[9]$ e $d_2 == \text{dígito}[10]$.
+     ```math
+     R_2 = S_2 \pmod{11}
+     ```
+     ```math
+     d_2 = (11 - R_2) > 9 \;?\; 0 : (11 - R_2)
+     ```
+5. **Conferência Final:** O cálculo é válido se $`d_1 == \text{dígito}[9]`$ e $`d_2 == \text{dígito}[10]`$.
 
 ### Diagrama de Atividades: Validação de CPF
 

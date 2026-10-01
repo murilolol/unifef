@@ -392,7 +392,7 @@ DROP VIEW IF EXISTS vw_clientes_sp;
 
 ### O Dilema das Dependências: CASCADE versus RESTRICT
 
-Bancos de dados relacionais mantêm árvores de dependência estritas registradas em tabelas do sistema (`pg_depend`). Uma view $V_1$ pode ser fonte de dados para outra view $V_2$, ou pode ser referenciada por uma regra, gatilho (*trigger*) ou função armazenada (*stored function*).
+Bancos de dados relacionais mantêm árvores de dependência estritas registradas em tabelas do sistema (`pg_depend`). Uma view $`V_1`$ pode ser fonte de dados para outra view $`V_2`$, ou pode ser referenciada por uma regra, gatilho (*trigger*) ou função armazenada (*stored function*).
 
 ```sql
 -- Cenário de dependência
@@ -768,7 +768,7 @@ SELECT * FROM clientes;
 
 ### 2. O Problema da Proliferação de Camadas (*View Stacking Hell*)
 
-**O Erro**: Criar views sobre views sobre views (ex.: $V_1$ consulta tabela; $V_2$ consome $V_1$ com `JOIN`; $V_3$ agrega $V_2$; $V_4$ filtra $V_3$).  
+**O Erro**: Criar views sobre views sobre views (ex.: $`V_1`$ consulta tabela; $`V_2`$ consome $`V_1`$ com `JOIN`; $`V_3`$ agrega $`V_2`$; $`V_4`$ filtra $`V_3`$).  
 **O Problema**: O otimizador de consultas tem dificuldades para descer predicados (*push down predicates*) e escolher caminhos indexados ideais em árvores sintáticas excessivamente profundas. A depuração de código se torna caótica.  
 **Boa Prática**: Limite a profundidade de aninhamento de views a no máximo 2 níveis lógicos.
 
@@ -1223,7 +1223,7 @@ Abaixo, cada exercício proposto pelo material original é resolvido com seu res
 
 #### Exercício 1: View contendo apenas clientes do estado de SP
 - **Enunciado**: Crie uma view contendo apenas clientes do estado de SP.
-- **Raciocínio**: Trata-se de uma visão filtrada sobre uma única relação base (`clientes`). Aplica-se a seleção $\sigma_{estado = 'SP'}(clientes)$. As colunas relevantes para operações usuais são projetadas.
+- **Raciocínio**: Trata-se de uma visão filtrada sobre uma única relação base (`clientes`). Aplica-se a seleção $`\sigma_{estado = 'SP'}(clientes)`$. As colunas relevantes para operações usuais são projetadas.
 - **Resolução Comentada**:
   ```sql
   CREATE VIEW vw_ex01_clientes_sp AS

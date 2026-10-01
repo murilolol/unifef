@@ -52,7 +52,7 @@ Para acompanhar este módulo com profundidade, é fundamental dominar os seguint
 
 - **Alocação de Memória em Tempo de Execução:** Compreensão da separação entre a pilha de execução (*Call Stack*), onde residem as variáveis locais e referências a objetos, e o monte (*Heap*), onde instâncias de classes e arrays são alocados dinamicamente.
 - **Conceito de Ponteiro/Referência:** Compreensão de que variáveis de tipos não primitivos em Java armazenam endereços lógicos que apontam para a posição de memória onde os dados reais residem, e que a atribuição de referências copia apenas o endereço, não o conteúdo subjacente.
-- **Estruturas Sequenciais Lineares:** Experiência prévia com vetores estáticos (*arrays*) e listas sequenciais (`ArrayList`), compreendendo a indexação contígua em memória onde o endereço do elemento $i$ é calculado por aritmética direta: $\text{Base} + (i \times \text{tamanho\_tipo})$.
+- **Estruturas Sequenciais Lineares:** Experiência prévia com vetores estáticos (*arrays*) e listas sequenciais (`ArrayList`), compreendendo a indexação contígua em memória onde o endereço do elemento $i$ é calculado por aritmética direta: $`\text{Base} + (i \times \text{tamanho\_tipo})`$.
 - **Operação de Inserção no Início:** Recordatório da operação `adicionarInicio(int valor)` vista na aula anterior, onde um novo nó é criado, seu ponteiro `proximo` é direcionado para o atual `inicio`, e a referência `inicio` é atualizada, operando em tempo constante $O(1)$.
 
 ---
@@ -989,7 +989,7 @@ Marque cada item conforme consolidar os conhecimentos para a avaliação formal:
 - [ ] Sei implementar a busca linear por valor tratando o caso em que o elemento não está presente na lista.
 - [ ] Sei implementar o método `atualizar(indice, novoValor)` com validação de limites inferiores e superiores.
 - [ ] Domino os seis passos do roteiro de análise de algoritmos do Prof. Wesley Soares para responder questões de prova.
-- [ ] Sei classificar e ordenar as classes assintóticas: $O(1) < O(\log n) < O(n) < O(n^2)$.
+- [ ] Sei classificar e ordenar as classes assintóticas: $`O(1) < O(\log n) < O(n) < O(n^2)`$.
 - [ ] Sei explicar por que o deslocamento de elementos em inserções intermediárias em vetores deve ocorrer da direita para a esquerda.
 - [ ] Consigo descrever as três fases do redimensionamento dinâmico em listas sequenciais (alocação, cópia e inserção).
 - [ ] Conheço a matriz comparativa completa entre listas sequenciais e ligadas para acesso, busca, inserção e remoção nas extremidades.

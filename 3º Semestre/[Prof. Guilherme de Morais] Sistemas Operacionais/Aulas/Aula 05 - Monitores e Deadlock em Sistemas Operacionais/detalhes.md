@@ -369,7 +369,7 @@ mindmap
 1. **Exclusão Mútua:** Os recursos envolvidos só podem ser utilizados por um processo por vez.
 2. **Posse e Espera (*Hold and Wait*):** Um processo que já retém recursos concedidos anteriormente pode solicitar novos recursos e aguardar bloqueado pela sua liberação.
 3. **Não-Preempção:** Um recurso alocado a um processo não pode ser tomado compulsoriamente pela CPU ou pelo SO; ele só pode ser liberado voluntariamente pelo processo que o detém após a conclusão de sua tarefa.
-4. **Espera Circular:** Deve existir uma cadeia fechada de processos $\{P_1, P_2, \dots, P_n\}$, tal que $P_1$ aguarda um recurso retido por $P_2$, $P_2$ aguarda um recurso de $P_3$, ..., e $P_n$ aguarda um recurso retido por $P_1$.
+4. **Espera Circular:** Deve existir uma cadeia fechada de processos $`\{P_1, P_2, \dots, P_n\}`$, tal que $`P_1`$ aguarda um recurso retido por $`P_2`$, $`P_2`$ aguarda um recurso de $`P_3`$, ..., e $`P_n`$ aguarda um recurso retido por $`P_1`$.
 
 Se o arquiteto do sistema operacional conseguir quebrar pelo menos **uma** dessas quatro condições, a ocorrência de deadlocks torna-se matematicamente impossível.
 
@@ -479,11 +479,11 @@ A única saída física para desfazer o nó do cruzamento sem que haja destruiç
 O **Grafo de Alocação de Recursos** (conhecido internacionalmente como **RAG** — *Resource Allocation Graph*) é um grafo direcionado $G = (V, E)$ utilizado pelo sistema operacional para modelar matematicamente o estado atual do compartilhamento de recursos no sistema:
 
 - O conjunto de vértices $V$ divide-se em dois subconjuntos disjuntos:
-  1. **Processos:** $P = \{P_1, P_2, \dots, P_n\}$, representados convencionalmente por retângulos ou círculos com identificação $P$.
-  2. **Recursos:** $R = \{R_1, R_2, \dots, R_m\}$, representados graficamente por retângulos ou círculos com identificação $R$. *(Se o recurso contiver múltiplas instâncias idênticas, desenham-se pontos dentro da caixa correspondente).*
+  1. **Processos:** $`P = \{P_1, P_2, \dots, P_n\}`$, representados convencionalmente por retângulos ou círculos com identificação $P$.
+  2. **Recursos:** $`R = \{R_1, R_2, \dots, R_m\}`$, representados graficamente por retângulos ou círculos com identificação $R$. *(Se o recurso contiver múltiplas instâncias idênticas, desenham-se pontos dentro da caixa correspondente).*
 - O conjunto de arestas direcionadas $E$ divide-se em:
-  1. **Aresta de Solicitação / Requisição ($P_i \to R_j$):** Indica que o processo $P_i$ solicitou uma instância do recurso $R_j$ e está atualmente bloqueado, aguardando alocação.
-  2. **Aresta de Alocação / Atribuição ($R_j \to P_i$):** Indica que uma instância do recurso $R_j$ foi concedida e está atualmente em posse do processo $P_i$.
+  1. **Aresta de Solicitação / Requisição ($`P_i \to R_j`$):** Indica que o processo $`P_i`$ solicitou uma instância do recurso $`R_j`$ e está atualmente bloqueado, aguardando alocação.
+  2. **Aresta de Alocação / Atribuição ($`R_j \to P_i`$):** Indica que uma instância do recurso $`R_j`$ foi concedida e está atualmente em posse do processo $`P_i`$.
 
 ```mermaid
 flowchart LR
@@ -505,12 +505,12 @@ flowchart LR
 ## Exemplo de deadlock simples e a condição de espera circular
 
 ### Descrição do cenário do material de aula
-Consideremos o exemplo clássico de impasse mínimo entre dois processos ($P_1$ e $P_2$) e dois tipos de recursos de instância única ($R_1$ e $R_2$):
+Consideremos o exemplo clássico de impasse mínimo entre dois processos ($`P_1`$ e $`P_2`$) e dois tipos de recursos de instância única ($`R_1`$ e $`R_2`$):
 
-1. O processo $P_1$ retém o recurso $R_1$ (alocado).
-2. O processo $P_1$ necessita do recurso $R_2$ para continuar e solicita $R_2$. Como $R_2$ não está livre, $P_1$ bloqueia.
-3. O processo $P_2$ retém o recurso $R_2$ (alocado).
-4. O processo $P_2$ necessita do recurso $R_1$ para continuar e solicita $R_1$. Como $R_1$ não está livre, $P_2$ bloqueia.
+1. O processo $`P_1`$ retém o recurso $`R_1`$ (alocado).
+2. O processo $`P_1`$ necessita do recurso $`R_2`$ para continuar e solicita $`R_2`$. Como $`R_2`$ não está livre, $`P_1`$ bloqueia.
+3. O processo $`P_2`$ retém o recurso $`R_2`$ (alocado).
+4. O processo $`P_2`$ necessita do recurso $`R_1`$ para continuar e solicita $`R_1`$. Como $`R_1`$ não está livre, $`P_2`$ bloqueia.
 
 ### O Grafo RAG do Deadlock Simples
 
@@ -528,19 +528,21 @@ flowchart LR
 ```
 
 Note a existência do ciclo fechado de dependência orientada:
-$$P_1 \to R_2 \to P_2 \to R_1 \to P_1$$
+```math
+P_1 \to R_2 \to P_2 \to R_1 \to P_1
+```
 
 ### A dinâmica temporal do colapso
 A tabela abaixo documenta passo a passo como o entrelaçamento temporal de duas threads executando em núcleos distintos atinge o estado travado:
 
-| Instante ($t$) | Ação da Thread / Processo $P_1$ | Ação da Thread / Processo $P_2$ | Estado de $R_1$ | Estado de $R_2$ | Resultado do Sistema |
+| Instante ($t$) | Ação da Thread / Processo $`P_1`$ | Ação da Thread / Processo $`P_2`$ | Estado de $`R_1`$ | Estado de $`R_2`$ | Resultado do Sistema |
 | :---: | :--- | :--- | :--- | :--- | :--- |
-| **$t_0$** | Inicia execução | Inicia execução | Livre | Livre | Normal |
-| **$t_1$** | Solicita e obtém $R_1$ | Executa trabalho local | Em posse de $P_1$ | Livre | Normal |
-| **$t_2$** | Executa trabalho local | Solicita e obtém $R_2$ | Em posse de $P_1$ | Em posse de $P_2$ | Normal |
-| **$t_3$** | Solicita $R_2$ (bloqueia) | Executa trabalho local | Em posse de $P_1$ | Em posse de $P_2$ | $P_1$ suspenso na fila |
-| **$t_4$** | Aguardando $R_2$ | Solicita $R_1$ (bloqueia) | Em posse de $P_1$ | Em posse de $P_2$ | $P_2$ suspenso na fila |
-| **$t_5$** | **Bloqueado para sempre** | **Bloqueado para sempre** | Retido por $P_1$ | Retido por $P_2$ | **Deadlock consumado** |
+| **$`t_0`$** | Inicia execução | Inicia execução | Livre | Livre | Normal |
+| **$`t_1`$** | Solicita e obtém $`R_1`$ | Executa trabalho local | Em posse de $`P_1`$ | Livre | Normal |
+| **$`t_2`$** | Executa trabalho local | Solicita e obtém $`R_2`$ | Em posse de $`P_1`$ | Em posse de $`P_2`$ | Normal |
+| **$`t_3`$** | Solicita $`R_2`$ (bloqueia) | Executa trabalho local | Em posse de $`P_1`$ | Em posse de $`P_2`$ | $`P_1`$ suspenso na fila |
+| **$`t_4`$** | Aguardando $`R_2`$ | Solicita $`R_1`$ (bloqueia) | Em posse de $`P_1`$ | Em posse de $`P_2`$ | $`P_2`$ suspenso na fila |
+| **$`t_5`$** | **Bloqueado para sempre** | **Bloqueado para sempre** | Retido por $`P_1`$ | Retido por $`P_2`$ | **Deadlock consumado** |
 
 Nenhum dos dois processos consegue dar um único passo de computação adiante para atingir o ponto de código em que liberaria o recurso que o outro tanto aguarda.
 
@@ -554,7 +556,7 @@ Um dos pontos mais importantes da aula do Prof. Guilherme de Morais é a desmist
 ### Onde reside a limitação?
 O monitor é excelente para proteger **um** recurso compartilhado individualizado. Ele encapsula o recurso dentro de sua estrutura e garante que ninguém o corrompa. No entanto, em sistemas reais, aplicações frequentemente precisam alocar **múltiplos recursos simultaneamente** para concluir uma operação (por exemplo: copiar dados da Unidade de Fita $A$ para a Unidade de Fita $B$; ou debitar da Conta $X$ e creditar na Conta $Y$).
 
-Se o recurso $A$ for gerenciado pelo Monitor $M_A$ e o recurso $B$ for gerenciado pelo Monitor $M_B$, surge o problema clássico de **aninhamento de monitores** e **ordenação de travamento inconsistente**:
+Se o recurso $A$ for gerenciado pelo Monitor $`M_A`$ e o recurso $B$ for gerenciado pelo Monitor $`M_B`$, surge o problema clássico de **aninhamento de monitores** e **ordenação de travamento inconsistente**:
 
 ```mermaid
 sequenceDiagram
@@ -729,9 +731,9 @@ if __name__ == "__main__":
 
 **Raciocínio detalhado:**
 1. Os monitores operam como fronteiras isoladas de proteção. Um monitor protege exclusivamente os recursos e variáveis definidos em seu próprio escopo léxico/objeto.
-2. Em um sistema com múltiplos monitores independentes ($M_1, M_2, \dots, M_k$), não existe um coordenador global centralizado que ordene as requisições atômicas entre os diferentes monitores.
-3. Se um processo $P_A$ adquire a trava de $M_1$ e, antes de sair dele, tenta invocar um procedimento em $M_2$, ele mantém a trava de $M_1$ retida enquanto aguarda a liberação de $M_2$ (atendendo à condição de *Posse e Espera*).
-4. Se simultaneamente um processo $P_B$ adquire a trava de $M_2$ e tenta invocar um procedimento em $M_1$, forma-se a *Espera Circular*.
+2. Em um sistema com múltiplos monitores independentes ($`M_1, M_2, \dots, M_k`$), não existe um coordenador global centralizado que ordene as requisições atômicas entre os diferentes monitores.
+3. Se um processo $`P_A`$ adquire a trava de $`M_1`$ e, antes de sair dele, tenta invocar um procedimento em $`M_2`$, ele mantém a trava de $`M_1`$ retida enquanto aguarda a liberação de $`M_2`$ (atendendo à condição de *Posse e Espera*).
+4. Se simultaneamente um processo $`P_B`$ adquire a trava de $`M_2`$ e tenta invocar um procedimento em $`M_1`$, forma-se a *Espera Circular*.
 5. Como cada monitor cuida estritamente de si mesmo, nenhum deles possui visibilidade para diagnosticar que o travamento cruzado está acontecendo no ambiente externo.
 
 **Resolução completa:**
@@ -750,7 +752,7 @@ O problema principal é o **aninhamento de monitores associado à ausência de u
 2. Se eliminarmos completamente o compartilhamento de recursos:
    - Ou cada processo teria que possuir hardware dedicado exclusivo (o que é economicamente inviável e fisicamente absurdo em arquiteturas multiprogramadas).
    - Ou o sistema teria que executar exatamente um único processo por vez de forma estritamente sequencial (sistema monoprogramado em lote/batch da década de 1950).
-3. A definição formal de um sistema multiprogramado pressupõe que o conjunto de recursos físicos $R$ é compartilhado concorrentemente por um conjunto de processos $P$, onde a cardinalidade de processos ativos excede os recursos disponíveis: $|P| > |R|$.
+3. A definição formal de um sistema multiprogramado pressupõe que o conjunto de recursos físicos $R$ é compartilhado concorrentemente por um conjunto de processos $P$, onde a cardinalidade de processos ativos excede os recursos disponíveis: $`|P| > |R|`$.
 4. Logo, extinguir o compartilhamento elimina o próprio conceito e propósito da multiprogramação.
 
 **Resolução completa:**
@@ -761,13 +763,13 @@ A falha fundamental reside em uma contradição de premissas arquiteturais: **o 
 ### Exercício 3: Análise de Grafo de Alocação de Recursos (Prático)
 
 **Enunciado:**
-Considere um sistema composto por três processos ($P_1, P_2, P_3$) e três recursos de instância única ($R_1, R_2, R_3$). O estado do sistema é descrito pelas seguintes relações:
-- $R_1$ está alocado para $P_2$.
-- $P_1$ está solicitando $R_1$.
-- $R_2$ está alocado para $P_1$.
-- $P_2$ está solicitando $R_2$.
-- $R_3$ está alocado para $P_3$.
-- $P_3$ está solicitando $R_1$.
+Considere um sistema composto por três processos ($`P_1, P_2, P_3`$) e três recursos de instância única ($`R_1, R_2, R_3`$). O estado do sistema é descrito pelas seguintes relações:
+- $`R_1`$ está alocado para $`P_2`$.
+- $`P_1`$ está solicitando $`R_1`$.
+- $`R_2`$ está alocado para $`P_1`$.
+- $`P_2`$ está solicitando $`R_2`$.
+- $`R_3`$ está alocado para $`P_3`$.
+- $`P_3`$ está solicitando $`R_1`$.
 
 Desenhe o Grafo RAG correspondente, verifique a existência de ciclo e informe se há deadlock e quais processos estão impedidos de progredir.
 
@@ -792,11 +794,11 @@ flowchart TD
 ```
 
 2. **Identificação de Ciclos:**
-   - Analisando as arestas: existe o ciclo fechado direcionado $P_1 \to R_1 \to P_2 \to R_2 \to P_1$.
-   - Como todos os recursos $R_1$ e $R_2$ possuem estritamente uma única instância, a presença de um ciclo é garantia definitiva de **Deadlock**.
+   - Analisando as arestas: existe o ciclo fechado direcionado $`P_1 \to R_1 \to P_2 \to R_2 \to P_1`$.
+   - Como todos os recursos $`R_1`$ e $`R_2`$ possuem estritamente uma única instância, a presença de um ciclo é garantia definitiva de **Deadlock**.
 3. **Análise dos Processos:**
-   - $P_1$ e $P_2$ estão diretamente envolvidos no ciclo de deadlock e nunca conseguirão progredir.
-   - O processo $P_3$ não está dentro do ciclo primário, mas solicita $R_1$ (que está retido por $P_2$, que nunca irá liberá-lo). Logo, $P_3$ também ficará bloqueado permanentemente (vítima indireta do deadlock).
+   - $`P_1`$ e $`P_2`$ estão diretamente envolvidos no ciclo de deadlock e nunca conseguirão progredir.
+   - O processo $`P_3`$ não está dentro do ciclo primário, mas solicita $`R_1`$ (que está retido por $`P_2`$, que nunca irá liberá-lo). Logo, $`P_3`$ também ficará bloqueado permanentemente (vítima indireta do deadlock).
 
 ---
 

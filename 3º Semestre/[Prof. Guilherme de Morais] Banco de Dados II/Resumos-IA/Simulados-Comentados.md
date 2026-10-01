@@ -927,7 +927,9 @@ Nos motores relacionais que operam sob a lógica trivalente (*Three-Valued Logic
 
 O operador `NOT IN` expande-se por Leis de De Morgan como uma sucessão de inequações conectadas pelo operador conjuntivo `AND`:
 
-$$\text{campo} \text{ NOT IN } (V_1, V_2, \text{NULL}) \iff (\text{campo} \neq V_1) \land (\text{campo} \neq V_2) \land (\text{campo} \neq \text{NULL})$$
+```math
+\text{campo} \text{ NOT IN } (V_1, V_2, \text{NULL}) \iff (\text{campo} \neq V_1) \land (\text{campo} \neq V_2) \land (\text{campo} \neq \text{NULL})
+```
 
 Como $(\text{campo} \neq \text{NULL})$ avalia invariavelmente para `UNKNOWN`, a expressão conjuntiva inteira torna-se:
 
@@ -1068,7 +1070,9 @@ SELECT SUBSTRING('Banco de Dados' FROM 1 FOR 4);
 
 O processo de normalização decompõe o modelo para mitigar redundâncias. A operação de junção (*join*) reconstitui as visões integradas de negócio. Matematicamente, uma equi-junção ($\theta$-junção baseada em igualdade) corresponde à aplicação de uma seleção restritiva sobre o produto cartesiano das tabelas:
 
-$$R \bowtie_{R.pk = S.fk} S \equiv \sigma_{R.pk = S.fk} (R \times S)$$
+```math
+R \bowtie_{R.pk = S.fk} S \equiv \sigma_{R.pk = S.fk} (R \times S)
+```
 
 ### Evolução Histórica da Sintaxe: ANSI SQL-89 versus ANSI SQL-92
 

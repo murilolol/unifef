@@ -355,15 +355,19 @@ Portanto: $T(n) = 3n^2 + 50n + 1000 \implies O(n^2)$.
 
 ### Análise Assintótica: Notações Big-O e Big-Omega
 
-- **Notação Big-O ($O$):** Define o **limite superior assintótico**. Formalmente, diz-se que $T(n) = O(f(n))$ se existirem constantes reais positivas $c > 0$ e $n_0 \ge 1$ tais que:
+- **Notação Big-O ($O$):** Define o **limite superior assintótico**. Formalmente, diz-se que $T(n) = O(f(n))$ se existirem constantes reais positivas $`c > 0`$ e $`n_0 \ge 1`$ tais que:
 
-$$0 \le T(n) \le c \cdot f(n), \quad \forall n \ge n_0$$
+```math
+0 \le T(n) \le c \cdot f(n), \quad \forall n \ge n_0
+```
 
 O Big-O representa a garantia formal de que o custo temporal do algoritmo não ultrapassará essa fronteira superior no pior cenário de execução possível.
 
-- **Notação Big-Omega ($\Omega$):** Define o **limite inferior assintótico**. Formalmente, diz-se que $T(n) = \Omega(g(n))$ se existirem constantes reais positivas $c > 0$ e $n_0 \ge 1$ tais que:
+- **Notação Big-Omega ($\Omega$):** Define o **limite inferior assintótico**. Formalmente, diz-se que $T(n) = \Omega(g(n))$ se existirem constantes reais positivas $`c > 0`$ e $`n_0 \ge 1`$ tais que:
 
-$$0 \le c \cdot g(n) \le T(n), \quad \forall n \ge n_0$$
+```math
+0 \le c \cdot g(n) \le T(n), \quad \forall n \ge n_0
+```
 
 O Big-Omega estabelece o piso estrutural: o algoritmo exigirá ao menos essa quantidade de trabalho computacional, mesmo sob as circunstâncias mais favoráveis.
 
@@ -397,7 +401,9 @@ flowchart TD
 
 As funções assintóticas fundamentais organizam-se em uma hierarquia estrita de dominância:
 
-$$O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)$$
+```math
+O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
+```
 
 ```mermaid
 flowchart LR
@@ -687,16 +693,16 @@ sequenceDiagram
 
     Note over P: Pilha Vazia (topo = -1)
     Cliente->>P: push(10)
-    Note over P: topo avança para 0; elementos[0] = 10
+    Note over P: topo avança para 0, elementos[0] = 10
     Cliente->>P: push(20)
-    Note over P: topo avança para 1; elementos[1] = 20
+    Note over P: topo avança para 1, elementos[1] = 20
     Cliente->>P: peek()
     P-->>Cliente: Retorna 20 (topo permanece 1)
     Cliente->>P: pop()
-    Note over P: Captura elementos[1] (20); topo recua para 0
+    Note over P: Captura elementos[1] (20), topo recua para 0
     P-->>Cliente: Retorna 20
     Cliente->>P: pop()
-    Note over P: Captura elementos[0] (10); topo recua para -1
+    Note over P: Captura elementos[0] (10), topo recua para -1
     P-->>Cliente: Retorna 10 (Pilha Vazia)
 ```
 
@@ -1333,7 +1339,7 @@ public static int somar(int[] valores) {
 }
 ```
 - **Dedução:** Seja $n = \text{valores.length}$. O laço executa exatamente $n$ iterações. Cada passagem executa uma soma aritmética e uma atribuição indexada de tempo constante $O(1)$. 
-- **Equação:** $T(n) = c_1 \cdot n + c_2 \implies \mathbf{O(n)}$ (Linear).
+- **Equação:** $`T(n) = c_1 \cdot n + c_2 \implies \mathbf{O(n)}`$ (Linear).
 
 #### Questão 2: Método `buscaBinaria`
 ```java
@@ -1355,7 +1361,7 @@ public static int buscaBinaria(int[] valores, int procurado) {
     return -1;
 }
 ```
-- **Dedução:** A cada iteração do laço `while`, o espaço de busca remanescente é reduzido à metade ($\frac{n}{2^k}$). No pior caso (elemento ausente ou na última partição), a condição de término ocorre quando $\frac{n}{2^k} \le 1 \implies k = \lceil \log_2 n \rceil$.
+- **Dedução:** A cada iteração do laço `while`, o espaço de busca remanescente é reduzido à metade ($\frac{n}{2^k}$). No pior caso (elemento ausente ou na última partição), a condição de término ocorre quando $`\frac{n}{2^k} \le 1 \implies k = \lceil \log_2 n \rceil`$.
 - **Conclusão:** $\mathbf{O(\log n)}$ (Logarítmica).
 
 #### Questão 3: Método `imprimirPares`
@@ -1387,7 +1393,9 @@ public static int contarIguais(int[] valores) {
 ```
 - **Dedução:** Laços aninhados dependentes formando um espaço triangular de comparações. A quantidade de iterações do laço interno decresce: $(n-1) + (n-2) + \dots + 1 + 0$.
 - **Somatório da Progressão Aritmética:**
-$$S = \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2} = \frac{1}{2}n^2 - \frac{1}{2}n$$
+```math
+S = \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2} = \frac{1}{2}n^2 - \frac{1}{2}n
+```
 - Descartando o termo de menor ordem ($-\frac{1}{2}n$) e a constante multiplicativa ($\frac{1}{2}$), resta a ordem dominante $n^2$.
 - **Conclusão:** $\mathbf{O(n^2)}$ (Quadrática — assinalado como `O(nˆ2)` no formulário).
 
@@ -1416,7 +1424,7 @@ public static void reduzir(int n) {
     }
 }
 ```
-- **Dedução:** A variável inteira $n$ é dividida por 2 a cada ciclo. O número de divisões inteiras sucessivas até atingir o valor 1 corresponde exatamente a $\lfloor \log_2 n \rfloor$.
+- **Dedução:** A variável inteira $n$ é dividida por 2 a cada ciclo. O número de divisões inteiras sucessivas até atingir o valor 1 corresponde exatamente a $`\lfloor \log_2 n \rfloor`$.
 - **Conclusão:** $\mathbf{O(\log n)}$ (Logarítmica).
 
 ---
@@ -1436,7 +1444,7 @@ public static void reduzir(int n) {
 ### Negligência no Tratamento de Listas Vazias e Casos Unitários
 - **O Erro:** Omitir a verificação `if (this.inicio == null)` em métodos de inserção e remoção.
 - **Consequência:** Disparo imediato de `NullPointerException` ao tentar acessar `fim.proximo` em lista vazia ou deixar o ponteiro `fim` apontando para um nó removido em lista que continha apenas 1 elemento.
-- **Mitigação:** Toda operação estrutural deve cobrir expressamente três cenários: lista vazia ($t = 0$), lista unitária ($t = 1$) e lista com múltiplos nós ($t > 1$).
+- **Mitigação:** Toda operação estrutural deve cobrir expressamente três cenários: lista vazia ($t = 0$), lista unitária ($t = 1$) e lista com múltiplos nós ($`t > 1`$).
 
 ### Deslocamento Destrutivo em Vetores Sequenciais
 - **O Erro:** Ao abrir espaço no início de um vetor (`inserirInicio`), iterar o laço da esquerda para a direita (`for (int i = 0; i < tamanho; i++) array[i+1] = array[i]`).

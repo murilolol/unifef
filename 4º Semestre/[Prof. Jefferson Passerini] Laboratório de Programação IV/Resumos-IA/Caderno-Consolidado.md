@@ -224,7 +224,7 @@ classDiagram
         ATIVO
         INATIVO
     }
-    GrupoProduto "1" o-- "0..*" Produto : classifica 1:N
+    GrupoProduto "1" o-- "0..*" Produto : classifica 1 para N
     Produto "0..*" --> "0..1" Fornecedor : abastecido por
     GrupoProduto --> Status
     Produto --> Status

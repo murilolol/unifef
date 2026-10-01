@@ -409,13 +409,13 @@ erDiagram
 #### Tipos de junções relacionais
 
 1. **INNER JOIN (Junção Interna):**
-   - *Definição:* Retorna apenas as tuplas que atendem ao predicado de junção especificado na cláusula `ON` ($R \Join_{p} S$).
+   - *Definição:* Retorna apenas as tuplas que atendem ao predicado de junção especificado na cláusula `ON` ($`R \Join_{p} S`$).
    - *Motivação:* Utilizado quando se deseja combinar registros de duas entidades onde há correspondência em ambos os lados.
    - *Contraexemplo:* Tentar listar todos os vendedores e seus respectivos pedidos com `INNER JOIN` fará com que vendedores sem pedidos sejam descartados do resultado.
    - *Armadilha:* Esquecer ou errar o predicado na cláusula `ON`, gerando produto cartesiano implícito e alto consumo de memória.
 
 2. **LEFT OUTER JOIN (Junção Externa à Esquerda):**
-   - *Definição:* Retorna todas as tuplas da relação à esquerda ($R$). Caso não haja tupla correspondente na relação à direita ($S$), os atributos de $S$ são preenchidos com `NULL` ($R \text{ }⟕_{p} S$).
+   - *Definição:* Retorna todas as tuplas da relação à esquerda ($R$). Caso não haja tupla correspondente na relação à direita ($S$), os atributos de $S$ são preenchidos com `NULL` ($`R \text{ }⟕_{p} S`$).
    - *Motivação:* Fundamental para relatórios analíticos em que entidades sem transações (clientes sem compras, vendedores sem vendas, produtos sem saída) precisam aparecer no resultado final.
    - *Contraexemplo:* Aplicar um filtro de atributos da tabela da direita dentro da cláusula `WHERE` após um `LEFT JOIN`. Isso converte a junção em um `INNER JOIN` disfarçado, pois `WHERE tabela_direita.campo = 'X'` elimina as linhas onde o campo é `NULL`.
    - *Armadilha:* Ao realizar agregações (`COUNT`, `SUM`), passar a tabela esquerda como argumento do `COUNT` (ex: `COUNT(*)`) em vez de contar a chave primária da tabela direita (`COUNT(s.id)`). Isso faz com que linhas vazias sejam contadas como 1 em vez de 0.
@@ -585,7 +585,9 @@ Utilizando a técnica de auto-relacionamento (`Self-Join`) na tabela `vendedores
 1. **Hierarquia:** A tabela `vendedores` precisa de um `LEFT JOIN` consigo mesma (`vendedores v LEFT JOIN vendedores s ON v.id_supervisor = s.id_vendedor`). O tratamento do nulo no supervisor é feito com `COALESCE(s.nome, 'Sem Supervisor')`.
 2. **Preservação de Vendedores sem Vendas:** Deve-se utilizar `LEFT JOIN` com `pedidos p` e em seguida `LEFT JOIN` com `itens_pedido ip`. Se usássemos `INNER JOIN`, os vendedores Marcos Silva, Fernanda Costa e Ricardo Alves seriam omitidos, pois não emitiram pedidos diretamente.
 3. **Cálculo Financeiro Líquido:** Cada item tem um preço, quantidade e desconto percentual.
-   $$\text{Valor Item} = \text{quantidade} \times \text{preco\_unitario} \times \left(1.0 - \frac{\text{desconto}}{100.0}\right)$$
+   ```math
+   \text{Valor Item} = \text{quantidade} \times \text{preco\_unitario} \times \left(1.0 - \frac{\text{desconto}}{100.0}\right)
+   ```
    O somatório deve ser encapsulado em `COALESCE(SUM(...), 0.00)` para retornar zero quando não houver pedidos vinculados.
 4. **Volume de Pedidos:** Deve-se contar os pedidos distintos emitidos (`COUNT(DISTINCT p.id_pedido)`). Se utilizássemos `COUNT(p.id_pedido)`, a contagem seria multiplicada pelo número de itens de cada pedido.
 
@@ -829,7 +831,9 @@ Crie uma visão relacional (`VIEW`) denominada `vw_faturamento_vendedores` que c
 #### Análise e formulação
 1. **Formatação Temporal:** Utiliza-se a função do PostgreSQL `TO_CHAR(p.data_pedido, 'YYYY-MM')` para extrair o período contábil no formato canônico.
 2. **Cálculo da Comissão:** A taxa de comissão está em percentual na coluna `v.comissao` (ex: 5.00 para 5%). O valor financeiro da comissão devida é:
-   $$\text{valor\_comissao} = \text{total\_liquido\_vendido} \times \left(\frac{v.\text{comissao}}{100.0}\right)$$
+   ```math
+   \text{valor\_comissao} = \text{total\_liquido\_vendido} \times \left(\frac{v.\text{comissao}}{100.0}\right)
+   ```
 3. **Agrupamento:** O agrupamento deve englobar a competência (`ano_mes`), a chave do vendedor, seu nome e a taxa de comissão.
 
 #### Código SQL comentado

@@ -440,19 +440,19 @@ Um engenheiro de software jamais deve iniciar a codificação ou modelagem com b
 
 ```mermaid
 mindmap
- root((Barreiras na Elicitação))
- Falhas Humanas
- Necessidades Não Explícitas Conhecimento Tácito
- Medo de Perda de Emprego ou Autonomia
- Vícios Operacionais Não Documentados
- Comunicação e Semântica
- Vocabulários Dissonantes entre Setores
- Termos Qualitativos e Ambíguos
- Políticas Internas
- Conflitos de Interesses entre Stakeholders
- Prioridades Divergentes Diretoria versus Operação
- Instabilidade
- Mudança Contínua de Ideia no Ciclo de Análise
+  root((Barreiras na Elicitação))
+    n1["Falhas Humanas"]
+      n2["Necessidades Não Explícitas Conhecimento Tácito"]
+      n3["Medo de Perda de Emprego ou Autonomia"]
+      n4["Vícios Operacionais Não Documentados"]
+    n5["Comunicação e Semântica"]
+      n6["Vocabulários Dissonantes entre Setores"]
+      n7["Termos Qualitativos e Ambíguos"]
+    n8["Políticas Internas"]
+      n9["Conflitos de Interesses entre Stakeholders"]
+      n10["Prioridades Divergentes Diretoria versus Operação"]
+    n11["Instabilidade"]
+      n12["Mudança Contínua de Ideia no Ciclo de Análise"]
 ```
 
 - **Conhecimento Tácito (Necessidades Ocultas):** O usuário executa um procedimento manual vital há tantos anos que assume que qualquer pessoa sabe que aquilo deve ser feito, omitindo o passo durante as entrevistas.
@@ -893,7 +893,7 @@ Para permitir que dezenas de ferramentas (navegadores de código, workspaces e t
 ```mermaid
 flowchart TD
  subgraph MonoliticoPrimitivo["Abordagem Primitiva (Classe Pen)"]
- P_Code["Lógica do Programa"] -->|Desenho Direto no Framebuffer| P_Screen["DisplayScreen (Global)"]
+ P_Code["Lógica do Programa"] -->|"Desenho Direto no Framebuffer"| P_Screen["DisplayScreen (Global)"]
  Note1["Risco de sobrescrita e corrupção de janelas"]
  end
 
@@ -901,10 +901,10 @@ flowchart TD
  M["Model (Domínio)"]
  V["View (Visual)"]
  C["Controller (Periféricos)"]
- M -.->|Notificação Reativa (changed/update)| V
- V -->|Renderização Delimitada no Viewport| S["Janela Alocada na Tela"]
- C -->|Comandos de Mutação| M
- C -->|Comandos Operacionais| V
+ M -.->|"Notificação Reativa (changed/update)"| V
+ V -->|"Renderização Delimitada no Viewport"| S["Janela Alocada na Tela"]
+ C -->|"Comandos de Mutação"| M
+ C -->|"Comandos Operacionais"| V
  end
 ```
 

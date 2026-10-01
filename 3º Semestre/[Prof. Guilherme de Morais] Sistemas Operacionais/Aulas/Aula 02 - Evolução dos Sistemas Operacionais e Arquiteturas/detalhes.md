@@ -275,14 +275,18 @@ sequenceDiagram
 ### Análise matemática de utilização da UCP
 *(Complemento pedagógico para formalização do conceito de ociosidade)*
 
-Seja $T_{comp}$ o tempo total que um programa gasta executando cálculos na UCP, e $T_{io}$ o tempo total gasto aguardando operações de E/S.
+Seja $`T_{comp}`$ o tempo total que um programa gasta executando cálculos na UCP, e $`T_{io}`$ o tempo total gasto aguardando operações de E/S.
 A taxa de utilização da UCP ($U$) em um sistema monoprogramável é dada por:
 
-$$U = \frac{T_{comp}}{T_{comp} + T_{io}}$$
+```math
+U = \frac{T_{comp}}{T_{comp} + T_{io}}
+```
 
 Se uma aplicação contábil gasta 10 segundos calculando na UCP e 90 segundos transferindo dados de e para fitas magnéticas:
 
-$$U = \frac{10}{10 + 90} = \frac{10}{100} = 10\%$$
+```math
+U = \frac{10}{10 + 90} = \frac{10}{100} = 10\%
+```
 
 Isso significa que **90% do tempo de vida do processador foi desperdiçado** em estado ocioso.
 
@@ -524,7 +528,7 @@ Multitarefa cooperativa (utilizada no Windows 3.1 e no Mac OS clássico): o SO n
 ### Definições das métricas
 A introdução e a otimização da multiprogramação visam diretamente aprimorar duas métricas de desempenho centrais dos sistemas computacionais:
 
-1. **Tempo de Turnaround ($T_{turnaround}$):** É o tempo total decorrido desde o instante em que uma tarefa ou processo é submetido ao sistema até o momento de sua conclusão completa e devolução dos resultados ao usuário. Inclui tempo de espera na fila, tempo de carregamento na memória, tempo de execução na UCP e tempo de espera por operações de E/S.
+1. **Tempo de Turnaround ($`T_{turnaround}`$):** É o tempo total decorrido desde o instante em que uma tarefa ou processo é submetido ao sistema até o momento de sua conclusão completa e devolução dos resultados ao usuário. Inclui tempo de espera na fila, tempo de carregamento na memória, tempo de execução na UCP e tempo de espera por operações de E/S.
 2. **Throughput (Vazão de Processamento):** É a quantidade de tarefas, transações ou processos completados com sucesso pelo sistema por unidade de tempo (ex: processos por minuto, requisições por segundo).
 
 ```mermaid
@@ -541,20 +545,20 @@ flowchart LR
 ### Análise matemática comparativa
 *(Complemento pedagógico detalhando a otimização de métricas)*
 
-Considere dois programas ($P_1$ e $P_2$) que chegam juntos no instante $t = 0$:
+Considere dois programas ($`P_1`$ e $`P_2`$) que chegam juntos no instante $t = 0$:
 - Cada programa necessita de 2 segundos de UCP e 4 segundos de E/S.
 - No modelo **Monoprogramável**:
-  - $P_1$ executa: $2s \text{ (CPU)} + 4s \text{ (E/S)} = 6s$. Turnaround de $P_1 = 6s$.
-  - $P_2$ inicia em $t = 6s$ e termina em $t = 12s$. Turnaround de $P_2 = 12s$.
+  - $`P_1`$ executa: $2s \text{ (CPU)} + 4s \text{ (E/S)} = 6s$. Turnaround de $`P_1 = 6s`$.
+  - $`P_2`$ inicia em $t = 6s$ e termina em $t = 12s$. Turnaround de $`P_2 = 12s`$.
   - $\text{Turnaround Médio} = \frac{6 + 12}{2} = 9s$.
   - $\text{Throughput} = \frac{2 \text{ processos}}{12 \text{ segundos}} = 0,166 \text{ proc/s}$.
 
 - No modelo **Multiprogramável** (com sobreposição de E/S):
-  - Em $t=0$, $P_1$ usa a UCP por 2s.
-  - Em $t=2$, $P_1$ vai para a E/S (levará 4s, até $t=6$). A UCP é imediatamente alocada para $P_2$, que consome seus 2s de UCP (até $t=4$).
-  - Em $t=4$, $P_2$ entra em E/S. Ambos realizam E/S concorrentemente.
-  - $P_1$ termina em $t=6$. Turnaround de $P_1 = 6s$.
-  - $P_2$ conclui sua E/S em $t=8$. Turnaround de $P_2 = 8s$.
+  - Em $t=0$, $`P_1`$ usa a UCP por 2s.
+  - Em $t=2$, $`P_1`$ vai para a E/S (levará 4s, até $t=6$). A UCP é imediatamente alocada para $`P_2`$, que consome seus 2s de UCP (até $t=4$).
+  - Em $t=4$, $`P_2`$ entra em E/S. Ambos realizam E/S concorrentemente.
+  - $`P_1`$ termina em $t=6$. Turnaround de $`P_1 = 6s`$.
+  - $`P_2`$ conclui sua E/S em $t=8$. Turnaround de $`P_2 = 8s`$.
   - $\text{Turnaround Médio} = \frac{6 + 8}{2} = 7s$ (Redução de 22% no tempo de resposta).
   - $\text{Throughput} = \frac{2 \text{ processos}}{8 \text{ segundos}} = 0,250 \text{ proc/s}$ (**Aumento de 50% na vazão**).
 
@@ -857,7 +861,9 @@ $$S(N) = \frac{1}{(1 - P) + \frac{P}{N}}$$
 
 Se considerarmos um número hipoteticamente infinito de processadores ($N \to \infty$):
 
-$$\lim_{N \to \infty} S(N) = \frac{1}{1 - P}$$
+```math
+\lim_{N \to \infty} S(N) = \frac{1}{1 - P}
+```
 
 Isso significa que **a fração serial do código impõe um teto rígido e inultrapassável ao ganho de desempenho**, independentemente de quantos milhares de núcleos de processamento sejam alocados ao sistema.
 
@@ -876,11 +882,7 @@ flowchart TD
     
     Join --> ParteSerial2["Fração Serial: Consolidação e I/O (1 - P)"]
     ParteSerial2 --> Fim["Fim do Algoritmo"]
-
-    note right of Join
-        A sincronização e as partes seriais
-        impedem o ganho de escala linear (Amdahl).
-    end note
+    Join -.-> JoinNote["A sincronização e as partes seriais impedem o ganho de escala linear (Amdahl)."]
 ```
 
 ### Análise numérica de Speedup segundo Amdahl

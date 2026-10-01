@@ -589,7 +589,9 @@ O Apache Tomcat não é um servidor de aplicações corporativo integral (como W
 #### O Dilema da Transição Java EE para Jakarta EE (Tomcat 9 versus Tomcat 10+)
 A Oracle transferiu o controle formal do Java EE para a Eclipse Foundation. Devido a questões de registro da marca "Java", a especificação foi renomeada para **Jakarta EE**. A partir da versão Jakarta EE 9, todos os pacotes das APIs sofreram uma alteração drástica de nomenclatura:
 
-$$\text{javax.*} \longrightarrow \text{jakarta.*}$$
+```math
+\text{javax.*} \longrightarrow \text{jakarta.*}
+```
 
 - **Apache Tomcat 9.0.x**: Executa sobre a especificação clássica **Java EE 8**, mantendo o namespace tradicional `javax.servlet.*` e `javax.servlet.jsp.*`.
 - **Apache Tomcat 10.0.x / 10.1.x / 11.0.x**: Adotam o novo namespace `jakarta.servlet.*`.
@@ -628,8 +630,8 @@ flowchart LR
         Ctrl <--> Negocio
         Negocio <--> Persist
     end
-    Navegador["Navegador Web"] <-->|Protocolo HTTP (Porta 8080)| Monolito
-    Persist <-->|Conexao Socket TCP (Porta 5432)| PostgreSQL[(SGBD PostgreSQL)]
+    Navegador["Navegador Web"] <-->|"Protocolo HTTP (Porta 8080)"| Monolito
+    Persist <-->|"Conexao Socket TCP (Porta 5432)"| PostgreSQL[(SGBD PostgreSQL)]
 ```
 
 #### Comparativo de Decisão de Engenharia de Software
@@ -660,10 +662,10 @@ flowchart TD
     Filtro -->|"2. Repassa cadeia (chain.doFilter)"| Servlet
     Servlet -->|"3. Aciona operacoes"| DAO
     DAO <-->|"4. Executa SQL via JDBC"| BD
-    DAO -->>|"5. Retorna Entidades / Colecoes"| Servlet
+    DAO -.->|"5. Retorna Entidades / Colecoes"| Servlet
     Servlet -->|"6. Injeta dados no escopo (request.setAttribute)"| JSP
     Servlet -->|"7. Despacho interno (forward)"| JSP
-    JSP -->>|"8. Resposta HTTP (HTML renderizado)"| Cliente
+    JSP -.->|"8. Resposta HTTP (HTML renderizado)"| Cliente
 ```
 
 #### Estrutura Canônica de Pacotes em `Source Packages`
@@ -753,17 +755,29 @@ Para padronizar a identidade visual e o fechamento do DOM, o projeto subdivide a
 #### Algoritmo do Módulo 11 para Validação de CPF e CNPJ
 No Brasil, o Ministério da Fazenda (Receita Federal) estabelece o cálculo dos dígitos verificadores (DV) de documentos por meio de somatórios ponderados com base no Módulo 11.
 
-A validação de um CPF de 11 dígitos ($d_1 d_2 \dots d_9 - d_{10} d_{11}$) obedece a:
+A validação de um CPF de 11 dígitos ($`d_1 d_2 \dots d_9 - d_{10} d_{11}`$) obedece a:
 
-1. Cálculo do primeiro dígito verificador ($d_{10}$):
-   $$S_1 = \sum_{i=1}^{9} d_i \times (11 - i)$$
-   $$R_1 = S_1 \pmod{11}$$
-   $$d_{10} = \begin{cases} 0, & \text{se } (11 - R_1) \ge 10 \\ 11 - R_1, & \text{caso contrário} \end{cases}$$
+1. Cálculo do primeiro dígito verificador ($`d_{10}`$):
+   ```math
+   S_1 = \sum_{i=1}^{9} d_i \times (11 - i)
+   ```
+   ```math
+   R_1 = S_1 \pmod{11}
+   ```
+   ```math
+   d_{10} = \begin{cases} 0, & \text{se } (11 - R_1) \ge 10 \\ 11 - R_1, & \text{caso contrário} \end{cases}
+   ```
 
-2. Cálculo do segundo dígito verificador ($d_{11}$):
-   $$S_2 = \left( \sum_{i=1}^{9} d_i \times (12 - i) \right) + (d_{10} \times 2)$$
-   $$R_2 = S_2 \pmod{11}$$
-   $$d_{11} = \begin{cases} 0, & \text{se } (11 - R_2) \ge 10 \\ 11 - R_2, & \text{caso contrário} \end{cases}$$
+2. Cálculo do segundo dígito verificador ($`d_{11}`$):
+   ```math
+   S_2 = \left( \sum_{i=1}^{9} d_i \times (12 - i) \right) + (d_{10} \times 2)
+   ```
+   ```math
+   R_2 = S_2 \pmod{11}
+   ```
+   ```math
+   d_{11} = \begin{cases} 0, & \text{se } (11 - R_2) \ge 10 \\ 11 - R_2, & \text{caso contrário} \end{cases}
+   ```
 
 O arquivo `app.js` implementa essa rotina no cliente, combinada com máscaras dinâmicas baseadas na quantidade de caracteres digitados no campo unificado de documento.
 

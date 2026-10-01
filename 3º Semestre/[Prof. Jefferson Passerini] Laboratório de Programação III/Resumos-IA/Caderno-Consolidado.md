@@ -107,9 +107,9 @@ flowchart TD
     DAO -->|"5. Solicita Conexão JDBC"| Utils
     Utils <-->|"6. Conexão TCP/IP (Porta 5432)"| Postgres
     DAO -->|"7. Executa SQL / Mapeia ResultSet"| Model
-    DAO -->>|"8. Retorna Dados / Confirmação"| Controller
+    DAO -.->|"8. Retorna Dados / Confirmação"| Controller
     Controller -->|"9. request.setAttribute() + forward"| View
-    View -->>|"10. HTML Compilado"| Browser
+    View -.->|"10. HTML Compilado"| Browser
 ```
 
 ---
@@ -1467,15 +1467,27 @@ A ordem de importação no `header.jsp` é mandatória para evitar falhas de dep
 A validação de CPF e CNPJ segue o algoritmo oficial de **Módulo 11** da Receita Federal do Brasil, implementado tanto no cliente (`app.js`) quanto no servidor (`DocumentoValidador.java`).
 
 #### Cálculo do CPF (11 Dígitos)
-Para um CPF composto por $d_1 d_2 \dots d_9 - d_{10} d_{11}$:
-1. **Primeiro Dígito Verificador ($d_{10}$):**
-   $$S_1 = \sum_{i=1}^{9} d_i \times (11 - i)$$
-   $$R_1 = S_1 \pmod{11}$$
-   $$d_{10} = (11 - R_1) \ge 10 \;?\; 0 : (11 - R_1)$$
-2. **Segundo Dígito Verificador ($d_{11}$):**
-   $$S_2 = \sum_{i=1}^{10} d_i \times (12 - i)$$
-   $$R_2 = S_2 \pmod{11}$$
-   $$d_{11} = (12 - R_2) \ge 10 \;?\; 0 : (12 - R_2)$$
+Para um CPF composto por $`d_1 d_2 \dots d_9 - d_{10} d_{11}`$:
+1. **Primeiro Dígito Verificador ($`d_{10}`$):**
+   ```math
+   S_1 = \sum_{i=1}^{9} d_i \times (11 - i)
+   ```
+   ```math
+   R_1 = S_1 \pmod{11}
+   ```
+   ```math
+   d_{10} = (11 - R_1) \ge 10 \;?\; 0 : (11 - R_1)
+   ```
+2. **Segundo Dígito Verificador ($`d_{11}`$):**
+   ```math
+   S_2 = \sum_{i=1}^{10} d_i \times (12 - i)
+   ```
+   ```math
+   R_2 = S_2 \pmod{11}
+   ```
+   ```math
+   d_{11} = (12 - R_2) \ge 10 \;?\; 0 : (12 - R_2)
+   ```
 
 #### Código Servidor: DocumentoValidador.java
 ```java

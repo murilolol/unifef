@@ -513,7 +513,9 @@ Considere o requisito: *"Clientes que moram em SP ou RJ e têm idade maior que 3
   WHERE estado = 'SP' OR estado = 'RJ' AND idade > 30
   ```
   Devido à precedência do `AND`, o motor avalia a expressão como:
-  $$\text{estado} = \text{'SP'} \lor (\text{estado} = \text{'RJ'} \land \text{idade} > 30)$$
+  ```math
+  \text{estado} = \text{'SP'} \lor (\text{estado} = \text{'RJ'} \land \text{idade} > 30)
+  ```
   Isso retorna qualquer cliente de SP (mesmo com 18 anos) e apenas clientes do RJ que tenham mais de 30 anos.
 - **Construção Correta:**
   ```sql
@@ -538,7 +540,9 @@ SELECT * FROM vendedor WHERE salario_fixo BETWEEN 3000 AND 2000;
 ```
 Por que essa consulta não retorna registros?
 Pela álgebra relacional, ela se traduz em:
-$$\text{salario\_fixo} \ge 3000 \land \text{salario\_fixo} \le 2000$$
+```math
+\text{salario\_fixo} \ge 3000 \land \text{salario\_fixo} \le 2000
+```
 Não existe número real que seja simultaneamente maior ou igual a 3000 e menor ou igual a 2000. O predicado sempre avalia para `FALSE` para qualquer registro, resultando em um conjunto vazio. Portanto, o limite inferior deve **sempre** anteceder o limite superior.
 
 ### 6. Eliminação de Redundância com DISTINCT
@@ -621,7 +625,7 @@ FROM CLIENTE;
 
 #### Exercício 2: Projeção de Nome e Idade de Clientes
 - **Enunciado:** Liste apenas nome e idade dos clientes.
-- **Conceito:** Projeção seletiva ($\pi_{nome, idade}$). Reduz o tráfego de rede e a sobrecarga de memória no cliente.
+- **Conceito:** Projeção seletiva ($`\pi_{nome, idade}`$). Reduz o tráfego de rede e a sobrecarga de memória no cliente.
 - **Código:**
 ```sql
 SELECT nome, idade 

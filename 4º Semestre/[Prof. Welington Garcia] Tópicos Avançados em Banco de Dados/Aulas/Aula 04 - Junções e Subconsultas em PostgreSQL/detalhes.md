@@ -768,7 +768,7 @@ ORDER BY desvio_da_media DESC;
 ## Operador IN e subconsultas de lista de valores
 
 ### Definição e Motivação
-O operador `IN` avalia se um atributo da consulta externa é igual a qualquer elemento pertencente ao conjunto unidimensional retornado pela consulta interna. Trata-se de uma disjunção lógica sucessiva ($x = v_1 \lor x = v_2 \lor \dots \lor x = v_n$).
+O operador `IN` avalia se um atributo da consulta externa é igual a qualquer elemento pertencente ao conjunto unidimensional retornado pela consulta interna. Trata-se de uma disjunção lógica sucessiva ($`x = v_1 \lor x = v_2 \lor \dots \lor x = v_n`$).
 
 ```sql
 SELECT id_cliente, nome, cidade
@@ -791,9 +791,13 @@ $$\text{FALSE} \land \text{UNKNOWN} \implies \text{FALSE}$$
 $$\text{NOT}(\text{UNKNOWN}) \implies \text{UNKNOWN}$$
 
 Quando declaramos a expressão:
-$$x \text{ NOT IN } (v_1, v_2, \dots, v_n)$$
+```math
+x \text{ NOT IN } (v_1, v_2, \dots, v_n)
+```
 O compilador SQL a expande logicamente como:
-$$(x \ne v_1) \land (x \ne v_2) \land \dots \land (x \ne v_n)$$
+```math
+(x \ne v_1) \land (x \ne v_2) \land \dots \land (x \ne v_n)
+```
 
 Caso **um único elemento** retornado pela subconsulta seja `NULL`, a expressão conterá o termo $(x \ne \text{NULL})$, cuja avaliação é **UNKNOWN**. Como a cláusula `WHERE` exige obrigatoriamente um resultado estritamente **TRUE** para admitir a tupla na saída, a presença de uma única linha nula na subconsulta fará a consulta externa retornar um resultado **vazio**, mascarando registros legítimos.
 
@@ -1702,7 +1706,7 @@ mindmap
 | :--- | :--- |
 | **PK (Primary Key)** | Chave primária. Identificador único e imutável de uma tupla que rejeita valores nulos. |
 | **FK (Foreign Key)** | Chave estrangeira. Atributo que estabelece a integridade referencial com a PK de outra tabela. |
-| **Theta-Join** | Junção relacional condicionada por um operador de comparação genérico ($=, <, >, \ne$). |
+| **Theta-Join** | Junção relacional condicionada por um operador de comparação genérico ($`=, <, >, \ne`$). |
 | **Equi-Join** | Subtipo de junção onde o operador de acoplamento relacional é exclusivamente o sinal de igualdade ($=$). |
 | **Semi-Join** | Operação relacional que retorna apenas as tuplas da primeira tabela que encontram correspondente na segunda, sem duplicar linhas. |
 | **Anti-Join** | Operação que retorna tuplas da primeira tabela que não possuem correspondência na segunda. |

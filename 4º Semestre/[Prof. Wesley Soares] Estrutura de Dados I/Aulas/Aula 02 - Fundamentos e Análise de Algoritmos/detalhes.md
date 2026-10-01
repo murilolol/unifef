@@ -314,7 +314,7 @@ Considere o problema clássico de localizar se determinado valor inteiro existe 
   - Para $n = 1.000.000$: realiza até 1.000.000 comparações.
 - **Algoritmo B (Pesquisa Binária):** Compara o valor buscado com o elemento central da lista ordenada. Se for menor, descarta toda a metade superior; se for maior, descarta toda a metade inferior. Repete o processo com a metade restante.
   - Para $n = 10$: realiza no máximo 4 comparações.
-  - Para $n = 1.000.000$: realiza no máximo $\lceil \log_2(1.000.000) \rceil \approx 20$ comparações.
+  - Para $n = 1.000.000$: realiza no máximo $`\lceil \log_2(1.000.000) \rceil \approx 20`$ comparações.
 
 A diferença entre 20 comparações e 1.000.000 de comparações é a diferença entre uma resposta instantânea em frações de microssegundo e um travamento perceptível em lote.
 
@@ -464,8 +464,8 @@ A análise assintótica é o estudo do comportamento de uma função $T(n)$ quan
 Como questionado no slide 25: *"Precisamos realmente nos preocupar com o número 2 em $T(n) = 2n$?"*
 
 A resposta da engenharia é: **não para fins de classificação assintótica**. Quando comparamos um algoritmo que realiza $2n$ passos com um que realiza $n^2$ passos, para $n = 1.000.000$, temos:
-- $T_1(1.000.000) = 2.000.000$ operações.
-- $T_2(1.000.000) = 1.000.000.000.000$ (um trilhão) de operações.
+- $`T_1(1.000.000) = 2.000.000`$ operações.
+- $`T_2(1.000.000) = 1.000.000.000.000`$ (um trilhão) de operações.
 
 O multiplicador constante $2$ perde qualquer significância diante da diferença astronômica das ordens de crescimento estruturais.
 
@@ -509,10 +509,12 @@ A Notação Big O (representada por $O$) formaliza o conceito de **limite superi
 
 Dizemos matematicamente que uma função de custo $T(n)$ pertence à ordem $O(g(n))$, denotado por:
 $$T(n) \in O(g(n)) \quad \text{ou informalmente} \quad T(n) = O(g(n))$$
-se, e somente se, existirem duas constantes positivas estritas $c > 0$ e $n_0 \ge 1$ tais que:
-$$0 \le T(n) \le c \cdot g(n), \quad \forall n \ge n_0$$
+se, e somente se, existirem duas constantes positivas estritas $`c > 0`$ e $`n_0 \ge 1`$ tais que:
+```math
+0 \le T(n) \le c \cdot g(n), \quad \forall n \ge n_0
+```
 
-Em termos conceituais: para entradas suficientemente grandes ($n \ge n_0$), o custo real do algoritmo $T(n)$ nunca ultrapassa a função $g(n)$ multiplicada por uma constante fixa $c$. O Big O estabelece uma garantia de que o algoritmo **não terá desempenho pior do que essa curva**.
+Em termos conceituais: para entradas suficientemente grandes ($`n \ge n_0`$), o custo real do algoritmo $T(n)$ nunca ultrapassa a função $g(n)$ multiplicada por uma constante fixa $c$. O Big O estabelece uma garantia de que o algoritmo **não terá desempenho pior do que essa curva**.
 
 ```mermaid
 flowchart TD
@@ -530,7 +532,7 @@ flowchart TD
 ### Compreendendo a Notação Big Omega ($\Omega$)
 Conforme estabelecido nos objetivos da aula (*"Compreender a ideia da notação $\Omega$"*):
 - Enquanto a Notação $O$ estabelece uma **cota superior** (o algoritmo não gasta mais do que isso), a **Notação $\Omega$ (Big Omega)** estabelece uma **cota inferior** (o algoritmo gasta no mínimo isso).
-- Formalmente: $T(n) \in \Omega(g(n))$ se existirem constantes $c > 0$ e $n_0$ tais que $T(n) \ge c \cdot g(n)$ para todo $n \ge n_0$.
+- Formalmente: $T(n) \in \Omega(g(n))$ se existirem constantes $`c > 0`$ e $`n_0`$ tais que $T(n) \ge c \cdot g(n)$ para todo $`n \ge n_0`$.
 - Uma analogia direta: o Big O é como o teto de um orçamento (você garante que não gastará mais do que X); o Big Omega é o piso de custo (você garante que terá que gastar ao menos Y).
 
 ### Exemplos do material didático
@@ -547,7 +549,7 @@ Todas essas funções pertencem à mesma classe de complexidade assintótica $O(
 | :--- | :--- | :--- | :--- |
 | **$O$** | Big O | Cota Superior (*Worst-case limit*) | $T(n) \le c \cdot g(n)$ |
 | **$\Omega$** | Big Omega | Cota Inferior (*Best-case limit*) | $T(n) \ge c \cdot g(n)$ |
-| **$\Theta$** | Big Theta | Cota Justa / Exata (*Tight bound*) | $c_1 \cdot g(n) \le T(n) \le c_2 \cdot g(n)$ |
+| **$\Theta$** | Big Theta | Cota Justa / Exata (*Tight bound*) | $`c_1 \cdot g(n) \le T(n) \le c_2 \cdot g(n)`$ |
 
 *(Nota: O material da aula enfatiza formalmente o Big O e a intuição do $\Omega$, servindo a tabela acima para consolidar a taxonomia completa da literatura técnica).*
 
@@ -612,7 +614,9 @@ As classes de complexidade agrupam funções matemáticas que compartilham a mes
 
 ### Hierarquia de eficiência
 Da mais eficiente (crescimento mais lento) para a menos eficiente (crescimento explosivo):
-$$O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)$$
+```math
+O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
+```
 
 ```mermaid
 flowchart TD
@@ -629,7 +633,7 @@ flowchart TD
 
 #### 1. $O(1)$: Complexidade Constante
 - **Conceito:** O número de operações necessárias é fixo e independente do tamanho da entrada $n$. Quer o vetor possua 5 elementos ou 500 milhões de elementos, a execução realiza exatamente a mesma quantidade de passos primitivos.
-- **Exemplo clássico dos slides:** `x = vetor[5]`. O acesso a uma posição de um vetor sequencial é resolvido em uma única operação de cálculo de endereço: $\text{Endereço} = \text{Base} + (\text{Índice} \times \text{Tamanho\_Elemento})$.
+- **Exemplo clássico dos slides:** `x = vetor[5]`. O acesso a uma posição de um vetor sequencial é resolvido em uma única operação de cálculo de endereço: $`\text{Endereço} = \text{Base} + (\text{Índice} \times \text{Tamanho\_Elemento})`$.
 - **Outros exemplos:** Consulta simples a variáveis, inserção/remoção no topo de uma pilha implementada com ponteiro direto.
 
 #### 2. $O(\log n)$: Complexidade Logarítmica
@@ -671,13 +675,13 @@ flowchart TD
   A complexidade continua sendo estritamente quadrática!
 
 #### 6. Classes Superpolinomiais: $O(2^n)$ e $O(n!)$
-- **Conceito:** Crescimento explosivo. Tornam-se computacionalmente intratáveis mesmo para valores pequenos de $n$ ($n > 50$).
+- **Conceito:** Crescimento explosivo. Tornam-se computacionalmente intratáveis mesmo para valores pequenos de $n$ ($`n > 50`$).
 - **Exemplos:** Algoritmos de força bruta que testam todas as combinações possíveis (Problema da Mochila booleana sem programação dinâmica $\implies O(2^n)$) ou que testam todas as permutações possíveis de cidades (Problema do Caixeiro Viajante ingênuo $\implies O(n!)$).
 
 ### Tabela comparativa de crescimento (Dados do Slide 38)
 O quadro a seguir reproduz a demonstração dos slides, ilustrando a divergência de operações conforme $n$ cresce:
 
-| $n$ | $O(1)$ | $O(\log_2 n)$ | $O(n)$ | $O(n^2)$ |
+| $n$ | $O(1)$ | $`O(\log_2 n)`$ | $O(n)$ | $O(n^2)$ |
 | :---: | :---: | :---: | :---: | :---: |
 | **10** | 1 | ~3 | 10 | 100 |
 | **100** | 1 | ~7 | 100 | 10.000 |
@@ -877,7 +881,9 @@ x = vetor[10]
 - A estrutura de dados subjacente é um vetor contíguo em memória.
 - Para encontrar o elemento no índice 10, o processador não precisa percorrer os índices $0, 1, 2, \dots, 9$.
 - A arquitetura da CPU aplica diretamente a fórmula de endereçamento:
-  $$\text{Endereço} = \text{Endereço\_Base} + (10 \times \text{Tamanho\_do\_Tipo})$$
+  ```math
+  \text{Endereço} = \text{Endereço\_Base} + (10 \times \text{Tamanho\_do\_Tipo})
+  ```
 - Essa expressão realiza uma multiplicação e uma adição de inteiros, que são instruções elementares de tempo fixo no processador.
 - Como o tempo gasto é totalmente independente do número total de elementos contidos no vetor, o custo é constante.
 
@@ -900,7 +906,7 @@ fim
 - Em cada iteração, o bloco interno executa a chamada primitiva `escreva(i)`, cujo custo é unitário (1 operação).
 - O número total de iterações executadas é rigorosamente igual a $n$.
 - A função exata de tempo é $T(n) = n$.
-- Pela definição de Big O, para $c = 1$ e $n_0 = 1$, temos $T(n) \le 1 \cdot n$.
+- Pela definição de Big O, para $c = 1$ e $`n_0 = 1`$, temos $T(n) \le 1 \cdot n$.
 
 **Classificação Assintótica:**
 $$O(n) \quad \text{(Complexidade Linear)}$$
@@ -1086,7 +1092,7 @@ flowchart TD
 - [ ] Sei aplicar a regra do descarte de termos de menor ordem e de constantes multiplicativas.
 - [ ] Sei enunciar formalmente a definição da Notação Big O ($O$) e intuitivamente da Notação Big Omega ($\Omega$).
 - [ ] Compreendo como identificar o melhor caso, o pior caso e o caso médio de um algoritmo de busca.
-- [ ] Sei de memória a hierarquia das classes de complexidade: $O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(2^n) < O(n!)$.
+- [ ] Sei de memória a hierarquia das classes de complexidade: $`O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(2^n) < O(n!)`$.
 - [ ] Sei deduzir por que a busca binária é $O(\log n)$ e a busca sequencial é $O(n)$ no pior caso.
 - [ ] Sei deduzir por que um laço aninhado que roda $\frac{n^2}{2}$ vezes continua sendo categorizado como $O(n^2)$.
 

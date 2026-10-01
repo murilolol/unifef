@@ -583,7 +583,9 @@ WHERE unidade = 'M';
 ### Definição Formal e Semântica do Intervalo
 O operador `BETWEEN` simplifica a verificação de valores pertencentes a um intervalo delimitado. Ele é semanticamente equivalente a uma conjunção relacional inclusiva:
 
-$$\text{expressão} \ge \text{limite\_inferior} \quad \text{AND} \quad \text{expressão} \le \text{limite\_superior}$$
+```math
+\text{expressão} \ge \text{limite\_inferior} \quad \text{AND} \quad \text{expressão} \le \text{limite\_superior}
+```
 
 O intervalo avaliado pelo `BETWEEN` é rigorosamente **fechado em ambos os extremos**, ou seja, os valores de fronteira fazem parte do conjunto de resultados.
 
@@ -887,7 +889,7 @@ WHERE pnome ILIKE '%a%';
 **Origem:** Slide 19 da Aula 04  
 **Enunciado:** Simule um aumento de 25% nos produtos cadastrados, projetando a descrição, a unidade, o valor unitário atual e o valor com aumento com um pseudônimo legível.  
 **Raciocínio Algorítmico/Relacional:**
-Um acréscimo percentual de $25\%$ equivale a multiplicar a grandeza por $1 + \frac{25}{100} = 1.25$. A expressão aritmética deve ser calculada no `SELECT` sem alterar os dados gravados no disco, acompanhada do alias formal `AS "Preço com Aumento"`.
+Um acréscimo percentual de $`25\%`$ equivale a multiplicar a grandeza por $1 + \frac{25}{100} = 1.25$. A expressão aritmética deve ser calculada no `SELECT` sem alterar os dados gravados no disco, acompanhada do alias formal `AS "Preço com Aumento"`.
 
 **Resolução Comentada:**
 ```sql
@@ -906,7 +908,7 @@ FROM produto;
 **Origem:** Slide 19 da Aula 04  
 **Enunciado:** Simule um desconto de 12% nos produtos cuja unidade de medida seja `'M'`, exibindo a descrição, a unidade, o valor unitário original e o valor calculado com desconto.  
 **Raciocínio Algorítmico/Relacional:**
-O cálculo de redução direta de $12\%$ pode ser estruturado matematicamente de duas formas equivalentes: $V - (V \times 0.12)$ ou diretamente $V \times 0.88$. A cláusula `WHERE` deve restringir o cálculo exclusivamente aos registros onde `unidade = 'M'`.
+O cálculo de redução direta de $`12\%`$ pode ser estruturado matematicamente de duas formas equivalentes: $V - (V \times 0.12)$ ou diretamente $V \times 0.88$. A cláusula `WHERE` deve restringir o cálculo exclusivamente aos registros onde `unidade = 'M'`.
 
 **Resolução Comentada:**
 ```sql

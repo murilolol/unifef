@@ -152,8 +152,8 @@ Ignorar a sobretaxa (*overhead*) do ciclo VM-Exit. Um único VM-Exit pode consum
 ```mermaid
 flowchart LR
     subgraph ConversaoMemoria["Tradução de Endereços em Duas Camadas (EPT/NPT)"]
-        GVA["GVA: Endereço Virtual da Aplicação Convidada"] -->|Tabela de Páginas do Convidado (CR3 do Guest)| GPA["GPA: Endereço 'Físico' da Máquina Virtual"]
-        GPA -->|Tabelas EPT/NPT em Hardware (EPTP)| HPA["HPA: Endereço Físico Real nos Módulos de RAM"]
+        GVA["GVA: Endereço Virtual da Aplicação Convidada"] -->|"Tabela de Páginas do Convidado (CR3 do Guest)"| GPA["GPA: Endereço 'Físico' da Máquina Virtual"]
+        GPA -->|"Tabelas EPT/NPT em Hardware (EPTP)"| HPA["HPA: Endereço Físico Real nos Módulos de RAM"]
     end
 ```
 
@@ -377,11 +377,15 @@ A consolidação eficiente de servidores baseia-se na constatação empírica de
      - Total de Memória requisitada: $12 \times 8\text{ GB} = \mathbf{96\text{ GB de RAM}}$.
    - **Cálculo da Taxa de Sobrealocação (*Overcommit Ratio*):**
      - **Sobrealocação de vCPU:**
-       $$\text{Razão sobre threads lógicas} = \frac{24\text{ vCPUs}}{16\text{ threads físicas}} = \mathbf{1{,}5:1}\text{ (ou }150\%\text{ de sobrealocação)}$$
+       ```math
+       \text{Razão sobre threads lógicas} = \frac{24\text{ vCPUs}}{16\text{ threads físicas}} = \mathbf{1{,}5:1}\text{ (ou }150\%\text{ de sobrealocação)}
+       ```
        $$\text{Razão sobre núcleos físicos reais} = \frac{24\text{ vCPUs}}{8\text{ núcleos puros}} = \mathbf{3:1}$$
        Em ambientes corporativos com cargas de trabalho médias (servidores web, servidores de arquivos, microsserviços), uma razão de vCPU:pCPU de $1{,}5:1$ a $2:1$ em relação a threads lógicas é plenamente recomendada e estável.
      - **Sobrealocação de Memória RAM:**
-       $$\text{Razão nominal de RAM} = \frac{96\text{ GB}}{64\text{ GB}} = \mathbf{1{,}5:1}\text{ (ou }150\%\text{)}$$
+       ```math
+       \text{Razão nominal de RAM} = \frac{96\text{ GB}}{64\text{ GB}} = \mathbf{1{,}5:1}\text{ (ou }150\%\text{)}
+       ```
        *Reserva Mandatória do Hipervisor:* Para garantir estabilidade, o sistema operacional hospedeiro / hipervisor Tipo 1 necessita de aproximadamente 4 GB de memória RAM dedicada para estruturas de controle da VMCS, tabelas de páginas EPT de todas as VMs, buffers de rede e pilha de gerenciamento.
        Portanto, a RAM disponível real para as VMs é de $64\text{ GB} - 4\text{ GB} = 60\text{ GB}$.
        $$\text{Razão efetiva de RAM} = \frac{96\text{ GB}}{60\text{ GB}} = \mathbf{1{,}6:1}$$

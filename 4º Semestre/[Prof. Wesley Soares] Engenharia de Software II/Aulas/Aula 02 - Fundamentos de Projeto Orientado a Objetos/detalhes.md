@@ -999,8 +999,8 @@ public class ContaBancaria {
 Construa uma hierarquia de classes em Java para modelar funcionários e suas regras corporativas de gratificação:
 1. Crie uma classe abstrata `Funcionario` contendo os atributos protegidos `nome`, `matricula` e `salarioBase`.
 2. A classe abstrata deve declarar o método abstrato `public abstract double calcularBonus()`.
-3. Implemente a subclasse `Gerente`, cujo cálculo de bônus é equivalente a $20\%$ do seu salário base somado a um adicional de participação nos lucros (`double pl`).
-4. Implemente a subclasse `Desenvolvedor`, cujo cálculo de bônus é equivalente a $10\%$ do seu salário base acrescido de R$ 50,00 por hora extra realizada no mês.
+3. Implemente a subclasse `Gerente`, cujo cálculo de bônus é equivalente a $`20\%`$ do seu salário base somado a um adicional de participação nos lucros (`double pl`).
+4. Implemente a subclasse `Desenvolvedor`, cujo cálculo de bônus é equivalente a $`10\%`$ do seu salário base acrescido de R$ 50,00 por hora extra realizada no mês.
 5. Crie uma classe cliente que receba uma lista genérica `List<Funcionario>` e imprima o nome e o bônus calculado de cada colaborador, comprovando a execução polimórfica.
 
 #### Raciocínio

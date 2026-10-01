@@ -224,7 +224,7 @@ INSERT INTO Pedidos VALUES (110, 9, '2026-05-12', 350.00);
 
 ### Fundamentação Teórica e Mecanismo Relacional
 
-A operação de junção interna (`INNER JOIN`) fundamenta-se na álgebra relacional como a composição de um produto cartesiano ($R \times S$) seguido pela aplicação de um operador de seleção baseado em um predicado de igualdade ($\sigma_{R.id = S.id}$), formalmente denominado $\theta$-junção ou equi-junção.
+A operação de junção interna (`INNER JOIN`) fundamenta-se na álgebra relacional como a composição de um produto cartesiano ($R \times S$) seguido pela aplicação de um operador de seleção baseado em um predicado de igualdade ($`\sigma_{R.id = S.id}`$), formalmente denominado $\theta$-junção ou equi-junção.
 
 Em termos práticos de computação de dados:
 - O SGBDR analisa os dois conjuntos de dados (`Clientes` e `Pedidos`).

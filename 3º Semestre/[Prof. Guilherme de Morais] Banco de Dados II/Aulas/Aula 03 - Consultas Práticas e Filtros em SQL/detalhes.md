@@ -262,7 +262,7 @@ sequenceDiagram
 ## Projeção e Consultas Básicas (SELECT, SELECT com colunas específicas)
 
 ### Definição
-A projeção é a operação da álgebra relacional denotada por $\pi_{A_1, A_2, \dots, A_n}(R)$, que extrai um subconjunto vertical de colunas de uma relação $R$, descartando as colunas não solicitadas. No SQL, a projeção é materializada na cláusula `SELECT`. O caractere curinga asterisco (`*`) solicita a projeção de todas as colunas declaradas no dicionário de dados da relação.
+A projeção é a operação da álgebra relacional denotada por $`\pi_{A_1, A_2, \dots, A_n}(R)`$, que extrai um subconjunto vertical de colunas de uma relação $R$, descartando as colunas não solicitadas. No SQL, a projeção é materializada na cláusula `SELECT`. O caractere curinga asterisco (`*`) solicita a projeção de todas as colunas declaradas no dicionário de dados da relação.
 
 ### Motivação
 Em sistemas em produção, projetar apenas as colunas necessárias reduz o consumo de memória RAM do servidor, minimiza o tráfego de rede (I/O de rede) e viabiliza a utilização de índices cobertos (*covering indexes*), otimizando drasticamente o desempenho de sistemas corporativos.
@@ -282,8 +282,8 @@ O uso sistemático de `SELECT *` em sistemas de produção (código de backend e
 ### Tabela Comparativa de Abordagens de Projeção
 | Sintaxe | Operação Algébrica | Volume de Tráfego | Resiliência a Mudanças de Schema |
 | :--- | :--- | :--- | :--- |
-| `SELECT * FROM R;` | Projeção total ($\pi_{\text{todas}}$) | Alto (retorna todos os bytes de cada tupla) | Baixa (quebra mapeamentos ORM estritos) |
-| `SELECT C1, C2 FROM R;` | Projeção seletiva ($\pi_{C1, C2}$) | Mínimo (apenas os bytes das colunas) | Alta (isolada contra adição de novas colunas) |
+| `SELECT * FROM R;` | Projeção total ($`\pi_{\text{todas}}`$) | Alto (retorna todos os bytes de cada tupla) | Baixa (quebra mapeamentos ORM estritos) |
+| `SELECT C1, C2 FROM R;` | Projeção seletiva ($`\pi_{C1, C2}`$) | Mínimo (apenas os bytes das colunas) | Alta (isolada contra adição de novas colunas) |
 
 ```mermaid
 flowchart LR
@@ -307,7 +307,7 @@ Por definição relacional fundamentada na Teoria dos Conjuntos de Codd, uma rel
 A cláusula `ORDER BY` aceita:
 - `ASC` (Ascendente): Ordena do menor para o maior (padrão implícito). Ordem alfabética (A-Z) para strings, cronológica para datas e crescente para números.
 - `DESC` (Descendente): Ordena do maior para o menor (Z-A, cronologia inversa, decrescente).
-- Ordenação composta: Múltiplas colunas separadas por vírgula (`ORDER BY C1 ASC, C2 DESC`), onde $C_2$ atua exclusivamente como critério de desempate quando houver valores idênticos em $C_1$.
+- Ordenação composta: Múltiplas colunas separadas por vírgula (`ORDER BY C1 ASC, C2 DESC`), onde $`C_2`$ atua exclusivamente como critério de desempate quando houver valores idênticos em $`C_1`$.
 
 ### Motivação
 Apresentar informações de forma legível para relatórios, interfaces de usuário e agrupamentos lógicos (por exemplo, agrupar todos os clientes por estado e, dentro de cada estado, listá-los do mais velho ao mais novo).
@@ -355,7 +355,7 @@ flowchart TD
 ## Filtros Condicionais Simples (WHERE)
 
 ### Definição
-O filtro condicional é a materialização direta da operação de Seleção ($\sigma_p(R)$) da Álgebra Relacional. A cláusula `WHERE` introduz um predicado booleano $p$. Para cada tupla avaliada, o predicado resulta em `TRUE`, `FALSE` ou `UNKNOWN` (lógica trivalente decorrente de valores `NULL`). Apenas as tuplas cujo predicado é avaliado como estritamente `TRUE` compõem o conjunto retornado.
+O filtro condicional é a materialização direta da operação de Seleção ($`\sigma_p(R)`$) da Álgebra Relacional. A cláusula `WHERE` introduz um predicado booleano $p$. Para cada tupla avaliada, o predicado resulta em `TRUE`, `FALSE` ou `UNKNOWN` (lógica trivalente decorrente de valores `NULL`). Apenas as tuplas cujo predicado é avaliado como estritamente `TRUE` compõem o conjunto retornado.
 
 ### Motivação
 Bancos corporativos operam com milhões de registros. Consultar e processar a totalidade de uma tabela quando o usuário ou relatório necessita de registros de uma região ou categoria específica sobrecarrega o hardware e invalida a utilidade do sistema.
@@ -482,7 +482,7 @@ flowchart TD
 ## Operadores Lógicos e Conjunção (AND)
 
 ### Definição
-O operador lógico `AND` representa a operação booliana de conjunção binária ($\land$). Em uma expressão `P1 AND P2`, o predicado composto somente é avaliado como `TRUE` se, e somente se, ambos os operandos $P_1$ e $P_2$ forem individualmente avaliados como `TRUE`.
+O operador lógico `AND` representa a operação booliana de conjunção binária ($\land$). Em uma expressão `P1 AND P2`, o predicado composto somente é avaliado como `TRUE` se, e somente se, ambos os operandos $`P_1`$ e $`P_2`$ forem individualmente avaliados como `TRUE`.
 
 ### Motivação
 Filtrar registros que atendam cumulativamente a múltiplos requisitos de negócio concorrentes (por exemplo: localizar um produto que esteja dentro de uma janela orçamentária simultânea de piso e teto, ou filtrar alunos por localidade geográfica E idade mínima).
@@ -502,7 +502,7 @@ WHERE Cidade = 'Campinas' AND Data_Nasc > '1990-12-31';
 Comparação de tipos e coerção implícita: ao filtrar `Data_Nasc > 1990`, se o ano for fornecido como número inteiro puro (`1990`), o motor SQL pode interpretar a operação como uma subtração aritmética ou tentar converter a coluna `DATE` para inteiro, invalidando o uso de índices (conhecido como perda de *sargability*). A data deve ser expressa como string literal no formato `'AAAA-MM-DD'`.
 
 ### Tabela Verdade do Operador AND
-| Operando $P_1$ | Operando $P_2$ | Resultado $P_1 \text{ AND } P_2$ |
+| Operando $`P_1`$ | Operando $`P_2`$ | Resultado $`P_1 \text{ AND } P_2`$ |
 | :--- | :--- | :--- |
 | `TRUE` | `TRUE` | **`TRUE`** (Tupla Selecionada) |
 | `TRUE` | `FALSE` | `FALSE` (Tupla Descartada) |
@@ -523,7 +523,7 @@ flowchart TD
 ## Operadores Lógicos e Disjunção (OR)
 
 ### Definição
-O operador lógico `OR` representa a disjunção binária ($\lor$). Em uma expressão condicional `P1 OR P2`, o resultado lógico será `TRUE` caso ao menos um dos predicados ($P_1$ ou $P_2$) seja avaliado como verdadeiro. A condição só resulta em `FALSE` se ambos os operandos forem simultaneamente falsos.
+O operador lógico `OR` representa a disjunção binária ($\lor$). Em uma expressão condicional `P1 OR P2`, o resultado lógico será `TRUE` caso ao menos um dos predicados ($`P_1`$ ou $`P_2`$) seja avaliado como verdadeiro. A condição só resulta em `FALSE` se ambos os operandos forem simultaneamente falsos.
 
 ### Motivação
 Recuperar conjuntos de dados heterogêneos onde múltiplos critérios aceitáveis são admitidos para a mesma análise de dados (exemplo: localizar vendedores que pertencem a categorias salariais específicas de R$ 2.500,00 ou R$ 3.000,00).
@@ -548,7 +548,7 @@ SELECT * FROM VENDEDOR WHERE Salario_Fixo = 2500 OR 3000;
 Em SQL, o operador `OR` conecta **dois predicados completos**. O operando à direita do `OR` deve ser uma comparação relacional integral (`Salario_Fixo = 3000`).
 
 ### Tabela Verdade do Operador OR
-| Operando $P_1$ | Operando $P_2$ | Resultado $P_1 \text{ OR } P_2$ |
+| Operando $`P_1`$ | Operando $`P_2`$ | Resultado $`P_1 \text{ OR } P_2`$ |
 | :--- | :--- | :--- |
 | `TRUE` | `TRUE` | **`TRUE`** (Tupla Selecionada) |
 | `TRUE` | `FALSE` | **`TRUE`** (Tupla Selecionada) |
@@ -658,8 +658,8 @@ Para tornar as colunas calculadas legíveis e semanticamente identificáveis em 
 Realizar projeções de simulação orçamentária, cálculos de reajustes inflacionários, comissões de vendas, bonificações salariais e margens de desconto diretamente no servidor de banco de dados, poupando processamento na camada de aplicação.
 
 ### Fórmulas Matemáticas de Reajuste
-- **Aumento de $X\%$:** Multiplica-se o valor original por $(1 + \frac{X}{100})$. Logo, aumento de 10% corresponde a $\text{Valor} \times 1.10$. Aumento de 25% corresponde a $\text{Valor} \times 1.25$.
-- **Desconto de $Y\%$:** Multiplica-se o valor original por $(1 - \frac{Y}{100})$. Logo, desconto de 12% corresponde a $\text{Valor} \times (1 - 0.12) = \text{Valor} \times 0.88$.
+- **Aumento de $`X\%`$:** Multiplica-se o valor original por $(1 + \frac{X}{100})$. Logo, aumento de 10% corresponde a $\text{Valor} \times 1.10$. Aumento de 25% corresponde a $\text{Valor} \times 1.25$.
+- **Desconto de $`Y\%`$:** Multiplica-se o valor original por $(1 - \frac{Y}{100})$. Logo, desconto de 12% corresponde a $\text{Valor} \times (1 - 0.12) = \text{Valor} \times 0.88$.
 
 ### Exemplo do Material
 ```sql
@@ -856,7 +856,7 @@ FROM CLIENTES;
 
 ### Exercício 2 - Projeção de Nome e Estado dos Clientes
 - **Enunciado:** Liste apenas `NomeCliente` e `Estado`.
-- **Raciocínio:** Aplica-se a operação de projeção formal $\pi_{\text{NomeCliente}, \text{Estado}}(\text{CLIENTES})$, restringindo verticalmente a recuperação dos dados e otimizando a largura da tupla resultante.
+- **Raciocínio:** Aplica-se a operação de projeção formal $`\pi_{\text{NomeCliente}, \text{Estado}}(\text{CLIENTES})`$, restringindo verticalmente a recuperação dos dados e otimizando a largura da tupla resultante.
 - **Resolução Comentada:**
 ```sql
 -- Exercicio 2: Projecao vertical seletiva de duas colunas
@@ -897,7 +897,7 @@ ORDER BY Estado ASC, Idade ASC;
 
 ### Exercício 5 - Filtro de Clientes por Estado
 - **Enunciado:** Liste clientes do estado `'SP'`.
-- **Raciocínio:** Operação de seleção $\sigma_{\text{Estado} = \text{'SP'}}(\text{CLIENTES})$. O predicado de igualdade relacional restringe as linhas retornadas exclusivamente àquelas cujo valor alfanumérico coincida com `'SP'`.
+- **Raciocínio:** Operação de seleção $`\sigma_{\text{Estado} = \text{'SP'}}(\text{CLIENTES})`$. O predicado de igualdade relacional restringe as linhas retornadas exclusivamente àquelas cujo valor alfanumérico coincida com `'SP'`.
 - **Resolução Comentada:**
 ```sql
 -- Exercicio 5: Restricao horizontal condicional por igualdade de string
@@ -911,7 +911,7 @@ WHERE Estado = 'SP';
 
 ### Exercício 6 - Filtro de Clientes com Idade Maior que 25
 - **Enunciado:** Liste clientes com idade maior que 25.
-- **Raciocínio:** Seleção algébrica $\sigma_{\text{Idade} > 25}(\text{CLIENTES})$. O operador relacional estrito `>` exclui o limite numérico 25, retornando apenas idades a partir de 26.
+- **Raciocínio:** Seleção algébrica $`\sigma_{\text{Idade} > 25}(\text{CLIENTES})`$. O operador relacional estrito `>` exclui o limite numérico 25, retornando apenas idades a partir de 26.
 - **Resolução Comentada:**
 ```sql
 -- Exercicio 6: Comparacao relacional estrita maior que 25
@@ -925,7 +925,7 @@ WHERE Idade > 25;
 
 ### Exercício 7 - Filtro de Clientes de SP Ordenados por Nome
 - **Enunciado:** Liste clientes de SP ordenados pelo nome.
-- **Raciocínio:** Composição do operador de seleção horizontal com ordenação final: $\tau_{\text{NomeCliente}}(\sigma_{\text{Estado} = \text{'SP'}}(\text{CLIENTES}))$. O filtro do `WHERE` opera antes da ordenação física do `ORDER BY`.
+- **Raciocínio:** Composição do operador de seleção horizontal com ordenação final: $`\tau_{\text{NomeCliente}}(\sigma_{\text{Estado} = \text{'SP'}}(\text{CLIENTES}))`$. O filtro do `WHERE` opera antes da ordenação física do `ORDER BY`.
 - **Resolução Comentada:**
 ```sql
 -- Exercicio 7: Filtragem geografica conjugada com organizacao alfabetica
@@ -1214,7 +1214,7 @@ flowchart TD
 - Datas no padrão SQL ANSI utilizam o formato internacional rigoroso `'AAAA-MM-DD'`.
 - O operador `AND` possui precedência de execução nativa superior ao operador `OR`. Na presença de condições combinadas, os parênteses devem ser utilizados para forçar o agrupamento correto dos predicados.
 - A ordem lógica de execução do motor SQL processa a cláusula `WHERE` antes da cláusula `SELECT`. Por esse motivo, é proibido referenciar um *alias* de coluna criado no `SELECT` diretamente dentro do `WHERE`.
-- O operador `BETWEEN valor_a AND valor_b` é um intervalo **inclusivo** (equivalente a $\ge \text{valor\_a} \land \le \text{valor\_b}$) e exige que o limite inferior seja posicionado antes do limite superior.
+- O operador `BETWEEN valor_a AND valor_b` é um intervalo **inclusivo** (equivalente a $`\ge \text{valor\_a} \land \le \text{valor\_b}`$) e exige que o limite inferior seja posicionado antes do limite superior.
 - A cláusula `ORDER BY` aceita múltiplos atributos separados por vírgula; o segundo atributo só é processado para registros que empatarem no valor do primeiro atributo.
 - A desduplicação promovida por `SELECT DISTINCT` considera a totalidade das colunas que compõem a linha projetada, e não apenas a primeira coluna declarada.
 

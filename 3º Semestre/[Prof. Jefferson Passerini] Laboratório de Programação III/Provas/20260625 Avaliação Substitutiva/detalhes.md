@@ -1233,7 +1233,7 @@ mindmap
 | **Encapsulamento** | Prática de ocultar variáveis internas de um objeto para assegurar que apenas métodos autorizados alterem seu estado, protegendo suas invariantes. |
 | **Checked Exception** | Exceção verificada em tempo de compilação derivada de `Exception` (exceto `RuntimeException`), exigindo tratamento ou repasse formal via `throws`. |
 | **Unchecked Exception** | Exceção de execução derivada de `RuntimeException`, representando falhas de programação que não exigem sintaxe obrigatória de tratamento. |
-| **Invariante de Classe** | Regra de negócio ou condição que deve permanecer invariavelmente verdadeira durante todo o ciclo de vida do objeto (ex: salário $> 0$). |
+| **Invariante de Classe** | Regra de negócio ou condição que deve permanecer invariavelmente verdadeira durante todo o ciclo de vida do objeto (ex: salário $`> 0`$). |
 | **Coleção Defensiva** | Técnica de clonar uma coleção ou encapsulá-la com `Collections.unmodifiableList` antes de expô-la, impedindo mutação externa indesejada. |
 | **Comparator** | Interface funcional usada para definir regras externas de comparação e ordenação entre dois objetos do mesmo tipo. |
 | **Generics** | Recurso que viabiliza a parametrização de tipos em classes e métodos (ex: `List<Funcionario>`), garantindo segurança de tipos em compilação. |

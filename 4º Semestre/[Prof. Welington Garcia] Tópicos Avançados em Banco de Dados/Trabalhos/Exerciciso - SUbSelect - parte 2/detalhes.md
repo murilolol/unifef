@@ -647,7 +647,7 @@ ORDER BY gastos_clientes.total_gasto DESC;
   - Cliente 2: R$ 650,00
   - Cliente 3: R$ 500,00 + R$ 850,00 + R$ 90,00 = R$ 1.440,00
   - Cliente 4: R$ 6.100,00 + R$ 4.500,00 = R$ 10.600,00
-- Média aritmética dos clientes com compras: $(12600 + 650 + 1440 + 10600) / 4 = 25290 / 4 = \text{R\$} 6.322,50$.
+- Média aritmética dos clientes com compras: $`(12600 + 650 + 1440 + 10600) / 4 = 25290 / 4 = \text{R\$} 6.322,50`$.
 - Clientes qualificados acima de R$ 6.322,50: **Cliente 1** (Tech Solutions) e **Cliente 4** (Boutique Criativa).
 
 ---

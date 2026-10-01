@@ -222,13 +222,17 @@ flowchart TD
 ### Definição e Fundamentação Teórica
 A **Fragmentação Interna** ocorre quando a quantidade de memória alocada a um processo é estritamente maior do que a quantidade de memória efetivamente requerida por ele. O excedente fica compreendido *dentro* da partição alocada ao processo, mas permanece completamente inacessível ao sistema operacional para alocar a qualquer outro programa.
 
-Matematicamente, se uma partição $i$ possui tamanho $S_{part}(i)$ e o processo $j$ alocado nela requer $S_{proc}(j)$, a fragmentação interna $FI$ gerada nessa partição é definida por:
+Matematicamente, se uma partição $i$ possui tamanho $`S_{part}(i)`$ e o processo $j$ alocado nela requer $`S_{proc}(j)`$, a fragmentação interna $FI$ gerada nessa partição é definida por:
 
-$$FI(i) = S_{part}(i) - S_{proc}(j), \quad \text{onde } S_{part}(i) \ge S_{proc}(j)$$
+```math
+FI(i) = S_{part}(i) - S_{proc}(j), \quad \text{onde } S_{part}(i) \ge S_{proc}(j)
+```
 
 A fragmentação interna total do sistema é o somatório das perdas em todas as partições ativas:
 
-$$FI_{total} = \sum_{i=1}^{M} (S_{part}(i) - S_{proc}(j))$$
+```math
+FI_{total} = \sum_{i=1}^{M} (S_{part}(i) - S_{proc}(j))
+```
 
 ### Motivação e Relevância Prática
 A análise de fragmentação interna é indispensável para o dimensionamento de qualquer sistema que empregue alocação em blocos discretos (como particionamento fixo, sistemas de paginação com páginas de 4 KB ou alocadores de blocos em kernel como o *Buddy Allocator*).
@@ -269,7 +273,7 @@ No **Particionamento Dinâmico** (ou partições variáveis), as partições de 
 Inicialmente, toda a memória disponível para o usuário forma um único bloco livre contíguo denominado *buraco* (hole) ou bloco livre. À medida que processos chegam, o sistema operacional fatia o espaço disponível na quantidade exata requerida. Quando um processo encerra, o bloco ocupado é devolvido à lista de blocos livres. Se o bloco recém-liberado for adjacente a outro bloco livre, ambos são imediatamente fundidos (coalescidos) em um único bloco livre contíguo maior.
 
 ### Motivação e Relevância Prática
-A motivação primordial do particionamento dinâmico é a erradicação completa da fragmentação interna primária. Como cada processo recebe exatamente o montante de bytes que requisitou, $S_{part} = S_{proc}$, o que resulta em:
+A motivação primordial do particionamento dinâmico é a erradicação completa da fragmentação interna primária. Como cada processo recebe exatamente o montante de bytes que requisitou, $`S_{part} = S_{proc}`$, o que resulta em:
 $$FI = 0$$
 
 ### Exemplo Prático de Aplicação
@@ -409,11 +413,15 @@ Para cada unidade de alocação física, existe exatamente **1 bit correspondent
 - O bit contém o valor **0** se a unidade correspondente estiver **livre**.
 - O bit contém o valor **1** se a unidade correspondente estiver **ocupada** por um processo.
 
-O tamanho do mapa de bits depende exclusivamente do tamanho total da memória física a ser gerenciada ($M_{total}$) e do tamanho da unidade de alocação elementar ($U_{aloc}$):
+O tamanho do mapa de bits depende exclusivamente do tamanho total da memória física a ser gerenciada ($`M_{total}`$) e do tamanho da unidade de alocação elementar ($`U_{aloc}`$):
 
-$$\text{Número de bits do Mapa} = \frac{M_{total}}{U_{aloc}}$$
+```math
+\text{Número de bits do Mapa} = \frac{M_{total}}{U_{aloc}}
+```
 
-$$\text{Tamanho do Bitmap em Bytes} = \frac{M_{total}}{U_{aloc} \times 8}$$
+```math
+\text{Tamanho do Bitmap em Bytes} = \frac{M_{total}}{U_{aloc} \times 8}
+```
 
 ### Motivação e Relevância Prática
 A principal virtude do mapa de bits é que seu tamanho em memória é rigorosamente fixo, previsível e invariante em relação à quantidade de processos em execução. Além disso, a perda percentual de memória para armazenar o próprio mapa é insignificante se a unidade for dimensionada adequadamente.
@@ -499,7 +507,7 @@ flowchart LR
 
 | Critério | Mapa de Bits (Bitmap) | Listas Encadeadas |
 | :--- | :--- | :--- |
-| **Consumo de Memória de Controle** | Fixo e estático: $\approx M / (U \times 8)$ | Variável: proporcional ao número de segmentos $N \times \text{tam\_nó}$ |
+| **Consumo de Memória de Controle** | Fixo e estático: $\approx M / (U \times 8)$ | Variável: proporcional ao número de segmentos $`N \times \text{tam\_nó}`$ |
 | **Velocidade de Busca de Espaço** | Lenta ($O(N)$ em varredura de bits) | Rápida nos nós livres |
 | **Fusão de Blocos Adjacentes** | Implícita (basta limpar os bits para 0) | Explícita (requer coalescência de nós vizinhos) |
 | **Sensibilidade à Fragmentação** | Nenhuma (tamanho do mapa não muda) | Alta (mais nós criados aumentam o overhead) |
@@ -527,7 +535,7 @@ Esse mecanismo oferece dois benefícios simultâneos:
 ### Exemplo Prático de Aplicação
 Um processo com limite de 10.000 bytes é carregado no endereço físico base 50.000.
 - Se o processo tentar ler a instrução no endereço lógico 1.200:
-  $1.200 < 10.000$ (Válido). Endereço Físico acessado = $50.000 + 1.200 = 51.200$.
+  $`1.200 < 10.000`$ (Válido). Endereço Físico acessado = $50.000 + 1.200 = 51.200$.
 - Se um loop com ponteiro desgovernado tentar escrever no endereço lógico 10.500:
   $10.500 \ge 10.000$ (Inválido). O circuito de hardware bloqueia a escrita na RAM e congela o processo, gerando interrupção para o SO punir a aplicação.
 
@@ -813,7 +821,7 @@ Estado inicial dos blocos livres:
   - Lista de livres: `[B1: 100 KB, B2: 83 KB, B3: 200 KB, B4: 300 KB, B5: 276 KB]`.
 - **P4 (426 KB):**
   - Maior bloco disponível no momento: B4 (300 KB).
-  - Como $300\text{ KB} < 426\text{ KB}$, P4 **NÃO PODE SER ALOCADO**.
+  - Como $`300\text{ KB} < 426\text{ KB}`$, P4 **NÃO PODE SER ALOCADO**.
   - **Resultado Worst-Fit:** P4 **NÃO PODE SER ALOCADO** (alocação postergada/bloqueada).
 
 **Conclusão Analítica:** Neste cenário empírico, o algoritmo **Best-Fit** foi o único capaz de alocar todos os processos, preservando o bloco de 600 KB intacto até a chegada de P4. O Worst-Fit apresentou o pior resultado estrutural, destruindo o bloco de 600 KB logo no primeiro passo.
@@ -833,13 +841,21 @@ Aplicar as fórmulas matemáticas de perda de capacidade interna para partiçõe
 
 2. **Cálculo de Fragmentação Interna (Partições de 128 KB):**
    - **Partição 1 (Processo de 72 KB):**
-     $$FI_1 = 128\text{ KB} - 72\text{ KB} = 56\text{ KB}$$
+     ```math
+     FI_1 = 128\text{ KB} - 72\text{ KB} = 56\text{ KB}
+     ```
    - **Partição 2 (Processo de 115 KB):**
-     $$FI_2 = 128\text{ KB} - 115\text{ KB} = 13\text{ KB}$$
+     ```math
+     FI_2 = 128\text{ KB} - 115\text{ KB} = 13\text{ KB}
+     ```
    - **Partição 3 (Processo de 128 KB):**
-     $$FI_3 = 128\text{ KB} - 128\text{ KB} = 0\text{ KB}$$
+     ```math
+     FI_3 = 128\text{ KB} - 128\text{ KB} = 0\text{ KB}
+     ```
    - **Fragmentação Interna Total:**
-     $$FI_{total} = 56\text{ KB} + 13\text{ KB} + 0\text{ KB} = 69\text{ KB}$$
+     ```math
+     FI_{total} = 56\text{ KB} + 13\text{ KB} + 0\text{ KB} = 69\text{ KB}
+     ```
    Dos 384 KB alocados no total para as 3 partições, 69 KB (17,96%) estão inteiramente desperdiçados dentro dos blocos.
 
 3. **Transição para Particionamento Dinâmico e Compactação:**
@@ -855,34 +871,38 @@ Um sistema operacional implementa proteção e realocação dinâmica em tempo d
 (b) Para os endereços lógicos gerados pela CPU a seguir, determine se a operação é permitida (calculando o endereço físico correspondente) ou se haverá interrupção por violação de acesso (trap): `0x0400`, `0x1200`, `0x11FF` e `0x1800`.
 
 #### Raciocínio
-A faixa válida de endereços lógicos é definida pela inequação: $0 \le \text{Endereço Lógico} < \text{Limite}$. O endereço físico é calculado como: $\text{Físico} = \text{Base} + \text{Lógico}$.
+A faixa válida de endereços lógicos é definida pela inequação: $`0 \le \text{Endereço Lógico} < \text{Limite}`$. O endereço físico é calculado como: $\text{Físico} = \text{Base} + \text{Lógico}$.
 
 #### Resolução Completa
 Dados fornecidos:
-- $\text{Base} = 0\text{x}4\text{A}00$ ($18944_{10}$)
-- $\text{Limite} = 0\text{x}1200$ ($4608_{10}$)
+- $\text{Base} = 0\text{x}4\text{A}00$ ($`18944_{10}`$)
+- $\text{Limite} = 0\text{x}1200$ ($`4608_{10}`$)
 
 **(a) Faixa completa de endereços físicos válidos:**
 - O menor endereço lógico permitido é `0x0000`.
-  $$\text{Endereço Físico Inicial} = \text{Base} + 0\text{x}0000 = 0\text{x}4\text{A}00 \quad (18944_{10})$$
-- O maior endereço lógico permitido é $\text{Limite} - 1 = 0\text{x}1200 - 1 = 0\text{x}11\text{FF}$ ($4607_{10}$).
-  $$\text{Endereço Físico Final} = 0\text{x}4\text{A}00 + 0\text{x}11\text{FF} = 0\text{x}5\text{BFF} \quad (23551_{10})$$
+  ```math
+  \text{Endereço Físico Inicial} = \text{Base} + 0\text{x}0000 = 0\text{x}4\text{A}00 \quad (18944_{10})
+  ```
+- O maior endereço lógico permitido é $\text{Limite} - 1 = 0\text{x}1200 - 1 = 0\text{x}11\text{FF}$ ($`4607_{10}`$).
+  ```math
+  \text{Endereço Físico Final} = 0\text{x}4\text{A}00 + 0\text{x}11\text{FF} = 0\text{x}5\text{BFF} \quad (23551_{10})
+  ```
 - **Faixa Válida de Endereços Físicos:** `0x4A00` até `0x5BFF` (inclusive), totalizando exatamente 4608 bytes contíguos.
 
 **(b) Avaliação dos Endereços Lógicos Gerados:**
-1. **Endereço Lógico `0x0400` ($1024_{10}$):**
-   - Teste de limite: $0\text{x}0400 < 0\text{x}1200$ (Verdadeiro: $1024 < 4608$).
+1. **Endereço Lógico `0x0400` ($`1024_{10}`$):**
+   - Teste de limite: $`0\text{x}0400 < 0\text{x}1200`$ (Verdadeiro: $`1024 < 4608`$).
    - Status: **Permitido.**
-   - Cálculo Físico: $0\text{x}4\text{A}00 + 0\text{x}0400 = 0\text{x}4\text{E}00$ ($20000_{10}$).
-2. **Endereço Lógico `0x1200` ($4608_{10}$):**
-   - Teste de limite: $0\text{x}1200 < 0\text{x}1200$ (Falso: o valor é estritamente igual ao limite, portanto fora do intervalo de $0$ a $\text{Limite}-1$).
+   - Cálculo Físico: $0\text{x}4\text{A}00 + 0\text{x}0400 = 0\text{x}4\text{E}00$ ($`20000_{10}`$).
+2. **Endereço Lógico `0x1200` ($`4608_{10}`$):**
+   - Teste de limite: $`0\text{x}1200 < 0\text{x}1200`$ (Falso: o valor é estritamente igual ao limite, portanto fora do intervalo de $0$ a $\text{Limite}-1$).
    - Status: **Negado (TRAP por Violação de Acesso / Falha de Segmentação).**
-3. **Endereço Lógico `0x11FF` ($4607_{10}$):**
-   - Teste de limite: $0\text{x}11\text{FF} < 0\text{x}1200$ (Verdadeiro: é exatamente o último byte legal do processo).
+3. **Endereço Lógico `0x11FF` ($`4607_{10}`$):**
+   - Teste de limite: $`0\text{x}11\text{FF} < 0\text{x}1200`$ (Verdadeiro: é exatamente o último byte legal do processo).
    - Status: **Permitido.**
-   - Cálculo Físico: $0\text{x}4\text{A}00 + 0\text{x}11\text{FF} = 0\text{x}5\text{BFF}$ ($23551_{10}$).
-4. **Endereço Lógico `0x1800` ($6144_{10}$):**
-   - Teste de limite: $0\text{x}1800 < 0\text{x}1200$ (Falso: $6144 \ge 4608$).
+   - Cálculo Físico: $0\text{x}4\text{A}00 + 0\text{x}11\text{FF} = 0\text{x}5\text{BFF}$ ($`23551_{10}`$).
+4. **Endereço Lógico `0x1800` ($`6144_{10}`$):**
+   - Teste de limite: $`0\text{x}1800 < 0\text{x}1200`$ (Falso: $6144 \ge 4608$).
    - Status: **Negado (TRAP por Violação de Acesso / Aborto Imediato).**
 
 ---
@@ -910,7 +930,7 @@ O Bitmap consome **invariavelmente 2048 bytes (2 KB)** de memória RAM.
 **(b) Ponto de Equilíbrio (Break-Even Point) entre Bitmap e Lista Encadeada:**
 - Cada nó da lista encadeada consome 8 bytes.
 - Se a memória estiver particionada em $N$ segmentos contínuos alternados entre ocupados e livres, a lista terá exatamente $N$ nós.
-- Tamanho da Lista Encadeada: $S_{lista} = N \times 8\text{ bytes}$.
+- Tamanho da Lista Encadeada: $`S_{lista} = N \times 8\text{ bytes}`$.
 - Igualando o consumo da lista ao tamanho fixo do bitmap:
   $$N \times 8 = 2.048 \implies N = \frac{2.048}{8} = 256\text{ nós}$$
 - **Conclusão:**
@@ -1042,9 +1062,9 @@ mindmap
    - *Particionamento Fixo:* Gera fragmentação interna severa; não gera fragmentação externa.
    - *Particionamento Dinâmico:* Elimina a fragmentação interna ($FI = 0$); sofre de fragmentação externa severa ao longo do tempo.
 2. **Matemática do Bitmap:**
-   - O tamanho do mapa de bits depende **apenas** da memória física total e da unidade de alocação ($M_{total} / (U_{aloc} \times 8)$ em bytes). Ele **não varia** com a quantidade de processos ativos no sistema.
+   - O tamanho do mapa de bits depende **apenas** da memória física total e da unidade de alocação ($`M_{total} / (U_{aloc} \times 8)`$ em bytes). Ele **não varia** com a quantidade de processos ativos no sistema.
 3. **Mecânica de Registradores Base e Limite:**
-   - A CPU envia o endereço lógico. O hardware **primeiro compara** se $\text{Lógico} < \text{Limite}$. Se for falso, gera **TRAP imediato** (o endereço físico sequer é calculado). Se verdadeiro, **soma** $\text{Físico} = \text{Lógico} + \text{Base}$.
+   - A CPU envia o endereço lógico. O hardware **primeiro compara** se $`\text{Lógico} < \text{Limite}`$. Se for falso, gera **TRAP imediato** (o endereço físico sequer é calculado). Se verdadeiro, **soma** $\text{Físico} = \text{Lógico} + \text{Base}$.
 4. **Comportamento dos Algoritmos de Alocação:**
    - O **First-Fit** é geralmente o mais rápido por parar na primeira ocorrência viável.
    - O **Best-Fit** gera fragmentos residuais minúsculos e inúteis.

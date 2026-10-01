@@ -224,14 +224,14 @@ flowchart LR
     AtorCliente --- UC09
 
     AtorAdmin --- UC10
-    AtorAdmin --|> AtorCliente
+    AtorAdmin -->|"generalização"| AtorCliente
 
     UC03 -.->|"«include»"| UC04
     UC03 -.->|"«include»"| UC06
     UC05 -.->|"«extend»"| UC03
 
-    UC07 --|> UC06
-    UC08 --|> UC06
+    UC07 -->|"generalização"| UC06
+    UC08 -->|"generalização"| UC06
 
     UC06 --- AtorGateway
     UC09 --- AtorLogistica

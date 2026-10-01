@@ -505,12 +505,14 @@ Se um desenvolvedor inadvertidamente fizesse `FROM consultas c LEFT JOIN exames 
 
 #### Cálculo Matemático da Média na Base de Testes
 O valor médio das 19 consultas cadastradas é obtido por:
-$$\mu_{\text{consultas}} = \frac{\sum_{i=1}^{19} \text{valor}_i}{19}$$
+```math
+\mu_{\text{consultas}} = \frac{\sum_{i=1}^{19} \text{valor}_i}{19}
+```
 Valores das consultas:
 - 350.00, 280.00, 320.00, 300.00, 420.00, 300.00, 350.00, 390.00, 280.00, 340.00, 350.00, 420.00, 280.00, 390.00, 350.00, 300.00, 340.00, 420.00, 350.00.
-- Somatório total: $R\$\ 6.560,00$.
+- Somatório total: $`R\$\ 6.560,00`$.
 - Média aritmética: $6.560,00 / 19 \approx 345,263157...$
-- Critério de seleção: $\text{valor} > 345,263158$. Consultas com valor de R$ 350,00, R$ 390,00 e R$ 420,00 satisfazem a condição. Consultas com valor de R$ 340,00, R$ 320,00, R$ 300.00 e R$ 280.00 são filtradas.
+- Critério de seleção: $`\text{valor} > 345,263158`$. Consultas com valor de R$ 350,00, R$ 390,00 e R$ 420,00 satisfazem a condição. Consultas com valor de R$ 340,00, R$ 320,00, R$ 300.00 e R$ 280.00 são filtradas.
 
 #### Código SQL Resolutivo Comentado
 
@@ -552,7 +554,9 @@ O corpo clínico possui 8 médicos cadastrados com os seguintes vencimentos:
 - Camila Rocha: R$ 9.200,00
 
 Cálculo da Média:
-$$\mu_{\text{salarios}} = \frac{12000 + 9500 + 10500 + 9800 + 13000 + 11000 + 9000 + 9200}{8} = \frac{84000}{8} = 10.500,00$$
+```math
+\mu_{\text{salarios}} = \frac{12000 + 9500 + 10500 + 9800 + 13000 + 11000 + 9000 + 9200}{8} = \frac{84000}{8} = 10.500,00
+```
 
 Como a cláusula pede salário **superior** (`>` e não `>=`), os médicos com salário igual a R$ 10.500,00 (Carlos Andrade) são excluídos pelo predicado estrito. Apenas médicos com salários de R$ 11.000,00, R$ 12.000,00 e R$ 13.000,00 devem ser retornados.
 
@@ -828,7 +832,7 @@ mindmap
 2. **Subconsulta com `AVG()` e valores nulos:**
    - A função `AVG()` do PostgreSQL ignora automaticamente valores `NULL` na computação da média. Ela computa a soma dos valores não-nulos dividida pela contagem de linhas não-nulas ($\sum / \text{COUNT(coluna)}$).
 3. **Média estrita vs inclusiva:**
-   - Atente para as palavras do enunciado: "maior que a média" exige o operador estrito `>`, enquanto "igual ou superior" exige `>=`. No Exercício 5, Carlos Andrade ganha exatamente a média ($R\$\ 10.500,00$) e sua exclusão determina a precisão da resposta.
+   - Atente para as palavras do enunciado: "maior que a média" exige o operador estrito `>`, enquanto "igual ou superior" exige `>=`. No Exercício 5, Carlos Andrade ganha exatamente a média ($`R\$\ 10.500,00`$) e sua exclusão determina a precisão da resposta.
 4. **Visões não aceitam cláusulas temporárias na criação:**
    - Não tente passar parâmetros dinâmicos para a criação de uma View (como valores variáveis de filtro). Parâmetros dinâmicos pertencem a Funções ou Stored Procedures (`PL/pgSQL`). A View é estática na sua definição estrutural e dinâmica apenas na sua resolução.
 

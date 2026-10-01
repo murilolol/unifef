@@ -186,11 +186,13 @@ flowchart TD
 ```
 
 #### Notação Big-O: Limite superior assintótico
-Diz-se formalmente que uma função de tempo $T(n)$ é $O(f(n))$ se existirem constantes positivas $c > 0$ e $n_0 \ge 1$ tais que:
+Diz-se formalmente que uma função de tempo $T(n)$ é $O(f(n))$ se existirem constantes positivas $`c > 0`$ e $`n_0 \ge 1`$ tais que:
 
-$$0 \le T(n) \le c \cdot f(n), \quad \forall n \ge n_0$$
+```math
+0 \le T(n) \le c \cdot f(n), \quad \forall n \ge n_0
+```
 
-Significa que, para entradas suficientemente grandes ($n \ge n_0$), o tempo de execução nunca ultrapassará $c \cdot f(n)$.
+Significa que, para entradas suficientemente grandes ($`n \ge n_0`$), o tempo de execução nunca ultrapassará $c \cdot f(n)$.
 
 ```mermaid
 flowchart LR
@@ -216,13 +218,13 @@ for (int i = 0; i < n; i++) {
 A condição é avaliada $n+1$ vezes, a variável de controle é incrementada $n$ vezes e o corpo do laço roda $n$ vezes. O custo total é linear: $T(n) = a \cdot n + b \implies O(n)$.
 
 #### Laço logarítmico por divisão
-Um laço cuja variável de controle é dividida (ou multiplicada) por uma constante $k > 1$ a cada iteração:
+Um laço cuja variável de controle é dividida (ou multiplicada) por uma constante $`k > 1`$ a cada iteração:
 ```java
 while (n > 1) {
     n = n / 2;
 }
 ```
-Seja $k$ o número de iterações até que o valor atinja $1$. A cada iteração $i$, o valor corrente é $\frac{n}{2^i}$. O laço termina quando $\frac{n}{2^k} \le 1 \implies 2^k \ge n \implies k \ge \log_2 n$. Portanto, o número de repetições é exatamente $\lfloor \log_2 n \rfloor \implies O(\log n)$.
+Seja $k$ o número de iterações até que o valor atinja $1$. A cada iteração $i$, o valor corrente é $\frac{n}{2^i}$. O laço termina quando $`\frac{n}{2^k} \le 1 \implies 2^k \ge n \implies k \ge \log_2 n`$. Portanto, o número de repetições é exatamente $`\lfloor \log_2 n \rfloor \implies O(\log n)`$.
 
 #### Laços aninhados independentes
 Quando o laço interno executa $n$ vezes para cada uma das $n$ iterações do laço externo:
@@ -234,7 +236,9 @@ for (int i = 0; i < n; i++) {
 }
 ```
 O número total de execuções do corpo é dado pelo produtório:
-$$\sum_{i=0}^{n-1} \sum_{j=0}^{n-1} 1 = \sum_{i=0}^{n-1} n = n \cdot n = n^2 \implies O(n^2)$$
+```math
+\sum_{i=0}^{n-1} \sum_{j=0}^{n-1} 1 = \sum_{i=0}^{n-1} n = n \cdot n = n^2 \implies O(n^2)
+```
 
 #### Laços aninhados dependentes
 Quando o laço interno inicia a partir do índice corrente do laço externo ($j = i + 1$):
@@ -253,7 +257,9 @@ Para cada iteração de $i$, o número de iterações de $j$ varia decrescenteme
 - Quando $i = n-1$, o laço interno não executa ($0$ vezes).
 
 O total de repetições corresponde à soma de uma Progressão Aritmética (PA):
-$$S = (n-1) + (n-2) + \dots + 2 + 1 + 0 = \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2} = \frac{n^2 - n}{2} = \frac{1}{2}n^2 - \frac{1}{2}n$$
+```math
+S = (n-1) + (n-2) + \dots + 2 + 1 + 0 = \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2} = \frac{n^2 - n}{2} = \frac{1}{2}n^2 - \frac{1}{2}n
+```
 
 Aplicando as regras de dominância assintótica:
 1. Descarta-se o termo de menor ordem ($-\frac{1}{2}n$).
@@ -309,8 +315,10 @@ Seja $n = \text{valores.length}$.
 6. `return soma;` $\to$ executado 1 vez.
 
 A equação total de operações elementares $T(n)$ é:
-$$T(n) = c_1 + c_2 + c_3(n + 1) + c_4(n) + c_5(n) + c_6 = (c_3 + c_4 + c_5)n + (c_1 + c_2 + c_3 + c_6)$$
-Definindo as constantes consolidadas $A = c_3 + c_4 + c_5$ e $B = c_1 + c_2 + c_3 + c_6$:
+```math
+T(n) = c_1 + c_2 + c_3(n + 1) + c_4(n) + c_5(n) + c_6 = (c_3 + c_4 + c_5)n + (c_1 + c_2 + c_3 + c_6)
+```
+Definindo as constantes consolidadas $`A = c_3 + c_4 + c_5`$ e $`B = c_1 + c_2 + c_3 + c_6`$:
 $$T(n) = A \cdot n + B$$
 
 #### Diagrama de fluxo de execução
@@ -376,7 +384,9 @@ O tamanho do espaço de busca em cada iteração $k$ reduz-se geometricamente:
 - Iteração $k$: $\frac{n}{2^k}$
 
 No pior cenário (quando o elemento procurado não existe no vetor ou encontra-se em uma das folhas da árvore implícita de busca), o algoritmo continuará dividindo até que o espaço de busca seja reduzido a tamanho 1:
-$$\frac{n}{2^k} = 1 \implies 2^k = n \implies k = \log_2 n$$
+```math
+\frac{n}{2^k} = 1 \implies 2^k = n \implies k = \log_2 n
+```
 
 #### Diagrama de estados da redução do espaço
 ```mermaid
@@ -400,8 +410,8 @@ stateDiagram-v2
 
 #### Análise de casos
 - **Melhor caso:** O elemento procurado está exatamente no meio inicial (`valores[(n-1)/2]`). O algoritmo executa apenas 1 iteração. Complexidade: $\Omega(1)$.
-- **Pior caso:** O elemento procurado não está presente no vetor ou é alcançado na última partição possível. O laço executa aproximadamente $\lfloor \log_2 n \rfloor + 1$ iterações. Complexidade: $O(\log n)$.
-- **Caso médio:** A probabilidade de encontrar o elemento requer em média $\log_2 n - 1$ iterações. Complexidade: $\Theta(\log n)$.
+- **Pior caso:** O elemento procurado não está presente no vetor ou é alcançado na última partição possível. O laço executa aproximadamente $`\lfloor \log_2 n \rfloor + 1`$ iterações. Complexidade: $O(\log n)$.
+- **Caso médio:** A probabilidade de encontrar o elemento requer em média $`\log_2 n - 1`$ iterações. Complexidade: $\Theta(\log n)$.
 
 Como a questão solicita a classificação Big-O do algoritmo (o limite superior no pior caso), a complexidade é logarítmica.
 
@@ -491,7 +501,7 @@ public static int contarIguais(int[] valores) {
 
 #### Passo a passo e contagem de operações
 Seja $n = \text{valores.length}$.
-O objetivo do algoritmo é comparar cada par de elementos não ordenados $(i, j)$ com $i < j$ para verificar duplicidades.
+O objetivo do algoritmo é comparar cada par de elementos não ordenados $(i, j)$ com $`i < j`$ para verificar duplicidades.
 
 1. Laço externo: $i$ varia de $0$ até $n - 1$.
 2. Laço interno: $j$ inicia em $i + 1$ e vai até $n - 1$.
@@ -500,10 +510,12 @@ O objetivo do algoritmo é comparar cada par de elementos não ordenados $(i, j)
    - Quando $i = 2$: $j$ assume valores de $3$ a $n - 1 \implies (n - 3)$ comparações.
    - ...
    - Quando $i = n - 2$: $j$ assume apenas o valor $n - 1 \implies 1$ comparação.
-   - Quando $i = n - 1$: $j = n$, a condição $n < n$ é falsa $\implies 0$ comparações.
+   - Quando $i = n - 1$: $j = n$, a condição $`n < n`$ é falsa $\implies 0$ comparações.
 
 O número total de execuções da comparação `if (valores[i] == valores[j])` é o somatório:
-$$C(n) = \sum_{i=0}^{n-1} (n - 1 - i) = \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2} = \frac{n^2 - n}{2} = 0.5n^2 - 0.5n$$
+```math
+C(n) = \sum_{i=0}^{n-1} (n - 1 - i) = \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2} = \frac{n^2 - n}{2} = 0.5n^2 - 0.5n
+```
 
 #### Diagrama de matriz triangular de comparações
 ```mermaid
@@ -524,7 +536,9 @@ flowchart TD
 #### Análise assintótica e armadilha clássica
 - **Armadilha:** O estudante desatento nota que o laço interno executa "metade" das iterações em relação ao método `imprimirPares` e conclui erroneamente que a complexidade seria menor ou linear.
 - **Rigor matemático:** Na análise assintótica, fatores constantes são ignorados ($c \cdot f(n) \equiv f(n)$). A constante multiplicativa $0.5$ é desconsiderada, e o termo linear $-0.5n$ torna-se desprezível quando $n$ cresce:
-$$\lim_{n \to \infty} \frac{0.5n^2 - 0.5n}{n^2} = 0.5 \quad (\text{constante finita não nula})$$
+```math
+\lim_{n \to \infty} \frac{0.5n^2 - 0.5n}{n^2} = 0.5 \quad (\text{constante finita não nula})
+```
 Portanto, a complexidade no pior caso (e em qualquer caso) é estritamente quadrática: $O(n^2)$.
 
 **Alternativa correta:** **O(nˆ2)** (grafia original da alternativa no formulário)
@@ -559,7 +573,7 @@ Seja $n = \text{valores.length}$.
 2. `int i = 1;` $\to 1$ operação de inicialização ($O(1)$).
 3. Laço `while (i < valores.length)`:
    - A condição `i < valores.length` é testada $(n - 1) + 1 = n$ vezes.
-   - O corpo do laço é executado exatamente para $i \in \{1, 2, \dots, n-1\}$, totalizando $n - 1$ iterações.
+   - O corpo do laço é executado exatamente para $`i \in \{1, 2, \dots, n-1\}`$, totalizando $n - 1$ iterações.
 4. Dentro do laço:
    - A verificação `if (valores[i] > maior)` executa $n - 1$ vezes.
    - A atribuição condicional `maior = valores[i]` executa no melhor caso 0 vezes (se o primeiro elemento já for o maior de todos) e no pior caso $n - 1$ vezes (se o vetor estiver em ordem estritamente crescente).
@@ -567,10 +581,10 @@ Seja $n = \text{valores.length}$.
 5. `return maior;` $\to 1$ operação ($O(1)$).
 
 A função de custo temporal é dada por:
-- No melhor caso: $T_{\text{melhor}}(n) = c_a \cdot (n - 1) + c_b$
-- No pior caso: $T_{\text{pior}}(n) = (c_a + c_{\text{atrib}}) \cdot (n - 1) + c_b$
+- No melhor caso: $`T_{\text{melhor}}(n) = c_a \cdot (n - 1) + c_b`$
+- No pior caso: $`T_{\text{pior}}(n) = (c_a + c_{\text{atrib}}) \cdot (n - 1) + c_b`$
 
-Em ambos os casos, a função resultante é da forma linear $f(n) = k_1 \cdot n + k_2$.
+Em ambos os casos, a função resultante é da forma linear $`f(n) = k_1 \cdot n + k_2`$.
 
 #### Diagrama de fluxo do algoritmo
 ```mermaid
@@ -610,28 +624,30 @@ public static void reduzir(int n) {
 #### Passo a passo e contagem de operações
 Neste método, a entrada não é um vetor, mas o próprio número inteiro positivo $n$. A análise verifica quantas vezes a instrução de divisão inteira `n = n / 2` é executada até que a condição `n > 1` se torne falsa.
 
-Seja $n_k$ o valor de $n$ após a $k$-ésima iteração:
-- Início ($k = 0$): $n_0 = n$
-- Iteração 1 ($k = 1$): $n_1 = \lfloor \frac{n}{2} \rfloor$
-- Iteração 2 ($k = 2$): $n_2 = \lfloor \frac{n_1}{2} \rfloor = \lfloor \frac{n}{4} \rfloor = \lfloor \frac{n}{2^2} \rfloor$
-- Iteração 3 ($k = 3$): $n_3 = \lfloor \frac{n}{2^3} \rfloor$
-- Iteração $k$: $n_k = \lfloor \frac{n}{2^k} \rfloor$
+Seja $`n_k`$ o valor de $n$ após a $k$-ésima iteração:
+- Início ($k = 0$): $`n_0 = n`$
+- Iteração 1 ($k = 1$): $`n_1 = \lfloor \frac{n}{2} \rfloor`$
+- Iteração 2 ($k = 2$): $`n_2 = \lfloor \frac{n_1}{2} \rfloor = \lfloor \frac{n}{4} \rfloor = \lfloor \frac{n}{2^2} \rfloor`$
+- Iteração 3 ($k = 3$): $`n_3 = \lfloor \frac{n}{2^3} \rfloor`$
+- Iteração $k$: $`n_k = \lfloor \frac{n}{2^k} \rfloor`$
 
-O laço encerra assim que $n_k \le 1$. Para analisar o número de passos, resolve-se a equação limite:
+O laço encerra assim que $`n_k \le 1`$. Para analisar o número de passos, resolve-se a equação limite:
 $$\frac{n}{2^k} \le 1 \implies 2^k \ge n$$
 Aplicando o logaritmo de base 2 em ambos os lados da inequação:
-$$\log_2(2^k) \ge \log_2 n \implies k \ge \log_2 n$$
-O número de iterações do laço é precisamente $k = \lfloor \log_2 n \rfloor$.
+```math
+\log_2(2^k) \ge \log_2 n \implies k \ge \log_2 n
+```
+O número de iterações do laço é precisamente $`k = \lfloor \log_2 n \rfloor`$.
 
 #### Tabela de rastreamento analítico (Trace Table)
-| Valor inicial de $n$ | Sequência de divisões sucessivas ($n = n / 2$) | Total de iterações ($k$) | $\lfloor \log_2 n \rfloor$ |
+| Valor inicial de $n$ | Sequência de divisões sucessivas ($n = n / 2$) | Total de iterações ($k$) | $`\lfloor \log_2 n \rfloor`$ |
 | :--- | :--- | :--- | :--- |
-| $n = 2$ | $2 \to 1$ (para) | 1 | $\log_2 2 = 1$ |
-| $n = 4$ | $4 \to 2 \to 1$ (para) | 2 | $\log_2 4 = 2$ |
-| $n = 8$ | $8 \to 4 \to 2 \to 1$ (para) | 3 | $\log_2 8 = 3$ |
-| $n = 16$ | $16 \to 8 \to 4 \to 2 \to 1$ (para) | 4 | $\log_2 16 = 4$ |
-| $n = 1024$ | $1024 \to 512 \to \dots \to 1$ | 10 | $\log_2 1024 = 10$ |
-| $n = 1.048.576$ | $2^{20} \to 2^{19} \to \dots \to 1$ | 20 | $\log_2 2^{20} = 20$ |
+| $n = 2$ | $2 \to 1$ (para) | 1 | $`\log_2 2 = 1`$ |
+| $n = 4$ | $4 \to 2 \to 1$ (para) | 2 | $`\log_2 4 = 2`$ |
+| $n = 8$ | $8 \to 4 \to 2 \to 1$ (para) | 3 | $`\log_2 8 = 3`$ |
+| $n = 16$ | $16 \to 8 \to 4 \to 2 \to 1$ (para) | 4 | $`\log_2 16 = 4`$ |
+| $n = 1024$ | $1024 \to 512 \to \dots \to 1$ | 10 | $`\log_2 1024 = 10`$ |
+| $n = 1.048.576$ | $2^{20} \to 2^{19} \to \dots \to 1$ | 20 | $`\log_2 2^{20} = 20`$ |
 
 #### Diagrama de divisão sucessiva
 ```mermaid
@@ -937,6 +953,6 @@ mindmap
 - [ ] Confirmar que a Questão 5 (`maior`) foi classificada como `O(n)`.
 - [ ] Confirmar que a Questão 6 (`reduzir`) foi classificada como `O(log n)`.
 - [ ] Validar a dedução matemática da soma da progressão aritmética $\frac{n(n-1)}{2}$ para laços dependentes.
-- [ ] Compreender a dedução da equação exponencial $2^k = n \implies k = \log_2 n$ para divisões sucessivas.
+- [ ] Compreender a dedução da equação exponencial $`2^k = n \implies k = \log_2 n`$ para divisões sucessivas.
 - [ ] Compilar e executar a classe Java [`ComplexidadeAlgoritmos.java`](./codigo/ComplexidadeAlgoritmos.java) no terminal para observar a saída empírica.
 - [ ] Preencher e submeter o formulário oficial antes do prazo limite (18/08/2026 às 23:59).

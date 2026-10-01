@@ -1197,7 +1197,7 @@ flowchart TD
         AS[Associacao Simples]
         AG[Agregacao ♢ - Todo-Parte Fraco]
         CP[Composicao ◆ - Todo-Parte Forte]
-        GN[Generalizacao/Heranca <|--]
+        GN["Generalizacao e Heranca"]
         DP[Dependencia ..> - Uso Transitorio]
     end
 ```

@@ -356,7 +356,7 @@ O Jakarta Bean Validation (módulo `spring-boot-starter-validation`) oferece ano
 - `@NotBlank`: O campo não pode ser nulo e deve conter pelo menos um caractere não-espaço (específico para `CharSequence`).
 - `@NotNull`: O campo não pode ser nulo (adequado para números, datas e identificadores).
 - `@Size(min, max)`: Delimita o comprimento mínimo e máximo de strings ou coleções.
-- `@Positive`: O valor numérico deve ser estritamente maior que zero ($x > 0$).
+- `@Positive`: O valor numérico deve ser estritamente maior que zero ($`x > 0`$).
 - `@PositiveOrZero`: O valor numérico deve ser maior ou igual a zero ($x \ge 0$).
 - `@Pattern(regexp = ...)`: Garante conformidade contra uma expressão regular.
 
@@ -1174,25 +1174,25 @@ flowchart TD
         BD[("PostgreSQL")]
     end
 
-    ClienteHTTP -->|1. Envia JSON| Controller
+    ClienteHTTP -->|"1. Envia JSON"| Controller
     Controller --> Validador
-    Validador -->|Se inválido (400)| Adv
-    Validador -->|Se válido| DTOIn
-    Controller -->|2. Converte campos simples| Mapper
-    Mapper -->|Instancia| Entidade
-    Controller -->|3. Executa caso de uso| Service
-    Service -->|4. Valida unicidade e busca FKs| Repo
-    Service -->|Se violar regra| ExcNegocio
-    ExcNegocio -.->|Interceptado (404/409)| Adv
-    Adv -->|Emite JSON| Err
+    Validador -->|"Se inválido (400)"| Adv
+    Validador -->|"Se válido"| DTOIn
+    Controller -->|"2. Converte campos simples"| Mapper
+    Mapper -->|"Instancia"| Entidade
+    Controller -->|"3. Executa caso de uso"| Service
+    Service -->|"4. Valida unicidade e busca FKs"| Repo
+    Service -->|"Se violar regra"| ExcNegocio
+    ExcNegocio -.->|"Interceptado (404/409)"| Adv
+    Adv -->|"Emite JSON"| Err
     Err --> ClienteHTTP
-    Repo -->|SQL| BD
-    BD -->|Dados| Repo
+    Repo -->|"SQL"| BD
+    BD -->|"Dados"| Repo
     Repo --> Entidade
-    Service -->|5. Retorna entidade gerenciada| Controller
-    Controller -->|6. Converte para DTO de saída| Mapper
+    Service -->|"5. Retorna entidade gerenciada"| Controller
+    Controller -->|"6. Converte para DTO de saída"| Mapper
     Mapper --> DTOOut
-    Controller -->|7. 201 Created + Location| ClienteHTTP
+    Controller -->|"7. 201 Created + Location"| ClienteHTTP
 ```
 
 ---
