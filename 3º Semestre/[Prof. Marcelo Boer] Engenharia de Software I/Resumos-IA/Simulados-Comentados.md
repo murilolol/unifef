@@ -1,1849 +1,1599 @@
-# Manual Integrado de Engenharia de Software I
+# Manual Integrado de Engenharia de Software I: Fundamentos, Processos, Requisitos e Modelagem na Fase de Análise
 
-**Instituição:** Fundação Educacional de Fernandópolis — UniFEF  
-**Curso:** Bacharelado em Sistemas de Informação  
-**Disciplina:** Engenharia de Software I (3º Semestre)  
-**Docente Responsável:** Prof. Marcelo Boer  
+> **Instituição:** Fundação Educacional de Fernandópolis (UniFEF)  
+> **Curso:** Bacharelado em Sistemas de Informação (3º Semestre)  
+> **Disciplina:** Engenharia de Software I  
+> **Professor:** Prof. Marcelo Boer  
+> **Finalidade:** Guia exaustivo de estudo, consulta técnica e preparação para as avaliações bimestrais (AV1 e AV2) e atividades práticas da disciplina.
 
 ---
 
 ## Sumário
 
-- [Fundamentos da Engenharia de Software e Processo de Abstração](#fundamentos-da-engenharia-de-software-e-processo-de-abstração)
-  - [Definição formal e motivação cognitiva da abstração](#definição-formal-e-motivação-cognitiva-da-abstração)
-  - [Níveis de abstração na modelagem](#níveis-de-abstração-na-modelagem)
-  - [A técnica léxica de Abbott](#a-técnica-léxica-de-abbott)
-  - [Exemplos, contraexemplos e armadilhas conceituais](#exemplos-contraexemplos-e-armadilhas-conceituais)
-- [Modelos de Ciclo de Vida e Processos de Desenvolvimento de Software](#modelos-de-ciclo-de-vida-e-processos-de-desenvolvimento-de-software)
-  - [Conceito de processo e atividades fundamentais](#conceito-de-processo-e-atividades-fundamentais)
-  - [Atividades genéricas de arcabouço e tarefas de proteção](#atividades-genéricas-de-arcabouço-e-tarefas-de-proteção)
-  - [Modelos prescritivos lineares: Cascata e Modelo V](#modelos-prescritivos-lineares-cascata-e-modelo-v)
-  - [Modelos evolutivos e iterativos: Prototipação e Incremental](#modelos-evolutivos-e-iterativos-prototipação-e-incremental)
-  - [Modelo Espiral de Barry Boehm e gestão orientada a riscos](#modelo-espiral-de-barry-boehm-e-gestão-orientada-a-riscos)
-  - [Processo Unificado e o RUP](#processo-unificado-e-o-rup)
-  - [Paradigmas ágeis e a curva de custo de mudança de Boehm](#paradigmas-ágeis-e-a-curva-de-custo-de-mudança-de-boehm)
-  - [Matriz multicritério de decisão de processos](#matriz-multicritério-de-decisão-de-processos)
-- [Engenharia de Requisitos: Elicitação, Análise e Métricas](#engenharia-de-requisitos-elicitação-análise-e-métricas)
-  - [Requisitos Funcionais versus Requisitos Não Funcionais](#requisitos-funcionais-versus-requisitos-não-funcionais)
-  - [Estabilidade de requisitos: permanentes versus voláteis](#estabilidade-de-requisitos-permanentes-versus-voláteis)
-  - [Fase de Análise versus Fase de Projeto](#fase-de-análise-versus-fase-de-projeto)
-  - [Fontes de informação e técnicas de elicitação](#fontes-de-informação-e-técnicas-de-elicitação)
-  - [Observação participante, não participante e testes de usabilidade](#observação-participante-não-participante-e-testes-de-usabilidade)
-  - [Quantificação formal de RNFs: FURPS+ e ISO/IEC 25010](#quantificação-formal-de-rnfs-furps-e-isoiec-25010)
-  - [Critérios de qualidade: atomicidade, rastreabilidade e testabilidade](#critérios-de-qualidade-atomicidade-rastreabilidade-e-testabilidade)
-- [Ferramentas CASE e Ambiente de Modelagem](#ferramentas-case-e-ambiente-de-modelagem)
-  - [Taxonomia de ferramentas CASE](#taxonomia-de-ferramentas-case)
-  - [Desenho vetorial versus modelagem semântica baseada em metamodelo](#desenho-vetorial-versus-modelagem-semântica-baseada-em-metamodelo)
-  - [Instalação, JVM e configuração do Astah UML](#instalação-jvm-e-configuração-do-astah-uml)
-  - [Arquitetura criptográfica de licenciamento institucional XML](#arquitetura-criptográfica-de-licenciamento-institucional-xml)
-  - [Estrutura de repositório e árvore de modelos](#estrutura-de-repositório-e-árvore-de-modelos)
-- [Modelagem Comportamental: Atores e Casos de Uso](#modelagem-comportamental-atores-e-casos-de-uso)
-  - [Conceituação de atores na UML e fronteira do sistema](#conceituação-de-atores-na-uml-e-fronteira-do-sistema)
-  - [Categorização de atores: primários, secundários e temporais](#categorização-de-atores-primários-secundários-e-temporais)
-  - [Relacionamentos entre atores: herança e especialização](#relacionamentos-entre-atores-herança-e-especialização)
-  - [Modularização funcional em sistemas corporativos](#modularização-funcional-em-sistemas-corporativos)
-  - [Estrutura do Quadro de Descrição de Caso de Uso](#estrutura-do-quadro-de-descrição-de-caso-de-uso)
-  - [Redação de pré-requisitos, fluxo normal e fluxos alternativos](#redação-de-pré-requisitos-fluxo-normal-e-fluxos-alternativos)
-- [Modelagem Estrutural: Diagrama de Classes na Fase de Análise](#modelagem-estrutural-diagrama-de-classes-na-fase-de-análise)
-  - [Classes conceituais versus classes de projeto/implementação](#classes-conceituais-versus-classes-de-projetoimplementação)
-  - [Tipagem abstrata de atributos e responsabilidades](#tipagem-abstrata-de-atributos-e-responsabilidades)
-  - [Relacionamentos: associação, agregação e composição](#relacionamentos-associação-agregação-e-composição)
-  - [Classes associativas e resolução de relacionamentos muitos-para-muitos](#classes-associativas-e-resolução-de-relacionamentos-muitos-para-muitos)
-  - [Generalização, especialização e o princípio DRY](#generalização-especialização-e-o-princípio-dry)
-- [Padrão Documental UniFEF para a Fase de Análise](#padrão-documental-unifef-para-a-fase-de-análise)
-  - [Estrutura formal da entrega AV2](#estrutura-formal-da-entrega-av2)
-  - [Contexto do aplicativo e limites de escopo](#contexto-do-aplicativo-e-limites-de-escopo)
-  - [Listagem e Quadro Descritivo de Atores](#listagem-e-quadro-descritivo-de-atores)
-  - [Diagrama de Contexto Geral por Ator](#diagrama-de-contexto-geral-por-ator)
-  - [Lista de Casos de Uso e Dicionário Central de Mensagens](#lista-de-casos-de-uso-e-dicionário-central-de-mensagens)
-  - [Especificações canônicas: Login, Cadastrar, Listar, Carregar, Alterar e Excluir](#especificações-canônicas-login-cadastrar-listar-carregar-alterar-e-excluir)
-- [Estudos de Caso Consolidados](#estudos-de-caso-consolidados)
-  - [Estudo de Caso 1: Aplicativo Desapega Já](#estudo-de-caso-1-aplicativo-desapega-já)
-  - [Estudo de Caso 2: Açaiteria Sabor da Amazônia](#estudo-de-caso-2-açaiteria-sabor-da-amazônia)
-  - [Estudo de Caso 3: Sistema Acadêmico e Municipal SCAESM](#estudo-de-caso-3-sistema-acadêmico-e-municipal-scaesm)
-  - [Estudo de Caso 4: SisVendas Corporativo](#estudo-de-caso-4-sisvendas-corporativo)
-- [Manutenção e Sustentação de Software](#manutenção-e-sustentação-de-software)
-  - [Taxonomia de manutenção de software](#taxonomia-de-manutenção-de-software)
-  - [Fatores geradores de custo e mitigação arquitetural](#fatores-geradores-de-custo-e-mitigação-arquitetural)
-- [Banco de Questões e Simulado Exaustivo para AV1 e AV2](#banco-de-questões-e-simulado-exaustivo-para-av1-e-av2)
-  - [Questões discursivas com resolução comentada](#questões-discursivas-com-resolução-comentada)
-  - [Dataset estruturado de revisão rápida em JSONL](#dataset-estruturado-de-revisão-rápida-em-jsonl)
-- [Glossário e Checklist de Auditoria Documental](#glossário-e-checklist-de-auditoria-documental)
+- [Capítulo 1: Fundamentos da Engenharia de Software e Ciclo de Vida](#capítulo-1-fundamentos-da-engenharia-de-software-e-ciclo-de-vida)
+  - [1.1 Definição de Engenharia de Software e a Crise do Software](#11-definição-de-engenharia-de-software-e-a-crise-do-software)
+  - [1.2 As Quatro Atividades Fundamentais do Ciclo de Vida](#12-as-quatro-atividades-fundamentais-do-ciclo-de-vida)
+  - [1.3 Ciclos de Vida segundo o PMBOK e a Norma ISO/IEC/IEEE 12207](#13-ciclos-de-vida-segundo-o-pmbok-e-a-norma-isoiecieee-12207)
+  - [1.4 Modalidades de Manutenção de Software em Produção](#14-modalidades-de-manutenção-de-software-em-produção)
+  - [1.5 Curva de Custo de Mudança de Barry Boehm](#15-curva-de-custo-de-mudança-de-barry-boehm)
+- [Capítulo 2: Modelos e Métodos de Processo de Desenvolvimento de Software](#capítulo-2-modelos-e-métodos-de-processo-de-desenvolvimento-de-software)
+  - [2.1 Paradigma Prescritivo versus Paradigma Ágil](#21-paradigma-prescritivo-versus-paradigma-ágil)
+  - [2.2 Modelo Cascata Linear e Modelo V](#22-modelo-cascata-linear-e-modelo-v)
+  - [2.3 Modelo de Prototipação: Descartável versus Evolutiva](#23-modelo-de-prototipação-descartável-versus-evolutiva)
+  - [2.4 Modelo Incremental](#24-modelo-incremental)
+  - [2.5 Modelo Espiral de Barry Boehm e Condução por Riscos](#25-modelo-espiral-de-barry-boehm-e-condução-por-riscos)
+  - [2.6 Processo Unificado e RUP: Fases, Disciplinas e Marcos](#26-processo-unificado-e-rup-fases-disciplinas-e-marcos)
+  - [2.7 Métodos Ágeis: Scrum, Extreme Programming e Kanban](#27-métodos-ágeis-scrum-extreme-programming-e-kanban)
+  - [2.8 Matriz Multicritério para Seleção de Modelos de Processo](#28-matriz-multicritério-para-seleção-de-modelos-de-processo)
+- [Capítulo 3: Engenharia de Requisitos e o Processo de Abstração](#capítulo-3-engenharia-de-requisitos-e-o-processo-de-abstração)
+  - [3.1 O Processo de Abstração Cognitiva na Engenharia](#31-o-processo-de-abstração-cognitiva-na-engenharia)
+  - [3.2 Espaço do Problema versus Espaço da Solução](#32-espaço-do-problema-versus-espaço-da-solução)
+  - [3.3 Níveis de Abstração: Conceitual, Lógico e Físico](#33-níveis-de-abstração-conceitual-lógico-e-físico)
+  - [3.4 Fontes de Informação e Mapeamento de Stakeholders](#34-fontes-de-informação-e-mapeamento-de-stakeholders)
+  - [3.5 Métodos de Coleta de Dados: Questionários, Entrevistas e Grupos Focais](#35-métodos-de-coleta-de-dados-questionários-entrevistas-e-grupos-focais)
+  - [3.6 Técnicas Etnográficas: Observação Participante, Não Participante e Testes de Usabilidade](#36-técnicas-etnográficas-observação-participante-não-participante-e-testes-de-usabilidade)
+  - [3.7 Requisitos Funcionais: Atomicidade, Testabilidade e Padronização](#37-requisitos-funcionais-atomicidade-testabilidade-e-padronização)
+  - [3.8 Requisitos Não Funcionais: Modelos FURPS+, ISO/IEC 25010 e Métricas](#38-requisitos-não-funcionais-modelos-furps-isoiec-25010-e-métricas)
+  - [3.9 Estabilidade de Requisitos: Permanentes versus Voláteis](#39-estabilidade-de-requisitos-permanentes-versus-voláteis)
+- [Capítulo 4: Ferramentas CASE e Modelagem Formal com Astah UML](#capítulo-4-ferramentas-case-e-modelagem-formal-com-astah-uml)
+  - [4.1 Taxonomia das Ferramentas CASE](#41-taxonomia-das-ferramentas-case)
+  - [4.2 Editores de Desenho Gráfico versus Ferramentas CASE Semânticas](#42-editores-de-desenho-gráfico-versus-ferramentas-case-semânticas)
+  - [4.3 Arquitetura de Execução do Astah UML e Arquivos .asta](#43-arquitetura-de-execução-do-astah-uml-e-arquivos-asta)
+  - [4.4 Mecanismo de Licença Acadêmica XML e Validação Criptográfica Assimétrica](#44-mecanismo-de-licença-acadêmica-xml-e-validação-criptográfica-assimétrica)
+  - [4.5 Estruturação de Pacotes e Árvore de Modelos](#45-estruturação-de-pacotes-e-árvore-de-modelos)
+- [Capítulo 5: Modelagem Conceitual de Domínio e Identificação de Classes](#capítulo-5-modelagem-conceitual-de-domínio-e-identificação-de-classes)
+  - [5.1 Análise Léxica Gramatical de Russell Abbott](#51-análise-léxica-gramatical-de-russell-abbott)
+  - [5.2 Identificação de Entidades, Atributos e Responsabilidades](#52-identificação-de-entidades-atributos-e-responsabilidades)
+  - [5.3 Duplicação Cadastral: Herança versus Papéis de Usuário](#53-duplicação-cadastral-herança-versus-papéis-de-usuário)
+  - [5.4 Relacionamentos Estruturais: Associação, Agregação e Composição](#54-relacionamentos-estruturais-associação-agregação-e-composição)
+  - [5.5 Multiplicidades e Integridade Referencial](#55-multiplicidades-e-integridade-referencial)
+- [Capítulo 6: Modelagem Comportamental e Especificação Textual de Casos de Uso](#capítulo-6-modelagem-comportamental-e-especificação-textual-de-casos-de-uso)
+  - [6.1 Conceito de Ator na UML: Primários, Secundários e Herança de Atores](#61-conceito-de-ator-na-uml-primários-secundários-e-herança-de-atores)
+  - [6.2 Diagrama de Casos de Uso e Modularização Funcional](#62-diagrama-de-casos-de-uso-e-modularização-funcional)
+  - [6.3 Estrutura Formal do Quadro de Descrição de Caso de Uso](#63-estrutura-formal-do-quadro-de-descrição-de-caso-de-uso)
+  - [6.4 Pré-requisitos Operacionais versus Passos de Ação](#64-pré-requisitos-operacionais-versus-passos-de-ação)
+  - [6.5 Elaboração do Fluxo Normal e Diálogo Ator-Sistema](#65-elaboração-do-fluxo-normal-e-diálogo-ator-sistema)
+  - [6.6 Mapeamento Numérico de Fluxos Alternativos e Exceções](#66-mapeamento-numérico-de-fluxos-alternativos-e-exceções)
+  - [6.7 Especificação de Dados e Dicionário de Mensagens](#67-especificação-de-dados-e-dicionário-de-mensagens)
+- [Capítulo 7: Estudos de Caso Integrados da Disciplina](#capítulo-7-estudos-de-caso-integrados-da-disciplina)
+  - [7.1 Aplicativo Móvel Desapega Já: Classificados Hiperlocais](#71-aplicativo-móvel-desapega-já-classificados-hiperlocais)
+  - [7.2 Aplicativo da Açaiteria Sabor da Amazônia](#72-aplicativo-da-açaiteria-sabor-da-amazônia)
+  - [7.3 Sistema SCAESM: Módulo Pessoa Funcionário](#73-sistema-scaesm-módulo-pessoa-funcionário)
+  - [7.4 Modelo Canônico da Fase de Análise para a Avaliação AV2](#74-modelo-canônico-da-fase-de-análise-para-a-avaliação-av2)
+- [Capítulo 8: Banco de Exercícios e Questões de Fixação](#capítulo-8-banco-de-exercícios-e-questões-de-fixação)
+  - [8.1 Questões Analíticas Resolvidas](#81-questões-analíticas-resolvidas)
+  - [8.2 Questões Objetivas no Padrão de Avaliação Bimestral](#82-questões-objetivas-no-padrão-de-avaliação-bimestral)
+- [Glossário Técnico Unificado](#glossário-técnico-unificado)
 
 ---
 
-## Fundamentos da Engenharia de Software e Processo de Abstração
+## Capítulo 1: Fundamentos da Engenharia de Software e Ciclo de Vida
 
-### Definição formal e motivação cognitiva da abstração
+### 1.1 Definição de Engenharia de Software e a Crise do Software
 
-A abstração é a operação intelectual fundamental da engenharia por meio da qual se isolam as propriedades essenciais e invariantes de uma entidade, processo ou fenômeno do mundo real, suprimindo deliberadamente detalhes acidentais, contextuais ou irrelevantes para os objetivos do sistema computacional em análise.
+#### Definição
+A Engenharia de Software é uma disciplina da computação dedicada ao estabelecimento e uso de sólidos princípios de engenharia para obter, economicamente, um software que seja confiável, que funcione eficientemente em máquinas reais e que atenda aos requisitos do usuário final (conforme definições clássicas de Fritz Bauer e do padrão IEEE 610.12). 
 
-No escopo da Engenharia de Software, construir software não significa reproduzir o mundo físico com exatidão fotográfica, mas sim criar um **modelo**. Um modelo é, por definição, uma representação seletiva da realidade, projetada com o objetivo de viabilizar a automação, o controle, a previsibilidade e a tomada de decisão.
+A disciplina emergiu formalmente na Conferência da OTAN (*NATO Science Committee*) em Garmisch (Alemanha, 1968), como resposta à histórica "Crise do Software". Esse fenômeno caracterizou-se pela incapacidade da indústria de entregar sistemas dentro do prazo contratado, dentro do orçamento previsto e com qualidade aceitável, resultando em cancelamentos catastróficos, falhas estruturais de segurança e custos exorbitantes de manutenção.
 
 ```mermaid
 flowchart TD
-    MundoReal["Mundo Real (Complexidade Infinita)\nEntidades físicas, biologia, estados emocionais,\nconversas informais, variáveis meteorológicas"]
-    Filtro["Filtro de Abstração da Engenharia de Software\nCritério: O que é indispensável para as regras de negócio?"]
-    Modelo["Modelo Conceitual do Sistema\nEntidades lógicas, atributos tipados,\nrelacionamentos estruturais, fluxos e restrições"]
+    Crise["Crise do Software (1968)\nSintomas: Prazos estourados, custos fora de controle, falhas críticas"]
+    Causas["Causas Principais:\n- Ausência de metodologia formal\n- Complexidade não gerenciada\n- Desenvolvimento ad-hoc (Code-and-Fix)\n- Falta de validação com stakeholders"]
+    Solucao["Engenharia de Software:\n- Processos estruturados (SDLC)\n- Engenharia de Requisitos rigorosa\n- Modelagem conceitual prévia (UML)\n- Garantia de Qualidade e Testes"]
+
+    Crise --> Causas
+    Causas --> Solucao
+```
+
+#### Motivação
+A construção de software difere da manufatura física tradicional: o software não se desgasta fisicamente com o atrito mecânico, mas deteriora-se funcionalmente devido à complexidade acumulada, evolução desordenada e alterações de ambiente operacional. Sem a aplicação deliberada de métodos analíticos, métricas e modelagem abstrata, projetos de software colapsam sob o peso do débito técnico e da entropia computacional.
+
+#### Exemplo
+A especificação prévia das regras de negócio de um sistema bancário via diagramas formais de casos de uso e classes conceituais, garantindo que as transações de débito e crédito mantenham a consistência contábil antes de qualquer implementação de código.
+
+#### Contraexemplo
+O paradigma informal denominado *Code-and-Fix* (Codificar e Remendar), no qual desenvolvedores iniciam a programação de telas e tabelas de banco de dados imediatamente após uma conversa verbal superficial com o cliente, sem documentar requisitos nem projetar arquiteturas lógicas.
+
+#### Armadilhas
+- Acreditar que a crise do software foi superada com a criação de linguagens modernas; ela permanece viva sempre que equipes negligenciam a fase de análise de requisitos.
+- Tratar a documentação como fim em si mesma, gerando volumes textuais burocráticos que não refletem a arquitetura do produto real.
+
+---
+
+### 1.2 As Quatro Atividades Fundamentais do Ciclo de Vida
+
+Conforme sistematizado por Ian Sommerville, independentemente do modelo de desenvolvimento escolhido (prescritivo linear ou ágil adaptativo), quatro atividades técnicas fundamentais compõem o ciclo de vida do software:
+
+```mermaid
+flowchart TD
+    ESP["1. Especificação de Software\nO que o sistema deve fazer?\nElicitação, análise, validação e modelagem de requisitos"]
+    DES["2. Desenvolvimento e Projeto\nComo o sistema será estruturado e construído?\nArquitetura, modelagem lógica, banco de dados e codificação"]
+    VAL["3. Validação de Software\nO sistema atende às necessidades reais do cliente?\nTestes unitários, de integração, de sistema e aceitação"]
+    EVO["4. Evolução de Software\nComo o sistema se adapta a novas demandas?\nManutenções corretivas, adaptativas, evolutivas e preventivas"]
+
+    ESP --> DES
+    DES --> VAL
+    VAL --> EVO
+    EVO -.->|"Novas necessidades / Mudanças legais"| ESP
+```
+
+1. **Especificação de Software:** Processo cooperativo no qual clientes e engenheiros delimitam as funcionalidades operacionais do sistema e as restrições arquiteturais e de qualidade sob as quais ele operará.
+2. **Desenvolvimento de Software (Projeto e Implementação):** Transformação das especificações conceituais em uma estrutura lógica computacional e sua posterior tradução para código executável.
+3. **Validação de Software:** Execução de procedimentos de verificação ("Estamos construindo o produto corretamente segundo o projeto?") e validação ("Estamos construindo o produto certo para as dores do cliente?").
+4. **Evolução de Software:** Atividade contínua de sustentação, adaptação a novos contextos legais ou mercadológicos e correção de desvios operacionais detectados durante a fase de produção.
+
+---
+
+### 1.3 Ciclos de Vida segundo o PMBOK e a Norma ISO/IEC/IEEE 12207
+
+#### Definição
+O Ciclo de Vida de Software (*Software Development Life Cycle* — SDLC) é a estrutura lógica de governança que organiza as fases do projeto desde a concepção inicial até o descarte definitivo do sistema. Conforme a norma ISO/IEC/IEEE 12207 e o corpo de conhecimento do PMBOK (*Project Management Body of Knowledge*), os projetos podem estruturar suas fases sob três abordagens executivas primárias:
+
+1. **Sequencial (Cascata ou Predivito):** Uma fase só é iniciada após o término formal, aprovação documental e congelamento (*baseline*) da fase antecedente.
+2. **Iterativo e Incremental:** O escopo geral é decomposto em entregáveis parciais. Cada iteração executa um ciclo completo em escala reduzida, gerando versões operacionais funcionais que agregam valor sucessivo ao produto.
+3. **Sobreposto (Concorrente ou *Fast-Tracking*):** Uma fase subsequente é deflagrada antes do encerramento oficial da fase anterior, exigindo controle rígido de riscos para mitigar retrabalho.
+
+```mermaid
+flowchart TD
+    subgraph Ciclo_Sequencial["Abordagem Sequencial"]
+        S1["Requisitos"] --> S2["Projeto"] --> S3["Codificação"] --> S4["Testes"]
+    end
+
+    subgraph Ciclo_Iterativo["Abordagem Iterativa / Incremental"]
+        I1["Iteração 1: Requisitos + Projeto + Código + Teste"] --> Inc1["Incremento Funcional 1"]
+        Inc1 --> I2["Iteração 2: Requisitos + Projeto + Código + Teste"] --> Inc2["Incremento Funcional 2"]
+    end
+```
+
+| Critério de Comparação | Abordagem Sequencial (Predivita) | Abordagem Iterativa/Incremental | Abordagem Sobreposta (*Fast-Tracking*) |
+| :--- | :--- | :--- | :--- |
+| **Clareza Inicial de Requisitos** | Exige requisitos 100% claros e estáveis | Suporta requisitos voláteis e evolutivos | Requisitos estáveis, foco em redução de tempo |
+| **Visibilidade do Produto pelo Cliente** | Tardia (somente nas fases finais de entrega) | Precoce (a cada final de iteração ou sprint) | Intermediária (conforme módulos amadurecem) |
+| **Tolerância a Mudanças** | Mínima; envolve alto custo de retrabalho | Máxima; incorporada ao planejamento cíclico | Média; risco elevado de retrabalho em cascata |
+| **Controle de Riscos Técnicos** | Adiado para a fase de testes e integração | Distribuído e mitigado nas voltas iniciais | Crítico; exige comunicação contínua e diária |
+
+---
+
+### 1.4 Modalidades de Manutenção de Software em Produção
+
+Após a entrada em operação (produção), o software entra na fase de manutenção e evolução. A literatura clássica (Pressman, Sommerville) e as normas de qualidade categorizam a manutenção em quatro tipos distintos:
+
+```mermaid
+flowchart TD
+    MANT["Manutenção de Software"]
+    MANT --> COR["1. Corretiva\nReparação de falhas e defeitos em produção"]
+    MANT --> ADA["2. Adaptativa\nAjustes a mudanças externas e de ambiente"]
+    MANT --> PRE["3. Preventiva\nRefatoração e melhoria interna da manutenibilidade"]
+    MANT --> EVO["4. Evolutiva / Perfectiva\nInclusão de novas regras e funcionalidades de negócio"]
+```
+
+#### 1. Manutenção Corretiva
+- **Definição:** Correção de bugs, erros lógicos, cálculos divergentes ou falhas técnicas observadas durante a operação regular do sistema.
+- **Motivação:** Restaurar a operacionalidade planejada sem alterar o escopo funcional contratado.
+- **Exemplo:** Correção de um erro de divisão por zero ao calcular o valor total de pedidos com desconto de 100%.
+- **Contraexemplo:** Adicionar um novo método de pagamento via criptomoedas (isso é manutenção evolutiva).
+- **Armadilha:** Aplicar correções rápidas (*hotfixes*) sem documentar a causa raiz, gerando regressões em outros módulos.
+
+#### 2. Manutenção Adaptativa
+- **Definição:** Modificação do software motivada por mudanças no ambiente operacional externo (hardware, sistemas operacionais, banco de dados, bibliotecas de terceiros) ou alterações compulsórias na legislação.
+- **Motivação:** Manter o sistema operacional diante de fatores externos sobre os quais a organização não possui controle discricionário.
+- **Exemplo:** Atualização do emissor de notas fiscais do sistema para atender ao novo leiaute do SPED Fiscal da Receita Federal ou adaptação da aplicação para rodar no Android 14.
+- **Contraexemplo:** Alterar a paleta de cores da tela a pedido do setor de marketing.
+- **Armadilha:** Tratar a atualização de ambiente como tarefa trivial sem executar baterias completas de testes de regressão.
+
+#### 3. Manutenção Preventiva (Engenharia Reversa / Refatoração)
+- **Definição:** Ações deliberadas para melhorar a estrutura interna do código, a legibilidade, o acoplamento e a manutenibilidade do software, sem alterar seu comportamento externamente observável.
+- **Motivação:** Mitigar a degradação estrutural do software, reduzir o débito técnico e prevenir a ocorrência de falhas futuras.
+- **Exemplo:** Refatoração de um método monolítico de 800 linhas em quatro classes coesas com responsabilidades bem delimitadas.
+- **Contraexemplo:** Reescrever código para implementar uma tela nova de cadastro.
+- **Armadilha:** Gastar ciclos excessivos de engenharia refatorando módulos estáveis que não sofrem alterações há anos e não possuem impacto financeiro.
+
+#### 4. Manutenção Evolutiva (Perfectiva)
+- **Definição:** Expansão deliberada do sistema pela inclusão de novos requisitos funcionais, relatórios inéditos, melhorias de desempenho solicitadas pelo usuário ou aprimoramento da interface gráfica.
+- **Motivação:** Acompanhar o crescimento do negócio e atender a novas oportunidades de mercado.
+- **Exemplo:** Criar um programa de pontos de fidelidade no aplicativo da açaiteria.
+- **Contraexemplo:** Ajustar o cálculo do ICMS que estava computando alíquota errada (isso é corretiva).
+- **Armadilha:** Aceitar manutenções evolutivas contínuas sem avaliar o impacto na arquitetura existente, convertendo o sistema em uma estrutura espaguete.
+
+---
+
+### 1.5 Curva de Custo de Mudança de Barry Boehm
+
+#### Fundamentação Matemática e Conceitual
+Barry Boehm demonstrou empiricamente que o custo financeiro e o esforço técnico necessários para corrigir uma falha ou implementar uma alteração de requisito crescem de forma não linear ao longo das fases do ciclo de desenvolvimento. 
+
+Se um erro conceitual de requisito for detectado na fase de análise, sua correção demanda apenas a alteração de um parágrafo textual ou de um diagrama no Astah UML. Se esse mesmo erro passar despercebido e for detectado apenas em ambiente de produção, ele exigirá:
+1. Atualização do documento de requisitos;
+2. Redesenho dos diagramas de arquitetura e classes;
+3. Refatoração profunda de código-fonte e testes unitários;
+4. Migração e alteração do esquema de banco de dados;
+5. Homologação completa, empacotamento, deploy emergencial e compensação financeira a usuários prejudicados.
+
+Matematicamente, a curva clássica de Boehm para sistemas desenvolvidos sob modelos lineares prescreve uma progressão geométrica aproximada:
+
+```math
+\text{Custo\_Correção} = C_0 \times b^{t}
+```
+
+Onde $ `C_0` $ representa o custo unitário base de correção na fase de requisitos, $ `b` $ é o fator multiplicador empírico de avanço de fase ($ `b \approx 3 \text{ a } 5` $) e $ `t` $ representa o índice ordinal da fase do ciclo de vida ($ `t \in \{1: \text{Requisitos}, 2: \text{Projeto}, 3: \text{Codificação}, 4: \text{Testes}, 5: \text{Produção}\}` $).
+
+```mermaid
+timeline
+    title Progressão do Custo Relativo de Correção (Curva de Boehm)
+    Requisitos : Custo Base 1x : Ajuste no documento de requisitos ou diagrama
+    Projeto Arquitetural : Custo 5x : Atualização de contratos de interfaces e classes
+    Codificação : Custo 10x : Refatoração de classes, queries e testes unitários
+    Testes de Sistema : Custo 20x a 50x : Retrabalho em cascata de integração e homologação
+    Operação e Produção : Custo 100x a 200x : Patch emergencial, migração de dados e recall
+```
+
+---
+
+## Capítulo 2: Modelos e Métodos de Processo de Desenvolvimento de Software
+
+### 2.1 Paradigma Prescritivo versus Paradigma Ágil
+
+A engenharia de processos divide-se em dois grandes paradigmas metodológicos:
+
+1. **Modelos Prescritivos (Dirigidos a Planos / Tradicionais):** Priorizam previsibilidade, planejamento formal antecipado (*Big Design Up Front* — BDUF), marcos contratuais documentados e controle rigoroso de mudanças. Acreditam que o processo de desenvolvimento pode ser ordenado, estruturado e planejado em detalhes antes do início da construção.
+2. **Modelos Ágeis (Adaptativos / Empíricos):** Fundamentados no Manifesto Ágil (2001). Priorizam indivíduos e interações sobre processos e ferramentas, software funcionando sobre documentação abrangente, colaboração com o cliente sobre negociação de contratos e resposta rápida a mudanças sobre seguir planos rígidos.
+
+```mermaid
+flowchart TD
+    subgraph Prescritivo["Paradigma Prescritivo"]
+        P1["Planejamento Integral Antecipado"] --> P2["Especificação Detalhada Congelada"]
+        P2 --> P3["Construção Linear ou Incremental"]
+        P3 --> P4["Validação Tardia com Cliente"]
+    end
+
+    subgraph Agil["Paradigma Ágil"]
+        A1["Visão Geral do Produto"] --> A2["Ciclos Curtos (Sprints de 1 a 4 semanas)"]
+        A2 --> A3["Software Executável Frequente"]
+        A3 --> A4["Feedback Contínuo e Adaptação"]
+        A4 --> A2
+    end
+```
+
+---
+
+### 2.2 Modelo Cascata Linear e Modelo V
+
+#### 1. Modelo Cascata (Waterfall)
+Proposto por Winston Royce em 1970, prescreve que as fases ocorram em sequência unidirecional estrita. Uma fase subsequente só inicia quando a fase anterior atinge seu término formal com artefatos homologados (*gates*).
+
+```mermaid
+flowchart TD
+    REQ["1. Engenharia de Requisitos\nDocumento SRS assinado e congelado"] --> PROJ["2. Projeto do Sistema\nArquitetura lógica e física"]
+    PROJ --> COD["3. Implementação e Codificação\nConstrução dos módulos"]
+    COD --> TEST["4. Integração e Testes\nValidação dos requisitos originais"]
+    TEST --> IMP["5. Implantação e Operação\nEntrega em produção"]
+```
+
+- **Motivação:** Controle de contratos em órgãos governamentais e projetos de infraestrutura onde mudanças de escopo no meio do caminho acarretam inviabilidade financeira.
+- **Contraexemplo:** Utilizar o Cascata para desenvolver um aplicativo de marketplace inovador, onde o comportamento dos consumidores muda semanalmente.
+- **Armadilhas:**
+  - *Bloqueio de fases:* Programadores ficam ociosos esperando analistas terminarem documentos formais.
+  - *Entrega Big-Bang:* O cliente só vê o software funcionando no final do cronograma contratado.
+
+#### 2. Modelo V
+O Modelo V explicita que cada fase de concepção e especificação possui uma fase de testes diretamente correspondente, planejada antecipadamente durante a descida da estrutura em V.
+
+```mermaid
+flowchart TD
+    subgraph Decomposicao_e_Projeto["Fase Construtiva (Descida)"]
+        V_REQ["Especificação de Requisitos"]
+        V_ARQ["Projeto Arquitetural"]
+        V_MOD["Projeto Detalhado de Módulos"]
+        V_COD["Codificação"]
+    end
+
+    subgraph Verificacao_e_Validacao["Fase de Testes (Subida)"]
+        V_UNIT["Testes Unitários"]
+        V_INT["Testes de Integração"]
+        V_SIST["Testes de Sistema"]
+        V_ACEIT["Testes de Aceitação do Usuário"]
+    end
+
+    V_REQ --> V_ARQ
+    V_ARQ --> V_MOD
+    V_MOD --> V_COD
+    V_COD --> V_UNIT
+    V_UNIT --> V_INT
+    V_INT --> V_SIST
+    V_SIST --> V_ACEIT
+
+    V_REQ -.->|"Planeja critérios de"| V_ACEIT
+    V_ARQ -.->|"Planeja critérios de"| V_SIST
+    V_MOD -.->|"Planeja critérios de"| V_INT
+    V_COD -.->|"Planeja critérios de"| V_UNIT
+```
+
+---
+
+### 2.3 Modelo de Prototipação: Descartável versus Evolutiva
+
+#### Definição e Motivação
+A Prototipação é adotada quando os usuários conhecem os objetivos gerais da aplicação, mas são incapazes de verbalizar requisitos técnicos detalhados de dados e interface. O protótipo atua como mecanismo para desmistificar incertezas e mitigar o efeito IKIWISI (*"I'll know it when I see it"*).
+
+```mermaid
+flowchart TD
+    Ouvir["1. Comunicação e Elicitação Rápida"] --> Projeto["2. Projeto Rápido da Interface"]
+    Projeto --> Const["3. Construção do Protótipo Operacional"]
+    Const --> Aval["4. Avaliação e Teste pelo Usuário"]
+    Aval --> Decisao{"Requisitos Estabilizados?"}
+    Decisao -- "Não (Ajustar)" --> Ouvir
+    Decisao -- "Sim (Concluído)" --> Final["Construção do Produto Final ou Descarte"]
+```
+
+#### Comparativo entre as duas vertentes de prototipação
+
+| Dimensão de Análise | Prototipação Descartável (*Throwaway*) | Prototipação Evolutiva |
+| :--- | :--- | :--- |
+| **Objetivo Primário** | Elicitar requisitos voláteis e testar ergonomia de UI | Entregar software funcional de imediato ao usuário |
+| **Destino do Código** | O código preliminar é descartado integralmente | O código base é mantido e refatorado sucessivamente |
+| **Rigor Arquitetural** | Baixo; simulações em Figma ou scripts rápidos | Elevado desde o primeiro protótipo funcional |
+| **Armadilha Típica** | O cliente confunde tela bonita com sistema pronto | Degradação da manutenibilidade interna do sistema |
+
+---
+
+### 2.4 Modelo Incremental
+
+O Modelo Incremental divide o escopo do projeto em múltiplos produtos parciais funcionais denominados **incrementos**. 
+
+```mermaid
+flowchart TD
+    subgraph Inc1["Incremento 1: Núcleo do Sistema"]
+        R1["Requisitos 1"] --> P1["Projeto 1"] --> C1["Código 1"] --> T1["Testes 1"] --> E1["Entrega: Core Funcional"]
+    end
+    subgraph Inc2["Incremento 2: Módulos Secundários"]
+        R2["Requisitos 2"] --> P2["Projeto 2"] --> C2["Código 2"] --> T2["Testes 2"] --> E2["Entrega: Módulo Financeiro"]
+    end
+    subgraph Inc3["Incremento 3: Relatórios e BI"]
+        R3["Requisitos 3"] --> P3["Projeto 3"] --> C3["Código 3"] --> T3["Testes 3"] --> E3["Entrega: Sistema Completo"]
+    end
+
+    E1 -. "Base para" .-> R2
+    E2 -. "Base para" .-> R3
+```
+
+- **Mecânica Operacional:** O Incremento 1 implementa os requisitos essenciais (*core*). Cada incremento entrega um subsistema completo colocado em produção real.
+- **Vantagem:** O cliente aufere retorno sobre o investimento (*ROI*) antes do encerramento global do projeto.
+
+---
+
+### 2.5 Modelo Espiral de Barry Boehm e Condução por Riscos
+
+#### Definição e Estrutura dos Quatro Quadrantes
+Criado em 1988 por Barry Boehm, o Modelo Espiral é um modelo evolucionário impulsionado formalmente pela **análise e mitigação de riscos**. O ciclo do projeto é representado como uma espiral contínua, onde o raio representa os custos acumulados e o ângulo angular representa o progresso através de quatro quadrantes ordenados:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Q1
+    state "Quadrante 1: Determinar Objetivos, Alternativas e Restrições" as Q1 {
+        Definir_Metas --> Identificar_Restricoes
+        Identificar_Restricoes --> Identificar_Caminhos_Alternativos
+    }
+    state "Quadrante 2: Avaliar Alternativas e Resolver Riscos" as Q2 {
+        Analise_Quantitativa_de_Risco --> Prototipacao_e_Spikes
+        Prototipacao_e_Spikes --> Simulacao_e_Benchmarks
+    }
+    state "Quadrante 3: Desenvolver e Verificar o Produto da Fase" as Q3 {
+        Modelagem_Formal --> Implementacao_de_Codigo
+        Implementacao_de_Codigo --> Testes_e_Verificacao
+    }
+    state "Quadrante 4: Planejar as Próximas Fases (Revisão do Cliente)" as Q4 {
+        Avaliacao_dos_Stakeholders --> Decisao_Go_NoGo
+        Decisao_Go_NoGo --> Planejamento_do_Proximo_Ciclo
+    }
+
+    Q1 --> Q2
+    Q2 --> Q3
+    Q3 --> Q4
+    Q4 --> Q1 : Nova volta na espiral (maior fidelidade)
+```
+
+1. **Quadrante 1 (Determinar Objetivos):** Identificação das metas funcionais da iteração, caminhos alternativos de implementação e restrições de custo, desempenho e hardware.
+2. **Quadrante 2 (Avaliar Alternativas e Resolver Riscos):** O núcleo da espiral. Riscos técnicos (ex.: incerteza quanto à escalabilidade do banco) são atacados com protótipos de prova de conceito (*spikes*) e simulações.
+3. **Quadrante 3 (Desenvolver e Verificar):** Seleciona-se o modelo mais apropriado para o nível de risco remanescente (ex.: cascata ou ágil) para construir o produto daquela volta da espiral.
+4. **Quadrante 4 (Planejar as Próximas Fases):** Os clientes avaliam os resultados e decide-se formalmente se a espiral prossegue para uma nova volta ou se o projeto é abortado (*Go / No-Go Decision*).
+
+---
+
+### 2.6 Processo Unificado e RUP: Fases, Disciplinas e Marcos
+
+O *Rational Unified Process* (RUP), projetado pela Rational Software (Booch, Rumbaugh e Jacobson), é um processo prescritivo iterativo e incremental estruturado em duas dimensões:
+
+- **Eixo Horizontal (Tempo / Fases):** As etapas ordenadas do ciclo de vida pontuadas por marcos formais (*milestones*).
+- **Eixo Vertical (Disciplinas de Engenharia):** Atividades técnicas lógicas (Modelagem de Negócios, Requisitos, Análise e Projeto, Implementação, Teste, Implantação) executadas com intensidades variáveis em todas as fases.
+
+```mermaid
+flowchart LR
+    subgraph Eixo_Horizontal_Fases["Eixo Horizontal do RUP (Fases e Marcos)"]
+        INC["1. Concepção\n(Inception)\nMarco: LCO"] --> ELA["2. Elaboração\n(Elaboration)\nMarco: LCA"]
+        ELA --> CON["3. Construção\n(Construction)\nMarco: IOC"]
+        CON --> TRA["4. Transição\n(Transition)\nMarco: PR"]
+    end
+```
+
+#### As Quatro Fases e Seus Marcos Arquiteturais
+1. **Concepção (*Inception*):** Delimitação do escopo geral e viabilidade financeira.  
+   - **Marco:** *Lifecycle Objective (LCO)* — Alinhamento de que o escopo e o orçamento são viáveis.
+2. **Elaboração (*Elaboration*):** Mitigação dos principais riscos técnicos e criação da linha de base da arquitetura (*architectural baseline*). Pelo menos 80% dos casos de uso são descritos em detalhes.  
+   - **Marco:** *Lifecycle Architecture (LCA)* — A linha de base da arquitetura está estável e validada. **É o marco mais crítico do RUP.**
+3. **Construção (*Construction*):** Desenvolvimento massivo dos componentes operacionais e funcionalidades complementares.  
+   - **Marco:** *Initial Operational Capability (IOC)* — Sistema atinge maturidade para testes beta.
+4. **Transição (*Transition*):** Testes de homologação final com usuários, migração de dados e deploy em produção.  
+   - **Marco:** *Product Release (PR)* — O sistema é formalmente aceito para operação em produção.
+
+---
+
+### 2.7 Métodos Ágeis: Scrum, Extreme Programming e Kanban
+
+1. **Scrum:** Arcabouço gerencial iterativo. O trabalho ocorre em ciclos de tempo fixos denominados *Sprints* (1 a 4 semanas). Possui papéis definidos: *Product Owner* (define prioridades de negócio no *Product Backlog*), *Scrum Master* (remove impedimentos e zela pelo processo) e *Developers* (time multifuncional auto-organizado). As reuniões estruturantes incluem *Sprint Planning*, *Daily Scrum*, *Sprint Review* e *Sprint Retrospective*.
+2. **Extreme Programming (XP):** Focado em excelência técnica de engenharia. Prega práticas consagradas como *Test-Driven Development* (TDD), Programação em Par (*Pair Programming*), Integração Contínua (*Continuous Integration*), Design Simples e Refatoração Constante.
+3. **Kanban:** Sistema visual de gestão de fluxo derivado do Sistema Toyota de Produção. Não prescreve iterações com tempo fixo; concentra-se em visualizar o fluxo de trabalho (*Kanban Board*), limitar o trabalho em progresso (*WIP — Work in Progress*) e medir o tempo de ciclo (*Cycle Time* / *Lead Time*).
+
+---
+
+### 2.8 Matriz Multicritério para Seleção de Modelos de Processo
+
+| Critério de Seleção do Projeto | Modelo Cascata | Modelo de Prototipação | Modelo Incremental | Modelo Espiral | Abordagens Ágeis (Scrum/XP) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Clareza Inicial dos Requisitos** | Alta (indispensável) | Baixa (objetivo primário) | Média / Alta | Média / Baixa | Baixa / Evolutiva |
+| **Estabilidade dos Requisitos** | Alta (congelamento) | Baixa (em mutação) | Alta para o núcleo | Média | Altamente Volátil |
+| **Criticidade do Sistema (Risco)** | Baixo a Médio | Baixo | Médio | Extremamente Alto | Baixo a Médio |
+| **Envolvimento do Cliente** | Início e Fim | Contínuo e Intenso | Regular por entrega | A cada volta (Q4) | Diário / Semanal |
+| **Incerteza Tecnológica** | Baixa | Alta | Média | Extremamente Alta | Média a Alta |
+| **Tempo para Primeira Versão** | Muito Longo | Curto (apenas visual) | Médio (Incremento 1) | Médio | Curtíssimo (Sprint 1) |
+
+---
+
+## Capítulo 3: Engenharia de Requisitos e o Processo de Abstração
+
+### 3.1 O Processo de Abstração Cognitiva na Engenharia
+
+#### Definição
+A abstração é a capacidade intelectual de focar deliberadamente nas características essenciais e pertinentes de uma entidade ou processo do mundo real, ignorando detalhes acidentais ou irrelevantes para o contexto do software a ser construído. 
+
+A abstração gerencia os limites cognitivos da mente humana (Lei de Miller: retenção imediata em memória de trabalho de $ `7 \pm 2` $ blocos de informação). Construir software consiste em criar **modelos**, e todo modelo é uma abstração orientada a uma finalidade funcional específica.
+
+```mermaid
+flowchart TD
+    MundoReal["Mundo Real (Complexidade Infinita)\nPessoa física: dados biológicos, hobbies, altura, peso, estado civil, humor"]
+    Filtro["Filtro de Abstração da Engenharia\nO que importa para o domínio do aplicativo Desapega Já?"]
+    Modelo["Modelo Conceitual de Dados\nEntidade Usuario: id, nome, email, telefone, cpf, cidade, estado, bairro"]
 
     MundoReal --> Filtro
     Filtro --> Modelo
 ```
 
-A motivação cognitiva para o uso contínuo da abstração decorre das limitações estruturais da mente humana. Conforme estabelecido na psicologia cognitiva contemporânea (associada ao limite de retenção imediata da memória operacional, conhecido como a Lei de Miller), o ser humano processa simultaneamente entre $7 \pm 2$ blocos de informação (*chunks*). Diante de um sistema corporativo ou industrial composto por centenas de regras operacionais, a única estratégia viável para gerenciar a complexidade sistêmica é a **decomposição hierárquica por meio de níveis de abstração**.
+#### Motivação
+Sem abstração, os sistemas computacionais tornam-se inchados, complexos e economicamente inviáveis, capturando atributos e comportamentos do mundo real que não possuem utilidade funcional para a organização.
 
-### Níveis de abstração na modelagem
+#### Exemplo
+No aplicativo *Desapega Já*, abstrai-se de uma pessoa apenas: `nome`, `email`, `telefone`, `cpf`, `cidade`, `estado`, `bairro` e dados de autenticação. Ignoram-se seu tipo sanguíneo ou estilo musical preferido.
 
-O desenvolvimento de software transita progressivamente por três níveis de abstração distintos, que devem ser rigorosamente segregados para evitar o chamado **vazamento de abstração** (*leaky abstraction*):
+#### Contraexemplo
+Incluir no cadastro de um cliente de açaiteria o número de calçado e o modelo do automóvel que ele dirige, onerando o banco de dados e gerando atrito desnecessário na experiência de uso do cliente.
 
-1. **Nível Conceitual (Domínio do Negócio / Espaço do Problema):**
-   - **Foco:** Mapear *o que* a organização necessita, identificando conceitos do mundo real e regras operacionais.
-   - **Independência:** Totalmente desacoplado de linguagens de programação, esquemas de bancos de dados ou padrões visuais de telas.
-   - **Artefatos:** Declarações de escopo, Requisitos Funcionais e Não Funcionais, Diagramas de Casos de Uso preliminares e Diagramas de Classes Conceituais de Negócio.
-
-2. **Nível Lógico (Estrutura Arquitetural / Espaço da Análise):**
-   - **Foco:** Traduzir os conceitos de negócio em estruturas computacionais formais, estabelecendo tipos abstratos, associações, navegabilidades, multiplicidades e contratos de interface.
-   - **Artefatos:** Diagramas de Classes de Análise, Modelos Entidade-Relacionamento lógicos e Especificações Formais de Casos de Uso.
-
-3. **Nível Físico (Espaço da Solução / Implementação):**
-   - **Foco:** Implementar as estruturas lógicas em hardware, sistemas operacionais, linguagens de codificação específicas e mecanismos de armazenamento.
-   - **Artefatos:** Scripts DDL SQL, código-fonte (`Java`, `TypeScript`, `C#`), arquivos de migração de banco e configurações de contêineres e redes.
-
-```mermaid
-flowchart LR
-    Conceitual["1. Nível Conceitual\n(O que o negócio faz?)"] --> Lógico["2. Nível Lógico\n(Como os dados e regras se organizam?)"]
-    Lógico --> Físico["3. Nível Físico\n(Como o compilador e o hardware executam?)"]
-```
-
-| Nível de Abstração | Pergunta Fundamental | Foco de Atenção | Linguagem Empregada | Exemplo Prático |
-| :--- | :--- | :--- | :--- | :--- |
-| **Conceitual** | O que o negócio requer? | Necessidades dos stakeholders e regras organizacionais. | Vocabulário corporativo do cliente. | "Um cliente realiza um pedido contendo itens de açaí." |
-| **Lógico** | Como a lógica se articula? | Entidades, multiplicidades, contratos e fluxos alternativos. | UML formal e tipos abstratos de dados. | `Pedido "1" *-- "1..*" ItemPedido` com atributo `valorTotal: Decimal`. |
-| **Físico** | Como o computador processa? | Tabelas físicas, ponteiros, consumo de memória e threads. | Sintaxe de linguagens e dialetos SQL. | `CREATE TABLE tb_item_pedido (vl_unitario NUMERIC(10,2)...)`. |
-
-### A técnica léxica de Abbott
-
-Para realizar a extração metódica de elementos conceituais a partir de descrições textuais fornecidas por clientes, a Engenharia de Software adota a técnica gramatical de Russell Abbott (1983). Essa abordagem estabelece correspondências diretas entre as categorias morfológicas da língua portuguesa e os blocos de modelagem orientada a objetos:
-
-- **Substantivos próprios:** Representam instâncias ou objetos específicos do mundo real (exemplo: *"UniFEF"*, *"Sabor da Amazônia"*, *"José da Silva"*). Não viram classes; tornam-se registros ou valores de instâncias.
-- **Substantivos comuns:** Representam conceitos gerais, conjuntos de elementos ou candidatos primários a **Classes de Domínio** ou a **Atributos** (exemplo: *"Cliente"*, *"Produto"*, *"Preço"*, *"Pedido"*).
-- **Verbos transitivos e intransitivos:** Representam ações, estímulos, mudanças de estado e candidatos diretos a **Operações/Métodos** ou **Casos de Uso** (exemplo: *"cadastrar"*, *"autenticar"*, *"calcular total"*, *"excluir"*).
-- **Adjetivos:** Indicam características qualificadoras, servindo como base para **Valores de Atributos**, **Restrições de Integridade** ou **Estados de Objetos** (exemplo: *"pedido finalizado"*, *"cliente ativo"*, *"anúncio pendente"*).
-
-### Exemplos, contraexemplos e armadilhas conceituais
-
-- **Exemplo de Abstração Adequada:**
-  Ao modelar a entidade `Cliente` para o sistema de classificados *Desapega Já*, o engenheiro seleciona: `nomeCompleto`, `email`, `telefone`, `cpf`, `cidade`, `estado` e `bairro`. Esses dados são suficientes para autenticação, contato humano, geolocalização por proximidade e segurança jurídica básica.
-- **Contraexemplo por Superespecificação (*Over-specification*):**
-  O analista inclui na modelagem do `Cliente`: `tipo_sanguíneo`, `modelo_do_veiculo`, `grau_de_escolaridade` e `cor_favorita`. Tais atributos geram poluição estrutural, aumentam custos de armazenamento, sobrecarregam o formulário de cadastro e violam os princípios de minimização de dados da Lei Geral de Proteção de Dados (LGPD).
-- **Contraexemplo por Subespecificação (*Under-specification*):**
-  O analista modela a classe `Anuncio` contendo apenas `titulo` e `preco`. Ele desconsidera a `categoria`, as `fotos` e a `localizacao`. Como resultado, os compradores não conseguem filtrar os itens nem avaliar o estado de conservação das mercadorias, inviabilizando a operação do negócio.
-- **Armadilha Conceitual:**
-  Confundir abstração com "ocultamento estético de código". Na fase de engenharia preliminar, a abstração é primordialmente a decisão arquitetural sobre **o que pertence e o que não pertence ao escopo formal do software**.
+#### Armadilhas
+- *Subespecificação:* Abstrair excessivamente e esquecer atributos críticos (ex.: esquecer o `bairro` no *Desapega Já*, impedindo a busca de produtos por proximidade).
+- *Vazamento de Abstração (*Leaky Abstraction*):* Permitir que detalhes técnicos de baixo nível (como tipos específicos de tabelas SQL) influenciem os modelos conceituais na fase de análise de requisitos.
 
 ---
 
-## Modelos de Ciclo de Vida e Processos de Desenvolvimento de Software
+### 3.2 Espaço do Problema versus Espaço da Solução
 
-### Conceito de processo e atividades fundamentais
-
-Um **Processo de Desenvolvimento de Software (PDS)** é um conjunto estruturado de atividades, métodos, práticas, padrões e artefatos associados, utilizado pela equipe de engenharia para conceber, construir, entregar e evoluir sistemas com previsibilidade de custos, conformidade de prazos e qualidade mensurável.
-
-Sem a disciplina imposta por um processo formal, o desenvolvimento degenera no modelo caótico de **Codificar-e-Remendar** (*Code-and-Fix*). Nesse modelo, a programação se inicia imediatamente após conversas informais, gerando código espaguete, ausência de testes, acoplamento destrutivo e impossibilidade de manutenção futura.
-
-Conforme a literatura clássica de Engenharia de Software consolidada por Ian Sommerville, independentemente da metodologia adotada, todo processo de software abriga **quatro atividades fundamentais**:
-
-```mermaid
-flowchart TD
-    subgraph AtividadesFundamentais["Atividades Fundamentais do Ciclo de Vida (Sommerville)"]
-        ESP["1. Especificação de Software\nDefinição formal de requisitos, serviços operacionais\ne restrições funcionais/não-funcionais"]
-        DES["2. Desenvolvimento de Software\nConcepção da arquitetura lógica, modelagem de dados,\nprojeto de interfaces e codificação executável"]
-        VAL["3. Validação de Software\nVerificação e testes para assegurar que o sistema cumpre\na especificação e atende às necessidades reais do cliente"]
-        EVO["4. Evolução de Software\nManutenção corretiva, adaptativa, preventiva e evolutiva\npara adequar o produto a novas realidades de negócio"]
-    end
-
-    ESP --> DES
-    DES --> VAL
-    VAL --> EVO
-    EVO -.->|Demandas de Novos Requisitos| ESP
-```
-
-### Atividades genéricas de arcabouço e tarefas de proteção
-
-Sob a taxonomia proposta por Roger S. Pressman, o processo de software divide-se didaticamente em **cinco atividades genéricas de arcabouço** (*framework activities*), acompanhadas por um conjunto pervasivo de **tarefas de proteção** (*umbrella activities*):
+A Engenharia de Software estabelece uma fronteira metodológica rigorosa entre o entendimento da necessidade e a implementação técnica da solução:
 
 ```mermaid
 flowchart LR
-    COM["1. Comunicação\n(Elicitação)"] --> PLA["2. Planejamento\n(Estimativas)"]
-    PLA --> MOD["3. Modelagem\n(UML / Análise)"]
-    MOD --> CON["4. Construção\n(Código e Testes)"]
-    CON --> IMP["5. Implantação\n(Entrega e Feedback)"]
-```
-
-#### Atividades Genéricas de Arcabouço
-1. **Comunicação:** Cooperação direta entre engenheiros e partes interessadas (*stakeholders*) para identificação dos objetivos do software e das necessidades de negócio.
-2. **Planejamento:** Estimativas métricas de esforço, dimensionamento de prazos, mapeamento preliminar de riscos técnicos e estabelecimento de cronogramas com marcos contratuais (*milestones*).
-3. **Modelagem:** Elaboração de representações conceituais e lógicas do sistema. Engloba o levantamento de requisitos, a especificação textual de casos de uso e os diagramas estáticos e dinâmicos em UML.
-4. **Construção:** Atividade combinada que reúne a geração de código-fonte e os procedimentos técnicos de testes em níveis unitário e de integração.
-5. **Implantação:** Disponibilização da aplicação em ambiente de homologação ou produção, treinamento de usuários, homologação operacional e coleta de feedback.
-
-#### Tarefas de Proteção (*Umbrella Activities*)
-As tarefas de proteção executam-se de forma paralela e contínua durante todo o ciclo de vida:
-- **Garantia da Qualidade de Software (SQA - Software Quality Assurance):** Auditorias técnicas formais para validar a aderência dos processos e artefatos aos padrões organizacionais.
-- **Gerência de Configuração de Software (SCM - Software Configuration Management):** Controle rigoroso de versões, branches, baselines e rastreamento de mudanças no código e na documentação.
-- **Gerência de Riscos de Software:** Identificação contínua, quantificação e elaboração de planos de contingência para riscos arquiteturais, humanos e de negócio.
-- **Medição e Métricas de Software:** Coleta de dados quantitativos de processo (produtividade, densidade de defeitos, complexidade ciclomática e cobertura de código).
-- **Revisões Técnicas Formais (FTE - Formal Technical Reviews):** Inspeções detalhadas de requisitos, projetos de classes e códigos antes de sua liberação formal para etapas subsequentes.
-
-### Modelos prescritivos lineares: Cascata e Modelo V
-
-#### Modelo Cascata (*Waterfall*)
-Formulado em 1970 por Winston Royce, o Modelo Cascata propõe uma abordagem estritamente sequencial e linear para o desenvolvimento. O trabalho flui de cima para baixo através de fases rígidas, onde uma etapa só pode ser formalmente iniciada após a conclusão, documentação, revisão técnica e congelamento (*baseline*) de todos os artefatos da fase antecedente.
-
-```mermaid
-flowchart TD
-    Req["Engenharia de Requisitos\n(Especificação formal e congelamento do documento SRS)"] --> Proj["Projeto de Sistema e Software\n(Arquitetura de dados, componentes e diagramas técnicos)"]
-    Proj --> Impl["Implementação e Testes Unitários\n(Codificação de classes e testes isolados)"]
-    Impl --> Integ["Integração e Testes de Sistema\n(Unificação de módulos e verificação global)"]
-    Integ --> Oper["Operação e Manutenção\n(Instalação em produção e correção de falhas em campo)"]
-```
-
-- **Motivação:** Proporcionar o mais alto grau de previsibilidade gerencial, controle de custos contratuais e geração exaustiva de evidências documentais auditáveis.
-- **Indicação:** Sistemas cujos requisitos sejam estáveis, amplamente conhecidos e matematicamente especificados desde o início, e cuja tecnologia de implementação seja madura e dominada pela equipe (exemplo: sistemas de controle de voo, equipamentos de suporte vital em medicina, módulos criptográficos para o setor bancário).
-- **Contraindicação:** Projetos de inovação, plataformas web, startups ou mercados dinâmicos onde o usuário precise experimentar o produto para refinar suas necessidades.
-- **Armadilhas e Patologias Técnicas:**
-  - *Bloqueio Operacional:* A equipe de desenvolvimento fica paralisada aguardando a aprovação burocrática da fase de análise.
-  - *Visibilidade Nula do Produto:* O software executável só se torna disponível nas semanas finais do projeto.
-  - *Efeito Avalanche de Erros:* Um equívoco de interpretação cometido na fase de requisitos que só seja descoberto nos testes de sistema demandará a reescrita de projetos, esquemas de dados e dezenas de milhares de linhas de código.
-
-#### Modelo V
-O Modelo V é uma variação do modelo linear que explicita visualmente e operacionalmente que **as atividades de garantia de qualidade (testes) devem ser planejadas de maneira paralela às fases de concepção e especificação**.
-
-```mermaid
-flowchart TD
-    subgraph DecomposicaoProjeto["Decomposição e Concepção"]
-        ReqV["Especificação de Requisitos"]
-        ArqV["Projeto Arquitetural de Sistema"]
-        ModV["Projeto Detalhado de Componentes"]
-        CodV["Codificação"]
+    subgraph EspacoProblema["Fase de Análise (Espaço do Problema)"]
+        AP1["Necessidades do Negócio"] --> AP2["Elicitação com Stakeholders"]
+        AP2 --> AP3["Especificação de Requisitos (RF e RNF)"]
+        AP3 --> AP4["Casos de Uso e Classes Conceituais"]
     end
 
-    subgraph IntegracaoValidacao["Integração e Testes"]
-        TUnit["Testes Unitários"]
-        TInt["Testes de Integração"]
-        TSist["Testes de Sistema"]
-        TAceit["Testes de Aceitação"]
+    subgraph EspacoSolucao["Fase de Projeto / Design (Espaço da Solução)"]
+        AS1["Arquitetura Tecnológica (MVC, Microserviços)"] --> AS2["Banco de Dados Físico (PostgreSQL DDL)"]
+        AS2 --> AS3["Classes de Projeto (Controllers, DAOs, DTOs)"]
+        AS3 --> AS4["Contratos de API REST (Swagger/JSON)"]
     end
 
-    ReqV --> ArqV
-    ArqV --> ModV
-    ModV --> CodV
-    CodV --> TUnit
-    TUnit --> TInt
-    TInt --> TSist
-    TSist --> TAceit
-
-    ReqV -.->|Define critérios formais para| TAceit
-    ArqV -.->|Define contratos de teste para| TSist
-    ModV -.->|Define especificações de teste para| TInt
-    CodV -.->|Alimenta execução dos| TUnit
+    EspacoProblema -->|"Alimenta e Restringe"| EspacoSolucao
 ```
 
-- **Princípio Central:** Os critérios e roteiros de teste de aceitação são redigidos no momento em que os requisitos são elicitados; os testes de sistema são projetados simultaneamente com a arquitetura geral; e os testes de integração são delineados durante a modelagem de classes e componentes.
-
-### Modelos evolutivos e iterativos: Prototipação e Incremental
-
-#### Modelo de Prototipação
-Projetado especificamente para lidar com a incerteza e a incompletude crônica de requisitos. Quando o cliente não consegue articular com precisão quais dados devem ser manipulados ou quais regras governam uma tela, constrói-se um protótipo operacional rápido.
-
-```mermaid
-flowchart TD
-    ComRap["Comunicação Rápida\n(Mapeamento de objetivos vagos)"] --> ModRap["Modelagem e Projeto Rápido\n(Foco em interface e fluxo básico)"]
-    ModRap --> ConstProt["Construção do Protótipo\n(Telas clicáveis, dados simulados)"]
-    ConstProt --> AvalProt["Avaliação pelo Cliente\n(Experimentação prática no navegador/dispositivo)"]
-    AvalProt --> Decisao{"Requisitos Estabilizados?"}
-    Decisao -- "Não (Ajustes necessários)" --> ComRap
-    Decisao -- "Sim (Validados)" --> ProdFinal["Desenvolvimento da Engenharia do Produto Final"]
-```
-
-A prototipação subdivide-se em duas abordagens metodológicas rigorosamente distintas:
-1. **Prototipação Descartável (*Throwaway Prototyping*):** O protótipo tem a função exclusiva de viabilizar a elicitação assertiva de requisitos e testes de usabilidade. Uma vez acordados os requisitos, o código do protótipo é sumariamente descartado. O sistema final é então projetado a partir do zero com arquitetura limpa, segurança, persistência e tratamento de exceções.
-2. **Prototipação Evolutiva (*Evolutionary Prototyping*):** O protótipo é concebido desde a primeira linha com rigor arquitetural e qualidade técnica. A cada rodada de avaliação com o cliente, novos requisitos são incorporados diretamente sobre a base de código preexistente, até que o protótipo evolua organicamente para o sistema de produção.
-- **Armadilha Crítica (A "Prototipite"):** A armadilha mais perigosa ocorre quando o cliente, ao visualizar telas de um protótipo descartável funcionando com dados mockados, assume que o software está pronto e exige sua entrada imediata em produção. Se os engenheiros cederem, o produto entrará no mercado sem segurança, sem integridade transacional e com alta taxa de acoplamento.
-
-#### Modelo Incremental
-O Modelo Incremental divide o escopo global do projeto em múltiplos blocos funcionais operacionais autônomos, denominados **incrementos**. 
-
-```mermaid
-flowchart TD
-    subgraph Inc1["Incremento 1 (Núcleo Operacional - Core)"]
-        Req1["Requisitos 1"] --> Proj1["Projeto 1"] --> Cod1["Código 1"] --> Test1["Testes 1"] --> Ent1["Entrega Operacional 1\n(Em produção)"]
-    end
-
-    subgraph Inc2["Incremento 2 (Módulo Complementar)"]
-        Req2["Requisitos 2"] --> Proj2["Projeto 2"] --> Cod2["Código 2"] --> Test2["Testes 2"] --> Ent2["Entrega Operacional 2\n(Integrado a 1)"]
-    end
-
-    subgraph Inc3["Incremento 3 (Relatórios e Otimizações)"]
-        Req3["Requisitos 3"] --> Proj3["Projeto 3"] --> Cod3["Código 3"] --> Test3["Testes 3"] --> Ent3["Entrega Operacional 3\n(Sistema Completo)"]
-    end
-
-    Ent1 --> Inc2
-    Ent2 --> Inc3
-```
-
-- **Mecânica Operacional:** O Incremento 1 implementa o núcleo estruturante do negócio (exemplo: cadastro de pacientes e prontuário básico em um hospital). Os incrementos seguintes agregam recursos progressivamente (Incremento 2: agendamento de consultas; Incremento 3: faturamento de convênios).
-- **Vantagem de Negócio:** Redução drástica do tempo até a primeira entrega funcional (*Time-to-Market*) e geração antecipada de Retorno sobre o Investimento (*ROI*).
-
-### Modelo Espiral de Barry Boehm e gestão orientada a riscos
-
-Criado em 1988 por Barry Boehm, o Modelo Espiral é um modelo evolucionário de processo de software impulsionado primariamente pela **análise sistemática e mitigação formal de riscos**.
-
-O ciclo de vida do projeto é visualizado geometricamente como uma espiral contínua. Cada volta (*loop*) representa uma fase completa de engenharia, avançando progressivamente para níveis mais profundos e custosos de especificação e construção. O plano cartesiano da espiral divide-se em **quatro quadrantes funcionais**:
-
-```mermaid
-stateDiagram-v2
-    [*] --> Q1_Objetivos
-    
-    state "Quadrante 1: Determinar Objetivos" as Q1_Objetivos {
-        DefinirMetas --> IdentificarRestricoes
-        IdentificarRestricoes --> EstabelecerAlternativas
-    }
-
-    state "Quadrante 2: Avaliar Riscos e Alternativas" as Q2_Riscos {
-        AnaliseDeRiscos --> PrototiposDeEstresse
-        PrototiposDeEstresse --> SimulacoesArquiteturais
-    }
-
-    state "Quadrante 3: Desenvolver e Testar" as Q3_Dev {
-        ModelagemEProjeto --> CodificacaoEIntegracao
-        CodificacaoEIntegracao --> VerificacaoFormal
-    }
-
-    state "Quadrante 4: Planejar Próximas Fases" as Q4_Plan {
-        RevisaoCompradores --> DecisaoAvancarAbortar
-        DecisaoAvancarAbortar --> AlocacaoDeRecursos
-    }
-
-    Q1_Objetivos --> Q2_Riscos
-    Q2_Riscos --> Q3_Dev
-    Q3_Dev --> Q4_Plan
-    Q4_Plan --> Q1_Objetivos: Próxima Iteração da Espiral
-```
-
-#### A Dinâmica dos Quatro Quadrantes
-1. **Quadrante 1 (Superior Esquerdo) — Determinar Objetivos, Alternativas e Restrições:**
-   - Define-se o objetivo específico daquela iteração (exemplo: estabelecer a persistência segura de dados biométricos).
-   - Identificam-se as restrições arquiteturais, financeiras e de tempo, mapeando caminhos tecnológicos viáveis.
-2. **Quadrante 2 (Superior Direito) — Avaliar Alternativas, Identificar e Resolver Riscos:**
-   - É o coração metodológico da Espiral. Especialistas avaliam as incertezas críticas levantadas.
-   - Aplica-se a construção de *spikes* técnicos, protótipos de teste de estresse ou simulações matemáticas para mitigar incertezas tecnológicas. Se um risco não puder ser mitigado dentro dos parâmetros de custo e segurança, o projeto pode ser encerrado imediatamente (*Go / No-Go Decision*).
-3. **Quadrante 3 (Inferior Direito) — Desenvolver e Verificar o Produto da Fase:**
-   - Seleciona-se o modelo mais apropriado para o nível de risco residual. Se o risco for mitigado e os requisitos estiverem perfeitamente claros, pode-se adotar o modelo linear (Cascata) ou o incremental para construir a versão intermediária do software.
-4. **Quadrante 4 (Inferior Esquerdo) — Planejar a Próxima Fase:**
-   - O projeto é submetido a uma comissão de auditoria técnica e financeira. Avalia-se o progresso em relação aos marcos acordados, aprova-se o orçamento e planeja-se a volta seguinte da espiral.
-
-### Processo Unificado e o RUP
-
-O **Rational Unified Process (RUP)**, estruturado por Ivar Jacobson, Grady Booch e James Rumbaugh (os criadores da UML), é um processo prescritivo iterativo e incremental com três pilares conceituais fundamentais:
-- **Dirigido por Casos de Uso:** As necessidades dos usuários guiam o processo desde a análise até os testes finais.
-- **Centrado na Arquitetura:** A robustez estrutural é projetada e validada antes que grandes equipes passem a produzir código.
-- **Iterativo e Incremental:** O sistema é refinado por meio de ciclos estruturados com lançamentos de versões operacionais parciais.
-
-O RUP introduz uma estrutura bidimensional que cruza o tempo com as atividades de engenharia:
-- **Eixo Horizontal (Tempo):** Quatro fases sequenciais, cada qual concluída em um **Marco Arquitetural** (*Milestone*) decisivo.
-- **Eixo Vertical (Disciplinas):** Atividades técnicas e de gestão executadas com intensidades variáveis em cada fase.
-
-```mermaid
-flowchart LR
-    subgraph FasesDoRUP["As Quatro Fases Sequenciais do RUP (Eixo do Tempo)"]
-        F1["1. Concepção (Inception)\nMarco: LCO\n(Lifecycle Objective)"]
-        F2["2. Elaboração (Elaboration)\nMarco: LCA\n(Lifecycle Architecture)"]
-        F3["3. Construção (Construction)\nMarco: IOC\n(Initial Operational Capability)"]
-        F4["4. Transição (Transition)\nMarco: PR\n(Product Release)"]
-    end
-
-    F1 --> F2
-    F2 --> F3
-    F3 --> F4
-```
-
-#### As Quatro Fases e Seus Respectivos Marcos Formais
-1. **Concepção (*Inception*):**
-   - **Objetivo:** Estabelecer a viabilidade do negócio (*business case*), delimitar a fronteira de escopo e identificar os atores e casos de uso de maior relevância econômica.
-   - **Marco:** *Lifecycle Objective (LCO)* — Aprovação formal de que o escopo é factível e o projeto possui justificativa financeira para prosseguir.
-2. **Elaboração (*Elaboration*):**
-   - **Objetivo:** Mitigar os maiores riscos arquiteturais. Aqui se constrói o "esqueleto executável" (*architectural baseline*). Pelo menos 80% dos casos de uso críticos do sistema são descritos detalhadamente.
-   - **Marco:** *Lifecycle Architecture (LCA)* — A linha de base da arquitetura é formalmente homologada e a estabilidade técnica é confirmada. **Este é o marco mais importante do RUP.**
-3. **Construção (*Construction*):**
-   - **Objetivo:** Desenvolvimento fabril e em larga escala dos componentes e casos de uso restantes, associado a testes exaustivos e elaboração de manuais.
-   - **Marco:** *Initial Operational Capability (IOC)* — O sistema atinge capacidade operacional com estabilidade suficiente para ser submetido a testes beta em ambiente real de homologação.
-4. **Transição (*Transition*):**
-   - **Objetivo:** Transferir com sucesso o produto de software homologado para a base de usuários finais. Compreende testes beta, treinamento, migração de bases legadas e ajuste fino de desempenho.
-   - **Marco:** *Product Release (PR)* — O sistema é formalmente aceito pela organização para operação assistida e manutenção rotineira.
-
-### Paradigmas ágeis e a curva de custo de mudança de Boehm
-
-Na virada dos anos 2000, a constatação de que os modelos prescritivos pesados geravam documentação excessiva que se desatualizava rapidamente culminou na criação do **Manifesto para o Desenvolvimento Ágil de Software (2001)**. As abordagens ágeis (como Scrum, Extreme Programming — XP e Kanban) operam sob o paradigma empírico, valorizando:
-1. Indivíduos e interações mais que processos e ferramentas;
-2. Software em funcionamento mais que documentação abrangente;
-3. Colaboração com o cliente mais que negociação de contratos;
-4. Responder a mudanças mais que seguir um plano.
-
-A principal divergência de engenharia entre os modelos lineares clássicos e os modelos ágeis reside no tratamento da **Curva de Custo de Mudança de Barry Boehm**:
-
-```mermaid
-timeline
-    title Curva de Custo de Mudança ao Longo do Tempo (Boehm)
-    Requisitos : Fator 1x : Erro corrigido no documento ou no modelo conceitual
-    Projeto Arquitetural : Fator 5x : Ajuste de diagramas de classes e contratos
-    Codificação : Fator 10x : Refatoração de métodos, classes e testes de unidade
-    Testes de Sistema : Fator 50x : Desmonte de pacotes integrados e retrabalho de compilação
-    Produção / Operação : Fator 100x a 200x : Recall de software, incidentes de dados e multas
-```
-
-- **Nos Modelos Prescritivos:** Assume-se que a curva de custo de mudança cresce de forma exponencial. Portanto, deve-se investir esforço maciço na análise preliminar para congelar os requisitos e evitar alterações nas fases avançadas.
-- **Nas Abordagens Ágeis:** Adotam-se práticas técnicas contínuas (como automação de testes, Integração Contínua/CI, design incremental e refatoração arquitetural) que mantêm o custo de absorver mudanças relativamente plano ao longo do tempo, permitindo que o sistema se adapte sem colapsar a estrutura de código.
-
-### Matriz multicritério de decisão de processos
-
-Não existe um processo de software universalmente superior. A seleção da abordagem deve resultar da análise do perfil do projeto, cruzando variáveis técnicas e organizacionais:
-
-| Critério de Engenharia | Modelo Cascata | Modelo de Prototipação | Modelo Incremental | Modelo Espiral | Abordagens Ágeis (Scrum/XP) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Clareza inicial dos requisitos** | Requisitos estáveis e totalmente claros | Requisitos vagos e desconhecidos | Requisitos razoavelmente claros no início | Requisitos associados a incertezas | Requisitos altamente mutáveis e voláteis |
-| **Criticidade do sistema (Segurança)** | Excelente para sistemas de missão crítica | Inadequado como produto final | Bom para sistemas estruturados | Excelente (foco absoluto em riscos) | Requer adaptação de conformidade |
-| **Envolvimento do cliente** | Apenas no início e na homologação final | Contínuo durante as sessões de tela | Moderado (homologa cada incremento) | Alto (participa em todo quadrante 4) | Intensivo e diário (papel de Product Owner) |
-| **Complexidade tecnológica e arquitetural** | Baixa a moderada (tecnologias conhecidas) | Utilizado para testar viabilidade visual | Média (módulos bem segmentados) | Altíssima (novas plataformas e integrações) | Média a alta (evolução por refatoração) |
-| **Geração de documentação técnica** | Exaustiva e auditável (base contratual) | Mínima ou restrita a testes de interface | Formal por módulo entregue | Alta (relatórios formais de risco) | Mínima suficiente orientada ao código |
-
----
-
-## Engenharia de Requisitos: Elicitação, Análise e Métricas
-
-### Requisitos Funcionais versus Requisitos Não Funcionais
-
-A Engenharia de Requisitos é a disciplina responsável por identificar, negociar, modelar, validar e gerenciar o conjunto de serviços que o sistema computacional deve prover e as restrições sob as quais ele operará. Os requisitos dividem-se em duas naturezas primárias:
-
-1. **Requisitos Funcionais (RF):**
-   - **Definição:** Expressam explicitamente **o que** o sistema deve fazer. Definem as funções, as transformações de dados, os cálculos de negócio, os fluxos comportamentais e as respostas a estímulos externos.
-   - **Exemplo Real:** *"O sistema deve calcular o valor total do pedido somando os subtotais de cada item selecionado e aplicar o percentual de desconto caso o cupom de fidelidade seja válido."*
-   - **Critério de Falha:** O sistema deixa de processar uma operação que lhe foi explicitamente solicitada.
-
-2. **Requisitos Não Funcionais (RNF):**
-   - **Definição:** Expressam **como** ou **sob quais restrições de qualidade** o sistema deve executar suas funções. Abrangem restrições arquiteturais, desempenho, tempo de resposta, padrões de segurança, escalabilidade, disponibilidade, interoperabilidade e conformidade com marcos legais.
-   - **Exemplo Real:** *"A operação de autenticação de credenciais deve responder em no máximo 1,5 segundos sob carga de até 500 requisições simultâneas em conexões 4G."*
-   - **Critério de Falha:** O sistema realiza a operação solicitada, mas viola uma restrição qualitativa (o sistema calcula o valor correto, mas demora 45 segundos para exibir o resultado).
-
-```mermaid
-flowchart TD
-    Req["Corpo Geral de Requisitos"]
-    Req --> RF["Requisitos Funcionais (RF)\nComportamento, ações de negócio, cadastros e relatórios"]
-    Req --> RNF["Requisitos Não Funcionais (RNF)\nCritérios de qualidade, limitações arquiteturais e conformidade"]
-    
-    RNF --> Prod["Requisitos de Produto\n(Desempenho, usabilidade, confiabilidade)"]
-    RNF --> Org["Requisitos Organizacionais\n(Padrões de codificação, ambiente operacional)"]
-    RNF --> Ext["Requisitos Externos\n(Legislação, LGPD, normas regulatórias e interoperabilidade)"]
-```
-
-### Estabilidade de requisitos: permanentes versus voláteis
-
-Na taxonomia formal da Engenharia de Requisitos, a estabilidade das demandas do usuário divide-se quanto à sua volatilidade ao longo do ciclo de vida:
-
-- **Requisitos Permanentes (ou Estáveis):** Correspondem ao núcleo de regras estruturais e fundamentais do domínio de negócio. Mantêm-se consistentes ao longo de todo o projeto e nas rotinas diárias da empresa (exemplo: a exigência de calcular débitos e créditos de forma equilibrada em sistemas contábeis; o registro de CPF de contribuintes para emissão de documentos fiscais).
-- **Requisitos Voláteis (ou Mutáveis):** Requisitos sujeitos a frequentes alterações durante a construção do software ou após sua implantação em produção. Mudanças nos requisitos voláteis decorrem da dinâmica concorrencial do mercado, de novas políticas fiscais governamentais ou de transformações no comportamento do consumidor.
-
-> **Atenção para a prova:** Afirmar que "requisitos permanentes são requisitos que mudam constantemente durante o ciclo de desenvolvimento" é um erro clássico de interpretação. Requisitos que se alteram são categorizados formalmente como **voláteis**.
-
-### Fase de Análise versus Fase de Projeto
-
-A Engenharia de Software estabelece uma linha divisória rigorosa entre a compreensão dos requisitos e a arquitetura técnica que os sustentará:
-
-```mermaid
-flowchart LR
-    subgraph EspacoDoProblema["Fase de Análise (Espaço do Problema)"]
-        A1["Necessidades Organizacionais"] --> A2["Elicitação com Stakeholders"]
-        A2 --> A3["Especificação de Requisitos (SRS)"]
-        A3 --> A4["Modelagem Conceitual de Classes e Casos de Uso"]
-    end
-
-    subgraph EspacoDaSolucao["Fase de Projeto (Espaço da Solução)"]
-        P1["Definição da Arquitetura Tecnológica"] --> P2["Projeto Físico de Banco de Dados (SQL/DDL)"]
-        P2 --> P3["Design Patterns (DAO, MVC, Service Layer)"]
-        P3 --> P4["Diagramas de Componentes e Implantação"]
-    end
-
-    EspacoDoProblema -->|Direciona e Restringe| EspacoDaSolucao
-```
-
-| Critério de Comparação | Fase de Análise (Espaço do Problema) | Fase de Projeto / Design (Espaço da Solução) |
+| Critério de Comparação | Fase de Análise (Espaço do Problema) | Fase de Projeto (Espaço da Solução) |
 | :--- | :--- | :--- |
-| **Pergunta Principal** | **O que** o sistema deve fazer para o negócio? | **Como** a tecnologia construirá a solução? |
-| **Vocabulário** | Termos do cliente, jargões da empresa e regras corporativas. | Termos computacionais: tabelas, chaves estrangeiras, threads, APIs, índices. |
-| **Independência Tecnológica** | Altíssima: o requisito existe mesmo sem computador. | Nula: vinculada a frameworks, drivers e sistemas operacionais. |
-| **Artefatos Gerados** | Casos de Uso de Análise, DCUs, Classes Conceituais, RNFs. | Diagramas de Sequência de Projeto, Diagramas de Componentes, Schemas DDL. |
-| **Responsável Típico** | Analista de Requisitos, Engenheiro de Software, Product Owner. | Arquiteto de Software, Tech Lead, Engenheiro de Dados. |
+| **Pergunta Fundamental** | O que o sistema deve fazer? | Como o sistema será implementado tecnologicamente? |
+| **Vocabulário Utilizado** | Linguagem do cliente e do negócio (domínio) | Linguagem técnica (classes, threads, sockets, SQL) |
+| **Independência Tecnológica** | Total (o requisito independe de linguagem de programação) | Baixa (decisões amarradas a frameworks e hardware) |
+| **Responsável Típico** | Analista de Requisitos, Engenheiro de Software, PO | Arquiteto de Software, Tech Lead, Desenvolvedor |
 
-### Fontes de informação e técnicas de elicitação
+---
 
-A elicitação não é um processo passivo de escuta, mas uma investigação metódica. As fontes de requisitos compreendem:
-1. **Stakeholders:** Usuários operacionais, gerentes, equipes de suporte, auditores e executivos.
-2. **Domínio da Aplicação:** Princípios matemáticos, normas contábeis ou regras de logística.
-3. **Ambiente Operacional:** Plataformas de hardware, sistemas operacionais e restrições de largura de banda de rede.
-4. **Ambiente Organizacional:** Cultura interna, disputa de processos departamentais e diretrizes de conformidade jurídica.
+### 3.3 Níveis de Abstração: Conceitual, Lógico e Físico
 
-Para extrair os requisitos a partir dessas fontes, o engenheiro de software dispõe de um leque de métodos formais de coleta de dados:
+A complexidade sistêmica é organizada em camadas sucessivas de abstração técnica:
 
-| Técnica de Coleta | Amplitude / Alcance | Profundidade Qualitativa | Custo Relativo | Indicador de Uso Recomendado |
-| :--- | :--- | :--- | :--- | :--- |
-| **Questionário Online** | Massivo (Centenas de respondentes) | Superficial / Quantitativa | Baixo | Levantamentos demográficos preliminares e validação quantitativa. |
-| **Entrevista Aberta** | Individual / Amostral | Altíssima / Subjetiva | Alto | Domínios complexos, elucidação de processos informais e atritos de fluxo. |
-| **Entrevista Estruturada** | Individual / Segmentada | Moderada / Comparativa | Médio-Alto | Confirmação padronizada de regras com diferentes operadores do mesmo cargo. |
-| **Grupo Focal (*Focus Group*)**| Grupos de 6 a 12 participantes | Alta / Dinâmica | Médio-Alto | Brainstorming de novos produtos, avaliação de protótipos e resolução de conflitos. |
-| **Análise Documental** | Factual (Documentos existentes) | Neutra / Histórica | Baixo | Manuais operacionais, formulários de papel, relatórios e legislações vigentes. |
+1. **Abstração Conceitual (Alto Nível):** Representa o domínio do negócio puro. Foca nas entidades da realidade e regras corporativas (ex.: "Um Cliente realiza um Pedido contendo Itens de Açaí").
+2. **Abstração Lógica (Médio Nível):** Estrutura formal das entidades sem vinculação a tecnologias físicas. Define classes lógicas, atributos tipados, multiplicidades de relacionamentos e fluxos textuais de casos de uso (ex.: Classe `Pedido` com atributo `valorTotal: Real`, associada a `ItemPedido` com multiplicidade `1..*`).
+3. **Abstração Física (Baixo Nível):** Detalha a implementação direta no ambiente de execução (ex.: Tabela `tb_pedido` no PostgreSQL com coluna `vl_total NUMERIC(10,2)` e chave primária com índice B-Tree).
 
-### Observação participante, não participante e testes de usabilidade
+---
 
-Frequentemente, os operadores do sistema executam rotinas mecânicas que não conseguem articular em entrevistas. Nesses cenários, aplicam-se técnicas de **investigação etnográfica**:
+### 3.4 Fontes de Informação e Mapeamento de Stakeholders
 
-- **Observação Não Participante:** O engenheiro de software atua como um observador passivo no local de trabalho. Ele monitora a rotina dos funcionários sem interromper os processos, registrando fluxos reais, atalhos não documentados e o uso de sistemas paralelos (como anotações em papel e planilhas isoladas).
-- **Observação Participante:** O analista integra-se ativamente à equipe do cliente, vivenciando o ambiente operacional e executando tarefas da rotina do trabalho. Essa imersão revela as dores operacionais e as limitações de interface sentidas pelo usuário.
-- **Testes de Usabilidade Associados à Observação:** Quando um sistema em produção apresenta altas taxas de abandono de operações (como carrinhos eletrônicos abandonados ou cancelamentos em telas de formulário), convoca-se o usuário para operar a aplicação em um ambiente controlado. Sob monitoramento, analisam-se pontos de hesitação, cliques errôneos, expressões de confusão e tempos excessivos em cada campo.
+A elicitação de requisitos não pode restringir-se a entrevistar apenas o patrocinador do software. Uma especificação de qualidade exige a varredura abrangente das seguintes fontes:
 
-### Quantificação formal de RNFs: FURPS+ e ISO/IEC 25010
+```mermaid
+flowchart TD
+    Fontes["Fontes de Informação de Requisitos"]
+    Fontes --> S1["1. Stakeholders\nUsuários finais, gerentes, atendentes, auditores"]
+    Fontes --> S2["2. Domínio da Aplicação\nTermos técnicos, regras de tributação, jargão comercial"]
+    Fontes --> S3["3. Ambiente Operacional\nRedes móveis, navegadores, hardware, limitações de tela"]
+    Fontes --> S4["4. Ambiente Organizacional\nPolíticas internas, limites de investimento, cultura"]
+    Fontes --> S5["5. Legislação e Normas\nLGPD, normas fiscais (SPED), padrões de segurança"]
+    Fontes --> S6["6. Sistemas Legados\nDocumentações antigas, formulários físicos de comandas"]
+```
 
-Um dos equívocos mais graves na Engenharia de Software é a redação de requisitos não funcionais por meio de adjetivos genéricos, como *"o sistema deve ser rápido"*, *"o software deve ser seguro"* ou *"a interface deve ser intuitiva"*. Essas declarações são subjetivas, impossibilitam a elaboração de casos de teste automatizados e abrem margem para contestações jurídicas e contratuais.
+---
 
-Todo RNF deve ser vinculado a **métricas objetivas e verificáveis**, estruturadas segundo modelos consolidados como o **FURPS+** da Hewlett-Packard (Functionality, Usability, Reliability, Performance, Supportability) e a norma internacional **ISO/IEC 25010** (Engenharia de Qualidade de Produto de Software).
+### 3.5 Métodos de Coleta de Dados: Questionários, Entrevistas e Grupos Focais
+
+| Método de Coleta | Custo e Logística | Alcance Amostral | Profundidade Qualitativa | Taxa de Resposta / Retorno | Indicação Primária de Uso |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Questionário Online** | Muito Baixo | Massivo (Centenas/Milhares) | Baixa (Perguntas fechadas) | Tipicamente baixa (5% a 20%) | Levantamento quantitativo preliminar e pesquisas demográficas |
+| **Entrevista Estruturada** | Alto | Reduzido (Individual) | Média (Roteiro pré-fixado) | Total (Agendamento individual) | Coleta de dados padronizados entre múltiplos departamentos |
+| **Entrevista Aberta** | Muito Alto | Reduzido (Individual) | Altíssima (Exploratória) | Total (Presencial ou remota) | Descoberta inicial de domínio e fluxos de trabalho complexos |
+| **Grupo Focal (*Focus Group*)**| Médio a Alto | Médio (6 a 12 participantes) | Alta (Debate coletivo) | Alta (Sessão mediada) | Geração de ideias, avaliação de protótipos de interface |
+| **Análise Documental** | Muito Baixo | Documentos legados | Factual e Histórica | Total (Registros existentes) | Extração de regras fiscais, formulários de papel e manuais |
+
+---
+
+### 3.6 Técnicas Etnográficas: Observação Participante, Não Participante e Testes de Usabilidade
+
+Muitas vezes os usuários executam tarefas tácitas no cotidiano que são incapazes de verbalizar em entrevistas formais. A etnografia supre essa lacuna:
+
+- **Observação Participante:** O analista integra-se ativamente ao ambiente dos usuários, vivenciando o trabalho real (*work-as-done*) em contraste com o trabalho prescrito em manuais (*work-as-imagined*). Revela desvios informais operacionais e gargalos de comunicação.
+- **Observação Não Participante:** O analista atua como observador silencioso, registrando tempos, cliques, movimentos e hesitações sem interferir na rotina de trabalho.
+- **Testes de Usabilidade com Observação Direta:** Coloca-se o usuário final diante do sistema sob monitoramento de interações para registrar telas abandonadas, preenchimentos incorretos e pontos de fricção ergonômica.
+
+---
+
+### 3.7 Requisitos Funcionais: Atomicidade, Testabilidade e Padronização
+
+#### Critérios Formais de Qualidade (IEEE 830 / ISO/IEC/IEEE 29148)
+Um Requisito Funcional (RF) descreve as ações, serviços, transformações de dados e comportamentos que o software deve executar. Para ser considerado válido, um RF deve cumprir os seguintes critérios:
+1. **Comportamento Verificável:** Declarar uma função computacional mensurável, nunca um desejo subjetivo de negócio.
+2. **Atomicidade:** Tratar de uma única funcionalidade indivisível.
+3. **Testabilidade (Verificabilidade):** Possibilitar a elaboração de um caso de teste booleano (Passou / Falhou).
+4. **Padronização Sintática:** Redigido no formato canônico:  
+   *"O sistema deve [ação/verbo de negócio] [objeto direto] [condições, restrições ou parâmetros]"*.
+
+```mermaid
+flowchart TD
+    Objetivo["Objetivo de Negócio Genérico\nFacilitar a venda de produtos (Não testável)"] --> Decomposicao["Decomposição e Refinamento de Engenharia"]
+    Decomposicao --> RF1["RF01: O sistema deve permitir o cadastro de anúncios com título, fotos e preço"]
+    Decomposicao --> RF2["RF02: O sistema deve registrar transações de compra com data e valor"]
+    Decomposicao --> RF3["RF03: O sistema deve possibilitar a troca de mensagens entre comprador e vendedor"]
+```
+
+---
+
+### 3.8 Requisitos Não Funcionais: Modelos FURPS+, ISO/IEC 25010 e Métricas
+
+#### Definição e Taxonomia
+Requisitos Não Funcionais (RNF) estabelecem restrições operacionais, qualidades sistêmicas e conformidades de arquitetura. Se os requisitos funcionais determinam **o que** o sistema faz, os não funcionais determinam **como** e **sob quais limites** ele deve operar.
 
 ```mermaid
 mindmap
-  root((ISO/IEC 25010))
-    Adequação Funcional
-      Completude
-      Corretude
-      Pertinência
-    Eficiência de Desempenho
-      Comportamento temporal
-      Utilização de recursos
-      Capacidade
-    Compatibilidade
-      Coexistência
-      Interoperabilidade
-    Usabilidade
-      Reconhecimento da adequação
-      Apreensibilidade
-      Operacionalidade
-      Proteção contra erros
-      Acessibilidade
-    Confiabilidade
-      Maturidade
-      Disponibilidade
-      Tolerância a falhas
-      Recuperabilidade
-    Segurança
-      Confidencialidade
-      Integridade
-      Não repúdio
-      Autenticidade
-    Manutenibilidade
-      Modularidade
-      Reusabilidade
-      Analisabilidade
-      Modificabilidade
-      Testabilidade
-    Portabilidade
-      Adaptabilidade
-      Facilidade de instalação
-      Facilidade de substituição
+  root("Requisitos Não Funcionais")
+    "FURPS+"
+      "F - Functionality (Segurança)"
+      "U - Usability (Ergonomia, UX)"
+      "R - Reliability (Disponibilidade, MTBF)"
+      "P - Performance (Tempo de resposta)"
+      "S - Supportability (Manutenibilidade)"
+      "+ - Restrições de Design e Físicas"
+    "ISO/IEC 25010"
+      "Adequação Funcional"
+      "Eficiência de Desempenho"
+      "Compatibilidade"
+      "Usabilidade"
+      "Confiabilidade"
+      "Segurança"
+      "Manutenibilidade"
+      "Portabilidade"
 ```
 
-A tabela a seguir demonstra a conversão de declarações subjetivas em especificações métricas formais de engenharia:
+#### A Falha da Subjetividade e a Quantificação Obrigatória
+Declarações como "o sistema deve ser rápido" ou "o aplicativo deve ter fácil usabilidade" são contratualmente inválidas e tecnicamente inúteis. Todo RNF deve ser acompanhado de uma métrica objetiva e verificável.
 
-| Categoria da Qualidade | Requisito Subjetivo (Problemático) | Requisito Não Funcional Formal e Mensurável | Métrica e Critério de Aceitação |
+| RNF Subjetivo (Problemático) | Categoria ISO 25010 | RNF Refinado com Métrica de Engenharia (Válido) | Critério de Aceite e Teste |
 | :--- | :--- | :--- | :--- |
-| **Usabilidade** | "O aplicativo deve ser de fácil usabilidade." | O sistema deve permitir que novos usuários concluam a publicação de um anúncio sem treinamento formal prévio. | 85% dos usuários de teste devem concluir o fluxo de anúncio em até 3 minutos no primeiro uso, com taxa de erro em campos inferior a 5%. |
-| **Desempenho** | "O sistema deve carregar os produtos rapidamente." | O tempo de carregamento da listagem de produtos geolocalizados deve atender a limites estritos sob tráfego normal. | Tempo de resposta HTTP menor que 2,0 segundos para o percentil 95 ($`P_{95}`$) em conexões 4G com carga de 100 requisições/segundo. |
-| **Confiabilidade** | "O sistema não pode falhar no horário de pico." | O serviço de autorização de pedidos deve manter alta taxa de operação contínua sem quedas de serviço. | Disponibilidade mensal mínima de 99,8% e Tempo Médio Entre Falhas ($MTBF$) superior a 720 horas operacionais ininterruptas. |
-| **Segurança** | "O sistema deve proteger as senhas dos usuários." | As credenciais de acesso devem ser armazenadas com proteção contra vazamentos de dados na base. | Armazenamento de senhas utilizando função de derivação de chave criptográfica lenta (ex.: Argon2id ou BCrypt com fator de custo $\ge 12$). |
-
-### Critérios de qualidade: atomicidade, rastreabilidade e testabilidade
-
-Conforme estabelecido pela norma **ISO/IEC/IEEE 29148** (Processos do Ciclo de Vida de Software — Engenharia de Requisitos), para que uma declaração de requisito seja homologada tecnicamente, ela deve atender aos seguintes critérios de qualidade:
-
-1. **Atomicidade:** O requisito deve descrever uma única função de negócio indivisível. Declarações que utilizam conectivos como *"e também"*, *"bem como"* ou *"além disso"* devem ser decompostas em múltiplos requisitos atômicos.
-2. **Comportamento Verificável (Testabilidade):** Um engenheiro de testes deve ser capaz de criar um procedimento booleano (Passou / Falhou) para verificar se o sistema atende ou viola a declaração.
-3. **Não Ambiguidade:** O texto deve admitir uma única interpretação semântica tanto para os analistas de negócios quanto para os programadores e clientes.
-4. **Rastreabilidade (Horizontal e Vertical):** Deve ser possível mapear o requisito desde sua origem (necessidade de negócio) até o artefato de projeto (casos de uso, classes do modelo), código-fonte e suíte de testes de aceitação correspondente.
-5. **Estrutura Sintática Canônica:** Recomenda-se a adoção da forma padrão:  
-   $$\text{"O sistema deve [ação verbal] [objeto/dado de negócio] sob [condições ou restrições]."}$$
+| "O sistema deve ser rápido." | Eficiência de Desempenho | O sistema deve processar e retornar requisições de consulta de catálogo em até 2,0 segundos sob carga de 500 requisições simultâneas. | Teste de estresse com ferramenta de injeção de carga (Apache JMeter). |
+| "O app deve ter fácil usabilidade." | Usabilidade | Um usuário recém-cadastrado deve ser capaz de concluir a publicação de um anúncio em menos de 3 minutos sem suporte externo. | Teste de usabilidade com amostragem de 20 usuários registrando tempo médio. |
+| "O sistema deve ser seguro." | Segurança | O sistema deve criptografar todas as senhas utilizando algoritmo de dispersão seguro (Argon2id ou BCrypt com salt de 12 rounds). | Auditoria de código e inspeção da base de dados física. |
+| "O aplicativo deve ser estável." | Confiabilidade | O sistema deve apresentar disponibilidade mensal mínima de 99,5% (tempo de inatividade não planejado inferior a 3,65 horas/mês). | Monitoramento de telemetria contínua em produção (*APM*). |
 
 ---
 
-## Ferramentas CASE e Ambiente de Modelagem
+### 3.9 Estabilidade de Requisitos: Permanentes versus Voláteis
 
-### Taxonomia de ferramentas CASE
+Conforme sistematizado por Ian Sommerville:
 
-As ferramentas CASE (*Computer-Aided Software Engineering* — Engenharia de Software Auxiliada por Computador) são aplicações computacionais projetadas para apoiar, automatizar, gerenciar e auditar as atividades ao longo do ciclo de vida de desenvolvimento de software (SDLC).
+- **Requisitos Permanentes (Estáveis):** Tratam do núcleo estrutural do domínio da aplicação. Permanecem inalterados durante a vida do software, pois decorrem de regras basilares do negócio (ex.: o princípio contábil de partidas dobradas em bancos, ou o cálculo de valor total de um pedido baseado em `quantidade * preço_unitário`).
+- **Requisitos Voláteis (Mutáveis):** Sofrem alterações contínuas durante o desenvolvimento ou após o deploy, impulsionados por pressões mercadológicas, políticas internas da organização ou mudanças legislativas (ex.: integração com novos gateways de pagamento ou mudança nas alíquotas de ICMS).
 
-Elas categorizam-se de acordo com o estágio de atuação no ciclo de vida:
+> [!IMPORTANT]
+> **Atenção para avaliações teóricas:** Dizer que "requisitos permanentes mudam com facilidade durante o projeto" é um erro clássico de prova. Requisitos que mudam são **voláteis**, enquanto os permanentes mantêm sua estabilidade conceitual.
 
-```mermaid
-flowchart TD
-    subgraph TaxonomiaCASE["Taxonomia das Ferramentas CASE"]
-        UP["Upper-CASE (Front-End)\nElicitação de requisitos, modelagem conceitual,\ndiagramas UML e análise orientada a objetos\n(Ex: Astah UML, Enterprise Architect)"]
-        LOW["Lower-CASE (Back-End)\nGeração de código-fonte, automação de testes,\ncompilação, profiling e engenharia reversa de bancos\n(Ex: Compiladores, Frameworks xUnit, DB Migration)"]
-        ICASE["Integrated-CASE (I-CASE)\nPlataformas unificadas gerenciando requisitos,\nmodelos, repositórios de metadados, pipelines CI/CD\ne governança contínua de ponta a ponta"]
-    end
+---
 
-    UP -->|Fornece Modelos Semânticos| LOW
-    ICASE --> UP
-    ICASE --> LOW
-```
+## Capítulo 4: Ferramentas CASE e Modelagem Formal com Astah UML
 
-- **Upper-CASE (Front-End CASE):** Concentram-se nas fases iniciais de concepção e análise. Seu principal propósito é fornecer um ambiente formal para a criação de modelos sintáticos e semânticos do sistema. O software **Astah UML** enquadra-se tipicamente nessa categoria.
-- **Lower-CASE (Back-End CASE):** Focam nas fases finais de construção, teste e manutenção. Automatizam tarefas de engenharia reversa, análise estática de código e conversão de diagramas em esqueletos de código-fonte nas linguagens finais.
-- **Integrated-CASE (I-CASE):** Unificam ferramentas Upper e Lower em torno de um **Repositório Central de Metadados**, sincronizando diagramas, regras de negócio e código-fonte em tempo real.
+### 4.1 Taxonomia das Ferramentas CASE
 
-### Desenho vetorial versus modelagem semântica baseada em metamodelo
-
-Um dos equívocos recorrentes em equipes de desenvolvimento iniciantes é assumir que diagramas produzidos em editores vetoriais livres (como Draw.io, Lucidchart, Miro ou Canva) equivalem a artefatos de Engenharia de Software produzidos em uma ferramenta CASE formal. A diferença não reside na estética visual, mas na **arquitetura do núcleo de dados**:
+As ferramentas CASE (*Computer-Aided Software Engineering*) automatizam as disciplinas do ciclo de vida:
 
 ```mermaid
 flowchart TD
-    subgraph DesenhoVetorial["Editor de Desenho Vetorial Livre (Draw.io, Miro)"]
-        V1["Primitiva Retângulo A\nTexto: 'Cliente'"] 
-        V2["Primitiva Retângulo B\nTexto: 'Cliente'"]
-        Linha["Conexão Gráfica Manual\n(Linha geométrica simples)"]
-        V1 -. Conexão cosmética sem regra .-> Linha -.-> V2
-    end
-
-    subgraph ModelagemCASE["Ferramenta CASE Formal (Astah UML)"]
-        Metamodelo["Repositório Central de Metadados (Grafo Semântico)\nElemento: 'Class Cliente' (UUID Único)\nAtributos: nome, cpf, email"]
-        Visao1["Visão 1: Diagrama de Classes"]
-        Visao2["Visão 2: Diagrama de Sequência"]
-        Metamodelo -->|Reflete e sincroniza| Visao1
-        Metamodelo -->|Reflete e sincroniza| Visao2
+    subgraph Taxonomia_CASE["Taxonomia das Ferramentas CASE"]
+        UP["Upper-CASE (Front-End)\nFase de Análise e Projeto de Requisitos\nEx: Astah UML, Enterprise Architect"]
+        LOW["Lower-CASE (Back-End)\nFase de Codificação e Testes\nEx: Compiladores, Geradores de DDL, Geradores de Código"]
+        INT["I-CASE (Integrated ALM)\nRepositório Único Centralizado\nSincroniza Requisitos, Classes, Código e DevOps em tempo real"]
     end
 ```
 
-| Dimensão de Análise | Editores de Desenho Vetorial (Draw.io, Miro) | Ferramentas CASE Formais (Astah UML) |
+---
+
+### 4.2 Editores de Desenho Gráfico versus Ferramentas CASE Semânticas
+
+É um equívoco metodológico comum confundir ferramentas de diagramação vetorial livre (Draw.io, Lucidchart, Miro, Canva) com ferramentas CASE formais baseadas no metamodelo da OMG:
+
+| Critério Técnico | Editor de Desenho Gráfico (Draw.io / Canva) | Ferramenta CASE Formal (Astah UML) |
 | :--- | :--- | :--- |
-| **Núcleo de Armazenamento** | Primitivas visuais 2D avulsas (coordenadas $X, Y$, cor e texto solto). | Repositório estruturado baseado no **Metamodelo UML da OMG**. |
-| **Integridade Referencial** | Inexistente. Caixas com o mesmo nome são tratadas como textos independentes. | Absoluta. Modificar o nome ou tipo de um método atualiza todas as visões do projeto. |
-| **Validação Sintática** | Nula. Permite relacionamentos ilegais perante a OMG (como herança cíclica). | Ativa. Bloqueia conexões sintaticamente inválidas e audita multiplicidades. |
-| **Rastreabilidade** | Manual, sujeita a inconsistências e esquecimentos humanos. | Nativa, organizada em árvores hierárquicas de pacotes de projeto. |
-| **Capacidade Operacional** | Apenas exportações gráficas (PNG, PDF, SVG). | Exportação de metadados (XMI), engenharia direta (código esqueleto) e reversa. |
+| **Núcleo de Armazenamento** | Primitivas visuais 2D isoladas (retângulos, círculos) | Grafo semântico estruturado baseado no metamodelo UML |
+| **Integridade Referencial** | Nula. Renomear uma classe em uma folha não afeta as demais | Total. Renomear uma classe atualiza todos os diagramas |
+| **Validação Sintática** | Inexistente. Permite heranças circulares e relações ilegais | Nativa. Bloqueia conexões que violam as regras da UML |
+| **Engenharia Reversa e Direta** | Inexistente. Exporta apenas formatos raster/vetor (PNG/PDF) | Suporte à exportação de esqueletos de código Java/C++ |
+| **Rastreabilidade** | Manual e propensa a erros de digitação | Automática via Catálogo da Árvore de Modelos (*Model Tree*) |
 
-### Instalação, JVM e configuração do Astah UML
+---
 
-O software Astah UML (desenvolvido pela corporação japonesa *Change Vision, Inc.*) é construído sobre a plataforma **Java Virtual Machine (JVM)**. Essa decisão de arquitetura garante portabilidade nativa entre ambientes operacionais (Windows, macOS e distribuições GNU/Linux), mas impõe a dependência de um ambiente de execução Java (JRE ou JDK) compatível.
+### 4.3 Arquitetura de Execução do Astah UML e Arquivos .asta
+
+O Astah UML é desenvolvido sobre a plataforma Java Virtual Machine (JVM). As especificações do projeto são serializadas na extensão compactada `.asta`.
+
+- **Repositório Central de Metadados:** Quando o desenvolvedor cria a classe `Usuario` no Astah, ela recebe um identificador global único (UUID).
+- **Visões do Modelo:** Um elemento semântico pode aparecer simultaneamente em múltiplos diagramas (de classes, sequência, casos de uso). Alterações efetuadas em uma visão visual propagam-se instantaneamente para todas as outras visões do sistema.
+- **Atenção Técnica de Exclusão:** Pressionar a tecla `Delete` no diagrama remove apenas a representação gráfica daquela visão específica; o elemento permanece vivo na árvore de modelos (*Model Tree*). Para exclusão definitiva do projeto, deve-se excluí-lo explicitamente da árvore.
+
+---
+
+### 4.4 Mecanismo de Licença Acadêmica XML e Validação Criptográfica Assimétrica
+
+O licenciamento educacional do Astah UML (conforme arquivo institucional de trabalho `astah_uml_license_2025-2026.xml`) utiliza um modelo de segurança baseado em **criptografia assimétrica**.
+
+```mermaid
+sequenceDiagram
+    actor Aluno as Aluno / Estação de Trabalho
+    participant GUI as Interface Astah UML
+    participant LicMgr as Módulo de Licenciamento
+    participant Engine as Motor Criptográfico
+    participant PubKey as Chave Pública Embutida
+
+    Aluno->>GUI: Acessa "Help" > "License..." e seleciona XML institucional
+    GUI->>LicMgr: Envia "astah_uml_license_2025-2026.xml"
+    LicMgr->>LicMgr: Executa parser das tags estruturadas (<INFO>, <USER_SIGNATURE>)
+    LicMgr->>Engine: Requisita validação de integridade e autenticidade
+    Engine->>PubKey: Carrega a Chave Pública da Change Vision (embutida no binário)
+    Engine->>Engine: Decifra o conteúdo de <USER_SIGNATURE> obtendo o Hash A
+    Engine->>Engine: Calcula o Hash criptográfico sobre o bloco literal de dados da tag <INFO> obtendo o Hash B
+    Engine->>LicMgr: Compara Hash A com Hash B (Resultado: Idênticos)
+    LicMgr->>LicMgr: Valida relógio local contra USER_RUN_FROM e USER_RUN_TO
+    LicMgr-->>GUI: Licença homologada como válida (Perfil Students ativo)
+    GUI-->>Aluno: Desbloqueia recursos e elimina marcas d'água de exportação
+```
+
+#### Segurança e Inviolabilidade do Arquivo de Licença XML
+1. **Tentativa de Alteração de Data:** Se um usuário editar o XML alterando `<USER_RUN_TO>2026/08/31</USER_RUN_TO>` para `2030/12/31`, o novo hash calculado na máquina local divergirá do hash original assinado. A aplicação rejeitará a licença imediatamente.
+2. **Impossibilidade de Forjar Assinatura:** Gerar um novo hash válido para os dados alterados exigiria posse da **Chave Privada** da *Change Vision, Inc.*, a qual reside exclusivamente nos servidores protegidos da empresa desenvolvedora.
+3. **Validação Offline:** Como a verificação depende apenas da **Chave Pública** gravada no código executável do Astah, o software valida a licença sem necessidade de acesso à internet.
+
+---
+
+### 4.5 Estruturação de Pacotes e Árvore de Modelos
+
+Para garantir organização em projetos corporativos, o Astah organiza os artefatos em pacotes lógicos (*Packages*):
 
 ```mermaid
 flowchart TD
-    Download["Obtenção do Instalador Oficial Astah UML"] --> ExecInst["Execução do Instalador Administrativo"]
-    ExecInst --> DetectJVM{"JVM Embutida ou do Sistema?"}
-    DetectJVM -- "Detectada e Compatível" --> ConfigDir["Definição de Diretórios de Sistema"]
-    DetectJVM -- "Incompatível / Ausente" --> InstOpenJDK["Instalação do OpenJDK Atualizado"] --> ConfigDir
-    ConfigDir --> SetupOpt["Ajuste de Parâmetros de Memória (-Xmx)"]
-    SetupOpt --> FirstRun["Primeira Execução do Ambiente"]
-    FirstRun --> ValidLic{"Verificação da Licença XML"}
-    ValidLic -- "Ausente / Expirada" --> ModoTrial["Modo Avaliação (Com marca d'água nas exportações)"]
-    ValidLic -- "Aplicada com Sucesso" --> ModoFull["Modo Acadêmico Institucional Pleno Liberado"]
+    ROOT["Raiz do Projeto (.asta)"]
+    ROOT --> PKG_REQ["Pacote: Requisitos e Casos de Uso"]
+    ROOT --> PKG_DOM["Pacote: Modelo de Domínio (Classes de Análise)"]
+    ROOT --> PKG_ARQ["Pacote: Arquitetura e Projeto Lógico"]
+
+    PKG_REQ --> DUC["Diagrama de Casos de Uso Geral"]
+    PKG_REQ --> DCU1["Quadro Descritivo DCU - Realizar Login"]
+    
+    PKG_DOM --> DCL["Diagrama de Classes da Fase de Análise"]
+    PKG_DOM --> C1["Classe Conceitual: Usuario"]
+    PKG_DOM --> C2["Classe Conceitual: Pedido"]
 ```
 
-#### Parâmetros de Otimização e Diretrizes Técnicas
-- **Alocação de Memória Heap da JVM:** Em sistemas complexos (com centenas de diagramas e classes), é indispensável verificar o arquivo de configuração do inicializador da JVM (`astah-uml.l4j.ini` no Windows ou `astah-uml.vmoptions` no macOS/Linux), ajustando o parâmetro `-Xmx` para pelo menos `1024m` ou `2048m`, evitando o erro de esgotamento de memória `java.lang.OutOfMemoryError`.
-- **Codificação de Caracteres (*Encoding*):** O Astah deve ser mantido estritamente sob a codificação **UTF-8** para evitar corrupções em comentários e descrições com caracteres acentuados.
-- **Formato Proprietário `.asta`:** O arquivo de projeto compactado contém a serialização binária do grafo de metadados, as coordenadas espaciais das representações visuais e as configurações do repositório.
+---
 
-### Arquitetura criptográfica de licenciamento institucional XML
+## Capítulo 5: Modelagem Conceitual de Domínio e Identificação de Classes
 
-A distribuição de autorizações institucionais para instituições de ensino parceiras (como a UniFEF) é operacionalizada por meio de arquivos estruturados em formato XML (`astah_uml_license_2025-2026.xml`). Diferente de chaves seriais comuns, o Astah adota um modelo de verificação de autenticidade e integridade baseado em **criptografia assimétrica e função hash**:
+### 5.1 Análise Léxica Gramatical de Russell Abbott
+
+Para identificar os elementos do modelo de domínio a partir de uma narrativa textual, aplica-se o método clássico de Russell Abbott:
+
+| Elemento Gramatical no Texto | Candidato na Modelagem Orientada a Objetos | Exemplo no Estudo de Caso (Açaiteria / Desapega Já) |
+| :--- | :--- | :--- |
+| **Substantivo Comum / Próprio** | Classe Conceitual ou Atributo | `Cliente`, `Pedido`, `Produto`, `preco`, `telefone` |
+| **Verbo Transitivo / Ação** | Método de Classe ou Caso de Uso | `cadastrar()`, `calcularTotal()`, `efetuarPagamento()` |
+| **Adjetivo** | Valor de Atributo ou Estado | `status = "Aguardando"`, `status = "Em Preparo"` |
+| **Sentença Declarativa de Posse**| Relacionamento / Associação | "O Pedido contém Itens de Produto" (Composição) |
+
+---
+
+### 5.2 Identificação de Entidades, Atributos e Responsabilidades
+
+Na Fase de Análise, as classes representam entidades do domínio do problema. Elas devem possuir:
+- **Nome:** Substantivo singular representativo escrito em `PascalCase`.
+- **Atributos:** Informações intrínsecas que a entidade deve reter, escritos em `camelCase`.
+- **Tipos de Dados Abstratos:** Tipagem voltada à semântica de análise (`Texto`, `Numero`, `Data`, `Logico`, `Real`), sem acoplamento a tipos primitivos de linguagens (`VARCHAR`, `INTEGER`).
+
+---
+
+### 5.3 Duplicação Cadastral: Herança versus Papéis de Usuário
+
+Um problema recorrente na modelagem de software é a redundância no cadastro de pessoas com papéis distintos (como no aplicativo *Desapega Já*, onde foram levantados preliminarmente `Anunciante` e `Interessado` com atributos absolutamente idênticos).
+
+```mermaid
+classDiagram
+    class Usuario {
+        -String idUsuario
+        -String nomeCompleto
+        -String email
+        -String telefoneWhatsApp
+        -String cpf
+        -Date dataNascimento
+        -String cidade
+        -String estado
+        -String bairro
+        +autenticar()
+        +atualizarCadastro()
+    }
+
+    class Anunciante {
+        -float avaliacaoVendedor
+        +publicarAnuncio()
+        +pausarAnuncio()
+    }
+
+    class Interessado {
+        -float avaliacaoComprador
+        +enviarMensagem()
+        +registrarCompra()
+    }
+
+    Usuario <|-- Anunciante : Generalização / Herança
+    Usuario <|-- Interessado : Generalização / Herança
+```
+
+#### Soluções de Engenharia
+1. **Abordagem por Generalização/Especialização (Herança):** Modela-se a superclasse abstrata `Usuario`, concentrando os atributos cadastrais comuns (`nome`, `cpf`, `email`, `telefone`, `endereco`). As subclasses `Anunciante` e `Interessado` herdam essa base e contêm apenas os métodos e atributos específicos do seu papel.
+2. **Abordagem Baseada em Papéis (Composição / Padrão Role):** A mesma pessoa física pode atuar como compradora pela manhã e vendedora à tarde. Modela-se `Usuario` com uma coleção de perfis (*Roles*), evitando duplicações cadastrais e facilitando o gerenciamento de permissões.
+
+---
+
+### 5.4 Relacionamentos Estruturais: Associação, Agregação e Composição
+
+```mermaid
+classDiagram
+    class Pedido {
+        -int idPedido
+        -DateTime dataHora
+        -double valorTotal
+        +calcularTotal()
+    }
+    class ItemPedido {
+        -int quantidade
+        -double precoUnitario
+        +calcularSubtotal()
+    }
+    class Produto {
+        -int idProduto
+        -string nome
+        -double precoBase
+    }
+    class Cliente {
+        -int idCliente
+        -string nome
+    }
+
+    Cliente "1" --> "0..*" Pedido : realiza (Associação Simples)
+    Pedido "1" *-- "1..*" ItemPedido : composto por (Composição Forte)
+    ItemPedido "*" --> "1" Produto : referencia (Agregação Fraca)
+```
+
+1. **Associação Simples:** Relação conceitual entre duas entidades independentes. Ex.: Um `Cliente` realiza múltiplos `Pedidos`. Destruir o cliente não implica necessariamente destruir os registros contábeis históricos dos pedidos já faturados.
+2. **Agregação (Todo-Parte Fraco):** A parte pertence ao todo, mas possui ciclo de vida independente. Representada por um losango oco. Ex.: Uma `Turma` agrega `Alunos`. Se a turma for dissolvida, os alunos continuam existindo no cadastro acadêmico.
+3. **Composição (Todo-Parte Forte):** A existência da parte está estritamente vinculada ao ciclo de vida do todo. Representada por um losango preenchido. Ex.: `Pedido` e `ItemPedido`. Um item de pedido não possui significado nem existência conceitual isolada sem o pedido ao qual pertence; se o pedido for descartado antes da persistência, os itens deixam de existir.
+
+---
+
+### 5.5 Multiplicidades e Integridade Referencial
+
+A multiplicidade define os limites inferior e superior de ocorrências de instâncias de uma classe vinculadas a uma única instância da classe associada:
+
+| Notação UML | Significado Semântico | Regra de Negócio Prática no Domínio |
+| :--- | :--- | :--- |
+| `1` | Exatamente um | Todo `ItemPedido` refere-se obrigatoriamente a exatamente 1 `Produto`. |
+| `0..1` | Zero ou um (Opcional) | Um `Pedido` pode ou não possuir 1 comprovante de `Pagamento` gerado. |
+| `*` ou `0..*` | Zero ou muitos | Um `Cliente` pode se cadastrar e ter realizado 0 ou muitos `Pedidos`. |
+| `1..*` | Um ou muitos (Pelo menos um) | Um `Pedido` não pode existir sem pelo menos 1 `ItemPedido`. |
+
+---
+
+## Capítulo 6: Modelagem Comportamental e Especificação Textual de Casos de Uso
+
+### 6.1 Conceito de Ator na UML: Primários, Secundários e Herança de Atores
+
+Um **Ator** em UML representa um papel idealizado exercido por qualquer entidade externa que interage diretamente através da fronteira do software. Um ator reside obrigatoriamente fora do sistema.
+
+```mermaid
+flowchart TD
+    subgraph Atores_do_Sistema["Classificação dos Atores"]
+        ACT_P["Ator Primário (Principal)\nInicia o caso de uso para atingir um benefício direto de negócio\nEx: Cliente, Funcionário"]
+        ACT_S["Ator Secundário (Apoiador)\nFornece serviços de infraestrutura ou recebe dados passivamente\nEx: Gateway de Pagamento, Servidor SMTP, Web Service dos Correios"]
+        ACT_H["Generalização de Atores\nPerfis especializados herdam direitos de acesso da base abstrata\nEx: Administrador herda de Usuário"]
+    end
+```
+
+```mermaid
+classDiagram
+    class UsuarioSistema {
+        <<actor>>
+        +efetuarLogin()
+        +alterarSenha()
+    }
+    class Administrador {
+        <<actor>>
+        +gerenciarUsuarios()
+        +auditarLogs()
+    }
+    class Atendente {
+        <<actor>>
+        +operarBalcao()
+    }
+
+    UsuarioSistema <|-- Administrador : Generalização de Papel
+    UsuarioSistema <|-- Atendente : Generalização de Papel
+```
+
+---
+
+### 6.2 Diagrama de Casos de Uso e Modularização Funcional
+
+O Diagrama de Casos de Uso sumariza o comportamento externo da aplicação. Em sistemas complexos, colocar todas as funcionalidades em um único diagrama gera diagramas poluídos e ilegíveis. Aplica-se a modularização por área funcional (conforme padrão do sistema SCAESM):
+
+```mermaid
+flowchart LR
+    subgraph Fronteira_Modulo_Funcionario["SCAESM - Módulo Pessoa Funcionário"]
+        UC01(["Funcionário Logar"])
+        UC02(["Consultar Dados Cadastrais"])
+        UC03(["Alterar Senha de Acesso"])
+    end
+
+    AtorFunc["Ator: Funcionário"] --> UC01
+    AtorFunc --> UC02
+    AtorFunc --> UC03
+```
+
+---
+
+### 6.3 Estrutura Formal do Quadro de Descrição de Caso de Uso
+
+O diagrama visual da UML comunica apenas *o que* o sistema faz e *quem* o aciona, mas não explicita o fluxo passo a passo. Essa lacuna é preenchida pelo **Quadro de Descrição de Caso de Uso (DCU)**.
+
+```mermaid
+classDiagram
+    class QuadroDCU {
+        +String identificadorCasoUso
+        +String nomeCasoUso
+        +String atorPrincipal
+        +String descricaoAcao
+        +List~String~ preRequisitos
+        +List~PassoNormal~ fluxoNormal
+        +List~DesvioAlternativo~ fluxosAlternativos
+        +List~String~ dadosManipulados
+    }
+
+    class PassoNormal {
+        +int numeroPasso
+        +String sujeitoExecutor
+        +String acaoRealizada
+    }
+
+    class DesvioAlternativo {
+        +String pontoDesvio
+        +String condicaoAtivacao
+        +String acaoTratamento
+        +String pontoConvergencia
+    }
+
+    QuadroDCU "1" *-- "many" PassoNormal
+    QuadroDCU "1" *-- "many" DesvioAlternativo
+```
+
+---
+
+### 6.4 Pré-requisitos Operacionais versus Passos de Ação
+
+- **Pré-requisito (Precondição):** Condição de verdade absoluta que o sistema e o ambiente **devem satisfazer obrigatoriamente antes** que o caso de uso seja autorizado a iniciar. Se o pré-requisito for violado, o caso de uso não pode ser executado.
+- **Passo do Fluxo:** Ações interativas executadas pelo usuário ou respostas geradas pelo sistema durante o andamento da sessão.
+
+| Declaração | Classificação | Avaliação Técnica |
+| :--- | :--- | :--- |
+| "O usuário deve estar pré-cadastrado na base de dados com status ativo." | **Pré-requisito Válido** | Define um estado de dados preexistente indispensável para permitir o fluxo. |
+| "O operador deve abrir o navegador e digitar o login." | **Ação do Fluxo (Erro)** | Trata-se de uma interação que ocorre dentro dos passos do caso de uso, não antes dele. |
+| "A conexão com a internet deve estar ativa e segura via HTTPS." | **Pré-requisito Válido** | Define a infraestrutura necessária para viabilizar a comunicação. |
+| "O usuário clica no botão salvar." | **Ação do Fluxo (Erro)** | Passo operacional da interface com o usuário. |
+
+---
+
+### 6.5 Elaboração do Fluxo Normal e Diálogo Ator-Sistema
+
+O **Fluxo Normal** (Caminho Feliz) documenta a sequência lógica perfeita onde todas as validações têm sucesso e o valor de negócio é entregue sem erros. Deve ser redigido como um diálogo alternado entre a ação do ator e a resposta do sistema.
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Aluno as Aluno / Estação Local
-    participant Astah as Interface do Astah UML
-    participant LicEngine as Módulo de Licenciamento
-    participant EngineCripto as Motor de Criptografia Interno
-    participant PubKey as Chave Pública Change Vision (Embutida)
+    actor Ator as Ator: Funcionário
+    participant Front as Interface Web / App
+    participant Sis as Servidor / Sistema
+    participant BD as Banco de Dados
 
-    Aluno->>Astah: Acessa o menu 'Help' > 'License...'
-    Aluno->>Astah: Clica em 'Set License Key' e aponta o arquivo XML
-    Astah->>LicEngine: Efetua parse das tags <INFO> e <USER_SIGNATURE>
-    LicEngine->>EngineCripto: Solicita auditoria de integridade do arquivo
-    EngineCripto->>PubKey: Carrega chave pública hardcoded da fabricante
-    EngineCripto->>EngineCripto: Decifra o conteúdo de <USER_SIGNATURE> via Chave Pública (Obtém Hash A)
-    EngineCripto->>EngineCripto: Calcula o hash criptográfico sobre o bloco de dados <INFO> (Obtém Hash B)
-    EngineCripto->>LicEngine: Compara Hash A com Hash B (Resultado: Idênticos)
-    LicEngine->>LicEngine: Valida se o relógio da máquina está entre <USER_RUN_FROM> e <USER_RUN_TO>
-    LicEngine-->>Astah: Homologação confirmada: Licença Acadêmica Válida
-    Astah-->>Aluno: Exibe status 'Valid' (Desbloqueia exportações em alta resolução sem marca)
-```
-
-A integridade do documento é garantida pelas seguintes propriedades criptográficas:
-1. **Inviolabilidade dos Dados:** Se um usuário alterar manualmente o conteúdo de `<USER_RUN_TO>` de `2026/08/31` para `2030/12/31`, o novo hash calculado na estação local divergirá do hash assinado pela Change Vision. O software identificará a adulteração e revogará a licença imediatamente.
-2. **Validação Offline Autônoma:** Como a validação depende exclusivamente da **Chave Pública** embutida no binário da aplicação, o software valida o direito de uso sem necessidade de conexão com servidores de autenticação remotos.
-
-| Tag Estrutural XML | Conteúdo Típico da Licença | Finalidade Técnica e Restrição |
-| :--- | :--- | :--- |
-| `<USER_ORGANIZATION>` | `Provided by Change Vision, Inc` | Identifica a entidade emissora da licença acadêmica. |
-| `<USER_NAME>` | `Students` | Delimita o público beneficiário (estudantes e docentes). |
-| `<USER_KIND>` | `astah_UML` | Restringe a ativação ao produto de modelagem UML. |
-| `<USER_VERSION>` | `6.0` | Define a versão mínima/máxima do software suportada pelo licenciamento. |
-| `<USER_RUN_FROM>` | `2025/07/02` | Marco temporal inicial para a execução do direito de uso. |
-| `<USER_RUN_TO>` | `2026/08/31` | Marco temporal final de expiração dos privilégios acadêmicos. |
-| `<USER_CONSTRAINT>` | `SingleUser` | Restrição de alocação por estação de trabalho individual. |
-| `<USER_SIGNATURE>` | *(Sequência em Base64)* | Assinatura digital da fabricante gerada por chave privada sobre o bloco `<INFO>`. |
-
-### Estrutura de repositório e árvore de modelos
-
-Uma modelagem consistente no Astah UML exige a organização hierárquica do projeto em **Pacotes Lógicos** (*Packages*). O painel de navegação estrutural (*Structure Tree*) reflete a modularização arquitetural do sistema, segregando modelos conceituais, fluxos de requisitos e modelos estruturais:
-
-```mermaid
-flowchart TD
-    Raiz["Raiz do Projeto (.asta)"] --> PkgReq["Pacote: 01 - Engenharia de Requisitos"]
-    Raiz --> PkgCasos["Pacote: 02 - Modelos de Casos de Uso"]
-    Raiz --> PkgDominio["Pacote: 03 - Classes de Análise e Domínio"]
-    Raiz --> PkgMensagens["Pacote: 04 - Dicionário de Mensagens e Tipos"]
-
-    PkgReq --> DocSRS["Especificação Textual de Requisitos (RF e RNF)"]
-    PkgCasos --> DiagGeral["Diagrama de Contexto Geral de Atores"]
-    PkgCasos --> SubPkgLogin["Módulo de Autenticação"]
-    PkgCasos --> SubPkgVendas["Módulo de Vendas e Pedidos"]
-
-    PkgDominio --> DiagClasses["Diagrama de Classes da Fase de Análise"]
-    PkgDominio --> Cl1["Classe: Usuario"]
-    PkgDominio --> Cl2["Classe: Pedido"]
-    PkgDominio --> Cl3["Classe: ItemPedido"]
+    Ator->>Front: Acessa a URL da aplicação
+    Front->>Sis: Requisita recurso de entrada
+    Sis-->>Front: Renderiza formulário de login
+    Ator->>Front: Digita credenciais (login e senha) e aciona "Entrar"
+    Front->>Sis: Submete dados de autenticação
+    Sis->>BD: Consulta credenciais e status do usuário
+    BD-->>Sis: Retorna registro ativo confirmado
+    Sis-->>Front: Emite mensagem de sucesso (MSG03) e inicializa sessão
+    Front-->>Ator: Exibe tela principal personalizada
 ```
 
 ---
 
-## Modelagem Comportamental: Atores e Casos de Uso
+### 6.6 Mapeamento Numérico de Fluxos Alternativos e Exceções
 
-### Conceituação de atores na UML e fronteira do sistema
+Os **Fluxos Alternativos** tratam de desvios operacionais ou ramificações previstas no negócio. Os **Fluxos de Exceção** tratam de falhas técnicas que impedem a conclusão do objetivo. Ambos devem utilizar indexação decimal referenciando explicitamente o passo do Fluxo Normal onde o desvio ocorre:
 
-Na linguagem UML, um **Ator** representa um **papel coeso idealizado** desempenhado por uma entidade externa ao interagir diretamente com o sistema para consumir seus serviços ou fornecer estímulos operacionais.
+- `Passo 5`: O sistema valida se o usuário está cadastrado.
+- `Fluxo Alternativo 5.1`: Se o usuário não estiver cadastrado:
+  - `5.1.1`: O sistema exibe mensagem de alerta `MSG01 ("Usuário não cadastrado")`.
+  - `5.1.2`: O sistema redireciona o usuário para o formulário de autocadastro.
 
-- **Fronteira do Sistema (*System Boundary*):** É a linha divisória que separa o software daquilo que pertence ao ambiente externo. Atores residem **obrigatoriamente fora** da fronteira do sistema. Os casos de uso residem **obrigatoriamente dentro** da fronteira.
-- **Distinção Fundamental entre Usuário e Ator:** Um usuário é um indivíduo específico do mundo real (exemplo: *"o colaborador João da Silva"*). Um ator é o papel funcional assumido perante o software (exemplo: `OperadorDeVendas`). Um mesmo indivíduo humano pode atuar como múltiplos atores no mesmo dia (como `Cliente` pela manhã e `Anunciante` à tarde).
-- **Contraexemplo Clássico:** Desenhar atores dentro do retângulo da fronteira do sistema, ou criar um ator chamado *"Banco de Dados MySQL"*. O banco de dados faz parte da infraestrutura interna do software, não se constituindo em ator externo na fase de análise.
+---
+
+### 6.7 Especificação de Dados e Dicionário de Mensagens
+
+Para garantir a rastreabilidade entre requisitos e código, todas as notificações de tela devem ser mapeadas em um dicionário central de mensagens com códigos padronizados (`MSG`):
 
 ```mermaid
 flowchart LR
-    subgraph ForaDaFronteira["Ambiente Externo (Atores)"]
-        AtorHumano["Ator Primário: Operador"]
-        AtorSistema["Ator Secundário: Gateway Pagamento"]
-    end
-
-    subgraph DentroDaFronteira["Fronteira do Sistema de Software"]
-        UC1(["UC01: Registrar Pedido"])
-        UC2(["UC02: Autorizar Transação"])
-    end
-
-    AtorHumano --> UC1
-    UC1 --> UC2
-    UC2 --> AtorSistema
-```
-
-### Categorização de atores: primários, secundários e temporais
-
-A Engenharia de Software classifica os atores em três categorias essenciais:
-
-1. **Ator Primário:** É aquele que dá início direto à execução do caso de uso com o propósito de atingir um objetivo de negócio mensurável. Ele consome ativamente as funcionalidades do sistema (exemplo: `Cliente` iniciando a compra de mercadorias).
-2. **Ator Secundário (ou de Suporte):** É o ator do qual o sistema necessita para completar um serviço secundário ou obter validações adicionais. Ele é acionado pelo próprio software de forma passiva (exemplo: um `Serviço de Cobrança Pix` externo acionado para liquidar um pagamento).
-3. **Ator Temporal:** O papel exercido pelo próprio tempo (relógio do sistema ou agendador de tarefas/cron jobs) ao emitir sinais temporais predeterminados para iniciar fluxos automáticos sem intervenção humana (exemplo: fechamento diário de lotes de pedidos ou disparos noturnos de relatórios analíticos).
-
-### Relacionamentos entre atores: herança e especialização
-
-Quando múltiplos atores compartilham comportamentos e direitos operacionais comuns sobre o sistema, aplica-se o mecanismo de **Generalização/Especialização de Atores**:
-
-```mermaid
-flowchart TD
-    UsuarioSistema["«actor»\nUsuário do Sistema\n(Ator Abstrato com acessos comuns)"]
-    Admin["«actor»\nAdministrador\n(Especializado)"]
-    Operador["«actor»\nOperador de Vendas\n(Especializado)"]
-
-    Admin -->|Generalização / Herança| UsuarioSistema
-    Operador -->|Generalização / Herança| UsuarioSistema
-
-    UC_Login(["Realizar Login"])
-    UC_Senha(["Alterar Senha Pessoal"])
-    UC_Config(["Configurar Parâmetros de Rede"])
-    UC_Venda(["Registrar Pedido de Venda"])
-
-    UsuarioSistema --> UC_Login
-    UsuarioSistema --> UC_Senha
-    Admin --> UC_Config
-    Operador --> UC_Venda
-```
-
-- **Semântica:** O ator `Administrador` e o ator `Operador de Vendas` herdam automaticamente as associações de `Usuário do Sistema`. Portanto, ambos têm acesso aos casos de uso de autenticação e recuperação de credenciais, sem a necessidade de traçar linhas redundantes no diagrama.
-
-### Modularização funcional em sistemas corporativos
-
-Em sistemas de grande porte, alocar dezenas de elipses de casos de uso em uma única folha de diagrama gera diagramas poluídos, que dificultam a leitura e a manutenção. A boa prática de engenharia adota a **decomposição por módulos funcionais coesos**:
-
-- Agrupam-se os casos de uso de acordo com o departamento de negócio ou domínio de dados (exemplo: *Módulo Financeiro*, *Módulo de Recursos Humanos*, *Módulo Acadêmico*).
-- Como demonstrado no estudo de caso do sistema **SCAESM** ministrado pelo Prof. Marcelo Boer, o módulo **Pessoa Funcionário** isola rigorosamente as ações executadas pelo ator `Funcionário` (tais como autenticação, consulta de prontuário e solicitação de licenças), criando fronteiras operacionais bem definidas.
-
-### Estrutura do Quadro de Descrição de Caso de Uso
-
-Os diagramas de casos de uso da UML resumem visualmente *o que* o sistema faz e *quem* interage com ele. Contudo, eles não descrevem *como* a interação se desenrola passo a passo. 
-
-Para documentar os requisitos funcionais com precisão, adota-se o **Quadro de Descrição de Caso de Uso (DCU)**:
-
-```text
-================================================================================
-Quadro Padronizado – DCU: [Identificador] [Nome do Caso de Uso]
---------------------------------------------------------------------------------
-Ator Principal:
-  Nome do papel que inicia o caso de uso.
-Descrição da Ação:
-  Resumo conciso do objetivo de negócio que o caso de uso cumpre.
-Pré-requisito (Pré-condições):
-  Estado obrigatório que o ambiente e os dados devem possuir antes da execução.
-Fluxo Normal (Caminho Feliz):
-  Passos numerados sequenciais alternando estímulo do ator e resposta do sistema.
-Fluxo Alternativo (Ramificações e Falhas):
-  Subpassos numerados hierarquicamente apontando desvios e regras de retorno.
-Dados Manipulados:
-  Listagem de atributos e parâmetros que trafegam nas entradas e saídas do fluxo.
-================================================================================
-```
-
-### Redação de pré-requisitos, fluxo normal e fluxos alternativos
-
-- **Pré-requisitos Operacionais:** Não confundir pré-requisito com o primeiro passo da tela. O pré-requisito estabelece uma condição de estado preexistente (exemplo: *"O usuário deve estar autenticado no sistema com perfil de operador ativo"*). Dizer que o pré-requisito é *"o usuário digitar a senha e clicar no botão"* constitui erro conceitual grave, pois essa é uma ação do próprio fluxo.
-- **Fluxo Normal (Caminho Principal / Feliz):** Deve ser redigido sob a ótica da intenção do negócio, de forma neutra em termos de tecnologia de interface gráfica (evitar amarras como *"o usuário clica com o botão esquerdo no input `#txtNome`"*).
-- **Mapeamento Rigoroso de Desvios nos Fluxos Alternativos:** Todo fluxo alternativo deve indicar precisamente o passo de origem do qual derivou e o ponto de retorno para o fluxo normal:
-
-```text
-Passo Normal 03: Sistema verifica a integridade do CPF digitado.
-Fluxo Alternativo 3.1: Se o CPF digitado for inválido:
-  3.1.1. Sistema exibe a mensagem MSG04 ("CPF informado é inválido");
-  3.1.2. Sistema limpa o campo correspondente e retorna ao Passo 02 do Fluxo Normal.
+    RN["Regra de Negócio no Fluxo\nCredenciais Inválidas"] --> Catalogo["Catálogo de Mensagens\nCódigo MSG01"]
+    Catalogo --> Tela["Exibição Padronizada na UI\n'Usuário ou senha inválidos'"]
 ```
 
 ---
 
-## Modelagem Estrutural: Diagrama de Classes na Fase de Análise
+## Capítulo 7: Estudos de Caso Integrados da Disciplina
 
-### Classes conceituais versus classes de projeto/implementação
+### 7.1 Aplicativo Móvel Desapega Já: Classificados Hiperlocais
 
-O **Diagrama de Classes da Fase de Análise** modela os conceitos estruturais do domínio de negócio. Ele não representa tabelas de banco de dados, nem classes de frameworks de interface gráfica ou de mapeamento objeto-relacional (ORM):
+#### Proposta de Valor e Modelo de Negócio
+O *Desapega Já* foi concebido como uma plataforma de economia circular hiperlocal. Ele resolve a retenção ociosa e o descarte indevido de bens duráveis e semiduráveis (roupas, livros, móveis, eletrônicos), aproximando compradores e vendedores no mesmo perímetro urbano (cidade, estado e bairro), eliminando fretes caros e reduzindo o risco de fraudes.
 
-```mermaid
-classDiagram
-    direction LR
-    class PedidoAnálise {
-        <<Conceitual - Domínio>>
-        -idPedido: Identificador
-        -dataHora: DataHora
-        -status: Texto
-        -valorTotal: Decimal
-        +calcularTotal() Decimal
-        +atualizarStatus(novoStatus)
-    }
+#### Matriz de Rastreabilidade de Requisitos Funcionais Refinados
 
-    class PedidoProjeto {
-        <<Implementação - Projeto>>
-        -id: Long
-        -uuid: UUID
-        -created_at: java.sql.Timestamp
-        -connectionPool: ConnectionPool
-        +saveToDatabase(conn: Connection) boolean
-        +toJsonString() String
-        +renderHtmlComponent() View
-    }
-```
+| ID Original | Requisito Bruto (Aula 01/04) | Status da Engenharia | Requisito Funcional Refinado e Testável | Dados de Entrada | Dados de Saída |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **RF01** | Facilitar a venda de produtos | Inadequado (Meta de negócio) | *Reclassificado:* Meta estratégica atendida pela composição do RF02, RF05 e RF08. | — | — |
+| **RF02** | Permitir anúncio de produtos | Aceitável (Necessita refinamento) | O sistema deve permitir que o usuário autenticado publique anúncios com fotos (mínimo 1, máximo 5), título, descrição, categoria e preço. | Título, descrição, fotos, preço, categoria | Anúncio publicado e listado publicamente |
+| **RF03** | Permitir cadastro de interessados | Redundante com RF06 | O sistema deve permitir o autocadastro de usuários coletando nome, e-mail, telefone/WhatsApp, senha criptografada, CPF, data de nascimento, cidade, estado e bairro. | Dados pessoais, localização e credenciais | Conta criada e token de sessão |
+| **RF04** | Facilitar busca por proximidade | Inadequado (Subjetivo) | O sistema deve permitir a busca parametrizada de anúncios por proximidade geográfica, filtrando por estado, cidade e bairro do anunciante. | Parâmetros de busca (estado, cidade, bairro) | Coleção de anúncios filtrados |
+| **RF05** | Gerar histórico e avaliações | Composto | O sistema deve manter o histórico cronológico de transações concluídas e calcular a média ponderada das avaliações recebidas (notas de 1 a 5). | Identificador da transação, nota e comentário | Média da reputação e log no perfil |
+| **RF06** | Cadastro de ofertantes | Redundante com RF03 | *Unificado ao RF03:* O cadastro de usuários unificado atende tanto ao comprador quanto ao anunciante. | Conforme RF03 | Conforme RF03 |
+| **RF07** | Cadastrar produtos a vender | Redundante com RF02 | *Unificado ao RF02:* O produto é abstraído diretamente na publicação do anúncio na plataforma. | Conforme RF02 | Conforme RF02 |
+| **RF08** | Troca de mensagens | Requisito claro | O sistema deve disponibilizar canal de mensageria síncrona/assíncrona entre o interessado e o anunciante com histórico vinculado ao anúncio. | Texto da mensagem, id do anúncio, id do remetente | Mensagem persistida e notificação push |
 
-- **Na Fase de Análise:** Registram-se apenas atributos de domínio e métodos de regras de negócio essenciais. É estritamente vedado inserir atributos de infraestrutura tecnológica (como conexões de banco de dados, chaves estrangeiras declaradas manualmente como atributos ou referências a frameworks).
-- **Na Fase de Projeto:** Introduzem-se as classes de controle, Data Access Objects (DAO), Data Transfer Objects (DTO) e as bibliotecas específicas da linguagem de programação.
-
-### Tipagem abstrata de atributos e responsabilidades
-
-Na fase conceitual, os tipos de dados devem refletir conceitos matemáticos ou lógicos universais, e não dialetos de banco de dados:
-- Utiliza-se `Texto` ou `String` (nunca `VARCHAR(100)` ou `CHAR(2)`).
-- Utiliza-se `Número`, `Inteiro` ou `Decimal` (nunca `FLOAT4`, `BIGINT` ou `NUMBER(10,2)`).
-- Utiliza-se `Data` ou `DataHora` (nunca `DATETIME2` ou `TIMESTAMP WITH TIME ZONE`).
-- Utiliza-se `Booleano` ou `Lógico` (nunca `TINYINT(1)` ou `BIT`).
-
-### Relacionamentos: associação, agregação e composição
-
-A UML padroniza as formas de acoplamento estrutural entre classes:
+#### Requisitos Não Funcionais Parametrizados (ISO/IEC 25010)
 
 ```mermaid
-classDiagram
-    direction LR
-    class Cliente {
-        -nome: Texto
-    }
-    class Pedido {
-        -dataHora: DataHora
-    }
-    class ItemPedido {
-        -quantidade: Inteiro
-        -precoUnitario: Decimal
-    }
-    class Produto {
-        -descricao: Texto
-    }
-
-    Cliente "1" --> "0..*" Pedido : realiza (Associação Direcional)
-    Pedido "1" *-- "1..*" ItemPedido : composto por (Composição)
-    ItemPedido "*" o-- "1" Produto : referencia (Agregação)
+flowchart TD
+    RNF_DJ["RNFs do Desapega Já"]
+    RNF_DJ --> RNF01["RNF01: Usabilidade\nInterface mobile alinhada ao Material Design e Human Interface Guidelines.\nTempo de anúncio < 3 min para usuários leigos"]
+    RNF_DJ --> RNF02["RNF02: Segurança e Privacidade (LGPD)\nCriptografia de senhas em BCrypt.\nCPF e telefone ocultos na visualização pública do anúncio"]
+    RNF_DJ --> RNF03["RNF03: Desempenho\nConsultas de proximidade retornadas em menos de 1,5 segundos sob redes móveis 4G"]
+    RNF_DJ --> RNF04["RNF04: Integridade de Dados\nPersistência transacional com chave estrangeira impedindo anúncios sem usuário responsável"]
 ```
 
-1. **Associação Simples:** Demonstra uma conexão semântica entre duas classes independentes. Possui nome de relação, navegabilidade e multiplicidades explícitas em ambas as pontas.
-2. **Agregação (Todo-Parte Fraco — Losango Oco):** Indica que uma classe faz parte de outra, mas pode existir de forma independente no domínio. Se a classe "Todo" for excluída, a classe "Parte" continua existindo (exemplo: um `Produto` existe no catálogo da empresa independentemente de constar em um `ItemPedido`).
-3. **Composição (Todo-Parte Forte — Losango Preenchido):** Indica um vínculo de dependência de existência absoluta. A classe "Parte" só faz sentido existencial se pertencer à classe "Todo". Se o `Pedido` for destruído, todas as suas instâncias subordinadas de `ItemPedido` perdem a razão de existir e são destruídas em cascata.
-
-### Classes associativas e resolução de relacionamentos muitos-para-muitos
-
-Em modelagem orientada a objetos de domínio, um relacionamento de multiplicidade muitos-para-muitos ($N:N$) frequentemente esconde dados que não pertencem exclusivamente a nenhuma das duas pontas.
-
-- **Cenário:** Um `Pedido` pode conter muitos `Produtos`, e um `Produto` pode constar em múltiplos `Pedidos`.
-- **Problema:** Onde armazenar a `quantidade` comprada daquele item específico? Se colocarmos `quantidade` em `Produto`, violamos a consistência conceitual (pois a quantidade varia a cada pedido). Se colocarmos em `Pedido`, precisaremos de arrays dinâmicos desnormalizados. Além disso, o preço de venda praticado no dia da compra deve ser congelado para proteger a transação de reajustes futuros de catálogo.
-- **Solução Formal:** Cria-se uma **Classe Associativa** ou entidade intermediária resolvida denominada `ItemPedido`:
-
-```mermaid
-classDiagram
-    direction LR
-    class Pedido {
-        -idPedido: Inteiro
-        -dataHoraSolicitacao: DataHora
-        -valorTotal: Decimal
-    }
-    class ItemPedido {
-        -quantidade: Inteiro
-        -precoUnitarioHistorico: Decimal
-        -subtotal: Decimal
-        +calcularSubtotal() Decimal
-    }
-    class Produto {
-        -idProduto: Inteiro
-        -nome: Texto
-        -precoAtual: Decimal
-    }
-
-    Pedido "1" *-- "1..*" ItemPedido : contém
-    ItemPedido "*" --> "1" Produto : referencia
-```
-
-### Generalização, especialização e o princípio DRY
-
-O princípio **DRY (*Don't Repeat Yourself*)** postula que todo conhecimento em um sistema computacional deve possuir uma representação única, não ambígua e autoritativa.
-
-Quando identificamos que entidades distintas compartilham um conjunto idêntico de atributos e métodos (como demonstrado na análise das entidades `Anunciante` e `Interessado` na Aula 01 e Aula 04 do Prof. Marcelo Boer), modelá-las como tabelas ou classes isoladas e duplicadas gera redundância cadastral:
+#### Diagrama de Classes Conceituais de Domínio
 
 ```mermaid
 classDiagram
     class Usuario {
-        <<Superclasse - Generalização>>
-        -idUsuario: Inteiro
-        -nomeCompleto: Texto
-        -email: Texto
-        -telefoneWhatsApp: Texto
-        -senhaHash: Texto
-        -cpf: Texto
-        -cidade: Texto
-        -estado: Texto
-        -bairro: Texto
-        +fazerLogin(credenciais)
+        -String idUsuario
+        -String nomeCompleto
+        -String email
+        -String telefoneWhatsApp
+        -String senhaHash
+        -String cpf
+        -Date dataNascimento
+        -String estado
+        -String cidade
+        -String bairro
+        +autenticar()
         +atualizarPerfil()
-    }
-
-    class Anunciante {
-        <<Subclasse - Especializada>>
-        -avaliacaoMediaVendedor: Decimal
-        +publicarAnuncio(dados)
-    }
-
-    class Interessado {
-        <<Subclasse - Especializada>>
-        -avaliacaoMediaComprador: Decimal
-        +enviarMensagemContato()
-        +confirmarCompra()
-    }
-
-    Usuario <|-- Anunciante : Herança
-    Usuario <|-- Interessado : Herança
-```
-
-- **Vantagem de Engenharia:** Centraliza os mecanismos de autenticação, criptografia de senhas, validações de documentos legais (CPF) e auditoria cadastral na superclasse base `Usuario`. As subclasses especializadas herdam a estrutura comum e acrescentam exclusivamente seus atributos e comportamentos específicos de perfil.
-
----
-
-## Padrão Documental UniFEF para a Fase de Análise
-
-### Estrutura formal da entrega AV2
-
-Para a realização da Avaliação Oficial AV2 da disciplina de Engenharia de Software I, a UniFEF adota uma especificação documental rigorosa. Esta estrutura formal sintetiza a análise orientada a objetos preliminar de uma aplicação e deve conter as seguintes seções estruturantes:
-
-1. **Contexto do Aplicativo:** Identificação, escopo explícito, limitações e público-alvo da aplicação;
-2. **Lista de Atores e Diagrama de Atores:** Classificação dos papéis com diagramação de herança;
-3. **Quadro 1 — Descrição dos Atores:** Tabela com identificador, categoria, responsabilidades e permissões;
-4. **Diagrama de Contexto Geral (Por Ator):** Visualização completa do escopo operacional do sistema com fronteiras bem definidas;
-5. **Lista de Casos de Uso:** Relação dos identificadores, títulos e metas de negócio;
-6. **Lista Central de Mensagens do Sistema:** Dicionário com códigos formais, tipos e textos literais;
-7. **Especificação de Casos de Uso Canônicos:** Diagramas isolados e Quadros de Descrição de Caso de Uso (DCU) completos para os fluxos essenciais;
-8. **Diagrama de Classes da Fase de Análise:** Modelo estrutural conceitual com tipagem abstrata, associações e multiplicidades.
-
-### Contexto do aplicativo e limites de escopo
-
-A descrição do contexto estabelece formalmente os limites contratuais do software. Ela deve sanar ambiguidades, declarando o que o sistema fará e explicitando aquilo que **não** será contemplado:
-
-```text
-================================================================================
-MODELO DE DECLARAÇÃO FORMAL DE ESCOPO
-Sistema: SisVendas — Sistema de Automação Comercial Varejista
-Escopo Incluído:
-  - Autenticação e gestão individualizada de perfis de operadores;
-  - Manutenção cadastral centralizada de produtos e clientes;
-  - Emissão de pedidos com cálculo automatizado de subtotais e controle de status;
-  - Validação transacional de pagamentos em dinheiro, Pix e cartões.
-Limites Estritos de Escopo (Não Contemplado):
-  - Emissão e autorização de notas fiscais eletrônicas junto à SEFAZ (módulo fiscal);
-  - Conciliação bancária automática com arquivos de retorno CNAB;
-  - Controle de rotas logísticas e fretes de terceiros.
-================================================================================
-```
-
-### Listagem e Quadro Descritivo de Atores
-
-Todos os atores mapeados devem ser registrados formalmente no documento através do **Quadro 1**:
-
-| Identificador | Nome do Ator | Categoria | Descrição do Papel e Responsabilidades |
-| :--- | :--- | :--- | :--- |
-| **ACT01** | **Usuário do Sistema** | Humano (Abstrato) | Papel que reúne as credenciais e permissões básicas compartilhadas por todos os operadores humanos (Login, logout e alteração de senha). |
-| **ACT02** | **Administrador** | Humano (Especializado) | Responsável pela gestão técnica global, concessão de acessos a novos operadores, auditoria de logs de segurança e manutenção do catálogo base. |
-| **ACT03** | **Operador de Vendas** | Humano (Especializado) | Responsável pelo atendimento rotineiro aos clientes, registro de pedidos de venda no balcão e acompanhamento do status de montagem. |
-| **ACT04** | **Serviço de Cobrança Pix**| Sistema Externo | API de terceiros (Instituição Financeira) consumida pelo sistema para emissão de chaves dinâmicas, validação e notificação de liquidação financeira. |
-
-### Diagrama de Contexto Geral por Ator
-
-O Diagrama de Contexto Geral agrupa o ecossistema de funcionalidades providas pela aplicação, estabelecendo as fronteiras entre o ambiente interno e as entidades externas:
-
-```mermaid
-flowchart LR
-    subgraph FronteiraDoSistema["Fronteira do Sistema SisVendas"]
-        UC01(["UC01: Realizar Login"])
-        UC02(["UC02: Cadastrar Usuário"])
-        UC03(["UC03: Cadastrar Cliente"])
-        UC04(["UC04: Listar Clientes"])
-        UC05(["UC05: Carregar Cliente"])
-        UC06(["UC06: Alterar Cliente"])
-        UC07(["UC07: Excluir Cliente"])
-        UC08(["UC08: Consultar Auditoria"])
-    end
-
-    AtorAdmin["Administrador"]
-    AtorOperador["Operador de Vendas"]
-
-    AtorAdmin --> UC01
-    AtorAdmin --> UC02
-    AtorAdmin --> UC07
-    AtorAdmin --> UC08
-
-    AtorOperador --> UC01
-    AtorOperador --> UC03
-    AtorOperador --> UC04
-    AtorOperador --> UC05
-    AtorOperador --> UC06
-```
-
-### Lista de Casos de Uso e Dicionário Central de Mensagens
-
-#### Lista Consolidada de Casos de Uso
-
-| Identificador | Nome do Caso de Uso | Ator Primário | Objetivo / Meta de Negócio |
-| :--- | :--- | :--- | :--- |
-| **UC01** | Realizar Login | Usuário do Sistema | Validar as credenciais corporativas do operador e liberar os módulos permitidos. |
-| **UC02** | Cadastrar | Operador de Vendas | Inserir novos registros de entidades de domínio garantindo integridade cadastral. |
-| **UC03** | Listar | Operador de Vendas | Recuperar e exibir listagens tabulares de entidades com suporte a filtros de consulta. |
-| **UC04** | Carregar | Operador de Vendas | Localizar e trazer os detalhes de uma entidade específica para a tela de visualização/edição. |
-| **UC05** | Alterar | Operador de Vendas | Salvar modificações em atributos de uma entidade preexistente no banco de dados. |
-| **UC06** | Excluir | Administrador | Remover fisicamente ou inativar logicamente uma entidade selecionada mediante confirmação. |
-
-#### Dicionário Central de Mensagens do Sistema (MSG)
-É vedado utilizar mensagens em texto livre espalhadas pela especificação. Todas as mensagens exibidas aos usuários devem ser centralizadas e identificadas:
-
-| Código | Tipo da Mensagem | Texto Padronizado da Mensagem | Finalidade Operacional |
-| :--- | :--- | :--- | :--- |
-| **MSG01** | Erro | "Usuário ou senha inválidos. Por favor, confira suas credenciais." | Falha na autenticação (credencial inexistente ou senha divergente). |
-| **MSG02** | Alerta | "Conta de usuário inativa ou suspensa. Contate o administrador." | Tentativa de login realizada por conta com bloqueio administrativo. |
-| **MSG03** | Sucesso | "Autenticação efetuada com sucesso. Redirecionando..." | Validação bem-sucedida de credenciais de login. |
-| **MSG04** | Erro | "Existem campos obrigatórios que não foram preenchidos: [Campos]." | Tentativa de submissão de formulário com dados obrigatórios em branco. |
-| **MSG05** | Erro | "Registro já cadastrado com os dados informados: [Chave]." | Violação de chave única de negócio (ex.: CPF já existente na base). |
-| **MSG06** | Sucesso | "Registro cadastrado com sucesso!" | Confirmação de persistência bem-sucedida de novo registro no banco. |
-| **MSG07** | Alerta | "Nenhum registro encontrado para os critérios de busca informados." | Retorno de conjunto de dados vazio em operações de listagem e busca. |
-| **MSG08** | Erro | "O registro solicitado não foi localizado ou foi removido recentemente." | Falha na operação de carga (ID não existente no banco de dados). |
-| **MSG09** | Sucesso | "Alterações salvas com sucesso!" | Confirmação de persistência após atualização cadastral de dados. |
-| **MSG10** | Confirmação | "Deseja realmente excluir o registro [Nome]? Esta operação é definitiva." | Diálogo de segurança exibido antes da efetivação de uma exclusão. |
-| **MSG11** | Erro | "Não é possível excluir o registro: existem transações vinculadas." | Bloqueio de exclusão em virtude de regras de integridade referencial. |
-| **MSG12** | Sucesso | "Registro excluído com sucesso!" | Confirmação formal da remoção do registro da base de dados. |
-
-### Especificações canônicas: Login, Cadastrar, Listar, Carregar, Alterar e Excluir
-
-Abaixo detalham-se as especificações completas dos casos de uso canônicos do sistema, no formato padrão exigido na avaliação AV2:
-
-#### Caso de Uso UC01: Realizar Login
-
-```mermaid
-flowchart LR
-    subgraph ModuloAcesso["Módulo de Controle de Acesso"]
-        UC01(["UC01: Realizar Login"])
-    end
-    Ator["Usuário do Sistema"] --> UC01
-```
-
-```text
-================================================================================
-Quadro DCU — UC01: Realizar Login
---------------------------------------------------------------------------------
-Ator Principal:
-  Usuário do Sistema (Ator Primário).
-Descrição da Ação:
-  Autenticar o operador perante o sistema validando credenciais (login e senha).
-Pré-requisito:
-  O aplicativo deve estar operacional e com conectividade ativa com a base de dados.
-Fluxo Normal:
-  01. O usuário acessa a tela inicial do aplicativo;
-  02. O sistema exibe o formulário solicitando identificador de login e senha;
-  03. O usuário digita suas credenciais nos campos correspondentes;
-  04. O usuário clica na ação "Entrar";
-  05. O sistema verifica se os campos foram informados;
-  06. O sistema consulta a base e valida a existência do login e o hash da senha;
-  07. O sistema valida se o status da conta do usuário é "Ativo";
-  08. O sistema inicializa a sessão autenticada, exibe MSG03 e abre o menu principal.
-Fluxo Alternativo:
-  5.1. Se o usuário deixar login ou senha em branco:
-    5.1.1. O sistema exibe a mensagem MSG04 apontando os campos em branco;
-    5.1.2. O sistema devolve o foco ao campo não preenchido no Passo 02.
-  6.1. Se o login não existir ou a senha for inválida:
-    6.1.1. O sistema exibe a mensagem MSG01;
-    6.1.2. O sistema limpa o campo de senha e retorna ao Passo 02 do Fluxo Normal.
-  7.1. Se a conta do usuário estiver com o status "Inativo" ou "Bloqueado":
-    7.1.1. O sistema exibe a mensagem de alerta MSG02;
-    7.1.2. O sistema cancela a inicialização da sessão e permanece no Passo 02.
-Dados Manipulados:
-  login, senha.
-================================================================================
-```
-
-#### Caso de Uso UC02: Cadastrar
-
-```mermaid
-flowchart LR
-    subgraph ModuloCadastros["Módulo de Gestão Cadastral"]
-        UC02(["UC02: Cadastrar"])
-    end
-    Ator["Operador de Vendas"] --> UC02
-```
-
-```text
-================================================================================
-Quadro DCU — UC02: Cadastrar
---------------------------------------------------------------------------------
-Ator Principal:
-  Operador de Vendas (Ator Primário).
-Descrição da Ação:
-  Registrar uma nova entidade de negócio no sistema garantindo dados válidos.
-Pré-requisito:
-  O operador deve estar previamente autenticado no sistema (UC01).
-Fluxo Normal:
-  01. O operador aciona a opção "Novo Registro" no menu correspondente;
-  02. O sistema renderiza o formulário com os campos vazios;
-  03. O operador preenche os campos requeridos (nome, CPF, telefone, endereço);
-  04. O operador clica no botão "Gravar";
-  05. O sistema valida o preenchimento de todos os campos obrigatórios;
-  06. O sistema valida o formato matemático do CPF informado;
-  07. O sistema verifica se já existe outro registro com a mesma chave (CPF);
-  08. O sistema persiste as informações no banco de dados;
-  09. O sistema exibe a mensagem MSG06 e retorna para a tela de listagem (UC03).
-Fluxo Alternativo:
-  5.1. Se houver algum campo obrigatório em branco:
-    5.1.1. O sistema interrompe o processamento e exibe a mensagem MSG04;
-    5.1.2. O sistema destaca visualmente os campos faltantes no Passo 02.
-  6.1. Se o CPF for matematicamente inválido:
-    6.1.1. O sistema exibe mensagem de alerta informando erro de digitação do CPF;
-    6.1.2. O sistema posiciona o cursor no campo de CPF e aguarda correção.
-  7.1. Se o CPF já constar na base de dados para outro cliente:
-    7.1.1. O sistema exibe a mensagem de erro MSG05;
-    7.1.2. O sistema encerra o cadastro sem gravar e mantém os dados na tela.
-Dados Manipulados:
-  nome, cpf, telefone, email, endereco.
-================================================================================
-```
-
-#### Caso de Uso UC03: Listar
-
-```mermaid
-flowchart LR
-    subgraph ModuloConsultas["Módulo de Consultas e Relatórios"]
-        UC03(["UC03: Listar"])
-    end
-    Ator["Operador de Vendas"] --> UC03
-```
-
-```text
-================================================================================
-Quadro DCU — UC03: Listar
---------------------------------------------------------------------------------
-Ator Principal:
-  Operador de Vendas (Ator Primário).
-Descrição da Ação:
-  Consultar e visualizar listagem tabular das entidades cadastradas na aplicação.
-Pré-requisito:
-  O operador deve estar previamente autenticado no sistema (UC01).
-Fluxo Normal:
-  01. O operador aciona o menu "Consultar Registros";
-  02. O sistema recupera os registros mais recentes e apresenta em tabela com colunas:
-      Código, Nome, Telefone, Cidade e Ações;
-  03. O operador digita um parâmetro no campo de filtro rápido (Nome ou CPF);
-  04. O operador clica na opção "Filtrar";
-  05. O sistema executa a consulta na base aplicando os critérios;
-  06. O sistema localiza os registros correspondentes;
-  07. O sistema atualiza a tabela em tela exibindo as linhas retornadas.
-Fluxo Alternativo:
-  6.1. Se a consulta não retornar nenhum registro correspondente:
-    6.1.1. O sistema limpa as linhas da tabela e apresenta a mensagem MSG07;
-    6.1.2. O sistema mantém o campo de filtro disponível para nova consulta.
-Dados Manipulados:
-  parametroFiltro, listaRegistrosRetornados.
-================================================================================
-```
-
-#### Caso de Uso UC04: Carregar
-
-```mermaid
-flowchart LR
-    subgraph ModuloNavegacao["Módulo de Recuperação de Registros"]
-        UC04(["UC04: Carregar"])
-    end
-    Ator["Operador de Vendas"] --> UC04
-```
-
-```text
-================================================================================
-Quadro DCU — UC04: Carregar
---------------------------------------------------------------------------------
-Ator Principal:
-  Operador de Vendas (Ator Primário).
-Descrição da Ação:
-  Recuperar todas as informações detalhadas de uma entidade para visualização ou edição.
-Pré-requisito:
-  O operador deve estar visualizando a tela de listagem de registros (UC03).
-Fluxo Normal:
-  01. Na tabela da listagem, o operador clica no botão "Visualizar/Editar" da linha;
-  02. O sistema identifica o identificador único (ID) do registro selecionado;
-  03. O sistema busca no banco de dados o registro correspondente àquele ID;
-  04. O sistema encontra o registro;
-  05. O sistema preenche todos os campos do formulário na tela com os dados recuperados;
-  06. O formulário é liberado para o operador (para consulta ou alteração via UC05).
-Fluxo Alternativo:
-  4.1. Se o registro selecionado tiver sido excluído por outro operador simultaneamente:
-    4.1.1. O sistema identifica que o ID não existe mais na base;
-    4.1.2. O sistema apresenta a mensagem de erro MSG08;
-    4.1.3. O sistema atualiza a lista de registros e retorna ao Passo 02 do UC03.
-Dados Manipulados:
-  idRegistroSelecionado, dadosCompletosDoRegistro.
-================================================================================
-```
-
-#### Caso de Uso UC05: Alterar
-
-```mermaid
-flowchart LR
-    subgraph ModuloManutencao["Módulo de Manutenção Cadastral"]
-        UC05(["UC05: Alterar"])
-    end
-    Ator["Operador de Vendas"] --> UC05
-```
-
-```text
-================================================================================
-Quadro DCU — UC05: Alterar
---------------------------------------------------------------------------------
-Ator Principal:
-  Operador de Vendas (Ator Primário).
-Descrição da Ação:
-  Atualizar os dados de um registro preexistente que foi carregado previamente na tela.
-Pré-requisito:
-  O registro alvo deve ter sido carregado com sucesso em tela (UC04).
-Fluxo Normal:
-  01. O operador edita os campos desejados (exemplo: telefone ou endereço);
-  02. O operador clica no botão "Salvar Alterações";
-  03. O sistema valida se todos os campos de preenchimento obrigatório permanecem preenchidos;
-  04. O sistema atualiza o registro na base de dados com as novas informações;
-  05. O sistema emite a mensagem de confirmação MSG09;
-  06. O sistema atualiza a visualização e bloqueia os campos contra edição acidental.
-Fluxo Alternativo:
-  3.1. Se o operador apagar o conteúdo de algum campo de preenchimento obrigatório:
-    3.1.1. O sistema suspende a gravação e apresenta a mensagem de erro MSG04;
-    3.1.2. O sistema mantém o formulário aberto permitindo a reinserção do dado.
-Dados Manipulados:
-  idRegistro, novosDadosModificados.
-================================================================================
-```
-
-#### Caso de Uso UC06: Excluir
-
-```mermaid
-flowchart LR
-    subgraph ModuloExclusao["Módulo de Exclusão de Registros"]
-        UC06(["UC06: Excluir"])
-    end
-    Ator["Administrador"] --> UC06
-```
-
-```text
-================================================================================
-Quadro DCU — UC06: Excluir
---------------------------------------------------------------------------------
-Ator Principal:
-  Administrador (Ator Primário com privilégios de gestão).
-Descrição da Ação:
-  Excluir definitivamente ou inativar logicamente um registro do sistema.
-Pré-requisito:
-  O operador deve possuir perfil de Administrador e selecionar um item na lista (UC03).
-Fluxo Normal:
-  01. Na tabela de listagem, o administrador clica no botão "Excluir" do registro;
-  02. O sistema exibe uma caixa modal de confirmação contendo a mensagem MSG10;
-  03. O administrador confirma a operação clicando no botão "Confirmar Exclusão";
-  04. O sistema verifica as regras de integridade referencial do banco de dados;
-  05. O sistema confirma que não há dependências ativas vinculadas àquele registro;
-  06. O sistema remove o registro da base de dados;
-  07. O sistema exibe a mensagem de sucesso MSG12 e atualiza a listagem de registros.
-Fluxo Alternativo:
-  03.1. Se o administrador desistir da operação clicando em "Cancelar":
-    03.1.1. O sistema fecha a janela modal sem realizar nenhuma exclusão;
-    03.1.2. O sistema retorna à listagem inalterada no Passo 02 do UC03.
-  05.1. Se existirem movimentações operacionais atreladas ao registro (ex.: pedidos emitidos):
-    05.1.1. O sistema bloqueia a exclusão física e emite a mensagem de erro MSG11;
-    05.1.2. O sistema sugere ao administrador realizar apenas a inativação cadastral.
-Dados Manipulados:
-  idRegistroExclusao, confirmacaoUsuario.
-================================================================================
-```
-
----
-
-## Estudos de Caso Consolidados
-
-### Estudo de Caso 1: Aplicativo Desapega Já
-
-#### Cenário do Problema e Proposta de Valor
-Muitas pessoas acumulam bens duráveis e semiduráveis em perfeito estado funcional (móveis, roupas, livros, aparelhos eletrônicos) por falta de canais práticos de intermediação local. O envio tradicional via frete nacional encarece a transação e adiciona atritos logísticos e riscos de fraude.
-
-A proposta de valor do **Desapega Já** é estabelecer uma plataforma móvel orientada à **economia circular hiperlocal**: conectar vendedores e compradores que residam na mesma cidade e bairro, viabilizando negociações diretas, retiradas presenciais e custo logístico zero.
-
-#### Elicitação e Refinamento de Requisitos
-
-```mermaid
-flowchart TD
-    subgraph ElicitacaoBruta["Requisitos Brutos Levantados"]
-        RF01_B["RF01: Facilitar a venda de produtos"]
-        RF02_B["RF02: Permitir anúncio de produtos"]
-        RF03_B["RF03: Cadastro de interessados em comprar"]
-        RF04_B["RF04: Facilitar busca por proximidade"]
-        RF05_B["RF05: Histórico de contatos e avaliações"]
-        RF06_B["RF06: Cadastro de quem faz oferta"]
-        RF07_B["RF07: Cadastro de produtos a serem vendidos"]
-        RF08_B["RF08: Possibilitar troca de mensagens"]
-    end
-
-    subgraph RefinamentoEngenharia["Refinamento Formal da Engenharia"]
-        MetaNeg["Meta de Negócio do Produto (Deriva RF02, RF05, RF08)"]
-        RF02_R["RF02/07: Publicar anúncio com fotos, categoria e preço"]
-        RF03_R["RF03/06: Autocadastro de Usuário (Anunciante e Comprador)"]
-        RF04_R["RF04: Filtragem de anúncios por estado, cidade e bairro"]
-        RF05_R["RF05: Gerar log de contatos e avaliações de reputação"]
-        RF08_R["RF08: Mensageria interna direta sobre anúncio"]
-    end
-
-    RF01_B --> MetaNeg
-    RF02_B & RF07_B --> RF02_R
-    RF03_B & RF06_B --> RF03_R
-    RF04_B --> RF04_R
-    RF05_B --> RF05_R
-    RF08_B --> RF08_R
-```
-
-#### Diagrama de Classes de Análise — Desapega Já
-
-```mermaid
-classDiagram
-    class Usuario {
-        -idUsuario: Inteiro
-        -nomeCompleto: Texto
-        -email: Texto
-        -telefoneWhatsApp: Texto
-        -senhaHash: Texto
-        -cidade: Texto
-        -estado: Texto
-        -bairro: Texto
-        -cpf: Texto
-        -dataNascimento: Data
-        +fazerLogin(credenciais)
-        +atualizarPerfil()
-    }
-
-    class Anunciante {
-        -reputacaoVendedor: Decimal
-        +criarAnuncio(dados)
-    }
-
-    class Interessado {
-        -reputacaoComprador: Decimal
-        +buscarPorProximidade(cidade, bairro)
-        +enviarMensagem(texto)
-    }
-
-    class Categoria {
-        -idCategoria: Inteiro
-        -nome: Texto
     }
 
     class Anuncio {
-        -idAnuncio: Inteiro
-        -titulo: Texto
-        -descricao: Texto
-        -preco: Decimal
-        -status: Texto
-        -fotos: ListaDeTexto
-        -dataPublicacao: DataHora
+        -String idAnuncio
+        -String titulo
+        -String descricao
+        -double preco
+        -List~String~ fotosUrls
+        -Date dataPublicacao
+        -String status
         +publicar()
+        +pausar()
         +marcarComoVendido()
     }
 
+    class Categoria {
+        -int idCategoria
+        -String nomeCategoria
+    }
+
     class MensagemContato {
-        -idMensagem: Inteiro
-        -dataHoraEnvio: DataHora
-        -conteudoTexto: Texto
-        -lida: Booleano
+        -String idMensagem
+        -DateTime dataHoraEnvio
+        -String textoMensagem
+        -boolean lida
         +enviar()
         +marcarComoLida()
     }
 
-    Usuario <|-- Anunciante : Generalização
-    Usuario <|-- Interessado : Generalização
-    Anunciante "1" --> "0..*" Anuncio : publica
-    Anuncio "*" --> "1" Categoria : categorizado_em
-    Interessado "1" --> "0..*" MensagemContato : remete
-    Anuncio "1" --> "0..*" MensagemContato : contextualiza
+    class Compra {
+        -String idCompra
+        -Date dataCompra
+        -double valorTransacao
+        -int notaAvaliacao
+        +registrarTransacao()
+        +avaliarContraparte()
+    }
+
+    Usuario "1" --> "0..*" Anuncio : publica
+    Anuncio "*" --> "1" Categoria : categorizado em
+    Usuario "1" --> "0..*" MensagemContato : envia
+    Anuncio "1" <-- "0..*" MensagemContato : referente a
+    Usuario "1" --> "0..*" Compra : realiza como comprador
+    Anuncio "1" <-- "0..1" Compra : liquida
 ```
 
 ---
 
-### Estudo de Caso 2: Açaiteria Sabor da Amazônia
+### 7.2 Aplicativo da Açaiteria Sabor da Amazônia
 
-#### Enunciado e Problemas do Domínio
-A empresa enfrenta filas excessivas nos horários de pico, frequentes erros manuais na montagem das tigelas, falta de controle automatizado de estoque, desorganização dos registros financeiros e total ineficácia no acompanhamento de seu programa de fidelidade por meio de carimbos físicos em cartões de papel.
+#### Contexto e Diagnóstico Operacional
+A Açaíteria Sabor da Amazônia comercializa açaí na tigela, smoothies e vitaminas com complementos. O fluxo presencial/WhatsApp enfrentava: demora no atendimento, erros na montagem física dos pedidos, perda de controle de estoque, ausência de relatórios gerenciais e descontrole do programa de fidelidade. A solução estabeleceu o desenvolvimento de um aplicativo móvel próprio.
 
-Para sanar os gargalos operacionais, a direção deliberou pela concepção de uma aplicação móvel com gestão centralizada.
+#### Resolução Integral dos Itens da Atividade Avaliativa
 
-#### Mapeamento de Classes e Estrutura de Domínio
+##### 1. Usuários do Aplicativo
+- **Cliente (Consumidor Final):** Realiza autocadastro (nome, telefone), consulta cardápio de produtos, monta pedidos customizados, efetua pagamentos digitais e acompanha pontos acumulados no programa de fidelidade.
+- **Gerente (Administrador):** Acompanha pedidos em tempo real, gerencia produtos, audita vendas, visualiza relatórios consolidados e organiza a gestão do negócio.
+- **Atendente / Operador da Cozinha:** Usuário operacional que atualiza os estados do pedido (`Aguardando`, `Em Preparo`, `Finalizado`).
+
+##### 2. Classes do Projeto e Atributos Tipados
 
 ```mermaid
 classDiagram
-    direction TB
     class Cliente {
-        -idCliente: Inteiro
-        -nome: Texto
-        -telefone: Texto
-        -pontosFidelidade: Inteiro
-        +consultarPontos() Inteiro
-        +resgatarPontos(qtd: Inteiro) Booleano
-    }
-
-    class Gerente {
-        -idGerente: Inteiro
-        -nome: Texto
-        -login: Texto
-        -senhaHash: Texto
-        +emitirRelatorioVendas(dataInicio, dataFim)
-        +ajustarEstoque()
+        -int idCliente
+        -string nome
+        -string telefone
+        -int pontosFidelidade
+        +acumularPontos(int pontos)
+        +resgatarPontos(int pontos)
     }
 
     class Produto {
-        -idProduto: Inteiro
-        -nome: Texto
-        -descricao: Texto
-        -preco: Decimal
-        -categoria: Texto
-    }
-
-    class Pedido {
-        -idPedido: Inteiro
-        -dataHoraSolicitacao: DataHora
-        -statusAcompanhamento: Texto
-        -valorTotal: Decimal
-        +calcularTotal() Decimal
-        +atualizarStatus(novoStatus: Texto)
+        -int idProduto
+        -string nome
+        -string descricao
+        -double preco
+        -string categoria
     }
 
     class ItemPedido {
-        -idItemPedido: Inteiro
-        -quantidade: Inteiro
-        -precoUnitarioHistorico: Decimal
-        -subtotal: Decimal
-        +calcularSubtotal() Decimal
+        -int idItemPedido
+        -int quantidade
+        -double precoUnitario
+        -double subtotal
+        +calcularSubtotal() double
+    }
+
+    class Pedido {
+        -int idPedido
+        -DateTime dataHoraSolicitacao
+        -string statusAcompanhamento
+        -double valorTotal
+        +calcularTotal() double
+        +atualizarStatus(string novoStatus)
     }
 
     class Pagamento {
-        -idPagamento: Inteiro
-        -formaPagamento: Texto
-        -situacaoTransacao: Texto
-        -dataHoraPagamento: DataHora
-        -valorTransacao: Decimal
-        +autorizar()
+        -int idPagamento
+        -string formaPagamento
+        -string situacaoTransacao
+        -DateTime dataHoraPagamento
+        -double valorTransacao
+        +processarTransacao() boolean
     }
 
-    Cliente "1" --> "0..*" Pedido : solicita
-    Gerente "1" --> "0..*" Pedido : supervisiona
+    class Gerente {
+        -int idGerente
+        -string nome
+        -string login
+        -string senha
+        +consultarRelatorioVendas()
+    }
+
+    Cliente "1" --> "0..*" Pedido : realiza
     Pedido "1" *-- "1..*" ItemPedido : composto por
     ItemPedido "*" --> "1" Produto : referencia
-    Pedido "1" --> "1" Pagamento : liquidado por
+    Pedido "1" -- "0..1" Pagamento : possui
 ```
 
-#### Requisitos Funcionais e Não Funcionais da Açaiteria
+##### 3. Lista de Requisitos Funcionais e Não Funcionais
 
-```text
-================================================================================
-ESPECIFICAÇÃO DE REQUISITOS — AÇAITERIA SABOR DA AMAZÔNIA
-Requisitos Funcionais (RF):
-  - RF01: O sistema deve permitir o autocadastro do cliente via nome e telefone celular.
-  - RF02: O sistema deve manter o catálogo de produtos (açaís, smoothies e complementos).
-  - RF03: O sistema deve permitir que o cliente monte pedidos com múltiplos itens.
-  - RF04: O sistema deve calcular automaticamente o subtotal de itens e o valor total do pedido.
-  - RF05: O sistema deve controlar o fluxo de status: "Aguardando", "Em Preparo" e "Finalizado".
-  - RF06: O sistema deve processar pagamentos integrados nas modalidades Pix e Cartões.
-  - RF07: O sistema deve creditar 1 ponto de fidelidade a cada R$ 10,00 gastos no aplicativo.
-  - RF08: O sistema deve gerar relatórios gerenciais consolidados de vendas por período.
+**Requisitos Funcionais (RF):**
+- **RF01:** O sistema deve permitir o autocadastro do cliente informando nome completo e telefone celular.
+- **RF02:** O sistema deve disponibilizar catálogo digital contendo nome, descrição, categoria e preço de cada produto.
+- **RF03:** O sistema deve permitir a montagem do pedido pelo cliente através da seleção de itens e quantidades.
+- **RF04:** O sistema deve calcular automaticamente o valor total do pedido somando os subtotais dos itens selecionados.
+- **RF05:** O sistema deve registrar o pagamento armazenando a modalidade escolhida (Pix ou Cartão) e a situação da transação (Aprovado ou Recusado).
+- **RF06:** O sistema deve gerenciar e atualizar os status de acompanhamento do pedido: `Aguardando`, `Em Preparo` e `Finalizado`.
+- **RF07:** O sistema deve computar e atualizar o saldo de pontos de fidelidade do cliente após a aprovação de cada pedido.
+- **RF08:** O sistema deve gerar relatórios administrativos consolidados de vendas por período para consulta pelo gerente.
 
-Requisitos Não Funcionais (RNF):
-  - RNF01 (Desempenho): A atualização de status do pedido para o cliente não deve 
-    ultrapassar 2 segundos de latência através de WebSockets em redes móveis 4G.
-  - RNF02 (Segurança): As transações financeiras devem obedecer a certificados digitais TLS 1.3.
-  - RNF03 (Disponibilidade): O sistema deve garantir disponibilidade mensal de 99,5% nos 
-    horários de atendimento comercial (11:00 às 23:00).
-  - RNF04 (Usabilidade): A interface móvel do cardápio deve ser compatível com as diretrizes
-    Material Design (Android) e Human Interface Guidelines (iOS).
-================================================================================
-```
+**Requisitos Não Funcionais (RNF):**
+- **RNF01 (Desempenho):** O processamento e cálculo do carrinho de compras não deve exceder 1 segundo de tempo de resposta.
+- **RNF02 (Usabilidade):** A interface móvel deve permitir que o cliente conclua a montagem e envio do pedido em no máximo 5 toques de tela a partir do cardápio.
+- **RNF03 (Segurança):** O sistema deve trafegar todas as requisições de pagamento criptografadas sob o protocolo seguro TLS 1.3.
+- **RNF04 (Confiabilidade):** O banco de dados deve utilizar transações ACID para garantir que o estoque e os pontos de fidelidade não sofram inconsistências durante acessos concorrentes.
+
+##### 4. Atores do Aplicativo (UML)
+- **Cliente:** Ator primário humano responsável por demandar produtos e registrar pedidos.
+- **Gerente:** Ator primário humano responsável pela administração, acompanhamento de métricas e controle de catálogo.
+- **Atendente de Produção:** Ator operacional responsável pela transição de estados na cozinha.
+- **Gateway de Pagamento Bancário:** Ator secundário externo (software) acionado pelo sistema para validar transações financeiras via Pix ou operadora de cartões.
 
 ---
 
-### Estudo de Caso 3: Sistema Acadêmico e Municipal SCAESM
+### 7.3 Sistema SCAESM: Módulo Pessoa Funcionário
 
-#### Contexto e Módulo Pessoa Funcionário
-O SCAESM (Sistema de Controle Acadêmico / Escolar / de Serviços / Municipal) é uma plataforma corporativa pública documentada pelo Prof. Marcelo Boer. Em razão de sua magnitude institucional, o software foi decomposto em módulos de negócio.
-
-No módulo **Pessoa Funcionário**, modela-se o comportamento do ator `Funcionário` perante as rotinas administrativas da repartição.
+Conforme trabalhado na Aula 05 a partir do estudo de caso histórico de 2019 da disciplina, o sistema corporativo SCAESM organiza suas funcionalidades por módulos de negócios. A análise foca no caso de uso fundamental **Funcionário Logar**:
 
 ```mermaid
 flowchart TD
-    subgraph SCAESM_ModuloPessoaFuncionario["SCAESM — Módulo Pessoa Funcionário"]
-        UC_Login(["Funcionário Logar"])
-        UC_Cadastrais(["Consultar Dados Cadastrais"])
-        UC_Senha(["Alterar Senha Pessoal"])
+    subgraph SCAESM_Funcionario["SCAESM - Módulo Pessoa Funcionário"]
+        UC_LOG(["Funcionário Logar"])
     end
-
-    AtorFuncionario["«actor»\nFuncionário"] --> UC_Login
-    AtorFuncionario --> UC_Cadastrais
-    AtorFuncionario --> UC_Senha
+    AtorFunc["Ator: Funcionário"] --> UC_LOG
 ```
 
-#### Diagrama de Sequência de Execução — Autenticação no SCAESM
+#### Quadro Descritivo de Caso de Uso Canônico (Quadro 5 do Material de Aula)
+
+| Campo Documental | Especificação Técnica Formal |
+| :--- | :--- |
+| **Identificador / Caso de Uso** | **DCU Individual — Funcionário Logar** |
+| **Ator Principal** | Funcionário |
+| **Descrição da Ação** | O usuário deseja realizar o login no sistema. Na tela de login, o usuário informa seus dados de login e senha para autenticar-se no sistema. |
+| **Pré-requisito** | Usuário deverá estar pré-cadastrado no sistema. |
+| **Fluxo Normal** | **01.** Usuário acessa o URL do sistema;<br>**02.** Sistema gera tela de login para o usuário;<br>**03.** Usuário informa seus dados nos respectivos campos solicitados;<br>**04.** Usuário clica em logar;<br>**05.** Sistema verifica se o usuário está cadastrado;<br>**06.** Sistema exibe a página inicial referente ao usuário. |
+| **Fluxo Alternativo** | **5.1.** Se o usuário não estiver cadastrado no sistema, será exibida a mensagem: *"Usuário não cadastrado"*; <br>**5.1.1.** Sistema retorna ao item 1, mas com tela de cadastro. |
+| **Dados Manipulados** | `login`, `senha` |
+
+---
+
+### 7.4 Modelo Canônico da Fase de Análise para a Avaliação AV2
+
+A entrega da segunda avaliação bimestral (AV2) da UniFEF exige a consolidação documental padronizada da Fase de Análise. A seguir, apresenta-se a estrutura canônica integral aplicada ao aplicativo corporativo de referência (SisVendas):
+
+#### 1. Contexto do Aplicativo
+O aplicativo corporativo destina-se a gerenciar operações comerciais de balcão e retaguarda. Ele centraliza o cadastro de clientes, controle de pedidos e consulta a catálogos, mitigando perdas financeiras decorrentes de controles manuais e garantindo rastreabilidade das operações sob perfis individualizados de acesso.
+
+#### 2. Quadro 1: Descrição dos Atores do Aplicativo
+
+| Identificador | Nome do Ator | Categoria | Descrição do Papel e Responsabilidades |
+| :--- | :--- | :--- | :--- |
+| **ACT01** | **Usuário do Sistema** | Humano (Abstrato) | Papel base para qualquer pessoa autenticada no software. Permite acesso a funções elementares de login, recuperação de credenciais e troca de senha pessoal. |
+| **ACT02** | **Administrador** | Humano (Especializado) | Responsável pela gestão estratégica, auditoria de logs, parametrização global, concessão de perfis e exclusão controlada de registros. Herda de Usuário do Sistema. |
+| **ACT03** | **Operador de Vendas** | Humano (Especializado) | Responsável pela operação rotineira de vendas, cadastro de clientes, consulta a catálogos e emissão de pedidos. Herda de Usuário do Sistema. |
+| **ACT04** | **Serviço de Cobrança** | Sistema Externo | API financeira remota acionada para validação de crédito e liquidação eletrônica de pagamentos de forma assíncrona. |
+
+#### 3. Diagrama de Contexto Geral por Ator
+
+```mermaid
+flowchart LR
+    subgraph Fronteira_SisVendas["Fronteira da Aplicação"]
+        UC01(["UC01: Realizar Login"])
+        UC02(["UC02: Cadastrar"])
+        UC03(["UC03: Listar"])
+        UC04(["UC04: Carregar"])
+        UC05(["UC05: Alterar"])
+        UC06(["UC06: Excluir"])
+        UC07(["UC07: Auditar Sistema"])
+    end
+
+    Admin["Administrador"]
+    Operador["Operador de Vendas"]
+
+    Admin --> UC01
+    Admin --> UC06
+    Admin --> UC07
+
+    Operador --> UC01
+    Operador --> UC02
+    Operador --> UC03
+    Operador --> UC04
+    Operador --> UC05
+```
+
+#### 4. Lista Central de Casos de Uso
+
+| ID | Nome do Caso de Uso | Ator Primário | Objetivo / Descrição Sumária |
+| :--- | :--- | :--- | :--- |
+| **UC01** | Realizar Login | Usuário do Sistema | Validar a identidade do operador mediante checagem de credenciais (login e senha). |
+| **UC02** | Cadastrar | Operador de Vendas | Inserir novos registros de entidades no sistema com validação obrigatória de campos. |
+| **UC03** | Listar | Operador de Vendas | Recuperar e exibir registros em formato tabular com suporte a filtros e paginação. |
+| **UC04** | Carregar | Operador de Vendas | Buscar e apresentar em formulário os dados completos de um registro específico selecionado. |
+| **UC05** | Alterar | Operador de Vendas | Modificar atributos de um registro previamente carregado e persistir as atualizações. |
+| **UC06** | Excluir | Administrador | Remover fisicamente ou desativar logicamente um registro após diálogo de confirmação. |
+
+#### 5. Lista Central de Mensagens do Sistema (MSG)
+
+| Código | Tipo | Texto Padronizado da Notificação | Gatilho / Finalidade de Disparo |
+| :--- | :--- | :--- | :--- |
+| **MSG01** | Erro | "Usuário ou senha inválidos. Por favor, verifique suas credenciais." | Credencial não localizada ou senha divergente no login. |
+| **MSG02** | Alerta | "Usuário inativo no sistema. Contate o administrador." | Tentativa de autenticação com conta em estado bloqueado. |
+| **MSG03** | Sucesso | "Autenticação realizada com sucesso. Redirecionando..." | Validação positiva de credenciais de acesso. |
+| **MSG04** | Erro | "Existem campos obrigatórios não preenchidos: [Campos]." | Tentativa de persistência com atributos obrigatórios nulos. |
+| **MSG05** | Erro | "Registro já cadastrado com os dados informados: [Chave]." | Tentativa de inclusão violando chave única de negócio (ex.: CPF existente). |
+| **MSG06** | Sucesso | "Registro gravado com sucesso!" | Confirmação de persistência bem-sucedida de novo registro. |
+| **MSG07** | Alerta | "Nenhum registro encontrado para os critérios de busca informados." | Consulta na listagem que retorna coleção vazia de dados. |
+| **MSG08** | Erro | "Registro selecionado não foi localizado ou foi removido por outro operador." | Falha ao carregar chave inexistente na base de dados. |
+| **MSG09** | Sucesso | "Alterações salvas com sucesso!" | Confirmação de atualização persistida com sucesso. |
+| **MSG10** | Confirmação | "Deseja realmente excluir o registro [Nome]? Esta ação não poderá ser desfeita." | Diálogo de segurança exibido antes da exclusão. |
+| **MSG11** | Erro | "Não é possível excluir o registro pois existem movimentações vinculadas." | Bloqueio de exclusão motivado por integridade referencial. |
+| **MSG12** | Sucesso | "Registro excluído com sucesso!" | Confirmação de remoção do registro da base de dados. |
+
+---
+
+#### 6. Especificação Canônica dos Quadros Descritivos de Casos de Uso (DCU)
+
+##### UC01 — Realizar Login
+- **Atores:** Usuário do Sistema (Primário).
+- **Objetivo:** Autenticar o usuário e liberar os módulos operacionais autorizados.
+- **Pré-requisitos:** O aplicativo deve estar inicializado e com conectividade ativa com a base de dados.
+- **Pós-condições:** Sessão iniciada e usuário redirecionado ao painel principal.
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Funcionario as Ator: Funcionário
-    participant Navegador as Interface Web
-    participant Controller as Módulo SCAESM
-    participant Banco as Base de Pessoal
+    actor Usr as Usuário do Sistema
+    participant Tela as Interface / Tela Login
+    participant Ctrl as Controlador Acesso
+    participant Base as Base de Dados
 
-    Funcionario->>Navegador: 1. Informa URL institucional no navegador
-    Navegador->>Controller: Requisita recurso protegido
-    Controller-->>Navegador: 2. Gera e renderiza tela de login
-    Funcionario->>Navegador: 3. Digita matrícula e senha
-    Funcionario->>Navegador: 4. Clica na ação "Logar"
-    Navegador->>Controller: Submete credenciais via HTTPS POST
-    Controller->>Banco: 5. Executa consulta para checar cadastro e hash
-    Banco-->>Controller: Retorna registro ativo e confirma autenticidade
-    Controller-->>Navegador: 6. Emite sessão e renderiza painel inicial do funcionário
-    Navegador-->>Funcionario: Apresenta interface do Módulo Pessoa Funcionário
+    Usr->>Tela: Acessa o aplicativo
+    Tela-->>Usr: Exibe formulário solicitando identificador e senha
+    Usr->>Tela: Informa identificador e senha e clica em "Entrar"
+    Tela->>Ctrl: Submete credenciais capturadas
+    Ctrl->>Base: Valida existência do identificador e correspondência da senha
+    Base-->>Ctrl: Confirmação de credenciais válidas e status ativo
+    Ctrl-->>Tela: Emite mensagem MSG03 e gera token de sessão
+    Tela-->>Usr: Redireciona para o painel principal do sistema
 ```
+
+- **Fluxo Normal:**
+  1. O usuário acessa a tela de entrada do aplicativo;
+  2. O sistema exibe o formulário solicitando identificador e senha;
+  3. O usuário informa os dados e aciona a opção "Entrar";
+  4. O sistema valida se os campos foram preenchidos;
+  5. O sistema verifica a existência das credenciais e status do usuário na base de dados;
+  6. O sistema emite a mensagem `MSG03`, cria a sessão e redireciona o usuário para o painel principal.
+- **Fluxos Alternativos e Exceções:**
+  - `4.1`: Se algum campo obrigatório estiver em branco, o sistema exibe mensagem `MSG04` e retorna ao passo 2;
+  - `5.1`: Se as credenciais estiverem incorretas, o sistema emite mensagem `MSG01` e retorna ao passo 2;
+  - `5.2`: Se o usuário estiver inativo, o sistema emite mensagem `MSG02` e encerra o fluxo;
+  - `5.E1`: Se houver falha de rede/banco, o sistema captura a exceção, exibe aviso de indisponibilidade e permanece na tela inicial sem travar a interface.
+
+##### UC02 — Cadastrar
+- **Atores:** Operador de Vendas (Primário).
+- **Objetivo:** Inserir um novo registro no sistema garantindo a integridade dos dados.
+- **Pré-requisitos:** O operador deve estar autenticado (UC01) com permissão ativa.
+- **Pós-condições:** Novo registro persistido e disponível para consultas.
+- **Fluxo Normal:**
+  1. O operador clica no botão "Novo Cadastro";
+  2. O sistema apresenta o formulário de cadastro com os campos em branco;
+  3. O operador preenche os campos solicitados e clica em "Salvar";
+  4. O sistema valida se todos os campos obrigatórios foram preenchidos;
+  5. O sistema valida as regras de formato e unicidade (chaves de negócio);
+  6. O sistema grava o novo registro na base de dados;
+  7. O sistema emite a mensagem `MSG06` e redireciona para a listagem atualizada.
+- **Fluxos Alternativos e Exceções:**
+  - `4.1`: Se houver campos em branco, exibe mensagem `MSG04` destacando os campos e retorna ao passo 3;
+  - `5.1`: Se a chave única já existir na base, emite mensagem `MSG05` e retorna ao passo 3;
+  - `6.E1`: Falha de gravação na base dispara rollback transacional, exibe erro técnico e mantém os dados digitados na tela para nova tentativa.
+
+##### UC03 — Listar
+- **Atores:** Operador de Vendas (Primário), Administrador.
+- **Objetivo:** Recuperar e exibir registros cadastrados de forma organizada e paginada.
+- **Pré-requisitos:** O usuário deve estar autenticado (UC01).
+- **Pós-condições:** Registros apresentados na tela permitindo ordenação e seleção.
+- **Fluxo Normal:**
+  1. O usuário acessa o menu de listagem da entidade;
+  2. O sistema executa consulta padrão à base de dados buscando os registros ativos;
+  3. O sistema renderiza a grade de dados exibindo as colunas principais e botões de ação;
+  4. O usuário visualiza os registros e pode aplicar filtros específicos de consulta.
+- **Fluxos Alternativos e Exceções:**
+  - `2.1`: Se a consulta retornar zero registros, o sistema exibe a mensagem de alerta `MSG07` no centro da grade e mantém os botões de ação e busca habilitados.
+
+##### UC04 — Carregar
+- **Atores:** Operador de Vendas (Primário), Administrador.
+- **Objetivo:** Recuperar todos os dados detalhados de um registro específico para inspeção ou edição.
+- **Pré-requisitos:** O usuário deve estar autenticado e visualizando a listagem (UC03).
+- **Pós-condições:** Formulário preenchido com os dados atuais do registro selecionado.
+- **Fluxo Normal:**
+  1. O usuário clica sobre um registro específico na listagem (UC03);
+  2. O sistema recupera a chave de identificação do registro selecionado;
+  3. O sistema busca na base de dados todos os atributos vinculados àquela chave;
+  4. O sistema preenche os campos do formulário com os dados retornados;
+  5. O sistema habilita as opções de edição e descarte.
+- **Fluxos Alternativos e Exceções:**
+  - `3.1`: Se o registro tiver sido excluído simultaneamente por outro usuário, o sistema exibe a mensagem de erro `MSG08` e retorna à listagem atualizada (UC03).
+
+##### UC05 — Alterar
+- **Atores:** Operador de Vendas (Primário), Administrador.
+- **Objetivo:** Modificar os atributos de um registro existente mantendo a consistência do sistema.
+- **Pré-requisitos:** O registro deve ter sido previamente carregado com sucesso (UC04).
+- **Pós-condições:** Registro atualizado na base de dados com data e autor da modificação.
+- **Fluxo Normal:**
+  1. O operador edita os campos desejados no formulário carregado (UC04);
+  2. O operador clica no botão "Salvar Alterações";
+  3. O sistema valida se os campos obrigatórios continuam devidamente preenchidos;
+  4. O sistema verifica se os dados alterados não violam unicidade de chaves de outros registros;
+  5. O sistema atualiza o registro na base de dados;
+  6. O sistema emite a mensagem de sucesso `MSG09` e redireciona para a listagem (UC03).
+- **Fluxos Alternativos e Exceções:**
+  - `3.1`: Se campos obrigatórios forem apagados, exibe mensagem `MSG04` e permanece na edição;
+  - `4.1`: Se a alteração colidir com dados de outro registro existente, exibe mensagem `MSG05`.
+
+##### UC06 — Excluir
+- **Atores:** Administrador (Primário).
+- **Objetivo:** Remover ou inativar permanentemente um registro da base de dados.
+- **Pré-requisitos:** O usuário deve estar autenticado com perfil de Administrador e o registro deve estar selecionado na listagem (UC03) ou carregado (UC04).
+- **Pós-condições:** Registro removido fisicamente ou marcado como inativo; desvinculação em listagens ativas.
+- **Fluxo Normal:**
+  1. O administrador seleciona a opção "Excluir" no registro desejado;
+  2. O sistema intercepta o comando e exibe a mensagem de diálogo confirmatório `MSG10`;
+  3. O administrador confirma a operação clicando em "Sim, Excluir";
+  4. O sistema verifica as regras de integridade referencial com outras entidades;
+  5. O sistema executa a exclusão na base de dados;
+  6. O sistema emite a mensagem de sucesso `MSG12` e atualiza a listagem.
+- **Fluxos Alternativos e Exceções:**
+  - `3.1`: Se o administrador clicar em "Cancelar", o sistema cancela a operação e permanece no estado atual sem alterar dados;
+  - `4.1`: Se o registro possuir dependências ativas (ex.: cliente com pedidos faturados em aberto), o sistema bloqueia a exclusão, emite mensagem de erro `MSG11` e encerra o fluxo.
 
 ---
 
-### Estudo de Caso 4: SisVendas Corporativo
+#### 7. Diagrama de Classes da Fase de Análise
 
-#### Domínio de Varejo Comercial
-O SisVendas representa a implementação de referência adotada para guiar os alunos no padrão da avaliação oficial AV2 da disciplina. O sistema centraliza a automação comercial balcão de lojas de departamentos e franquias comerciais, resolvendo a duplicidade de cadastros e mantendo a rastreabilidade total das movimentações de estoque e caixa.
-
-#### Diagrama Geral de Classes da Fase de Análise — SisVendas
+O diagrama a seguir sintetiza as entidades de negócio da aplicação, destacando tipagem conceitual e multiplicidades, isolado de detalhes técnicos de bancos de dados relacionais:
 
 ```mermaid
 classDiagram
-    direction TB
+    class PerfilUsuario {
+        -int idPerfil
+        -string nomePerfil
+        -string descricao
+    }
+
     class Usuario {
-        -idUsuario: Inteiro
-        -nome: Texto
-        -login: Texto
-        -senhaHash: Texto
-        -status: Texto
-        +autenticar()
-    }
-
-    class Administrador {
-        -nivelAcesso: Inteiro
-        +auditarOperacoes()
-    }
-
-    class OperadorVendas {
-        -matriculaVendedor: Texto
-        +abrirCaixa()
+        -int idUsuario
+        -string nomeCompleto
+        -string email
+        -string login
+        -string senhaHash
+        -string statusConta
+        -DateTime dataCadastro
+        +autenticar(login, senha)
+        +alterarSenha(senhaAtual, novaSenha)
     }
 
     class Cliente {
-        -idCliente: Inteiro
-        -nomeCompleto: Texto
-        -cpfCnpj: Texto
-        -telefone: Texto
-        -email: Texto
-        -limiteCredito: Decimal
-        +consultarInadimplencia() Booleano
+        -int idCliente
+        -string razaoSocialNome
+        -string documentoIdentificador
+        -string telefone
+        -string enderecoCompleto
+        -double limiteCredito
+        -string situacaoCadastral
+        +validarDocumento() boolean
+        +atualizarLimite(novoLimite)
+    }
+
+    class CategoriaProduto {
+        -int idCategoria
+        -string nomeCategoria
     }
 
     class Produto {
-        -idProduto: Inteiro
-        -codigoBarras: Texto
-        -descricao: Texto
-        -precoVenda: Decimal
-        -saldoEstoque: Decimal
-        +baixarEstoque(quantidade: Decimal)
+        -int idProduto
+        -string codigoBarras
+        -string nomeProduto
+        -string descricao
+        -double precoUnitarioVenda
+        -int quantidadeEstoque
+        +atualizarEstoque(quantidade)
     }
 
     class PedidoVenda {
-        -idPedidoVenda: Inteiro
-        -dataHoraEmissao: DataHora
-        -statusVenda: Texto
-        -valorTotal: Decimal
-        +calcularTotal() Decimal
+        -int idPedido
+        -DateTime dataHoraAbertura
+        -string statusPedido
+        -double valorTotalCalculado
+        +calcularTotal() double
+        +faturarPedido()
+        +cancelarPedido()
     }
 
     class ItemVenda {
-        -idItemVenda: Inteiro
-        -quantidade: Decimal
-        -precoUnitarioPraticado: Decimal
-        -subtotal: Decimal
-        +calcularSubtotal() Decimal
+        -int idItem
+        -int quantidade
+        -double precoCobrado
+        -double valorSubtotal
+        +calcularSubtotal() double
     }
 
-    class TransacaoFinanceira {
-        -idTransacao: Inteiro
-        -meioPagamento: Texto
-        -valor: Decimal
-        -statusTransacao: Texto
-        +processar()
-    }
-
-    Usuario <|-- Administrador : Generalização
-    Usuario <|-- OperadorVendas : Generalização
-    OperadorVendas "1" --> "0..*" PedidoVenda : registra
+    Usuario "1" --> "1" PerfilUsuario : possui
+    Usuario "1" --> "0..*" PedidoVenda : emite
     Cliente "1" --> "0..*" PedidoVenda : adquire
-    PedidoVenda "1" *-- "1..*" ItemVenda : contém
-    ItemVenda "*" --> "1" Produto : referencia
-    PedidoVenda "1" --> "1..*" TransacaoFinanceira : amortizado_por
+    PedidoVenda "1" *-- "1..*" ItemVenda : composto por
+    ItemVenda "*" --> "1" Produto : refere-se a
+    Produto "*" --> "1" CategoriaProduto : enquadrado em
 ```
 
 ---
 
-## Manutenção e Sustentação de Software
+## Capítulo 8: Banco de Exercícios e Questões de Fixação
 
-### Taxonomia de manutenção de software
+### 8.1 Questões Analíticas Resolvidas
 
-O ciclo de vida de uma aplicação não termina com a sua implantação em produção. Conforme normas consolidadas de Engenharia de Software (como a **ISO/IEC/IEEE 14764**), as atividades de sustentação e evolução de sistemas dividem-se em **quatro modalidades canônicas**:
+#### Exercício 1: Comparativo entre Modelo Cascata e Prototipação
+**Enunciado:** Analise dois cenários industriais: (A) Sistema de monitoramento hemodinâmico para marcapasso cardíaco implantável; (B) Aplicativo móvel para gamificação de hábitos alimentares. Justifique qual modelo de ciclo de vida (Cascata ou Prototipação) é adequado a cada cenário, fundamentando a resposta na Curva de Custo de Mudança de Barry Boehm.
 
-```mermaid
-pie title Distribuição Típica de Esforço na Manutenção de Software em Produção
-    "Evolutiva / Perfectiva" : 50
-    "Corretiva" : 20
-    "Adaptativa" : 25
-    "Preventiva" : 5
-```
-
-1. **Manutenção Corretiva:**
-   - **Definição:** Ação reativa executada para diagnosticar, isolar e corrigir falhas ativas, bugs, comportamentos incorretos ou travamentos que impeçam o sistema de operar conforme sua especificação original.
-   - **Exemplo Real:** Corrigir uma exceção de ponteiro nulo (`NullPointerException`) que ocorre quando o cliente tenta salvar um pedido de açaí sem selecionar nenhum complemento.
-   - **Contraexemplo:** Modificar a interface gráfica para incluir o cálculo de cashback (isto é manutenção evolutiva, não corretiva).
-
-2. **Manutenção Adaptativa:**
-   - **Definição:** Modificação do software motivada por alterações externas no ambiente operacional, tecnológico, organizacional ou legal, sem alterar as funcionalidades essenciais do negócio.
-   - **Exemplo Real:** Atualizar o conector de banco de dados para suportar a nova versão do PostgreSQL, ou reconfigurar os cálculos de retenção tributária para atender a uma nova alíquota do ICMS promulgada pela Receita Estadual.
-   - **Contraexemplo:** Refatorar o código para melhorar a legibilidade interna (isto é manutenção preventiva).
-
-3. **Manutenção Preventiva (Engenharia Reversa / Refatoração):**
-   - **Definição:** Alterações proativas realizadas no software para detectar e corrigir falhas latentes antes que elas se manifestem como defeitos operacionais em produção, ou para aprimorar a manutenibilidade e a clareza da arquitetura sem alterar seu comportamento externo observável.
-   - **Exemplo Real:** Refatorar uma classe "Deus" (*God Class*) de 3.000 linhas em quatro classes coesas de domínio; adicionar índices em colunas de busca do banco de dados para prevenir a degradação da performance antes do aumento previsto de tráfego.
-
-4. **Manutenção Evolutiva (ou Perfectiva):**
-   - **Definição:** Adição de novos requisitos funcionais, relatórios analíticos, otimizações de performance e melhorias de usabilidade demandadas pelo crescimento do negócio ou pela expansão das necessidades dos usuários.
-   - **Exemplo Real:** Adicionar suporte a pagamentos automáticos via Carteira Digital (Apple Pay e Google Pay) no aplicativo da Açaiteria Sabor da Amazônia.
-
-### Fatores geradores de custo e mitigação arquitetural
-
-Estudos clássicos da Engenharia de Software (Lientz & Swanson, 1980; Sommerville, 2011) apontam que **entre 60% e 80% do custo financeiro total gasto em um produto de software ao longo de toda a sua existência ocorre na fase de manutenção**, e não durante o desenvolvimento inicial.
-
-```mermaid
-flowchart TD
-    subgraph CausasDoAltoCusto["Fatores Geradores de Custo Excessivo na Manutenção"]
-        C1["Falta de Abstração e Documentação Inicial"]
-        C2["Acoplamento Extremo entre Camadas de Negócio e Dados"]
-        C3["Ausência de Testes Automatizados de Regressão"]
-        C4["Rotatividade da Equipe Técnica (Perda do Conhecimento Tácito)"]
-    end
-
-    subgraph PraticasMitigadoras["Diretrizes Arquiteturais Mitigadoras"]
-        M1["Modelagem Semântica Rigorosa na Fase de Análise (Astah)"]
-        M2["Respeito ao Princípio DRY e Separação de Responsabilidades"]
-        M3["Especificações Formais de Casos de Uso com DCUs Padronizados"]
-        M4["Adoção de Modelos de Processo Orientados a Riscos e Feedback"]
-    end
-
-    C1 --> M1
-    C2 --> M2
-    C3 --> M3
-    C4 --> M4
-```
+**Resolução Técnica:**
+- **Cenário A (Marcapasso Cardíaco) — Adoção do Modelo Cascata:** O sistema é de segurança crítica (*safety-critical*), regulamentado por normas sanitárias internacionais rigorosas (IEC 62304 e ISO 14971). Os requisitos médicos e parâmetros elétricos são matematicamente conhecidos e estáveis antes da implementação. A tolerância a falhas é zero e o custo de correção após o implante cirúrgico no paciente tende ao infinito (potencial de óbito e recalls judiciais bilionários). Sob a Curva de Boehm, a detecção de desvios na fase de análise e congelamento formal é a única estratégia aceitável de engenharia.
+- **Cenário B (Gamificação de Hábitos) — Adoção da Prototipação Rápida:** O sucesso do aplicativo depende de engajamento psicológico, apelo visual e tração de mercado. Os requisitos são extremamente voláteis e os usuários não conseguem descrever com precisão o que acham divertido ou engajador sem interagir com uma interface visual. Prototipar telas descartáveis permite testar hipóteses a custo quase nulo nas primeiras semanas, evitando o risco de passar um ano construindo um software no modelo Cascata para descobrir no lançamento que os usuários rejeitaram a dinâmica do jogo.
 
 ---
 
-## Banco de Questões e Simulado Exaustivo para AV1 e AV2
+#### Exercício 2: Resolução de Riscos no Modelo Espiral de Boehm
+**Enunciado:** Uma equipe foi encarregada de projetar um sistema transacional bancário que processará 100.000 requisições concorrentes por segundo. A equipe propõe utilizar um banco de dados NoSQL distribuído de código aberto recém-lançado no mercado, sobre o qual nenhum membro da equipe possui experiência. Demonstre como os quatro quadrantes do Modelo Espiral de Barry Boehm evitam o colapso desse projeto.
 
-### Questões discursivas com resolução comentada
-
-#### Questão 01 (Abstração e Engenharia de Requisitos)
-**Enunciado:** Em uma reunião de levantamento para o aplicativo *Desapega Já*, o cliente afirmou: *"O sistema deve ser intuitivo, fácil de usar e permitir que o anunciante venda seu produto rapidamente."* Analise a declaração sob a ótica dos critérios formais de qualidade de requisitos (ISO/IEC/IEEE 29148) e proponha a sua reestruturação de engenharia.
-- **Resolução Comentada:**
-  - **Crítica Técnica:** A declaração falha em dois critérios essenciais: não é atômica e não é testável (verificável). Os termos "intuitivo" e "fácil de usar" são subjetivos, impedindo a verificação booleana (Passou/Falhou) por um engenheiro de testes. Além disso, "permitir que venda rapidamente" é um objetivo corporativo ou de mercado, e não um comportamento do sistema computacional.
-  - **Reestruturação Proposta:**
-    - *Objetivo de Negócio:* Ampliar a liquidez de vendas locais de produtos seminovos.
-    - *RF01 (Funcional):* "O sistema deve permitir que o usuário autenticado publique anúncios informando título, descrição, categoria, fotos (de 1 a 5 imagens) e preço de venda."
-    - *RNF01 (Usabilidade / Métrico):* "A interface de publicação de anúncios deve ser estruturada em formulário passo a passo, permitindo que 90% dos usuários novatos concluam o cadastro de um anúncio em até 3 minutos, com taxa de erro de preenchimento inferior a 5% no primeiro teste."
-
-#### Questão 02 (Modelos de Processo e Matriz de Decisão)
-**Enunciado:** Compare o Modelo Cascata e o Modelo Espiral de Barry Boehm com base em seus mecanismos de alocação e mitigação de riscos técnicos ao projetar um sistema de monitoramento de usinas nucleares.
-- **Resolução Comentada:**
-  - O Modelo Cascata aloca o planejamento no início e assume que os riscos foram integralmente compreendidos antes da escrita do código. Se houver um risco arquitetural latente (ex.: latência nos sensores de pressão sob superaquecimento), o erro só será descoberto na fase de testes integrados, quando o custo de modificação alcança seu patamar mais elevado (fator $50\times$ a $100\times$).
-  - O Modelo Espiral coloca a gestão de riscos no coração de seu método (Quadrante 2). Se houver risco arquitetural na comunicação dos sensores, a equipe de engenharia desenvolve um *spike* técnico (protótipo de estresse) e executa simulações matemáticas na primeira volta da espiral. A decisão de avançar para a construção é tomada após a mitigação do risco.
-
-#### Questão 03 (Metamodelo CASE e Astah UML)
-**Enunciado:** Diferencie a exclusão de uma classe por meio da tecla `Delete` no diagrama visual da exclusão definitiva através do catálogo estrutural (*Structure Tree*) no Astah UML.
-- **Resolução Comentada:**
-  - Ao pressionar `Delete` na visualização gráfica de um diagrama, o Astah UML apenas remove o elemento visual daquela visão específica, mantendo a classe, seus atributos e seus métodos vivos e íntegros no Repositório de Metadados (*Model Tree*). Caso ela seja referenciada em outros diagramas (como sequência ou estado), continuará existindo.
-  - Para remover a entidade de forma definitiva de todo o sistema e de todas as visões correlacionadas, o analista deve executar a exclusão a partir da árvore de estrutura de modelos (*Structure Tree*), rompendo os metadados do grafo semântico do arquivo `.asta`.
-
-#### Questão 04 (Modelagem Estrutural e o Princípio DRY)
-**Enunciado:** No estudo de caso da Açaiteria Sabor da Amazônia, justifique a necessidade da criação da classe associativa `ItemPedido` entre as classes `Pedido` e `Produto`.
-- **Resolução Comentada:**
-  - A relação conceitual entre `Pedido` e `Produto` é de multiplicidade muitos-para-muitos ($N:N$). Um pedido reúne múltiplos produtos e um produto pode constar em múltiplos pedidos ao longo do tempo.
-  - Atributos cruciais como `quantidade` comprada pertencem exclusivamente ao evento da associação. Além disso, o atributo `precoUnitarioHistorico` deve ser congelado no momento da emissão da compra; caso contrário, se a açaiteria reajustasse o valor de catálogo do açaí no mês seguinte, os totais dos pedidos antigos gravados no histórico financeiro seriam recalculados e violariam a contabilidade da empresa. A classe associativa `ItemPedido` resolve o relacionamento muitos-para-muitos e garante a integridade dos dados históricos.
+**Resolução Técnica:**
+1. **Quadrante 1 (Objetivos e Restrições):** O objetivo é atingir vazão de $ `100.000 \text{ req/s}` $ com latência inferior a $ `10\text{ ms}` $. A restrição é manter a consistência contábil estrita e custos de infraestrutura controlados.
+2. **Quadrante 2 (Avaliação de Riscos):** O risco técnico máximo identificado é o banco NoSQL não suportar transações atômicas distribuídas e falhar miseravelmente sob estresse, corrompendo os saldos das contas. A equipe não avança para o desenvolvimento do sistema completo. Em vez disso, constrói um *spike* técnico (protótipo de estresse) simulando a injeção da carga alvo durante 48 horas ininterruptas.
+3. **Quadrante 3 (Desenvolvimento da Fase):** Se o teste de benchmark revelar que o banco NoSQL satura a memória com apenas $ `15.000 \text{ req/s}` $ e perde dados em partições de rede, a hipótese é descartada tecnicamente sem comprometer o cronograma nem a base de código do produto real. Desenvolve-se uma arquitetura alternativa baseada em filas de mensageria com banco relacional particionado.
+4. **Quadrante 4 (Revisão e Planejamento):** Os resultados dos testes são submetidos ao comitê de arquitetura e ao patrocinador. Aprovada a nova rota técnica comprovada, planeja-se a volta externa da espiral para detalhar os requisitos operacionais da solução homologada.
 
 ---
 
-### Dataset estruturado de revisão rápida em JSONL
+#### Exercício 3: Distinção entre Usuário, Ator e Entidade de Dados
+**Enunciado:** Explique a diferença teórica e prática entre os conceitos de Usuário, Ator e Entidade de Dados (Classe), utilizando como exemplo o processamento de pagamentos com cartão no aplicativo da Açaiteria Sabor da Amazônia.
 
-```jsonl
-{"id": 1, "topico": "Abstracao", "pergunta": "Qual a diferenca fundamental entre o dominio do problema e o dominio da solucao?", "resposta": "O dominio do problema foca nas necessidades, regras de negocio e processos do mundo real dos stakeholders; o dominio da solucao foca na arquitetura, modelos tecnicos, banco de dados e codigo-fonte necessarios para implementar o software."}
-{"id": 2, "topico": "Requisitos", "pergunta": "Por que a afirmacao 'o software deve ser confiavel' nao e um bom requisito nao funcional?", "resposta": "Porque e uma declaracao puramente subjetiva e desprovida de metrica verificavel; para ser valida, deve ser acompanhada de parametros quantificaveis, tais como disponibilidade minima de 99,9% ou MTBF superior a 1000 horas."}
-{"id": 3, "topico": "Requisitos", "pergunta": "Qual a diferenca entre requisitos permanentes e requisitos volateis segundo Sommerville?", "resposta": "Requisitos permanentes estao atrelados ao nucleo estruturante e imutavel do negocio da organizacao; requisitos volateis sao aqueles sujeitos a frequentes alteracoes motivadas pelo mercado, novas politicas ou dinamica de usuarios."}
-{"id": 4, "topico": "Processos", "pergunta": "Quais sao as quatro atividades fundamentais presentes em qualquer processo de desenvolvimento de software?", "resposta": "Especificacao de software, Desenvolvimento de software, Validacao de software e Evolucao de software."}
-{"id": 5, "topico": "Processos", "pergunta": "Qual e a forca motriz essencial que orienta a tomada de decisao nas iteracoes do Modelo Espiral de Barry Boehm?", "resposta": "A analise e mitigacao sistematica de riscos tecnicos, arquiteturais e de gestao em cada volta da espiral."}
-{"id": 6, "topico": "Processos", "pergunta": "Qual e o marco arquitetural mais critico do Rational Unified Process (RUP) e em qual fase ele ocorre?", "resposta": "O marco e o Lifecycle Architecture (LCA), que ocorre ao final da fase de Elaboracao, atestando que a linha de base arquitetural foi validada e os riscos mitigados."}
-{"id": 7, "topico": "Ferramentas CASE", "pergunta": "Por que editores vetoriais como Draw.io nao sao classificados como ferramentas CASE formais?", "resposta": "Porque editores vetoriais operam sobre primitivas graficas isoladas sem validacao de integridade referencial ou conformidade com o metamodelo formal da OMG."}
-{"id": 8, "topico": "Ferramentas CASE", "pergunta": "Como o Astah UML valida sua licenca institucional XML de forma 100% offline?", "resposta": "Ele decifra a assinatura digital da tag USER_SIGNATURE utilizando a Chave Publica da fabricante embutida no software e a compara com o hash recalculado do bloco INFO."}
-{"id": 9, "topico": "UML Casos de Uso", "pergunta": "Um ator na UML pode representar um sistema de computador externo?", "resposta": "Sim, um ator e qualquer entidade externa ao sistema que consome ou providencia dados, englobando pessoas, sistemas parceiros (como gateways de pagamento) ou dispositivos de hardware."}
-{"id": 10, "topico": "UML Casos de Uso", "pergunta": "O que constitui um pre-requisito valido em um Quadro de Descricao de Caso de Uso (DCU)?", "resposta": "Um estado obrigatorio do ambiente ou dos dados que deve ser verdadeiro antes da execucao do caso de uso (ex.: usuario pre-cadastrado no sistema); nunca uma acao do proprio fluxo."}
-{"id": 11, "topico": "UML Classes", "pergunta": "Qual a diferenca de ciclo de vida entre Agregacao e Composicao no Diagrama de Classes?", "resposta": "Na agregacao (todo-parte fraco), o objeto parte pode existir independentemente do todo; na composicao (todo-parte forte), a parte possui dependencia existencial estrita e e destruida se o todo for excluido."}
-{"id": 12, "topico": "Manutencao", "pergunta": "Adaptar um software bancario para atender a uma nova instrucao normativa do Banco Central e classificado em qual modalidade de manutencao?", "resposta": "Manutencao Adaptativa, pois decorre da alteracao de regras externas do ambiente legal sem modificacao da essencia operacional previa do negocio."}
-```
+**Resolução Técnica:**
+- **Usuário:** É a pessoa física concreta, de carne e osso, que opera o hardware (ex.: o cliente "Lucas Silva", que está segurando o smartphone no balcão e digitando na tela).
+- **Ator (UML Actor):** É o papel abstrato e coerente que uma entidade externa desempenha ao interagir com as fronteiras do sistema. No exemplo, "Lucas Silva" atua desempenhando o papel do ator primário `Cliente`. Simultaneamente, a API remota da operadora bancária (ex.: Cielo ou Rede) atua como o ator secundário `Gateway de Pagamento`, interagindo de fora da fronteira para autorizar a transação financeira.
+- **Entidade de Dados (Classe de Análise):** É o artefato lógico modelado dentro da memória e da base de dados do software para reter informações estruturadas sobre o evento comercial. No exemplo, a classe `Pagamento` armazena `idPagamento`, `formaPagamento = "Cartão de Crédito"`, `situacaoTransacao = "Aprovado"` e `valorTransacao = 25.50`. O usuário opera; o ator interage na fronteira; a classe persiste o estado internamente.
 
 ---
 
-## Glossário e Checklist de Auditoria Documental
+### 8.2 Questões Objetivas no Padrão de Avaliação Bimestral
 
-### Glossário Consolidado de Engenharia de Software
+#### Questão 1
+Na engenharia de requisitos, os requisitos que permanecem essencialmente estáveis ao longo de todo o ciclo de vida do software, pois derivam do núcleo estruturante do negócio e das regras basilares da aplicação, são definidos como:
+- (A) Requisitos Voláteis.
+- (B) Requisitos Emergentes.
+- (C) Requisitos Permanentes.
+- (D) Requisitos Não Funcionais Subjetivos.
+- (E) Requisitos Derivados de Interface.
 
-- **Abstração:** Operação de isolar características essenciais de um objeto ou processo real, descartando detalhes contingentes ou desprovidos de relevância para o sistema em modelagem.
-- **Ator Primário:** Entidade externa que dá o estímulo inicial e consome os serviços de um caso de uso para alcançar uma meta de negócio.
-- **Ator Secundário:** Entidade externa (humana ou sistêmica) acionada passivamente pelo software para fornecer suporte ou validação à execução de um caso de uso.
-- **Caminho Feliz (*Happy Path*):** Sequência ininterrupta de passos atômicos executada no fluxo de um caso de uso quando nenhuma exceção, falha de validação ou erro ocorre.
-- **Caso de Uso (*Use Case*):** Descrição das sequências de interações entre um ou mais atores e o sistema de software, proporcionando um resultado de valor observável para o ator.
-- **Classe Associativa:** Elemento de modelagem que reúne características estruturais de classe e semânticas de associação, utilizado para intermediar associações muitos-para-muitos.
-- **Composição:** Variação estrita do relacionamento todo-parte com dependência de ciclo de vida existencial direta entre as instâncias envolvidas.
-- **Curva de Barry Boehm:** Postulado que demonstra o crescimento exponencial do custo de reparo de defeitos de requisitos à medida que o projeto avança no ciclo de vida.
-- **DRY (*Don't Repeat Yourself*):** Princípio de engenharia que determina a eliminação de duplicações estruturais, centralizando o conhecimento de forma unificada no sistema.
-- **Elicitação:** Conjunto sistemático de práticas e investigações ativas orientadas a descobrir, mapear e negociar as necessidades reais dos clientes de um sistema.
-- **Ferramenta CASE:** Aplicações de software especializadas em automatizar e apoiar a condução do ciclo de vida de desenvolvimento de software.
-- **Fase de Análise:** Estágio de engenharia orientado a mapear o espaço do problema e os requisitos do cliente sem acoplamento a soluções tecnológicas finais.
-- **Fase de Projeto (*Design*):** Estágio de engenharia orientado a projetar a arquitetura técnica, interfaces e esquemas de dados que solucionarão as necessidades de análise.
-- **Metamodelo:** Especificação conceitual formal que define as regras sintáticas, conexões válidas e propriedades semânticas dos elementos de uma linguagem de modelagem (ex.: Metamodelo UML da OMG).
-- **Modelo Cascata:** Abordagem prescritiva linear e sequencial onde uma fase depende formalmente da conclusão e congelamento de todos os artefatos da etapa anterior.
-- **Modelo Espiral:** Abordagem evolucionária de desenvolvimento dirigida pela análise contínua e mitigação progressiva de riscos em quatro quadrantes.
-- **Métrica de Software:** Medida quantitativa do grau em que um sistema, componente ou processo possui um atributo específico de qualidade.
-- **Princípio da Atomicidade:** Diretriz segundo a qual uma especificação de requisito funcional deve descrever uma única função operacional indivisível.
-- **RUP (*Rational Unified Process*):** Processo prescritivo iterativo e incremental, dirigido por casos de uso e centrado na arquitetura, estruturado em quatro fases temporais.
-- **Vazamento de Abstração (*Leaky Abstraction*):** Ocorrência patológica em que detalhes técnicos de baixo nível contaminam a modelagem conceitual de alto nível de um sistema.
+> **Gabarito Comentado:** Alternativa **(C)**. Requisitos permanentes (ou estáveis) correspondem ao domínio nuclear da organização e não mudam com facilidade. Requisitos voláteis são aqueles que sofrem alterações constantes decorrentes de pressões do ambiente externo ou mercadológico.
 
 ---
 
-### Checklist de Auditoria Documental da Fase de Análise
+#### Questão 2
+Em relação ao Modelo Espiral proposto por Barry Boehm, assinale a afirmação correta:
+- (A) O modelo espiral proíbe terminantemente a utilização de protótipos de tela ou simulações técnicas.
+- (B) O avanço entre as voltas da espiral é orientado primordialmente pela identificação, avaliação e mitigação sistemática de riscos.
+- (C) O primeiro quadrante da espiral destina-se exclusivamente à escrita de testes unitários e testes de regressão.
+- (D) O modelo espiral não permite intervenção dos clientes ou comitês técnicos até a entrega da última volta do software.
+- (E) O modelo espiral prescreve que o custo de mudança cresce de forma perfeitamente linear ao longo de todo o projeto.
 
-Este checklist consolida as diretrizes metodológicas ministradas pelo Prof. Marcelo Boer e deve ser consultado antes da submissão final dos artefatos da disciplina:
+> **Gabarito Comentado:** Alternativa **(B)**. A principal força motriz do Modelo Espiral de Boehm é a condução formal baseada na gestão e mitigação de riscos técnicos, gerenciais e arquiteturais através dos seus quatro quadrantes sucessivos.
 
-```text
-================================================================================
-CHECKLIST DE AUDITORIA FORMAL — ENGENHARIA DE SOFTWARE I (UniFEF)
-================================================================================
-[ ] 01. O documento identifica expressamente a instituição (UniFEF), o curso
-        (Sistemas de Informação), o professor (Marcelo Boer) e o aluno?
-[ ] 02. A descrição do contexto delimita claramente os limites de escopo
-        (explicitando tanto o que o sistema fará quanto o que não contemplará)?
-[ ] 03. Os atores estão categorizados em primários e secundários, sendo desenhados
-        rigorosamente fora da fronteira do sistema no Diagrama de Contexto?
-[ ] 04. O Quadro 1 (Descrição dos Atores) detalha formalmente o identificador,
-        o papel exercido e as responsabilidades de acesso de cada ator?
-[ ] 05. A lista consolidada de casos de uso adota identificadores canônicos
-        (UC01, UC02...) com títulos verbais iniciados por verbo no infinitivo?
-[ ] 06. Todas as mensagens de erro, confirmação e alerta exibidas pelo sistema
-        foram catalogadas com códigos formais (MSG01 a MSG12) em dicionário central?
-[ ] 07. Os Quadros de Descrição de Casos de Uso (DCUs) separam rigorosamente
-        as pré-condições dos passos interativos do Fluxo Normal?
-[ ] 08. O Fluxo Normal dos DCUs alterna de forma equilibrada as ações do ator
-        e as respostas computacionais do sistema em passos sequenciais numerados?
-[ ] 09. Os Fluxos Alternativos e de Exceção apontam com precisão o subpasso de
-        desvio e especificam explicitamente o ponto de retorno ao Fluxo Normal?
-[ ] 10. O Diagrama de Classes da Fase de Análise contém apenas classes conceituais
-        de domínio, sem classes de infraestrutura (como conexões de banco e DAOs)?
-[ ] 11. Os atributos no Diagrama de Classes utilizam tipagem abstrata e independente
-        (Texto, Número, Data, Booleano), sem tipos de dialetos específicos de SGBD?
-[ ] 12. Todas as associações do Diagrama de Classes possuem multiplicidades explícitas
-        em ambas as extremidades (1, 0..1, 1..*, *), sem multiplicidades omissas?
-[ ] 13. O princípio DRY foi respeitado na modelagem de usuários, consolidando atributos
-        comuns em superclasses especializadas por papéis de herança?
-[ ] 14. Relacionamentos N:N foram adequadamente decompostos por classes associativas
-        (como ItemPedido), garantindo a preservação de dados e preços históricos?
-[ ] 15. O arquivo de modelagem foi estruturado em pacotes lógicos no Astah UML e
-        a licença institucional acadêmica XML encontra-se devidamente homologada?
-================================================================================
+---
+
+#### Questão 3
+Sobre a elaboração do Quadro de Descrição de Caso de Uso (DCU) na Fase de Análise, assinale a opção que descreve um pré-requisito válido:
+- (A) O operador deve clicar com o botão esquerdo no ícone de cadastro.
+- (B) O sistema deve processar os dados da requisição em menos de 500 milissegundos.
+- (C) O funcionário deve possuir cadastro ativo e privilégio de acesso liberado no módulo.
+- (D) O usuário digita seu CPF no campo de busca e aciona a tecla Enter.
+- (E) O sistema apresenta os dados carregados na grade de registros.
+
+> **Gabarito Comentado:** Alternativa **(C)**. Um pré-requisito (precondição) é um estado de verdade que o ambiente ou a base de dados deve satisfazer obrigatoriamente **antes** do caso de uso iniciar. As opções (A) e (D) são ações do fluxo; (B) é um requisito não funcional de desempenho; (E) é uma resposta do fluxo normal.
+
+---
+
+#### Questão 4
+No software Astah UML, ao selecionar uma classe gráfica em um diagrama de classes e pressionar a tecla `Delete` do teclado, ocorre:
+- (A) A exclusão física definitiva da classe do arquivo `.asta` e de todos os diagramas do projeto.
+- (B) A desinstalação automática da licença acadêmica em formato XML.
+- (C) Apenas a remoção da visualização visual da classe naquele diagrama específico, permanecendo a entidade íntegra na árvore de modelos (*Model Tree*).
+- (D) O travamento irreversível do grafo semântico da ferramenta CASE por quebra de chave primária.
+- (E) A compilação forçada da classe em código Java esqueleto.
+
+> **Gabarito Comentado:** Alternativa **(C)**. Nas ferramentas CASE semânticas como o Astah, a tecla `Delete` na área de desenho oculta a representação visual daquela visão. Para remover a classe integralmente de todo o metamodelo do projeto, o analista deve excluí-la diretamente na árvore de estrutura (*Structure Tree*).
+
+---
+
+## Glossário Técnico Unificado
+
+- **Abstração:** Mecanismo intelectual que isola as propriedades essenciais e indispensáveis de uma entidade ou processo do mundo real, ignorando detalhes contingentes, secundários ou irrelevantes para o domínio do software.
+- **Agregação:** Relacionamento estrutural todo-parte fraco entre classes, no qual a parte pode existir conceitual e operacionalmente de forma independente do objeto todo (notação: losango oco).
+- **Astah UML:** Ferramenta CASE formal proprietária baseada no metamodelo da OMG, desenvolvida em Java pela *Change Vision, Inc.*, utilizada para modelagem visual de sistemas através da extensão compactada `.asta`.
+- **Ator (UML Actor):** Entidade externa à fronteira do sistema (humano, dispositivo de hardware ou subsistema externo de software) que desempenha um papel coerente ao interagir diretamente com as funcionalidades da aplicação.
+- **Composição:** Relacionamento estrutural todo-parte forte entre classes, no qual a existência e o ciclo de vida da parte estão indissoluvelmente vinculados à existência do objeto todo (notação: losango preenchido).
+- **Curva de Boehm:** Postulado matemático-empírico de Barry Boehm demonstrando que o custo e esforço para corrigir defeitos de software crescem exponencialmente conforme o ciclo de vida avança da fase de requisitos até a fase de operação em produção.
+- **Fase de Análise:** Estágio inicial de modelagem de sistemas centrado no entendimento e especificação formal do **espaço do problema** (o que o sistema deve fazer), operando de forma desacoplada de decisões de implementação física e bancos de dados específicos.
+- **Fase de Projeto (*Design*):** Estágio de engenharia focado no **espaço da solução** (como construir tecnicamente o sistema), contemplando arquiteturas em camadas, esquemas físicos relacionais/NoSQL, frameworks, protocolos de rede e design patterns.
+- **Ferramenta CASE (*Computer-Aided Software Engineering*):** Software de engenharia concebido para automatizar, apoiar e assegurar a consistência semântica e integridade referencial dos artefatos ao longo de todo o ciclo de vida de desenvolvimento (SDLC).
+- **Fluxo Normal (*Happy Path*):** Caminho de execução sequencial ideal e ininterrupto de um caso de uso, no qual todos os passos operacionais são concluídos com sucesso e os objetivos de negócio são atingidos sem desvios ou erros.
+- **I-CASE (*Integrated CASE*):** Ambiente integrado que unifica as ferramentas Upper-CASE e Lower-CASE sob um repositório centralizado de metadados, sincronizando modelos visuais, código-fonte e esquemas de dados em tempo real.
+- **Licença Assimétrica XML:** Modelo de licenciamento de software que utiliza criptografia de chave pública e privada para assinar digitalmente dados institucionais (`<INFO>`) em um hash inviolável (`<USER_SIGNATURE>`), permitindo validação offline e autônoma.
+- **Metamodelo:** Modelo formal de alto nível que define a sintaxe, a semântica e as regras estruturais válidas para a construção de modelos derivados dentro de uma linguagem de especificação (como o metamodelo UML da OMG).
+- **Multiplicidade:** Especificação numérica que restringe a quantidade mínima e máxima de instâncias de uma classe que podem estar associadas a uma instância de outra classe associada.
+- **Pré-requisito (Precondição):** Declaração de estado verdadeiro que deve ser satisfeita compulsoriamente pelo sistema ou ambiente antes que a execução de um caso de uso seja autorizada a iniciar.
+- **Quadro DCU (*Descrição de Caso de Uso*):** Especificação textual padronizada que documenta detalhadamente a narrativa de interação de um caso de uso, decompondo atores, pré-requisitos, fluxo normal, fluxos alternativos e dados manipulados.
+- **Requisito Funcional (RF):** Declaração explícita de um serviço, comportamento, transformação de dados, cálculo ou resposta que o software deve executar mediante estímulos específicos.
+- **Requisito Não Funcional (RNF):** Declaração formal de uma restrição de qualidade, desempenho, segurança, conformidade legal ou arquitetura sob a qual o sistema deve operar.
+- **RUP (*Rational Unified Process*):** Processo de software prescritivo iterativo e incremental dirigido por casos de uso e centrado em arquitetura, organizado temporalmente em quatro fases sequenciais (*Inception*, *Elaboration*, *Construction*, *Transition*).
+- **Stakeholder:** Indivíduo, grupo ou organização que pode afetar, ser afetado ou perceber-se afetado positiva ou negativamente pelas decisões de arquitetura e funcionalidades de um sistema de software.
 
 ---
 
@@ -1851,4 +1601,4 @@ CHECKLIST DE AUDITORIA FORMAL — ENGENHARIA DE SOFTWARE I (UniFEF)
 
 - Turma no Classroom: Engenharia e Modelagem de Software I
 - Itens processados: 0 materiais, 6 tarefas, 9 avisos
-- Gerado em: 24/09/2026, 13:47:13 (BRT) via classroom-sync
+- Gerado em: 20/10/2026, 21:57:22 (BRT) via classroom-sync

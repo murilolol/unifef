@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 9 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 12 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -15,6 +15,9 @@
 | 07/09/2026 | Aviso | Material para prova dia 08/09 |
 | 09/09/2026 | Aviso | Aula no notion e revisão |
 | 22/09/2026 | Aviso | Aviso sem título |
+| 06/10/2026 | Aviso | https://outgoing-salt-444.notion.site/ED-I-Aula-09-Pilhas-Aplica-es-Manipula-o-e |
+| 17/10/2026 | Tarefa | Estruturas de ordenação 1 |
+| 20/10/2026 | Aviso | Aula de hoje! |
 
 ## 05/08/2026 - Aviso: Conteúdo aula 01
 
@@ -83,3 +86,26 @@ Aula no notion e revisão
 Aviso sem título
 
 - [https://outgoing-salt-444.notion.site/ED-I-Aula-08-Pilhas-Conceito-e-Implementa-o-3e38a4f8f8a780e6b351c61bc7592c07?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-08-Pilhas-Conceito-e-Implementa-o-3e38a4f8f8a780e6b351c61bc7592c07?source=copy_link)
+
+## 06/10/2026 - Aviso: https://outgoing-salt-444.notion.site/ED-I-Aula-09-Pilhas-Aplica-es-Manipula-o-e
+
+https://outgoing-salt-444.notion.site/ED-I-Aula-09-Pilhas-Aplica-es-Manipula-o-e-An-lise-de-Complexidade-3ea8a4f8f8a780b4ac10d6b31618ffef?source=copy_link
+
+- [https://outgoing-salt-444.notion.site/ED-I-Aula-09-Pilhas-Aplica-es-Manipula-o-e-An-lise-de-Complexidade-3ea8a4f8f8a780b4ac10d6b31618ffef?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-09-Pilhas-Aplica-es-Manipula-o-e-An-lise-de-Complexidade-3ea8a4f8f8a780b4ac10d6b31618ffef?source=copy_link)
+
+## 17/10/2026 - Tarefa: Estruturas de ordenação 1
+
+**Entrega:** 2026-10-21 | **Pontos:** 100
+
+Uma instituição precisa organizar as notas de seus alunos em ordem crescente para gerar um relatório de desempenho.
+Considere o seguinte vetor: int[] notas = {8, 5, 10, 3, 7, 2, 9, 6};
+
+Implemente o método bubbleSort(int[] notas).Implemente o método selectionSort(int[] notas).Execute os dois métodos com uma cópia do vetor original.Exiba o vetor antes e depois da ordenação.
+
+- [Bubble Sort e Selection Sort](https://docs.google.com/forms/d/e/1FAIpQLSe788DFHuR4mxr-PQwFIes-Gb7Tcclv8M_vBKGUZaNWsUc5_w/viewform?hr_submission=ChkIqfSd8tgWEhAIvv-9o9kZEgcI2Yqc368ZEAE)
+
+## 20/10/2026 - Aviso: Aula de hoje!
+
+Aula de hoje!
+
+- [https://outgoing-salt-444.notion.site/ED-I-Aula-11-Algoritmos-de-Ordena-o-Bubble-Sort-e-Selection-Sort-3fc8a4f8f8a780b58656ff76df6ba3a1?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-11-Algoritmos-de-Ordena-o-Bubble-Sort-e-Selection-Sort-3fc8a4f8f8a780b58656ff76df6ba3a1?source=copy_link)

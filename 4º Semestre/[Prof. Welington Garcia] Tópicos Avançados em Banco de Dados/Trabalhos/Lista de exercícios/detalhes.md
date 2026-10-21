@@ -2,7 +2,7 @@
 
 > **Professor:** Welington Garcia
 > **Disciplina:** Tópicos Avançados em Banco de Dados (4º Semestre)
-> **Prazo de Entrega:** 09/09/2026 às 19:59
+> **Prazo de Entrega:** 09/09/2026 às 19:00
 > **Pontuação Máxima:** 100 pontos
 > **Conteúdo cobrado:** [Aula 02 - Views e Materialized Views em PostgreSQL](../../Aulas/Aula%2002%20-%20Views%20e%20Materialized%20Views%20em%20PostgreSQL/detalhes.md), [Aula 03 - Stored Procedures no PostgreSQL com PL pgSQL](../../Aulas/Aula%2003%20-%20Stored%20Procedures%20no%20PostgreSQL%20com%20PL%20pgSQL/detalhes.md) e [Aula 04 - Junções e Subconsultas em PostgreSQL](../../Aulas/Aula%2004%20-%20Jun%C3%A7%C3%B5es%20e%20Subconsultas%20em%20PostgreSQL/detalhes.md)
 

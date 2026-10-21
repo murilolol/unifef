@@ -33,8 +33,8 @@
 
 | Atividade | Prazo | Pontuação |
 | :--- | :--- | :--- |
-| [20260323 - Avaliação 1](Provas/20260323%20-%20Avalia%C3%A7%C3%A3o%201/detalhes.md) | 24/03/2026 às 20:30 | 100 pontos |
-| [20260608 - Avaliação II](Provas/20260608%20-%20Avalia%C3%A7%C3%A3o%20II/detalhes.md) | 09/06/2026 às 20:30 | 100 pontos |
+| [20260323 - Avaliação 1](Provas/20260323%20-%20Avalia%C3%A7%C3%A3o%201/detalhes.md) | 23/03/2026 às 21:30 | 100 pontos |
+| [20260608 - Avaliação II](Provas/20260608%20-%20Avalia%C3%A7%C3%A3o%20II/detalhes.md) | 08/06/2026 às 21:30 | 100 pontos |
 | [20260625 Avaliação Substitutiva](Provas/20260625%20Avalia%C3%A7%C3%A3o%20Substitutiva/detalhes.md) | 25/06/2026 às 23:59 | 100 pontos |
 
 ## Revisão

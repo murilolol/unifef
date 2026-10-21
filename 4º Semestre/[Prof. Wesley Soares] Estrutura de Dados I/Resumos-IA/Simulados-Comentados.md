@@ -1,121 +1,1342 @@
-# Simulados Comentados - Estrutura de Dados I
+# Livro-Texto e Guia Integrado de Estudos — Estrutura de Dados I
 
-> **Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
-> **Curso:** Bacharelado em Sistemas de Informação (4º Semestre)  
-> **Disciplina:** Estrutura de Dados I  
-> **Docente:** Prof. Me. Wesley Soares de Souza  
-> **Material de Referência:** Aulas 01 a 07, Trabalho de Complexidade de Algoritmos e Trabalho Prático AV1  
+**Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
+**Curso:** Bacharelado em Sistemas de Informação (4º Semestre)  
+**Disciplina:** Estrutura de Dados I  
+**Docente Responsável:** Prof. Me. Wesley Soares de Souza  
 
 ---
 
 ## Sumário
 
-- [Apresentação e Orientações de Estudo](#apresentacao-e-orientacoes-de-estudo)
-- [Simulado 1 - Questões Objetivas](#simulado-1---questoes-objetivas)
-  - [Questão 01 - Fundamentos e Propriedades Formais de Algoritmos](#questao-01---fundamentos-e-propriedades-formais-de-algoritmos)
-  - [Questão 02 - Tipos Abstratos de Dados e Encapsulamento](#questao-02---tipos-abstratos-de-dados-e-encapsulamento)
-  - [Questão 03 - Metodologia de Análise Assintótica versus Medição Empírica](#questao-03---metodologia-de-analise-assintotica-versus-medicao-empirica)
-  - [Questão 04 - Análise de Laços Dependentes e Progressão Aritmética](#questao-04---analise-de-lacos-dependentes-e-progressao-aritmetica)
-  - [Questão 05 - Complexidade de Laços com Redução Logarítmica](#questao-05---complexidade-de-lacos-com-reducao-logaritmica)
-  - [Questão 06 - Custo Estrutural de Listas Sequenciais e Shifting](#questao-06---custo-estrutural-de-listas-sequenciais-e-shifting)
-  - [Questão 07 - Modelo de Memória da JVM: Stack, Heap e Referências](#questao-07---modelo-de-memoria-da-jvm-stack-heap-e-referencias)
-  - [Questão 08 - Inserção Terminal em Listas Encadeadas e Ponteiro de Cauda](#questao-08---insercao-terminal-em-listas-encadeadas-e-ponteiro-de-cauda)
-  - [Questão 09 - Encadeamento e Religamento Crítico de Referências](#questao-09---encadeamento-e-religamento-critico-de-referencias)
-  - [Questão 10 - Matriz de Decisão Arquitetural: Vetor versus Lista Ligada](#questao-10---matriz-de-decisao-arquitetural-vetor-versus-lista-ligada)
-  - [Questão 11 - Tipos Abstratos Restritos: Semântica e Disciplina da Pilha](#questao-11---tipos-abstratos-restritos-semantica-e-disciplina-da-pilha)
-  - [Questão 12 - Pilha com Array Estático: Indexação Sentinela e Estados](#questao-12---pilha-com-array-estatico-indexacao-sentinela-e-estados)
-- [Simulado 2 - Questões Discursivas](#simulado-2---questoes-discursivas)
-  - [Questão 13 - Modelagem Conceitual e Implementação de TAD de Atendimento](#questao-13---modelagem-conceitual-e-implementacao-de-tad-de-atendimento)
-  - [Questão 14 - Dedução Matemática Formal de Inserções em Memória Contígua](#questao-14---deducao-matematica-formal-de-insercoes-em-memoria-contigua)
-  - [Questão 15 - Engenharia de Listas Ligadas: Algoritmo Robusto de Cancelamento](#questao-15---engenharia-de-listas-ligadas-algoritmo-robusto-de-cancelamento)
-  - [Questão 16 - Pilha Estática, Invariantes do Topo e Vazamento de Memória](#questao-16---pilha-estatica-invariantes-do-topo-e-vazamento-de-memoria)
-  - [Questão 17 - Decisão Arquitetural de Engenharia: Localidade de Cache e Sobrecarga](#questao-17---decisao-arquitetural-de-engenharia-localidade-de-cache-e-sobrecarga)
-- [Gabarito Comentado](#gabarito-comentado)
-  - [Gabarito do Simulado 1 (Objetivas)](#gabarito-do-simulado-1-objetivas)
-  - [Gabarito do Simulado 2 (Discursivas)](#gabarito-do-simulado-2-discursivas)
+- [Livro-Texto e Guia Integrado de Estudos — Estrutura de Dados I](#livro-texto-e-guia-integrado-de-estudos--estrutura-de-dados-i)
+  - [Sumário](#sumário)
+  - [1. Apresentação da Disciplina e Contrato Pedagógico](#1-apresentação-da-disciplina-e-contrato-pedagógico)
+    - [1.1 Perfil Docente e Filosofia de Ensino](#11-perfil-docente-e-filosofia-de-ensino)
+    - [1.2 Ementa Oficial e Trilha Temática do Semestre](#12-ementa-oficial-e-trilha-temática-do-semestre)
+    - [1.3 Critérios e Métricas Formais de Avaliação](#13-critérios-e-métricas-formais-de-avaliação)
+    - [1.4 Bibliografia Oficial Comentada](#14-bibliografia-oficial-comentada)
+  - [2. Introdução a Algoritmos e Metodologia de Projeto](#2-introdução-a-algoritmos-e-metodologia-de-projeto)
+    - [2.1 Definição Formal e Semântica de Algoritmo](#21-definição-formal-e-semântica-de-algoritmo)
+    - [2.2 As Seis Características Fundamentais de um Algoritmo](#22-as-seis-características-fundamentais-de-um-algoritmo)
+    - [2.3 O Princípio da Organização: Wirth e o Equilíbrio de Sistemas](#23-o-princípio-da-organização-wirth-e-o-equilíbrio-de-sistemas)
+    - [2.4 Distinção Ontológica: Algoritmo versus Programa](#24-distinção-ontológica-algoritmo-versus-programa)
+    - [2.5 O Ciclo de Engenharia: Do Problema à Solução](#25-o-ciclo-de-engenharia-do-problema-à-solução)
+    - [2.6 As Seis Etapas Sistemáticas do Projeto de Algoritmos](#26-as-seis-etapas-sistemáticas-do-projeto-de-algoritmos)
+  - [3. Refinamento Sucessivo e Tipos Abstratos de Dados](#3-refinamento-sucessivo-e-tipos-abstratos-de-dados)
+    - [3.1 Metodologia do Refinamento Sucessivo](#31-metodologia-do-refinamento-sucessivo)
+    - [3.2 Conceituação de Tipo Abstrato de Dados](#32-conceituação-de-tipo-abstrato-de-dados)
+    - [3.3 O Princípio da Caixa-Preta: Abstração e Encapsulamento](#33-o-princípio-da-caixa-preta-abstração-e-encapsulamento)
+    - [3.4 Matriz de Decisão Arquitetural para Estruturas de Dados](#34-matriz-de-decisão-arquitetural-para-estruturas-de-dados)
+  - [4. Arquitetura de Memória e Ciclo de Vida de Objetos em Java](#4-arquitetura-de-memória-e-ciclo-de-vida-de-objetos-em-java)
+    - [4.1 Modelo de Execução da JVM: Segmentação Stack e Heap](#41-modelo-de-execução-da-jvm-segmentação-stack-e-heap)
+    - [4.2 Semântica de Valores: Variáveis Primitivas versus Tipos por Referência](#42-semântica-de-valores-variáveis-primitivas-versus-tipos-por-referência)
+    - [4.3 Alocação Dinâmica e o Papel do Garbage Collector](#43-alocação-dinâmica-e-o-papel-do-garbage-collector)
+    - [4.4 Impacto Físico no Hardware: Localidade Espacial de Cache](#44-impacto-físico-no-hardware-localidade-espacial-de-cache)
+  - [5. Análise Assintótica de Complexidade e Notação Big-O](#5-análise-assintótica-de-complexidade-e-notação-big-o)
+    - [5.1 Limitações da Medição Empírica de Relógio](#51-limitações-da-medição-empírica-de-relógio)
+    - [5.2 O Tamanho da Entrada e a Contagem de Operações Elementares](#52-o-tamanho-da-entrada-e-a-contagem-de-operações-elementares)
+    - [5.3 Fundamentos Matemáticos da Notação Big-O](#53-fundamentos-matemáticos-da-notação-big-o)
+    - [5.4 Regras Operacionais de Dominância e Descarte Assintótico](#54-regras-operacionais-de-dominância-e-descarte-assintótico)
+    - [5.5 Cenários de Execução: Melhor Caso, Pior Caso e Caso Médio](#55-cenários-de-execução-melhor-caso-pior-caso-e-caso-médio)
+    - [5.6 Taxonomia das Classes Fundamentais de Complexidade](#56-taxonomia-das-classes-fundamentais-de-complexidade)
+  - [6. Estruturas Lineares Sequenciais](#6-estruturas-lineares-sequenciais)
+    - [6.1 Organização Contígua e Cálculo Aritmético de Endereços](#61-organização-contígua-e-cálculo-aritmético-de-endereços)
+    - [6.2 Diferenciação Crítica: Capacidade Física versus Tamanho Lógico](#62-diferenciação-crítica-capacidade-física-versus-tamanho-lógico)
+    - [6.3 O Gargalo do Deslocamento em Mutações Intermediárias](#63-o-gargalo-do-deslocamento-em-mutações-intermediárias)
+    - [6.4 Mecanismo de Redimensionamento Dinâmico e Custo Amortizado](#64-mecanismo-de-redimensionamento-dinâmico-e-custo-amortizado)
+  - [7. Estruturas Dinâmicas Encadeadas: Listas Ligadas](#7-estruturas-dinâmicas-encadeadas-listas-ligadas)
+    - [7.1 A Mudança de Paradigma: Superando a Contiguidade Física](#71-a-mudança-de-paradigma-superando-a-contiguidade-física)
+    - [7.2 Anatomia do Nó e Auto-Referenciamento](#72-anatomia-do-nó-e-auto-referenciamento)
+    - [7.3 Arquitetura da Classe Controladora ListaLigada](#73-arquitetura-da-classe-controladora-listaligada)
+    - [7.4 Inserção no Fim: Análise da Otimização com Ponteiro de Cauda](#74-inserção-no-fim-análise-da-otimização-com-ponteiro-de-cauda)
+    - [7.5 Inserção no Início em Tempo Constante](#75-inserção-no-início-em-tempo-constante)
+    - [7.6 Inserção Ordenada no Meio: Localização versus Religamento](#76-inserção-ordenada-no-meio-localização-versus-religamento)
+    - [7.7 Busca Linear por Valor e Acesso Posicional por Salto](#77-busca-linear-por-valor-e-acesso-posicional-por-salto)
+    - [7.8 Atualização e Remoção de Elementos: Gestão de Invariantes](#78-atualização-e-remoção-de-elementos-gestão-de-invariantes)
+    - [7.9 Matriz Comparativa: Lista Sequencial versus Lista Ligada](#79-matriz-comparativa-lista-sequencial-versus-lista-ligada)
+  - [8. O Tipo Abstrato de Dados Pilha](#8-o-tipo-abstrato-de-dados-pilha)
+    - [8.1 Conceito Formal e o Princípio LIFO](#81-conceito-formal-e-o-princípio-lifo)
+    - [8.2 Operações Fundamentais: push, pop, peek e isEmpty](#82-operações-fundamentais-push-pop-peek-e-isempty)
+    - [8.3 Restrição Deliberada de Acesso e Blindagem Arquitetural](#83-restrição-deliberada-de-acesso-e-blindagem-arquitetural)
+    - [8.4 Implementação Estática Sequencial com Array](#84-implementação-estática-sequencial-com-array)
+    - [8.5 Exclusão Lógica versus Exclusão Física no Array](#85-exclusão-lógica-versus-exclusão-física-no-array)
+    - [8.6 Implementação Dinâmica Encadeada com Mapeamento no Topo](#86-implementação-dinâmica-encadeada-com-mapeamento-no-topo)
+    - [8.7 Manipulação de Elementos Intermediários com Pilhas Auxiliares](#87-manipulação-de-elementos-intermediários-com-pilhas-auxiliares)
+    - [8.8 Aplicações Clássicas de Pilhas em Engenharia de Software](#88-aplicações-clássicas-de-pilhas-em-engenharia-de-software)
+  - [9. Algoritmos Elementares de Ordenação](#9-algoritmos-elementares-de-ordenação)
+    - [9.1 A Relevância Estratégica da Ordenação de Dados](#91-a-relevância-estratégica-da-ordenação-de-dados)
+    - [9.2 Algoritmo Bubble Sort: Mecanismo de Trocas Adjacentes](#92-algoritmo-bubble-sort-mecanismo-de-trocas-adjacentes)
+    - [9.3 Otimização do Bubble Sort com Sinalizador de Parada Antecipada](#93-otimização-do-bubble-sort-com-sinalizador-de-parada-antecipada)
+    - [9.4 Algoritmo Selection Sort: Seleção de Extremos e Troca Mínima](#94-algoritmo-selection-sort-seleção-de-extremos-e-troca-mínima)
+    - [9.5 Comparativo Técnico: Bubble Sort versus Selection Sort](#95-comparativo-técnico-bubble-sort-versus-selection-sort)
+  - [10. Resolução Analítica e Comentada das Atividades do Google Classroom](#10-resolução-analítica-e-comentada-das-atividades-do-google-classroom)
+    - [10.1 Trabalho 1 — Análise de Complexidade de Algoritmos](#101-trabalho-1--análise-de-complexidade-de-algoritmos)
+    - [10.2 Trabalho 2 — Estruturas de Ordenação 1](#102-trabalho-2--estruturas-de-ordenação-1)
+  - [11. Roteiro Metodológico de Engenharia para Resolução de Problemas e Provas](#11-roteiro-metodológico-de-engenharia-para-resolução-de-problemas-e-provas)
+  - [12. Glossário Técnico Consolidado](#12-glossário-técnico-consolidado)
 
 ---
 
-## Apresentação e Orientações de Estudo
+## 1. Apresentação da Disciplina e Contrato Pedagógico
 
-Este caderno de simulados foi estruturado para consolidar os conhecimentos teóricos, conceituais e práticos da disciplina de **Estrutura de Dados I**, ministrada no 4º semestre do curso de Bacharelado em Sistemas de Informação da UniFEF pelo Prof. Me. Wesley Soares de Souza.
+### 1.1 Perfil Docente e Filosofia de Ensino
 
-O conteúdo aborda os tópicos fundamentais da computação estruturada e moderna:
-1. Fundamentos de algoritmos, ciclo de resolução de problemas e características operacionais canônicas.
-2. Refinamento sucessivo (*top-down*), Tipos Abstratos de Dados (TAD), abstração e encapsulamento de software.
-3. Análise analítica de algoritmos, contagem de instruções elementares, ordens assintóticas de complexidade (Notação Big O e Notação Omega).
-4. Gerenciamento e arquitetura de memória em tempo de execução: divisão estrutural entre Stack (Pilha) e Heap (Monte), referências de objetos, atuação do coletor de lixo (*Garbage Collector*) e localidade de referência em hardware.
-5. Listas lineares sequenciais baseadas em arrays contíguos: cálculo de endereços, capacidade versus tamanho, gargalo do deslocamento de elementos (*shifting*) e custo de redimensionamento dinâmico.
-6. Listas simplesmente encadeadas/ligadas dinâmicas: anatomia de nós, ponteiros de início (`head`) e fim (`tail`), inserção, busca, atualização e remoções com salvaguarda de invariantes.
-7. Estruturas lineares restritas: o Tipo Abstrato de Dados Pilha (*Stack*), disciplina LIFO (*Last In, First Out*), controle de índices com sentinela `-1`, detecção de *Stack Overflow* e *Stack Underflow*, e exclusão lógica versus física.
+A disciplina de Estrutura de Dados I, ministrada no 4º semestre do curso de Bacharelado em Sistemas de Informação do Centro Universitário de Santa Fé do Sul (UniFEF), é conduzida pelo Prof. Me. Wesley Soares de Souza. Graduado em Sistemas de Informação pela própria UniFEF, especialista em Gestão de Banco de Dados e Mestre em Engenharia de Software pela Universidade Federal do Pampa (UNIPAMPA - RS), o professor possui mais de 15 anos de atuação corporativa como engenheiro de software sênior e trajetória docente desde 2014, com passagens pelo Grupo Kroton (Anhanguera), FATEC Jales e IFSP Votuporanga.
 
-Recomenda-se que o estudante resolva primeiro as questões sem consultar o gabarito, cronometrando o tempo de resolução e redigindo as soluções discursivas por completo antes de confrontar sua resposta com a rubrica avaliativa.
+Essa vivência industrial e acadêmica imprime à disciplina uma diretriz pragmática: o ensino rigoroso dos modelos teóricos fundamentais associado à análise das implicações reais de custo, latência e consumo de hardware. Na engenharia de software profissional, algoritmos incorretos ou estruturas inadequadas não representam apenas notas baixas em exames; traduzem-se em desperdício de infraestrutura em nuvem, degradação de tempo de resposta para clientes, instabilidades transacionais e gargalos de escalabilidade.
 
----
+### 1.2 Ementa Oficial e Trilha Temática do Semestre
 
-## Simulado 1 - Questões Objetivas
+A ementa oficial estabelecida pelo colegiado do curso organiza-se em dois eixos articulados:
 
-### Questão 01 - Fundamentos e Propriedades Formais de Algoritmos
+1. **Fundamentos e Teoria Base:** Teoria e projeto de algoritmos, especificação de Tipos Abstratos de Dados (TAD), análise assintótica de complexidade, arquitetura física de memória, manipulação de ponteiros/referências e alocação dinâmica.
+2. **Estruturas Lineares e Aplicação Prática:** Projeto, implementação em linguagem Java e avaliação comparativa de desempenho de estruturas lineares contíguas e encadeadas (listas sequenciais, listas simplesmente ligadas, listas circulares, pilhas, filas, deques e estruturas compostas), culminando em algoritmos elementares de ordenação e busca.
 
-Na ciência da computação clássica, a formulação do conceito de algoritmo transcende a mera sintaxe de linguagens de programação imperativas ou orientadas a objetos. Niklaus Wirth formalizou a relação simbiótica dos sistemas computacionais através da equação fundamental $\text{Algoritmos} + \text{Estruturas de Dados} = \text{Programas}$. Paralelamente, a literatura canônica estabelece seis propriedades essenciais para que uma sequência de passos seja legitimamente classificada como um algoritmo: entrada (*input*), sequência de passos, saída (*output*), finitude (*finiteness*), precisão/não ambiguidade (*definiteness*) e executabilidade/efetividade (*effectiveness*).
+O plano semestral estrutura-se em nove unidades programáticas encadeadas:
 
-Considere um procedimento computacional projetado para processar registros financeiros que contenha a seguinte instrução em seu fluxo de controle:
-
-```text
-Passo 4: Enquanto o saldo da transação for divergente de zero, adicione gradualmente
-         quantias monetárias proporcionais ao bom senso do operador até convergir.
+```mermaid
+flowchart TD
+    U1["1. Introdução à Estrutura de Dados e Projeto de Algoritmos"] --> U2["2. Análise de Algoritmos"]
+    U2 --> U3["3. Memória e Alocação Dinâmica"]
+    U3 --> U4["4. Listas Lineares Sequenciais"]
+    U4 --> U5["5. Listas Ligadas"]
+    U5 --> U6["6. Pilhas"]
+    U6 --> U7["7. Filas e Deques Dinâmicos"]
+    U7 --> U8["8. Estruturas Compostas"]
+    U8 --> U9["9. Projeto e Aplicação de Estruturas Lineares"]
 ```
 
-Sob a ótica do rigor conceitual de algoritmos e das propriedades formais que regem a engenharia de software, assinale a alternativa que identifica a violação primária cometida pela instrução acima e sua implicação arquitetural.
+### 1.3 Critérios e Métricas Formais de Avaliação
 
-- [A] Viola a propriedade da entrada (*input*), pois o procedimento exige dados financeiros sem antes declarar a tipagem primitiva das variáveis no sistema operacional hospedeiro.
-- [B] Viola as propriedades de precisão (*definiteness*) e de executabilidade (*effectiveness*), uma vez que "adicionar quantias segundo o bom senso" introduz subjetividade não determinística e passos mecanicamente inexequíveis por um agente computacional.
-- [C] Viola a propriedade da finitude (*finiteness*), exclusivamente porque qualquer laço que utilize a palavra-chave "Enquanto" diverge para loops infinitos, impossibilitando a compilação por compiladores modernos.
-- [D] Viola a equação de Wirth, pois demonstra que estruturas de dados existem de forma independente e superior aos algoritmos, invalidando o uso de variáveis escalares na memória Heap.
-- [E] Não apresenta violação formal, uma vez que a precisão de um algoritmo aceita termos semânticos abertos na fase de modelagem conceitual, sendo convertida em código determinístico pelo interpretador.
+O sistema semestral de mensuração da aprendizagem é composto por dois blocos bimestrais (Módulo 1 e Módulo 2). Cada bloco compõe-se de uma avaliação escrita e prática individual ($ `AV` $`) com peso 80% (`$ `0,8` $`) e um trabalho técnico prático (`$ `T` $`) com peso 20% (`$ `0,2` $).
 
----
+A Média Semestral final ($ `MS` $) é apurada pela fórmula canônica apresentada em aula:
 
-### Questão 02 - Tipos Abstratos de Dados e Encapsulamento
+```math
+MS = \frac{[(AV_1 \times 0.8) + (T_1 \times 0.2)] + [(AV_2 \times 0.8) + (T_2 \times 0.2)]}{2}
+```
 
-No desenvolvimento de sistemas orientados a alta escalabilidade, o isolamento modular é obtido através do uso de Tipos Abstratos de Dados (TAD). Um TAD especifica formalmente o conjunto de dados, as operações disponíveis sobre esses dados e o comportamento público da estrutura, sem divulgar ou amarrar sua definição à representação física na memória do computador ou aos algoritmos internos de manipulação.
+| Instrumento | Característica e Escopo | Escala de Notas | Peso no Bimestre | Contribuição Efetiva |
+| :--- | :--- | :--- | :--- | :--- |
+| **Trabalho 1 ($ `T_1` $`)** | Listas de exercícios e implementações práticas | 0,0 a 10,0 | 20% (`$ `0,2` $) | Até 2,0 pontos no Módulo 1 |
+| **Avaliação 1 ($ `AV_1` $`)** | Prova individual sem consulta (Teoria e Código) | 0,0 a 10,0 | 80% (`$ `0,8` $) | Até 8,0 pontos no Módulo 1 |
+| **Trabalho 2 ($ `T_2` $`)** | Projeto aplicado de estruturas lineares e ordenação | 0,0 a 10,0 | 20% (`$ `0,2` $) | Até 2,0 pontos no Módulo 2 |
+| **Avaliação 2 ($ `AV_2` $`)** | Prova individual integradora sem consulta | 0,0 a 10,0 | 80% (`$ `0,8` $) | Até 8,0 pontos no Módulo 2 |
 
-Considere a modelagem de um TAD Ponto no plano cartesiano bidimensional e analise as seguintes asserções e a relação proposta entre elas:
+### 1.4 Bibliografia Oficial Comentada
 
-I. Uma aplicação consumidora de um TAD Ponto deve invocar funções públicas como `criar(x, y)`, `obterX(p)` e `distancia(p1, p2)`, sendo terminantemente impedida de acessar campos internos como `p->x` ou `p.coordenadas[0]` diretamente.
+O currículo oficial adota obras clássicas dedicadas à arquitetura interna de computadores e manuais de engenharia de algoritmos:
 
-**PORQUE**
+#### Bibliografia Básica
+- MONTEIRO, Mário A. *Introdução à Organização de Computadores*. 4. ed. Rio de Janeiro: LTC, 2002.
+- STALLINGS, William. *Arquitetura e Organização de Computadores*. 8. ed. São Paulo: Pearson, 2010.
+- TANENBAUM, Andrew S. *Organização Estruturada de Computadores*. 3. ed. São Paulo: Prentice-Hall do Brasil, 1990.
 
-II. O princípio do encapsulamento associado ao TAD estabelece que a interface pública responde "O QUE" a estrutura realiza, enquanto a implementação interna responde "COMO" a estrutura é armazenada, permitindo que a representação subjacente seja alterada de coordenadas cartesianas para coordenadas polares sem quebrar o código cliente.
+#### Bibliografia Complementar
+- IDOETA, Ivan Valeije; CAPUANO, Francisco Gabriel. *Elementos de Eletrônica Digital*. 32. ed. São Paulo: Érica, 2001.
+- PATTERSON, David A.; HENNESSY, John L. *Organização e Projeto de Computadores*. 2. ed. Rio de Janeiro: LTC, 1998.
+- WEBER, Raul Fernando. *Fundamentos de Arquitetura de Computadores*. 4. ed. Porto Alegre: Bookman, 2012.
 
-A respeito dessas asserções, assinale a opção correta:
-
-- [A] As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.
-- [B] As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.
-- [C] A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.
-- [D] A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.
-- [E] As asserções I e II são proposições falsas.
-
----
-
-### Questão 03 - Metodologia de Análise Assintótica versus Medição Empírica
-
-Durante uma sessão de revisão técnica de código em uma empresa de software, dois engenheiros apresentam soluções distintas para localizar chaves em um conjunto com $n$ registros ordenados. O Engenheiro A defende a Busca Sequencial, argumentando que ao rodar o algoritmo em sua estação de trabalho com um processador de última geração e 32 GB de memória RAM, a rotina gastou apenas 2 milissegundos para $n = 100.000$. O Engenheiro B defende a Busca Binária com base na análise matemática formal de contagem de instruções primitivas e notação assintótica Big O.
-
-Considerando os fundamentos da análise assintótica de algoritmos ensinados na disciplina de Estrutura de Dados I, assinale a afirmativa tecnicamente correta que justifica por que a ciência da computação rejeita o tempo de relógio (*wall-clock time*) como métrica definitiva de comparação entre algoritmos.
-
-- [A] A medição empírica de relógio é falha porque o compilador JIT (*Just-In-Time*) do Java converte algoritmos de complexidade quadrática em tempo constante de forma automática quando a máquina possui mais de 16 GB de memória física.
-- [B] O tempo de relógio depende de variáveis externas não controladas, como clock do processador, arquitetura do barramento, carga de processos concorrentes no sistema operacional e latência da hierarquia de cache, enquanto a análise assintótica mede a taxa intrínseca de crescimento das operações em função de $n \to \infty$.
-- [C] A análise de relógio é inadequada unicamente porque a unidade de milissegundos é matematicamente contínua, enquanto os computadores processam estados discretos, invalidando o uso de cronômetros em testes unitários.
-- [D] A Busca Sequencial possui tempo de pior caso $O(\log n)$ e a Busca Binária possui tempo de pior caso $O(n)$, o que torna o resultado empírico do Engenheiro A matematicamente impossível e indicativo de fraude no benchmark.
-- [E] A notação Big O restringe-se exclusivamente à análise de memória física consumida na pilha de execução (Stack), não possuindo correlação formal com a contagem de instruções de processamento da CPU.
+*(Nota de complementação pedagógica: Para o aprofundamento específico em tipos abstratos de dados e estruturas lineares em alto nível, recomenda-se a consulta a CORMEN, T. H. et al. Algoritmos: Teoria e Prática, e ZIVIANI, N. Projeto de Algoritmos).*
 
 ---
 
-### Questão 04 - Análise de Laços Dependentes e Progressão Aritmética
+## 2. Introdução a Algoritmos e Metodologia de Projeto
 
-Considere o seguinte método implementado em linguagem Java, extraído da bateria de estudos analíticos da disciplina:
+### 2.1 Definição Formal e Semântica de Algoritmo
 
+Formalmente, um **algoritmo** é uma sequência finita, ordenada e não ambígua de instruções computáveis que, a partir de um conjunto inicial de dados de entrada (que pode ser vazio), transforma o estado do sistema através de operações bem definidas até produzir um conjunto previsível de saídas em tempo finito.
+
+Historicamente, o vocábulo deriva da transliteração latina do nome do astrônomo e matemático persa do século IX, Abu Abdullah Muhammad ibn Musa al-Khwarizmi, autor de compêndios fundamentais sobre o cálculo posicional decimal e a resolução sistemática de equações lineares e quadráticas. Na ciência da computação contemporânea, o algoritmo representa a abstração lógica do processo resolutivo, existindo de maneira pura antes de qualquer materialização em silício ou linguagens de programação.
+
+### 2.2 As Seis Características Fundamentais de um Algoritmo
+
+Para que uma rotina de passos seja classificada rigorosamente como um algoritmo computacional, ela deve atender simultaneamente a seis propriedades canônicas:
+
+```mermaid
+flowchart TD
+    subgraph Propriedades["As Seis Propriedades Fundamentais"]
+        P1["1. Entrada (Zero ou mais dados de alimentação)"]
+        P2["2. Sequência de Passos (Ordem cronológica e causal)"]
+        P3["3. Saída (Ao menos um resultado entregue)"]
+        P4["4. Finitude (Término assegurado em passos discretos)"]
+        P5["5. Precisão (Clareza estrita e ausência de ambiguidade)"]
+        P6["6. Executabilidade (Operações fisicamente computáveis)"]
+    end
+```
+
+1. **Entrada (*Input*):** Define o conjunto de parâmetros externos sobre os quais a transformação operará. A entrada pode ser nula ($ `n = 0` $), caso em que o algoritmo processa constantes intrínsecas (como a geração dos primeiros cem números primos).
+2. **Sequência de Passos (*Sequence*):** As operações mantêm dependência determinística e sucessão causal estrita. Uma instrução só é executada após o encerramento formal do estado anterior.
+3. **Saída (*Output*):** Todo algoritmo justifica sua existência ao entregar uma modificação observável no domínio do problema ou uma resposta formalmente associada à entrada.
+4. **Finitude (*Finiteness*):** Para todo conjunto válido de entradas, o algoritmo encerra sua execução após uma quantidade finita de passos. Procedimentos que entram em ciclos infinitos divergentes configuram processos com falha estrutural.
+5. **Precisão (*Definiteness*):** Cada etapa do procedimento deve ser descrita de maneira exata, sem margens para interpretações divergentes por parte do agente executor.
+6. **Executabilidade (*Effectiveness*):** Cada instrução elementar deve ser mecanicamente viável, exigindo quantidade finita de tempo e memória real.
+
+| Característica | Definição Formal | Exemplo Válido | Violação Típica (Contraexemplo) |
+| :--- | :--- | :--- | :--- |
+| **Entrada** | Domínio de dados iniciais | Vetor de $ `n` $ números inteiros | Ponteiro sem inicialização |
+| **Sequência** | Determinismo causal | 1º Ler; 2º Processar; 3º Escrever | Escrever antes de calcular |
+| **Saída** | Imagem da transformação | O maior elemento encontrado | Procedimento que descarta o resultado |
+| **Finitude** | Parada matemática provável | Laço delimitado por sentinela | Laço `while (true)` sem `break` |
+| **Precisão** | Semântica mecânica estrita | Atribuir `media = soma / n` | "Misture até ficar satisfatório" |
+| **Executabilidade** | Operações viáveis na máquina | Divisão por número não nulo | "Divida o valor por zero" |
+
+### 2.3 O Princípio da Organização: Wirth e o Equilíbrio de Sistemas
+
+Conforme enfatizado pelo Prof. Wesley Soares em sala de aula, um software confiável repousa sobre duas bases inseparáveis:
+> *"Um bom programa depende tanto de um bom algoritmo quanto da forma como os dados são organizados."*
+
+Essa constatação resgata o axioma formulado pelo cientista da computação suíço Niklaus Wirth em seu clássico tratado de 1976:
+
+```math
+\text{Algoritmos} + \text{Estruturas de Dados} = \text{Programas}
+```
+
+A dedução direta desse princípio estabelece que algoritmos refinados fracassam se aplicados sobre dados dispostos de forma caótica, e arranjos de dados elegantes tornam-se inoperantes sob rotinas de manipulação ineficientes.
+
+### 2.4 Distinção Ontológica: Algoritmo versus Programa
+
+Um dos equívocos clássicos de acadêmicos iniciantes é considerar codificação como sinônimo de algoritmo. O algoritmo habita o domínio matemático da lógica abstrata; o programa é a sua tradução formal em uma gramática de engenharia executável.
+
+```mermaid
+flowchart TD
+    subgraph DominioLogico["Domínio Abstrato (Concepção)"]
+        Prob["Problema Real"] --> Alg["Algoritmo (Pseudocódigo / Modelo Lógico)"]
+    end
+
+    subgraph DominioFisico["Domínio Material (Engenharia)"]
+        Alg --> Codigo["Código-Fonte (Java, C, etc.)"]
+        Codigo --> Compilador["Compilador JVM / JIT"]
+        Compilador --> Bytecode["Bytecode / Código de Máquina"]
+        Bytecode --> Execucao["Processamento na CPU / Memória Física"]
+    end
+```
+
+| Critério Analítico | Algoritmo (Entidade Abstrata) | Programa (Artefato de Engenharia) |
+| :--- | :--- | :--- |
+| **Natureza** | Concepção matemática e lógica | Conjunto formal de arquivos de texto compiláveis |
+| **Dependência Tecnológica** | Independe de linguagem, compilador ou SO | Estritamente amarrado à sintaxe e ao ecossistema |
+| **Ambiente de Processamento** | Raciocínio humano ou Máquina de Turing ideal | CPU real, registradores, barramento e memória física |
+| **Tolerância a Erros** | Tolerante a pequenas imprecisões de notação | Intolerante; erros de sintaxe abortam compilação |
+| **Exemplo de Expressão** | Pseudocódigo, fluxogramas, equações | Classes `.java`, executáveis binários `.class` |
+
+### 2.5 O Ciclo de Engenharia: Do Problema à Solução
+
+A engenharia de software não inicia na escrita de código. Para atingir robustez, a equipe técnica deve percorrer o pipeline sistemático que converte demandas do mundo real em sistemas eficientes:
+
+```mermaid
+flowchart LR
+    P["Problema"] --> C["Compreensão"]
+    C --> M["Modelagem"]
+    M --> A["Algoritmo"]
+    A --> ED["Estrutura de Dados"]
+    ED --> I["Implementação"]
+    I --> S["Solução"]
+```
+
+1. **Problema:** A deficiência ou demanda no domínio de negócio (exemplo: lentidão no atendimento bancário).
+2. **Compreensão:** Levantamento detalhado de restrições, volumes, casos excepcionais e regras de negócio.
+3. **Modelagem:** Formalização conceitual dos dados intervenientes (atributos do cliente, tempo de espera, prioridade).
+4. **Algoritmo:** Definição dos passos abstratos para enfileirar, verificar prioridades e direcionar guichês.
+5. **Estrutura de Dados:** Seleção da topologia ótima de armazenamento (vetor circular versus nós dinâmicos em fila).
+6. **Implementação:** Construção dos artefatos de código na linguagem adotada (classes Java, tratamento de exceções).
+7. **Solução:** O sistema estabilizado operando em ambiente de produção com medição de desempenho.
+
+### 2.6 As Seis Etapas Sistemáticas do Projeto de Algoritmos
+
+Diante de um problema inédito, o estudante deve aplicar o método analítico de seis etapas abordado na Aula 01:
+
+1. **Entender o Problema:** Eliminar ambiguidades conceituais e isolar os objetivos exatos.
+2. **Identificar Entradas e Saídas:** Estabelecer o domínio formal dos dados de partida e os artefatos a serem devolvidos.
+3. **Decompor o Problema:** Quebrar o desafio global em subproblemas ortogonais e menores.
+4. **Definir a Estratégia e Estrutura:** Escolher a abordagem algorítmica (gulosa, divisão e conquista, iterativa) e a disposição dos dados.
+5. **Especificar o Algoritmo:** Escrever a solução em pseudocódigo estruturado com declaração clara de invariantes.
+6. **Testar e Refinar:** Submeter o algoritmo a testes de mesa rigorosos cobrindo casos de borda (coleção vazia, elemento unitário, valores duplicados ou extremos).
+
+---
+
+## 3. Refinamento Sucessivo e Tipos Abstratos de Dados
+
+### 3.1 Metodologia do Refinamento Sucessivo
+
+O refinamento sucessivo (*stepwise refinement* ou abordagem *top-down*), formalizado por Niklaus Wirth, dita que o desenvolvedor deve iniciar a solução a partir de uma declaração abstrata de alto nível e desdobrá-la em sucessivas camadas de detalhamento até que cada instrução atinja o nível atômico das linguagens de programação.
+
+```mermaid
+flowchart TD
+    N1["Nível 1 — Abstração Holística (O Que Fazer)"] --> N2["Nível 2 — Refinamento Estrutural (Fases de Fluxo)"]
+    N2 --> N3["Nível 3 — Refinamento Algorítmico Detalhado (Instruções Primitivas)"]
+    N3 --> N4["Nível 4 — Código Fonte Executável (Java / JVM)"]
+```
+
+#### Exemplo Guiado: Cálculo de Médias Escolares
+- **Nível 1 (Abstração):** "Calcular e emitir a média aritmética de três notas acadêmicas."
+- **Nível 2 (Estrutural):**
+  1. Obter os três valores de notas.
+  2. Acumular o somatório das notas válidas.
+  3. Dividir a soma pela constante três.
+  4. Emitir o resultado para o canal de saída.
+- **Nível 3 (Algorítmico):**
+```pseudocode
+algoritmo CalcularMediaAritmetica
+início
+    real: n1, n2, n3, soma, media
+    leia(n1)
+    leia(n2)
+    leia(n3)
+    soma <- n1 + n2 + n3
+    media <- soma / 3.0
+    escreva("Média apurada: ", media)
+fim
+```
+
+### 3.2 Conceituação de Tipo Abstrato de Dados
+
+Um **Tipo Abstrato de Dados (TAD)** é um modelo matemático composto por:
+1. Um conjunto de dados abstratos e seus domínios de validade.
+2. Uma coleção de operações autorizadas sobre tais dados.
+3. Um conjunto estrito de comportamentos e invariantes que essas operações preservam obrigatoriamente.
+
+A regra fundamental que define o TAD é a sua **independência estrita de implementação**. O TAD declara com exatidão **o que** a estrutura é capaz de fazer, omitindo deliberadamente **como** as informações serão acomodadas nos circuitos de memória física.
+
+```mermaid
+classDiagram
+    class TAD_Pilha {
+        <<Interface>>
+        +push(int elemento) void
+        +pop() int
+        +peek() int
+        +isEmpty() boolean
+    }
+    class PilhaVetor {
+        -int[] elementos
+        -int topo
+        +push(int elemento) void
+        +pop() int
+    }
+    class PilhaEncadeada {
+        -No topo
+        -int tamanho
+        +push(int elemento) void
+        +pop() int
+    }
+    TAD_Pilha <|.. PilhaVetor : implementa
+    TAD_Pilha <|.. PilhaEncadeada : implementa
+```
+
+### 3.3 O Princípio da Caixa-Preta: Abstração e Encapsulamento
+
+- **Abstração:** Capacidade mental de isolar a interface pública contratual de uma entidade computacional dos seus mecanismos operacionais subjacentes.
+- **Encapsulamento:** Prática de engenharia de software consistente em isolar os campos de estado de uma estrutura dentro de barreiras de proteção de visibilidade (`private`), impedindo o acesso indevido por códigos clientes externos.
+
+```mermaid
+flowchart LR
+    subgraph Cliente["Código Cliente (Consumidor)"]
+        C1["push(30)"]
+        C2["pop()"]
+        C3["peek()"]
+    end
+
+    subgraph Fronteira["Fronteira Pública (Interface)"]
+        Metodos["Assinaturas dos Métodos Públicos"]
+    end
+
+    subgraph Blindagem["Núcleo Protegido (Privado)"]
+        Dados["Array interno / Nós / Ponteiros"]
+    end
+
+    Cliente --> Fronteira
+    Fronteira --> Blindagem
+```
+
+**Armadilha Crítica (Quebra de Encapsulamento):** Permitir acesso direto ao array interno de uma pilha (`p.elementos[3] = 10`) ou aos ponteiros de nó de uma lista encadeada destrói os invariantes da estrutura, impossibilitando garantias de tempo constante ou corretude da política LIFO/FIFO.
+
+### 3.4 Matriz de Decisão Arquitetural para Estruturas de Dados
+
+A escolha da estrutura adequada é guiada pela frequência das operações essenciais demandadas pelo problema de engenharia:
+
+| Requisito Predominante do Sistema | Estrutura Recomendada | Fundamentação de Engenharia |
+| :--- | :--- | :--- |
+| **Acesso randômico direto por índice** | Lista Sequencial (Array) | Endereçamento imediato $ `O(1)` $ via cálculo aritmético de base. |
+| **Mutações frequentes no início ou meio** | Lista Simplesmente/Duplamente Ligada | Religamento atômico de ponteiros $ `O(1)` $ sem deslocamento físico. |
+| **Política de atendimento LIFO** | Pilha (*Stack*) | Restrição unívoca no topo; reversão natural de histórico. |
+| **Política de atendimento FIFO** | Fila (*Queue*) | Inserções na cauda e extrações na cabeça com preservação temporal. |
+| **Relações hierárquicas e de contenção** | Árvore Binária / N-ária | Subdivisão do espaço em nós raízes, ancestrais e descendentes. |
+| **Interconexões e rotas arbitrárias** | Grafo (*Graph*) | Mapeamento explícito de redes complexas via vértices e arestas. |
+
+---
+
+## 4. Arquitetura de Memória e Ciclo de Vida de Objetos em Java
+
+### 4.1 Modelo de Execução da JVM: Segmentação Stack e Heap
+
+A compreensão profunda das estruturas de dados exige o entendimento de como a Máquina Virtual Java (JVM) particiona os recursos físicos da memória de acesso aleatório (RAM) disponibilizados pelo sistema operacional. A arquitetura divide-se essencialmente em dois segmentos operacionais principais:
+
+```mermaid
+flowchart TD
+    subgraph StackMem["Memória Stack (Pilha de Ativação)"]
+        Frame1["Quadro de Execução: método main()"]
+        Frame1Var["Variáveis Primitivas locais<br>Ponteiros de Referência"]
+        Frame2["Quadro de Execução: método calcular()"]
+    end
+
+    subgraph HeapMem["Memória Heap (Armazenamento Dinâmico Global)"]
+        ObjA["Objeto: ListaLigada<br>Endereço: 0x7FF01"]
+        ObjB["Objeto: No<br>valor: 10 | proximo: 0x7FF09"]
+        ObjC["Objeto: No<br>valor: 20 | proximo: null"]
+        Arr1["Array: int[1000]<br>Endereço: 0x8AA02"]
+    end
+
+    Frame1Var -.->|"Referência 0x7FF01"| ObjA
+    ObjA -.->|"Ponteiro inicio"| ObjB
+    ObjB -.->|"Ponteiro proximo"| ObjC
+```
+
+1. **Memória Stack (Pilha de Ativação):**
+   - Região estática e veloz, gerenciada estritamente pela CPU conforme o fluxo de chamadas de métodos.
+   - Cada invocação de método cria um quadro de pilha (*stack frame*) contendo variáveis locais e parâmetros.
+   - Quando a execução do método atinge o comando `return`, o quadro é destruído imediatamente, desalocando todas as suas variáveis primitivas e ponteiros locais.
+2. **Memória Heap (Monte Dinâmico):**
+   - Espaço de memória global e compartilhado onde residem todos os objetos instanciados via operador `new`, bem como os vetores nativos.
+   - Sua alocação ocorre em tempo de execução de forma dinâmica e sob demanda.
+   - As instâncias continuam existindo no Heap mesmo após o término do método que as criou, desde que permaneçam alcançáveis por alguma cadeia ativa de referências.
+
+### 4.2 Semântica de Valores: Variáveis Primitivas versus Tipos por Referência
+
+A linguagem Java impõe uma distinção semântica absoluta entre manipulação de tipos primitivos e tipos estruturados:
+
+- **Variáveis Primitivas (`int`, `double`, `boolean`, `char`):**
+  - Armazenam diretamente o padrão de bits do valor no interior da própria variável no quadro da Stack.
+  - A atribuição (`a = b`) produz uma cópia independente de valor. Alterações posteriores em `a` não afetam `b`.
+- **Variáveis de Referência (`No`, `Pilha`, `int[]`, `String`):**
+  - Não armazenam o objeto em si, mas sim o **endereço lógico** (ponteiro gerenciado de 64 bits) do local onde o objeto real repousa no Heap.
+  - A atribuição (`refA = refB`) copia exclusivamente o endereço de memória. Ambas as variáveis passam a referenciar exatamente o mesmo objeto físico no Heap. Qualquer mutação efetuada através de `refA` reflete-se de imediato na consulta via `refB`.
+
+### 4.3 Alocação Dinâmica e o Papel do Garbage Collector
+
+Ao contrário de linguagens como C ou C++, onde a desalocação de memória no Heap exige intervenção manual do programador (através de comandos como `free()` ou `delete`), o ecossistema Java conta com o **Garbage Collector (GC)**.
+
+O Garbage Collector é um processo em segundo plano (*background daemon*) integrado à JVM encarregado de rastrear a cadeia de acessibilidade a partir das raízes de execução (*GC Roots*, que compreendem variáveis ativas na Stack e classes estáticas). Quando um nó ou objeto deixa de possuir qualquer caminho de referências que parta de um nó raiz, ele é formalmente categorizado como **inalcançável** (*unreachable*) e sua área é reciclada de forma assíncrona pelo coletor.
+
+```mermaid
+flowchart LR
+    subgraph Raizes["GC Roots (Stack Ativa)"]
+        Raiz["inicio"]
+    end
+
+    subgraph HeapObjetos["Instâncias no Heap"]
+        N1["Nó 1 (10)"]
+        N2["Nó 2 (20)"]
+        N_Orfao["Nó Órfão (50)<br>[Inalcançável: Coletado pelo GC]"]
+    end
+
+    Raiz --> N1
+    N1 --> N2
+```
+
+### 4.4 Impacto Físico no Hardware: Localidade Espacial de Cache
+
+Embora a análise assintótica trate o acesso à memória como $ `O(1)` $ teórico, em arquiteturas modernas de computadores a física impõe barreiras. A CPU opera em frequências muito mais altas do que a memória RAM principal, dependendo criticamente dos caches L1, L2 e L3:
+
+- **Localidade Espacial:** Ao acessar o índice $ `i` $ de um array contíguo, o hardware carrega preventivamente uma linha de cache inteira (*cache line*, tipicamente 64 bytes), disponibilizando os elementos subsequentes $ `i+1, i+2` $ em tempo de frações de nanossegundos.
+- **Fragmentação em Listas Encadeadas:** Como cada nó é instanciado em momentos distintos via `new`, eles espalham-se de maneira dispersa pelo Heap. Percorrer uma lista encadeada causa múltiplos *cache misses*, degradando o tempo real de CPU quando comparado à iteração sobre um vetor sequencial denso.
+
+---
+
+## 5. Análise Assintótica de Complexidade e Notação Big-O
+
+### 5.1 Limitações da Medição Empírica de Relógio
+
+Uma abordagem ingênua para aferir a eficiência de dois algoritmos que solucionam o mesmo problema consistiria em cronometrar seu tempo de relógio (*wall-clock time*) em segundos ou milissegundos. No entanto, essa medição empírica carece de rigor científico porque sofre interferência de variáveis espúrias:
+
+- Potência e arquitetura física do processador (clock, IPC, quantidade de núcleos);
+- Sistema operacional e quantidade de processos concorrentes disputando a CPU;
+- Latência e largura de banda dos barramentos e dos módulos de memória RAM;
+- Versão do runtime Java e decisões autônomas de compilação dinâmica do JIT (*Just-In-Time*);
+- Volume contingencial e disposição inicial dos dados de teste.
+
+A teoria da complexidade computacional substitui o tempo físico pela quantificação analítica do **número de operações primitivas fundamentais** em função do tamanho da massa de dados.
+
+### 5.2 O Tamanho da Entrada e a Contagem de Operações Elementares
+
+Denomina-se $ `n` $ a variável matemática que expressa o volume da entrada processada:
+- Em vetores ou listas: o número total de elementos ($ `n = \text{tamanho}` $);
+- Em grafos: a cardinalidade dos vértices ($ `|V|` $`) e arestas (`$ `|E|` $);
+- Em algoritmos numéricos: a quantidade de bits ou o valor escalar que governa os laços de repetição.
+
+Ao analisar a rotina:
+```java
+for (int i = 0; i < n; i++) {
+    soma += vetor[i];
+}
+```
+Identifica-se que a condição do laço é avaliada $ `n + 1` $ vezes, o incremento executa $ `n` $ vezes e o corpo do bloco executa $ `n` $ vezes. A função exata de custo é expressa como um polinômio:
+```math
+T(n) = c_1 n + c_2
+```
+
+### 5.3 Fundamentos Matemáticos da Notação Big-O
+
+A **Notação Big-O** ($ `O` $`) formaliza o limite superior assintótico do consumo de tempo ou memória de um algoritmo. Ela descreve o teto de crescimento de recursos quando a entrada cresce indefinidamente em direção ao infinito (`$ `n \to \infty` $).
+
+> **Definição Formal:**  
+> Diz-se que uma função $ `T(n)` $ é $ `O(f(n))` $ se existirem duas constantes estritamente positivas $ `c > 0` $ e $ `n_0 \ge 1` $ tais que:
+> ```math
+> 0 \le T(n) \le c \cdot f(n), \quad \forall n \ge n_0
+> ```
+
+Isso significa que, a partir do limiar $ `n_0` $, a curva de tempo real do algoritmo jamais ultrapassará o teto definido pela curva teórica $ `c \cdot f(n)` $.
+
+```mermaid
+flowchart LR
+    A["Função Real Exata:<br>T(n) = 3n² + 5n + 12"] --> B["Descartar termos de menor ordem:<br>3n²"]
+    B --> C["Descartar constantes multiplicativas:<br>Elimina o 3"]
+    C --> D["Ordem Assintótica Dominante:<br>O(n²)"]
+```
+
+> **Notações Correlatas de Referência Teórica:**
+> - **Big-Omega ($ `\Omega` $):** Estabelece o limite inferior assintótico (o piso mínimo de esforço computacional que o algoritmo sempre consumirá).
+> - **Big-Theta ($ `\Theta` $):** Estabelece o limite assintótico justo (quando o limite superior coincide em ordem com o limite inferior, delimitando rigorosamente a função).
+
+### 5.4 Regras Operacionais de Dominância e Descarte Assintótico
+
+Para determinar a classe Big-O de qualquer função de custo polinomial:
+1. **Regra da Soma (Termo Dominante):** Se $ `T(n) = T_1(n) + T_2(n)` $, onde $ `T_1` $ cresce mais rápido que $ `T_2` $, então $ `O(T(n)) = O(T_1(n))` $. Termos de ordem menor são descartados porque tornam-se insignificantes perante grandes entradas.
+2. **Regra do Produto (Constantes Multiplicativas):** Se $ `T(n) = c \cdot f(n)` $, onde $ `c` $ é uma constante finita, descarta-se $ `c` $, resultando em $ `O(f(n))` $. Dobrar a velocidade de um processador altera $ `c` $, mas não altera a escalabilidade matemática do algoritmo perante grandes massas de dados.
+
+### 5.5 Cenários de Execução: Melhor Caso, Pior Caso e Caso Médio
+
+O comportamento temporal de muitos algoritmos varia em função da disposição inicial dos dados na entrada:
+
+```mermaid
+flowchart TD
+    Entrada["Entrada de Dados"] --> Cenario{"Estado da Massa de Dados"}
+    Cenario -->|"Elemento na primeira posição"| MC["Melhor Caso (Omega): Mínimo de passos"]
+    Cenario -->|"Distribuição probabilística regular"| MedC["Caso Médio (Theta): Média estatística"]
+    Cenario -->|"Elemento no fim ou ausente"| PC["Pior Caso (Big-O): Limite superior garantido"]
+```
+
+- **Melhor Caso:** A configuração mais favorável dos dados de entrada, minimizando o percurso dos laços (exemplo: busca linear encontrando o alvo imediatamente no índice 0, resultando em $ `\Omega(1)` $).
+- **Pior Caso:** A configuração mais desfavorável que força o algoritmo a executar o número máximo de instruções possíveis (exemplo: elemento procurado localizado no último índice ou ausente, exigindo $ `O(n)` $ passos). **É a métrica primordial na engenharia de software para garantir acordos de nível de serviço (SLA) e confiabilidade**.
+- **Caso Médio:** O número esperado de operações sob uma distribuição uniforme de probabilidades sobre todas as entradas possíveis de tamanho $ `n` $.
+
+### 5.6 Taxonomia das Classes Fundamentais de Complexidade
+
+A hierarquia formal de complexidade assintótica organiza-se na seguinte escala de eficiência:
+
+```math
+O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
+```
+
+```mermaid
+flowchart LR
+    O1["O(1)<br>Constante"] --> Ologn["O(log n)<br>Logarítmica"]
+    Ologn --> On["O(n)<br>Linear"]
+    On --> Onlogn["O(n log n)<br>Linear-Logarítmica"]
+    Onlogn --> On2["O(n²)<br>Quadrática"]
+    On2 --> On3["O(n³)<br>Cúbica"]
+    On3 --> O2n["O(2ⁿ)<br>Exponencial"]
+    O2n --> Onfat["O(n!)<br>Fatorial"]
+```
+
+| Notação | Nomenclatura | Comportamento com o Aumento de $ `n` $ | Exemplos Clássicos |
+| :--- | :--- | :--- | :--- |
+| **$ `O(1)` $** | Constante | Custo invariante perante o tamanho da entrada | Acesso direto a vetor por índice; `push`/`pop` |
+| **$ `O(\log n)` $** | Logarítmica | Crescimento residual; divide o problema sucessivamente | Busca Binária; operações em árvores balanceadas |
+| **$ `O(n)` $** | Linear | Cresce estritamente na mesma proporção da entrada | Busca Linear sequencial; cópia de vetores |
+| **$ `O(n \log n)` $** | Linearítmica | Otimização ótima para algoritmos de ordenação comparativa | Merge Sort; Quick Sort (caso médio); Heap Sort |
+| **$ `O(n^2)` $** | Quadrática | Multiplica o custo exponencialmente em laços aninhados | Bubble Sort; Selection Sort; laços aninhados |
+| **$ `O(n^3)` $** | Cúbica | Três laços aninhados dependentes de $ `n` $ | Multiplicação elementar de matrizes densas |
+| **$ `O(2^n)` $** | Exponencial | Dobra o trabalho a cada elemento acrescido na entrada | Força bruta do Caixeiro Viajante; Fibonacci recursivo ingênuo |
+| **$ `O(n!)` $** | Fatorial | Explosão combinatória total; inviável para $ `n > 20` $ | Enumeração de todas as permutações de um vetor |
+
+#### Comportamento da Explosão de Operações em Função da Escala
+
+| Tamanho ($ `n` $) | $ `O(1)` $ | $ `O(\log_2 n)` $ | $ `O(n)` $ | $ `O(n \log_2 n)` $ | $ `O(n^2)` $ | $ `O(2^n)` $ |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **10** | 1 | 3 | 10 | 33 | 100 | 1.024 |
+| **100** | 1 | 7 | 100 | 664 | 10.000 | $ `1,26 \times 10^{30}` $ |
+| **1.000** | 1 | 10 | 1.000 | 9.966 | 1.000.000 | Incomputável |
+| **1.000.000** | 1 | 20 | 1.000.000 | $ `1,99 \times 10^7` $ | $ `10^{12}` $ (Trilhão) | Incomputável |
+
+---
+
+## 6. Estruturas Lineares Sequenciais
+
+### 6.1 Organização Contígua e Cálculo Aritmético de Endereços
+
+Uma **Lista Linear Sequencial** é implementada em memória através de um array nativo. Os dados são armazenados em endereços de memória física estritamente adjacentes.
+
+Essa adjacência permite ao compilador e ao hardware da máquina calcular diretamente a posição exata de qualquer elemento no barramento através de aritmética de ponteiros de tempo constante:
+
+```math
+\text{Endereço}(i) = \text{EndereçoBase} + (i \times \text{TamanhoElemento})
+```
+
+Se o endereço base de um array de inteiros (onde cada `int` consome 4 bytes) for `0x1000`, o elemento no índice 5 reside instantaneamente em:
+```math
+0x1000 + (5 \times 4) = 0x1000 + 20 = 0x1014
+```
+Por isso, a leitura e a escrita indexada (`vetor[i]`) ocorrem rigorosamente em tempo constante $ `O(1)` $.
+
+### 6.2 Diferenciação Crítica: Capacidade Física versus Tamanho Lógico
+
+Uma falha conceitual recorrente consiste em confundir a capacidade máxima física do vetor alocado com o tamanho lógico útil da estrutura:
+
+```mermaid
+flowchart LR
+    subgraph ArrayFisico["Array Interno (capacidade = 6)"]
+        P0["[0]: 10"]
+        P1["[1]: 20"]
+        P2["[2]: 30"]
+        P3["[3]: livre"]
+        P4["[4]: livre"]
+        P5["[5]: livre"]
+    end
+    Tam["tamanho = 3"] -.-> P3
+```
+
+- **Capacidade (`capacidade`):** A quantidade total de compartimentos físicos alocados no Heap (`elementos.length`). Trata-se do teto estático de memória reservado.
+- **Tamanho Lógico (`tamanho`):** O contador inteiro que rastreia quantos itens úteis válidos estão efetivamente sob a custódia da estrutura de dados naquele instante. O próximo elemento a ser anexado no final será acomodado precisamente no índice `tamanho`.
+
+### 6.3 O Gargalo do Deslocamento em Mutações Intermediárias
+
+A contiguidade física dos dados cobra um alto preço de processamento nas operações de inserção ou remoção que não ocorram no final da estrutura:
+
+```mermaid
+flowchart TD
+    subgraph EstadoAntes["Estado Inicial: [10, 20, 30, 40]"]
+        A0["[0]: 10"] --- A1["[1]: 20"] --- A2["[2]: 30"] --- A3["[3]: 40"]
+    end
+
+    subgraph AberturaVaga["Deslocamento O(n) para a Direita"]
+        M3["40 desloca para índice 4"]
+        M2["30 desloca para índice 3"]
+        M1["20 desloca para índice 2"]
+        M0["10 desloca para índice 1"]
+    end
+
+    subgraph EstadoDepois["Inserção do 5 no Índice 0"]
+        Novo["[0]: 5"]
+    end
+
+    EstadoAntes --> AberturaVaga --> EstadoDepois
+```
+
+- **Inserção no Início (índice 0):** Para inserir um dado na cabeça da estrutura sem sobrescrever informações preexistentes, todos os $ `n` $ elementos atuais devem ser transladados obrigatoriamente uma casa para a direita, partindo do último em direção ao primeiro. Custo temporal: **$ `O(n)` $**.
+- **Remoção no Início:** Ao remover o item do índice 0, todos os $ `n - 1` $ elementos remanescentes à direita devem ser puxados uma posição para a esquerda para preencher a lacuna física e restabelecer a contiguidade. Custo temporal: **$ `O(n)` $**.
+
+### 6.4 Mecanismo de Redimensionamento Dinâmico e Custo Amortizado
+
+Como os vetores nativos possuem tamanho estático inalterável após a alocação, uma lista sequencial que atinja a condição `tamanho == capacidade` deve realizar uma realocação dinâmica para aceitar novas inserções:
+
+1. Aloca-se um novo array no Heap com capacidade expandida (tipicamente o dobro da capacidade original);
+2. Copiam-se todos os $ `n` $ elementos do array antigo para o novo array;
+3. Atualiza-se a referência interna da classe controladora para apontar para o novo bloco contíguo;
+4. O array antigo torna-se inalcançável e é entregue ao Garbage Collector.
+
+Embora uma inserção isolada que dispare a duplicação custe $ `O(n)` $, esse custo é distribuído sobre uma sequência longa de inserções baratas de custo $ `O(1)` $`. Demonstra-se que o custo amortizado por inserção na cauda permanece assintoticamente constante: **`$ `O(1)` $ amortizado**.
+
+---
+
+## 7. Estruturas Dinâmicas Encadeadas: Listas Ligadas
+
+### 7.1 A Mudança de Paradigma: Superando a Contiguidade Física
+
+A questão central levantada pelo Prof. Wesley Soares inaugura a transição das estruturas estáticas para as estruturas encadeadas:
+> *"E se não precisarmos realizar o deslocamento em bloco? Imagine que cada elemento soubesse simplesmente: onde está o próximo elemento?"*
+
+Eliminando a imposição de que os dados ocupem gavetas de memória fisicamente adjacentes, os registros podem residir em quaisquer endereços livres da memória Heap. A ordenação lógica da coleção passa a ser regida estritamente por pontes explícitas de software: **ponteiros de referência**.
+
+### 7.2 Anatomia do Nó e Auto-Referenciamento
+
+O átomo constitutivo de qualquer estrutura ligada é o **Nó** (*Node*). Uma classe autossuficiente que encapsula:
+1. O dado útil (*payload*), representado didaticamente por um valor inteiro primitivo `valor`;
+2. A referência `proximo`, que armazena o endereço de outro objeto da mesma classe `No`, ou o literal `null` como terminador da cadeia.
+
+```mermaid
+classDiagram
+    class No {
+        +int valor
+        +No proximo
+        +No(int valor)
+    }
+    No "1" --> "0..1" No : proximo
+```
+
+```java
+public class No {
+    public int valor;    // Carga útil armazenada
+    public No proximo;   // Elo de encadeamento no Heap
+
+    public No(int valor) {
+        this.valor = valor;
+        this.proximo = null;
+    }
+}
+```
+
+### 7.3 Arquitetura da Classe Controladora ListaLigada
+
+A fim de preservar o encapsulamento, a topologia de nós deve ser administrada por uma classe controladora central que retém o estado da coleção por meio de três atributos privados:
+
+```java
+public class ListaLigada {
+    private No inicio;   // Aponta para o primeiro nó da estrutura
+    private No fim;      // Aponta para o último nó ativo (cauda)
+    private int tamanho; // Cardinalidade atual da coleção
+
+    public ListaLigada() {
+        this.inicio = null;
+        this.fim = null;
+        this.tamanho = 0;
+    }
+
+    public boolean estaVazia() {
+        return this.inicio == null;
+    }
+
+    public int getTamanho() {
+        return this.tamanho;
+    }
+}
+```
+
+```mermaid
+flowchart LR
+    subgraph Controladora["ListaLigada"]
+        ptrIni["inicio"]
+        ptrFim["fim"]
+        valTam["tamanho = 3"]
+    end
+
+    subgraph Heap["Nós Dinâmicos no Heap"]
+        N1["Nó (10)"]
+        N2["Nó (20)"]
+        N3["Nó (30)"]
+    end
+
+    ptrIni --> N1
+    N1 -->|"proximo"| N2
+    N2 -->|"proximo"| N3
+    N3 -->|"null"| Nil["null"]
+    ptrFim --> N3
+```
+
+### 7.4 Inserção no Fim: Análise da Otimização com Ponteiro de Cauda
+
+- **Abordagem Ingênua Sem Ponteiro `fim` ($ `O(n)` $):** Exige partir do ponteiro `inicio` e realizar um laço `while (atual.proximo != null)` percorrendo todos os nós da lista até localizar a cauda. Para uma lista de 1.000.000 de itens, serão 999.999 passos apenas para encadear um item.
+- **Abordagem Otimizada Com Ponteiro `fim` ($ `O(1)` $):** A classe mantém o endereço do último elemento permanentemente memorizado, permitindo anexar o nó de forma direta e atômica.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Cliente as Código Cliente
+    participant Lista as ListaLigada
+    participant Novo as Novo Nó (40)
+    participant Ultimo as Nó Antigo Fim (30)
+
+    Cliente->>Lista: adicionarFim(40)
+    Lista->>Novo: Instancia new No(40)
+    Lista->>Ultimo: fim.proximo = novo
+    Lista->>Lista: fim = novo
+    Lista->>Lista: tamanho++
+    Lista-->>Cliente: Retorno concluído
+```
+
+```java
+public void adicionarFim(int valor) {
+    No novo = new No(valor);
+
+    if (estaVazia()) {
+        this.inicio = novo;
+        this.fim = novo;
+    } else {
+        this.fim.proximo = novo;
+        this.fim = novo;
+    }
+    this.tamanho++;
+}
+```
+
+### 7.5 Inserção no Início em Tempo Constante
+
+A inserção na cabeça da lista prescinde de qualquer movimentação de elementos em bloco:
+1. Instancia-se o novo nó com o valor desejado;
+2. Configura-se o elo `novo.proximo` para apontar para o atual `inicio`;
+3. Atualiza-se o ponteiro `inicio` da classe para assumir a referência do `novo` nó;
+4. Se a lista estava vazia, o ponteiro `fim` também passa a referenciar este mesmo nó recém-criado.
+
+```java
+public void adicionarInicio(int valor) {
+    No novo = new No(valor);
+    novo.proximo = this.inicio;
+    this.inicio = novo;
+
+    if (this.fim == null) {
+        this.fim = novo;
+    }
+    this.tamanho++;
+}
+```
+
+Complexidade temporal: rigorosamente **$ `O(1)` $**.
+
+**Armadilha Crítica (Perda de Ponteiro):** Se a ordem de atribuição for invertida:
+```java
+// CODIGO COM FALHA CRITICA:
+this.inicio = novo;
+novo.proximo = this.inicio; // O nó passa a apontar para si mesmo!
+```
+A antiga cadeia encadeada perde seu ponto de ancoragem e torna-se inalcançável, gerando perda irrecuperável de dados e ciclos infinitos.
+
+### 7.6 Inserção Ordenada no Meio: Localização versus Religamento
+
+Ao inserir elementos em uma lista mantida em ordem crescente (exemplo: inserir `35` em `[10, 20, 30, 40]`), a operação decompõe-se em duas etapas de custos assintóticos distintos:
+
+1. **Localização do Ponto de Inserção:** Percorrer a estrutura até identificar o nó antecedente cujo valor é menor que `35` e cujo próximo é maior que `35`. Custo temporal: **$ `O(n)` $**.
+2. **Religamento de Referências:** Criar o nó e entrelaçar os ponteiros na cadeia. Custo temporal: **$ `O(1)` $**.
+
+Pela regra da dominância assintótica:
+```math
+\text{Custo Total} = O(n) + O(1) = O(n)
+```
+
+```mermaid
+flowchart LR
+    Ant["Nó Anterior (30)"]
+    Prox["Nó Próximo (40)"]
+    Novo["Novo Nó (35)"]
+
+    Ant -.->|"Passo 2: ant.proximo = novo"| Novo
+    Novo -->|"Passo 1: novo.proximo = ant.proximo"| Prox
+```
+
+```java
+public void inserirOrdenado(int valor) {
+    No novo = new No(valor);
+
+    // Caso 1: Lista vazia ou valor menor que o primeiro elemento
+    if (estaVazia() || valor <= this.inicio.valor) {
+        novo.proximo = this.inicio;
+        this.inicio = novo;
+        if (this.fim == null) {
+            this.fim = novo;
+        }
+        this.tamanho++;
+        return;
+    }
+
+    // Caso 2: Busca pelo predecessor no meio ou no fim
+    No atual = this.inicio;
+    while (atual.proximo != null && atual.proximo.valor < valor) {
+        atual = atual.proximo;
+    }
+
+    // Religamento ordenado
+    novo.proximo = atual.proximo;
+    atual.proximo = novo;
+
+    // Caso especial: inserido após o antigo último nó
+    if (novo.proximo == null) {
+        this.fim = novo;
+    }
+    this.tamanho++;
+}
+```
+
+### 7.7 Busca Linear por Valor e Acesso Posicional por Salto
+
+- **Busca por Valor:** Inicia em `inicio` e percorre `atual = atual.proximo` testando `atual.valor == valor`. Se encontrar, retorna a referência; se atingir `null`, conclui inexistência. Custo: $ `O(1)` $ melhor caso (primeiro elemento) e $ `O(n)` $ pior caso (último elemento ou ausente).
+- **Acesso Posicional (Busca por Índice):** Como não há indexação aritmética em memória, para acessar o "índice $ `k` $" o algoritmo é forçado a realizar $ `k` $ saltos sequenciais a partir do primeiro nó. Custo temporal: linear **$ `O(n)` $**.
+
+### 7.8 Atualização e Remoção de Elementos: Gestão de Invariantes
+
+A remoção de um nó requer costurar o elo do seu predecessor diretamente ao seu sucessor:
+
+```java
+public boolean removerPorValor(int valor) {
+    if (estaVazia()) return false;
+
+    // Caso 1: Remoção do primeiro nó
+    if (this.inicio.valor == valor) {
+        this.inicio = this.inicio.proximo;
+        if (this.inicio == null) {
+            this.fim = null; // Lista esvaziou
+        }
+        this.tamanho--;
+        return true;
+    }
+
+    // Caso 2: Busca pelo predecessor do nó a ser excluído
+    No atual = this.inicio;
+    while (atual.proximo != null && atual.proximo.valor != valor) {
+        atual = atual.proximo;
+    }
+
+    // Se encontrou o nó alvo
+    if (atual.proximo != null) {
+        if (atual.proximo == this.fim) {
+            this.fim = atual; // O predecessor torna-se o novo fim
+        }
+        atual.proximo = atual.proximo.proximo; // Pula o nó excluído
+        this.tamanho--;
+        return true;
+    }
+
+    return false; // Elemento ausente
+}
+```
+
+O nó desconectado fica sem referências e é liberado na próxima varredura do Garbage Collector.
+
+### 7.9 Matriz Comparativa: Lista Sequencial versus Lista Ligada
+
+| Dimensão Técnica | Lista Linear Sequencial (Array) | Lista Simplesmente Ligada Dinâmica |
+| :--- | :--- | :--- |
+| **Acesso por Índice (`get(i)`)** | $ `O(1)` $ direto e imediato | $ `O(n)` $ por percurso sequencial |
+| **Inserção no Início** | $ `O(n)` $ (exige translação à direita) | $ `O(1)` $ imediato via manipulação do `inicio` |
+| **Inserção no Fim** | $ `O(1)` $ amortizado | $ `O(1)` $ imediato com ponteiro `fim` |
+| **Inserção no Meio** | $ `O(n)` $ por deslocamento de memória | $ `O(1)` $ religamento após busca $ `O(n)` $ |
+| **Remoção no Início** | $ `O(n)` $ (exige translação à esquerda) | $ `O(1)` $ imediato |
+| **Remoção no Meio** | $ `O(n)` $ por fechamento de lacuna | $ `O(1)` $ religamento após busca $ `O(n)` $ |
+| **Sobrecarga de Memória** | Zero para dados úteis; folgas no array | Alto: 8 bytes extras por nó para o ponteiro |
+| **Localidade de Cache da CPU** | Excelente (contíguo em memória física) | Fraca (nós dispersos na memória Heap) |
+| **Dimensionamento** | Estático com custo de realocação | Totalmente elástico e sob demanda |
+
+---
+
+## 8. O Tipo Abstrato de Dados Pilha
+
+### 8.1 Conceito Formal e o Princípio LIFO
+
+A **Pilha** (*Stack*) é um Tipo Abstrato de Dados linear no qual todas as operações de inserção, remoção e consulta são rigorosamente canalizadas em uma única extremidade denominada **Topo** (*Top*). A extremidade oposta, inacessível a mutações diretas, é denominada **Base** (*Bottom*).
+
+A pilha impõe sobre o armazenamento a disciplina de acesso:
+> **LIFO — Last In, First Out**  
+> *O último elemento inserido na estrutura é obrigatoriamente o primeiro elemento a ser removido.*
+
+```mermaid
+flowchart TD
+    subgraph CicloLIFO["Princípio LIFO da Pilha"]
+        PushOp["push(30)"] --> Topo["[Topo: 30]"]
+        Topo --> ElementoMeio["[Meio: 20]"]
+        ElementoMeio --> Base["[Base: 10]"]
+        Topo --> PopOp["pop() -> Retorna 30"]
+    end
+```
+
+### 8.2 Operações Fundamentais: push, pop, peek e isEmpty
+
+O contrato operacional estrito do TAD Pilha compõe-se de quatro métodos primitivos essenciais, todos executados em tempo constante **$ `O(1)` $**:
+
+1. `push(int valor)`: Adiciona um novo elemento sobre o topo da estrutura. Dispara *Stack Overflow* se a capacidade estática for excedida.
+2. `pop()`: Remove e retorna o elemento atualmente posicionado no topo. Dispara *Stack Underflow* se invocada sobre pilha vazia.
+3. `peek()`: Retorna o valor contido no topo da pilha para consulta, sem removê-lo ou alterar a estrutura.
+4. `isEmpty()`: Predicado lógico que retorna `true` se a pilha estiver vazia e `false` caso contenha ao menos um elemento.
+
+| Operação | Assinatura | Efeito de Mutação | Condição de Exceção | Complexidade Temporal |
+| :--- | :--- | :--- | :--- | :--- |
+| `push` | `void push(int v)` | Incrementa tamanho; atualiza topo | *Stack Overflow* (capacidade cheia) | $ `O(1)` $ |
+| `pop` | `int pop()` | Decrementa tamanho; recua topo | *Stack Underflow* (pilha vazia) | $ `O(1)` $ |
+| `peek` | `int peek()` | Nenhuma alteração de estado | *Stack Underflow* (pilha vazia) | $ `O(1)` $ |
+| `isEmpty` | `boolean isEmpty()`| Nenhuma alteração de estado | Nenhuma | $ `O(1)` $ |
+
+### 8.3 Restrição Deliberada de Acesso e Blindagem Arquitetural
+
+Uma dúvida frequente de acadêmicos é: *"Por que não fornecer um método `get(int indice)` para ler um elemento arbitrário na pilha?"*
+
+A resposta reside no cerne da engenharia de software: **preservação de invariantes de modelo**. O poder do TAD Pilha decorre precisamente da restrição. Ao proibir o acesso aleatório, a estrutura garante que nenhuma rotina cliente quebre a ordem de reversão temporal ou corrompa estados internos intermediários (como quadros de ativação de funções ou pontos de restauração de banco de dados).
+
+### 8.4 Implementação Estática Sequencial com Array
+
+Na implementação baseada em array, a coleção reside em um bloco contíguo de tamanho pré-fixado, e o topo é gerenciado por um índice escalar inteiro inicializado em `-1`:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Cliente as Código Cliente
+    participant P as PilhaSequencial
+    
+    Note over P: Estado Inicial: topo = -1 (Pilha Vazia)
+    Cliente->>P: push(10)
+    Note over P: ++topo -> topo = 0<br>elementos[0] = 10
+    P-->>Cliente: Retorno (void)
+
+    Cliente->>P: push(20)
+    Note over P: ++topo -> topo = 1<br>elementos[1] = 20
+    P-->>Cliente: Retorno (void)
+
+    Cliente->>P: pop()
+    Note over P: valor = elementos[1] (20)<br>topo-- -> topo = 0
+    P-->>Cliente: Retorna 20
+```
+
+```java
+public class PilhaSequencial {
+    private int[] elementos;
+    private int topo;
+
+    public PilhaSequencial(int capacidade) {
+        if (capacidade <= 0) {
+            throw new IllegalArgumentException("Capacidade deve ser positiva.");
+        }
+        this.elementos = new int[capacidade];
+        this.topo = -1; // -1 indica ausência total de elementos
+    }
+
+    public void push(int valor) {
+        if (this.topo == this.elementos.length - 1) {
+            throw new IllegalStateException("Stack Overflow: capacidade máxima excedida.");
+        }
+        this.elementos[++this.topo] = valor;
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack Underflow: tentativa de pop em pilha vazia.");
+        }
+        return this.elementos[this.topo--];
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Pilha vazia.");
+        }
+        return this.elementos[this.topo];
+    }
+
+    public boolean isEmpty() {
+        return this.topo == -1;
+    }
+}
+```
+
+### 8.5 Exclusão Lógica versus Exclusão Física no Array
+
+Observe atentamente o método `pop()`:
+```java
+return this.elementos[this.topo--];
+```
+Nessa instrução, o valor primitivo contido na gaveta do vetor **não é apagado nem zerado fisicamente na memória RAM**. Ocorre uma **exclusão lógica**: o marcador `topo` regride uma unidade. O dado preexistente torna-se inacessível aos métodos contratuais e será simplesmente sobrescrito em um próximo `push()`.
+
+*(Nota de aprofundamento de Engenharia de Software: Se o array armazenasse objetos (`Object[]`), a ausência da atribuição `elementos[topo] = null` impediria o Garbage Collector de liberar o objeto inalcançável, gerando um vazamento de memória conhecido como loitering).*
+
+### 8.6 Implementação Dinâmica Encadeada com Mapeamento no Topo
+
+Para eliminar a capacidade fixa do array sem degradar o desempenho, constrói-se a pilha sobre uma lista encadeada dinâmica. 
+
+**Decisão de Projeto Crítica:** O topo da pilha deve ser mapeado obrigatoriamente para o **início da lista encadeada**.
+- Topo no Início: `push` insere na cabeça em $ `O(1)` $; `pop` remove da cabeça em $ `O(1)` $.
+- Topo no Fim: `push` insere na cauda em $ `O(1)` $`; contudo, o `pop` exigiria percorrer toda a lista para encontrar o nó penúltimo, degradando a remoção para inaceitáveis **`$ `O(n)` $**.
+
+```java
+public class PilhaEncadeada {
+    private No topo;
+    private int tamanho;
+
+    public PilhaEncadeada() {
+        this.topo = null;
+        this.tamanho = 0;
+    }
+
+    public void push(int valor) {
+        No novo = new No(valor);
+        novo.proximo = this.topo;
+        this.topo = novo;
+        this.tamanho++;
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack Underflow: pilha vazia.");
+        }
+        int valorRemovido = this.topo.valor;
+        this.topo = this.topo.proximo;
+        this.tamanho--;
+        return valorRemovido;
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Pilha vazia.");
+        }
+        return this.topo.valor;
+    }
+
+    public boolean isEmpty() {
+        return this.topo == null;
+    }
+
+    public int size() {
+        return this.tamanho;
+    }
+}
+```
+
+### 8.7 Manipulação de Elementos Intermediários com Pilhas Auxiliares
+
+Em determinados cenários algorítmicos, torna-se necessário verificar a existência, substituir ou contar ocorrências de dados situados abaixo do topo da pilha sem violar a abstração LIFO.
+
+A única abordagem metodológica que respeita o encapsulamento consiste no emprego de uma **Pilha Auxiliar Temporária**:
+1. Desempilham-se elementos da pilha original e inserem-se na pilha auxiliar até atingir a profundidade do dado alvo;
+2. Realiza-se a leitura ou mutação necessária;
+3. Desempilham-se todos os itens da pilha auxiliar, inserindo-os de volta na pilha original, restaurando rigorosamente o estado inicial.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant P as Pilha Original
+    participant A as Pilha Auxiliar
+
+    Note over P,A: Objetivo: Inspecionar elemento no meio
+    P->>A: aux.push(origem.pop()) [Desempilha até expor alvo]
+    Note over P: Alvo agora é visível no topo
+    A->>P: origem.push(aux.pop()) [Restaura a ordem original]
+    Note over P,A: Estado inicial perfeitamente preservado
+```
+
+#### Implementação do Método `contem(int valor)`
+```java
+public boolean contem(int valor) {
+    PilhaEncadeada auxiliar = new PilhaEncadeada();
+    boolean encontrado = false;
+
+    // Esvazia desempilhando para a pilha temporária
+    while (!isEmpty()) {
+        int atual = pop();
+        if (atual == valor) {
+            encontrado = true;
+        }
+        auxiliar.push(atual);
+    }
+
+    // Restaura a estrutura original
+    while (!auxiliar.isEmpty()) {
+        push(auxiliar.pop());
+    }
+
+    return encontrado;
+}
+```
+**Análise Assintótica:**
+- Complexidade Temporal: **$ `O(n)` $**, pois todos os $ `n` $ itens são transferidos e reempilhados.
+- Complexidade Espacial Auxiliar: **$ `O(n)` $**, devido à alocação de memória proporcional para a pilha auxiliar.
+
+### 8.8 Aplicações Clássicas de Pilhas em Engenharia de Software
+
+- **Pilha de Chamadas do Runtime (*Call Stack* da JVM):** Rastreia registros de ativação, variáveis locais e endereços de retorno de métodos invocados recursiva ou sequencialmente.
+- **Mecanismos de Desfazer/Refazer (*Undo/Redo*):** Editores de texto e ferramentas gráficas armazenam comandos executados em uma pilha para possibilitar reversão temporal reversa.
+- **Validação de Delimitadores e Compiladores:** Parsers sintáticos utilizam pilhas para verificar o balanceamento e aninhamento correto de parênteses `()`, colchetes `[]` e chaves `{}`.
+- **Histórico de Navegação Web:** A funcionalidade de "Voltar" nos navegadores empilha as URLs visitadas, desempilhando a página anterior ao clique do usuário.
+
+---
+
+## 9. Algoritmos Elementares de Ordenação
+
+### 9.1 A Relevância Estratégica da Ordenação de Dados
+
+A ordenação interna de registros em estruturas lineares contíguas consiste em reorganizar uma coleção $ `\{a_0, a_1, \dots, a_{n-1}\}` $ em uma permutação que satisfaça uma relação de ordem $ `a'_0 \le a'_1 \le \dots \le a'_{n-1}` $.
+
+A ordenação viabiliza:
+- **Redução de Custo de Busca:** Transforma a pesquisa de dados de uma busca linear $ `O(n)` $ para a Busca Binária de custo logarítmico $ `O(\log n)` $;
+- **Eliminação de Duplicidades e Cruzamento (*Merge*):** Localizar elementos repetidos em vetores ordenados consome tempo linear $ `O(n)` $;
+- **Relatórios Gerenciais:** Apresentação estruturada e legível para tomadores de decisão em ordem alfabética ou por métricas de desempenho.
+
+### 9.2 Algoritmo Bubble Sort: Mecanismo de Trocas Adjacentes
+
+O **Bubble Sort (Método da Bolha)** opera através de múltiplas passagens pelo vetor, comparando sucessivamente pares de vizinhos imediatos $ `(vetor[j], vetor[j+1])` $. Sempre que o elemento da esquerda for estritamente maior que o da direita, seus valores são permutados (*swap*). Ao final de cada varredura, o maior elemento não ordenado flutua até sua posição definitiva na cauda da partição.
+
+```mermaid
+flowchart LR
+    A["vetor[j]"] -->|"Compara com"| B["vetor[j+1]"]
+    B --> C{"vetor[j] > vetor[j+1]?"}
+    C -->|"Sim"| D["Efetua Troca (Swap)"]
+    C -->|"Não"| E["Mantém Posições"]
+    D --> F["Avança para o próximo par"]
+    E --> F
+```
+
+#### Código Canônico do Bubble Sort
+```java
+public static void bubbleSort(int[] vetor) {
+    int n = vetor.length;
+
+    // Laço externo: controla as n - 1 passagens
+    for (int i = 0; i < n - 1; i++) {
+        // Laço interno: percorre pares não ordenados
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (vetor[j] > vetor[j + 1]) {
+                // Procedimento de troca com variável temporária
+                int temp = vetor[j];
+                vetor[j] = vetor[j + 1];
+                vetor[j + 1] = temp;
+            }
+        }
+    }
+}
+```
+
+### 9.3 Otimização do Bubble Sort com Sinalizador de Parada Antecipada
+
+Na versão básica, mesmo que o vetor atinja a ordenação nas primeiras passagens (ou já entre perfeitamente ordenado), o algoritmo executa cegamente todas as $ `\frac{n(n-1)}{2}` $ comparações.
+
+A otimização introduz uma sentinela booleana (`houveTroca`). Se uma passagem completa for executada sem que ocorra uma única troca, conclui-se que o vetor já está ordenado, interrompendo o laço imediatamente:
+
+```java
+public static void bubbleSortOtimizado(int[] vetor) {
+    int n = vetor.length;
+
+    for (int i = 0; i < n - 1; i++) {
+        boolean houveTroca = false;
+
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (vetor[j] > vetor[j + 1]) {
+                int temp = vetor[j];
+                vetor[j] = vetor[j + 1];
+                vetor[j + 1] = temp;
+                houveTroca = true;
+            }
+        }
+
+        // Se nenhuma troca ocorreu, interrompe antecipadamente
+        if (!houveTroca) {
+            break;
+        }
+    }
+}
+```
+**Impacto da Otimização:** O melhor caso reduz-se de $ `O(n^2)` $ para complexidade estritamente linear **$ `O(n)` $**.
+
+### 9.4 Algoritmo Selection Sort: Seleção de Extremos e Troca Mínima
+
+O **Selection Sort (Ordenação por Seleção)** adota uma estratégia posicional. O vetor é dividido conceitualmente em um subvetor ordenado à esquerda e um subvetor não ordenado à direita. A cada passagem $ `i` $, o algoritmo varre exaustivamente a região não ordenada à procura do índice que armazena o menor valor absoluto, executando ao final **uma única troca por iteração externa**.
+
+```mermaid
+flowchart TD
+    A["Início da Passagem i"] --> B["Assume indiceMenor = i"]
+    B --> C["Varre j de i+1 até n-1"]
+    C --> D{"vetor[j] < vetor[indiceMenor]?"}
+    D -->|"Sim"| E["Atualiza indiceMenor = j"]
+    D -->|"Não"| F["Mantém indiceMenor"]
+    E --> G{"Fim da Varredura?"}
+    F --> G
+    G -->|"Não"| C
+    G -->|"Sim"| H["Efetua Troca Única entre posições i e indiceMenor"]
+```
+
+#### Código Canônico do Selection Sort
+```java
+public static void selectionSort(int[] vetor) {
+    int n = vetor.length;
+
+    for (int i = 0; i < n - 1; i++) {
+        int indiceMenor = i;
+
+        // Procura o menor elemento na partição desordenada
+        for (int j = i + 1; j < n; j++) {
+            if (vetor[j] < vetor[indiceMenor]) {
+                indiceMenor = j;
+            }
+        }
+
+        // Permuta o menor elemento com a fronteira i
+        int temp = vetor[i];
+        vetor[i] = vetor[indiceMenor];
+        vetor[indiceMenor] = temp;
+    }
+}
+```
+
+### 9.5 Comparativo Técnico: Bubble Sort versus Selection Sort
+
+| Critério de Comparação | Bubble Sort (Canônico) | Bubble Sort (Otimizado) | Selection Sort |
+| :--- | :--- | :--- | :--- |
+| **Comparações (Pior Caso)** | $ `\frac{n(n-1)}{2} \implies O(n^2)` $ | $ `\frac{n(n-1)}{2} \implies O(n^2)` $ | $ `\frac{n(n-1)}{2} \implies O(n^2)` $ |
+| **Comparações (Melhor Caso)** | $ `O(n^2)` $ | $ `n - 1 \implies O(n)` $ | $ `O(n^2)` $ (sempre varre tudo) |
+| **Trocas no Pior Caso** | $ `\frac{n(n-1)}{2} \implies O(n^2)` $ | $ `O(n^2)` $ | $ `n - 1 \implies O(n)` $ |
+| **Trocas no Melhor Caso** | Zero | Zero | Zero (se validar `if (i != min)`) |
+| **Sensibilidade à Ordenação** | Insensível na versão pura | Altamente sensível (para cedo) | Insensível (custo uniforme) |
+| **Estabilidade Original** | Estável (não permuta iguais) | Estável | Instável (pode transpor iguais) |
+| **Memória Auxiliar** | $ `O(1)` $ *in-place* | $ `O(1)` $ *in-place* | $ `O(1)` $ *in-place* |
+
+---
+
+## 10. Resolução Analítica e Comentada das Atividades do Google Classroom
+
+### 10.1 Trabalho 1 — Análise de Complexidade de Algoritmos
+
+Apresenta-se a dedução matemática e a análise assintótica para as seis questões do formulário avaliativo submetido no Google Classroom da disciplina:
+
+---
+
+#### Questão 1: Método `somar`
+```java
+public static int somar(int[] valores) {
+    int soma = 0;
+
+    for (int i = 0; i < valores.length; i++) {
+        soma += valores[i];
+    }
+
+    return soma;
+}
+```
+- **Demonstração Analítica:** Seja $ `n = \text{valores.length}` $. O laço executa com incremento unitário de $ `0` $ até $ `n - 1` $. O corpo é invocado exatamente $ `n` $ vezes. A função de tempo exata é da forma $ `T(n) = c_1 n + c_2` $. Pelo descarte de constantes e termos menores, temos crescimento estritamente linear.
+- **Classificação Big-O:** **$ `O(n)` $**
+
+---
+
+#### Questão 2: Método `buscaBinaria`
+```java
+public static int buscaBinaria(int[] valores, int procurado) {
+    int inicio = 0;
+    int fim = valores.length - 1;
+
+    while (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        if (valores[meio] == procurado) {
+            return meio;
+        }
+
+        if (valores[meio] < procurado) {
+            inicio = meio + 1;
+        } else {
+            fim = meio - 1;
+        }
+    }
+
+    return -1;
+}
+```
+- **Demonstração Analítica:** A cada repetição do laço `while`, o intervalo de pesquisa remanescente é subdividido pela metade ($ `\frac{n}{2}, \frac{n}{4}, \dots, \frac{n}{2^k}` $). No pior cenário (quando o elemento não existe no vetor), a execução cessa quando o intervalo atinge tamanho 1:
+```math
+\frac{n}{2^k} = 1 \implies 2^k = n \implies k = \log_2 n
+```
+- **Classificação Big-O:** **$ `O(\log n)` $**
+
+---
+
+#### Questão 3: Método `imprimirPares`
+```java
+public static void imprimirPares(int[] valores) {
+    for (int i = 0; i < valores.length; i++) {
+        for (int j = 0; j < valores.length; j++) {
+            System.out.println(valores[i] + " - " + valores[j]);
+        }
+    }
+}
+```
+- **Demonstração Analítica:** O laço externo executa $ `n` $ vezes. Para cada iteração de `i`, o laço interno executa outras $ `n` $ vezes completas de forma independente. O número de impressões é o produto:
+```math
+\sum_{i=0}^{n-1} \sum_{j=0}^{n-1} 1 = n \times n = n^2
+```
+- **Classificação Big-O:** **$ `O(n^2)` $** (grafado como `O(nˆ2)` no formulário original)
+
+---
+
+#### Questão 4: Método `contarIguais`
 ```java
 public static int contarIguais(int[] valores) {
     int contador = 0;
@@ -131,23 +1352,37 @@ public static int contarIguais(int[] valores) {
     return contador;
 }
 ```
-
-Seja $n = \text{valores.length}$ o tamanho da entrada. Um estudante avaliou o código e afirmou: *"Como o laço interno não começa em zero e executa cada vez menos passos conforme o índice $i$ avança, o algoritmo executa metade das operações de um laço duplo tradicional, devendo ser formalmente classificado como $O(n)$"*.
-
-Com base na dedução matemática formal da quantidade de comparações e nas regras de simplificação assintótica, a afirmação do estudante é:
-
-- [A] Correta, pois a soma de repetições decrescentes anula o expoente quadrático da variável $n$, convergindo para uma progressão geométrica de ordem linear.
-- [B] Incorreta, pois o laço interno executa uma divisão binária do vetor a cada passo, resultando em uma complexidade assintótica estrita de $O(n \log n)$.
-- [C] Incorreta, pois a quantidade de comparações é expressa pela soma de uma Progressão Aritmética: $`\sum_{k=1}^{n-1} k = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n`$, que pertence estritamente à classe $O(n^2)$ após o descarte de constantes multiplicativas e termos de menor ordem.
-- [D] Correta no melhor caso, pois se o vetor não contiver elementos duplicados, o laço interno é imediatamente abortado pelo coletor de lixo, operando em tempo $O(1)$.
-- [E] Incorreta, pois a presença da estrutura condicional `if (valores[i] == valores[j])` dentro do aninhamento eleva o custo computacional para a classe exponencial $O(2^n)$.
+- **Demonstração Analítica:** Trata-se de laços aninhados dependentes. Para `i = 0`, `j` executa $ `n - 1` $ vezes; para `i = 1`, executa $ `n - 2` $ vezes; culminando em 0 vezes quando `i = n - 1`. O total de comparações é dado pela soma de uma Progressão Aritmética:
+```math
+S(n) = \sum_{k=1}^{n-1} k = \frac{(n - 1)n}{2} = \frac{1}{2}n^2 - \frac{1}{2}n
+```
+Desprezando a constante $ `\frac{1}{2}` $ e o termo linear de menor ordem $ `-\frac{1}{2}n` $, a ordem assintótica é estritamente quadrática.
+- **Classificação Big-O:** **$ `O(n^2)` $** (grafado como `O(nˆ2)` no formulário original)
 
 ---
 
-### Questão 05 - Complexidade de Laços com Redução Logarítmica
+#### Questão 5: Método `maior`
+```java
+public static int maior(int[] valores) {
+    int maior = valores[0];
+    int i = 1;
 
-No estudo de algoritmos numéricos e controle de fluxo, a taxa de variação da variável de controle do laço determina sua curva assintótica de tempo. Observe atentamente a rotina abaixo:
+    while (i < valores.length) {
+        if (valores[i] > maior) {
+            maior = valores[i];
+        }
+        i++;
+    }
 
+    return maior;
+}
+```
+- **Demonstração Analítica:** O laço `while` avalia os elementos a partir do índice 1 com incremento estritamente linear até $ `n - 1` $. O bloco é executado exatamente $ `n - 1` $ vezes.
+- **Classificação Big-O:** **$ `O(n)` $**
+
+---
+
+#### Questão 6: Método `reduzir`
 ```java
 public static void reduzir(int n) {
     while (n > 1) {
@@ -155,935 +1390,181 @@ public static void reduzir(int n) {
     }
 }
 ```
-
-Assuma que $n$ é um número inteiro positivo fornecido como parâmetro de entrada. A classe de complexidade assintótica no pior caso que descreve o comportamento temporal dessa rotina e a sua fundamentação matemática correspondem a:
-
-- [A] $O(n)$, pois o laço executa uma operação aritmética simples de divisão para cada unidade inteira contida no valor inicial de $n$.
-- [B] $O(1)$, pois independentemente do valor de $n$, a variável é reduzida até o número 1, o que caracteriza um processamento com término constante no registrador da CPU.
-- [C] $O(n^2)$, pois a operação de divisão sucessiva exige conversões de ponto flutuante em nível de microcódigo de máquina, dobrando o custo por iteração.
-- [D] $O(\log n)$, pois o tamanho do problema é dividido sistematicamente por 2 a cada iteração, exigindo $k$ passos tais que $`2^k \ge n \implies k = \lceil \log_2 n \rceil`$.
-- [E] $O(n \log n)$, pois o algoritmo combina uma estrutura linear de repetição com uma decomposição polinomial de base 2.
+- **Demonstração Analítica:** Aqui o parâmetro $ `n` $ não representa o tamanho de uma coleção, mas a grandeza do valor de entrada. A variável de controle é dividida repetidamente por 2. O laço executa $ `\lfloor \log_2 n \rfloor` $ iterações até reduzir a 1.
+- **Classificação Big-O:** **$ `O(\log n)` $**
 
 ---
 
-### Questão 06 - Custo Estrutural de Listas Sequenciais e Shifting
+### 10.2 Trabalho 2 — Estruturas de Ordenação 1
 
-Listas lineares sequenciais implementadas sobre arrays nativos contíguos em memória física garantem tempo constante $O(1)$ para acesso posicional aleatório via cálculo direto de endereço base:
-
-$$\text{Endereço}(i) = \text{EndereçoBase} + (i \times \text{TamanhoElemento})$$
-
-Entretanto, ao projetar operações de inserção e remoção no início ou no meio dessa estrutura, manifesta-se o fenômeno conhecido na literatura como deslocamento de memória (*shifting*).
-
-Considere um vetor com capacidade física para 100 inteiros contendo atualmente $n = 50$ elementos ativos preenchidos da posição `0` até a posição `49`. Se uma rotina solicitar a inserção de uma nova chave no índice `0` (início da lista), o número exato de cópias/deslocamentos de memória requeridos e a complexidade dessa operação no pior caso são, respectivamente:
-
-- [A] Exatamente 1 deslocamento, operando em complexidade de tempo $O(1)$.
-- [B] Exatamente 49 deslocamentos, operando em complexidade de tempo $O(\log n)$.
-- [C] Exatamente 50 deslocamentos de elementos em direção ao final do array, operando em complexidade temporal de pior caso $O(n)$.
-- [D] Exatamente 100 deslocamentos, pois a capacidade total do array deve ser integralmente limpa antes de admitir novos dados, operando em $O(n^2)$.
-- [E] Nenhum deslocamento, pois a linguagem Java realiza troca atômica de ponteiros de índice físico sem alterar o conteúdo da memória contígua.
-
----
-
-### Questão 07 - Modelo de Memória da JVM: Stack, Heap e Referências
-
-O modelo de gerenciamento de memória em tempo de execução da Máquina Virtual Java (JVM) estabelece papéis estruturalmente distintos para os segmentos denominados Stack (Pilha de Execução) e Heap (Monte Dinâmico).
-
-Observe o seguinte trecho de código Java que manipula instâncias da classe `No`:
-
+O trabalho propõe a ordenação do seguinte vetor fornecido no Classroom:
 ```java
-No p1 = new No(10);
-No p2 = new No(20);
-p1.proximo = p2;
-No p3 = p1;
-p3.valor = 99;
-p1 = null;
+int[] notas = {8, 5, 10, 3, 7, 2, 9, 6}; // Tamanho n = 8
 ```
 
-Após a execução completa de todas as linhas de comando acima, a configuração correta das variáveis na memória Stack, das instâncias no Heap e da atuação do *Garbage Collector* (GC) é:
-
-- [A] As instâncias `No(10)` e `No(20)` foram destruídas imediatamente pelo GC no momento em que `p1 = null` foi executado, pois referências nulas provocam desalocação em cascata.
-- [B] A variável `p3` na Stack mantém a referência de memória para o nó cujo valor foi alterado para `99`, e esse mesmo nó ainda referencia o objeto com valor `20` através do atributo `proximo`; portanto, nenhum objeto é coletado pelo GC.
-- [C] A atribuição `No p3 = p1` duplicou o nó no Heap, criando uma cópia isolada com valor 10; logo, a mutação `p3.valor = 99` não alterou o valor apontado originalmente por `p1`.
-- [D] A variável `p2` na Stack foi automaticamente movida para o Heap para permitir a atribuição `p1.proximo = p2`, convertendo o tipo do dado primitivo de 32 bits em 64 bits.
-- [E] Ocorreu uma exceção do tipo `NullPointerException` na linha `p3.valor = 99`, uma vez que `p1` já havia sido limpo pelo ciclo de execução da JVM.
-
----
-
-### Questão 08 - Inserção Terminal em Listas Encadeadas e Ponteiro de Cauda
-
-Em uma lista simplesmente ligada de nós dinâmicos, a inclusão de novos elementos pode ser arquitetada com ou sem a manutenção de um ponteiro explícito para a cauda (`fim` ou `tail`).
-
-Analise o comportamento do método `adicionarFim` implementado em uma classe `ListaLigada`:
-
+#### Código-Fonte Completo e Instrumentado para Coleta de Métricas
 ```java
-public void adicionarFim(int valor) {
-    No novo = new No(valor);
-    if (this.inicio == null) {
-        this.inicio = novo;
-        this.fim = novo;
-    } else {
-        this.fim.proximo = novo;
-        this.fim = novo;
-    }
-    this.tamanho++;
-}
-```
-
-Caso o arquiteto de software optasse por eliminar o atributo `private No fim;` da classe controladora para economizar os bytes de uma referência na memória, o método de inserção no final passaria a apresentar:
-
-- [A] A mesma complexidade de tempo $O(1)$, pois a JVM armazena ponteiros implícitos de fim para todas as classes dinâmicas.
-- [B] Degradação de desempenho de tempo constante $O(1)$ para tempo linear $O(n)$, visto que o algoritmo precisaria percorrer sequencialmente todos os nós a partir de `inicio` até encontrar o elemento cujo `proximo == null`.
-- [C] Redução do consumo de tempo para $O(\log n)$, uma vez que a ausência do ponteiro `fim` viabiliza saltos binários sobre as referências da lista ligada.
-- [D] Falha crítica de execução (*Stack Overflow*), pois listas dinâmicas encadeadas são estruturalmente incapazes de inserir dados na cauda sem um ponteiro físico permanente.
-- [E] Comportamento idêntico ao de uma Pilha pura, invertendo a ordem dos elementos e forçando a estrutura a adotar disciplina LIFO (*Last In, First Out*).
-
----
-
-### Questão 09 - Encadeamento e Religamento Crítico de Referências
-
-Considere uma lista simplesmente ligada com nós contendo valores inteiros ordenados de forma crescente:
-
-$$\text{inicio} \to [10] \to [20] \to [30] \to [40] \to \text{null}$$
-
-Um desenvolvedor deseja inserir ordenadamente o valor `25` entre os nós `[20]` e `[30]`. Durante o percurso, o ponteiro auxiliar `atual` foi posicionado exatamente sobre o nó de valor `20`. Um novo nó foi criado: `No novo = new No(25);`.
-
-Avalie os dois seguintes blocos de código propostos para efetuar o religamento da estrutura:
-
-```java
-// Proposta Alpha
-novo.proximo = atual.proximo;
-atual.proximo = novo;
-
-// Proposta Beta
-atual.proximo = novo;
-novo.proximo = atual.proximo;
-```
-
-A análise lógica e estrutural dos dois blocos demonstra que:
-
-- [A] Ambas as propostas funcionam perfeitamente, pois a ordem de atribuição de variáveis de referência é comutativa na linguagem Java.
-- [B] A Proposta Alpha conecta a lista corretamente mantendo a integridade da cadeia, enquanto a Proposta Beta gera um ciclo autorreferenciado infinito (`novo.proximo` passa a apontar para o próprio `novo`) e perde irremediavelmente o acesso aos nós subsequentes `[30]` e `[40]`.
-- [C] A Proposta Beta é superior porque atualiza o encadeamento a partir da cabeça da lista antes de alocar a memória na Stack.
-- [D] A Proposta Alpha dispara uma exceção `NullPointerException`, pois não se pode ler `atual.proximo` antes de atribuir o endereço do nó `novo`.
-- [E] Ambas as propostas corrompem a lista, sendo estritamente obrigatório desinstanciar o nó `[20]` e reinseri-lo a partir do nó `inicio`.
-
----
-
-### Questão 10 - Matriz de Decisão Arquitetural: Vetor versus Lista Ligada
-
-A seleção da estrutura de dados ideal para compor a espinha dorsal de um sistema computacional depende da identificação dos padrões de acesso, volume e mutação de dados requeridos pelo domínio de negócio.
-
-Analise os seguintes cenários operacionais de engenharia de software:
-
-- **Cenário 1:** Um módulo de telemetria e renderização gráfica de alta performance precisa consultar e atualizar posições de partículas no espaço tridimensional milhões de vezes por segundo através de índices matemáticos arbitrários (`obter(i)`), raramente inserindo ou removendo partículas após a inicialização.
-- **Cenário 2:** Um sistema de triagem de mensagens de rede onde pacotes chegam e são despachados continuamente no início e no final da estrutura, com frequentes inclusões e exclusões de nós no meio da coleção sob fluxo constante, sem necessidade de consultas diretas por índice numérico.
-
-Com base nas características de complexidade de tempo, consumo de memória e comportamento físico de hardware (localidade de cache), a recomendação técnica correta para os Cenários 1 e 2 é, respectivamente:
-
-- [A] Cenário 1: Lista Ligada Dinâmica; Cenário 2: Lista Sequencial (Array).
-- [B] Cenário 1: Pilha Estática; Cenário 2: Lista Sequencial (Array).
-- [C] Cenário 1: Lista Sequencial (Array); Cenário 2: Lista Ligada Dinâmica.
-- [D] Cenário 1: Fila Estática; Cenário 2: Pilha Dinâmica.
-- [E] Ambos os cenários devem utilizar estritamente Listas Sequenciais, pois listas ligadas foram descontinuadas na arquitetura de computadores modernos.
-
----
-
-### Questão 11 - Tipos Abstratos Restritos: Semântica e Disciplina da Pilha
-
-A Pilha (*Stack*) é formalmente classificada como uma estrutura de dados linear de **acesso restrito**, regida pelo princípio **LIFO** (*Last In, First Out*). Todas as operações de mutação e consulta (`push`, `pop`, `peek`) ocorrem obrigatoriamente em uma única extremidade denominada **Topo** (*top*).
-
-Um programador júnior sugeriu alterar a classe `Pilha` do sistema bancário para adicionar o seguinte método:
-
-```java
-public int obterElementoIntermediario(int indice) {
-    return this.elementos[indice];
-}
-```
-
-Sob os princípios da teoria de Tipos Abstratos de Dados e da integridade de engenharia de software, a inclusão desse método:
-
-- [A] É recomendada, pois moderniza o conceito de pilha e eleva seu poder computacional para o nível de uma tabela hash sem violar o princípio LIFO.
-- [B] É inócua, pois em linguagens orientadas a objetos qualquer classe com array interno já permite acesso indexado nativo sem necessidade de compilação.
-- [C] Quebra a abstração e viola as invariantes fundamentais do TAD Pilha, destruindo a garantia de encapsulamento restritivo e permitindo que módulos externos processem estados fora de ordem, o que compromete rotinas como o controle transacional (*rollback*) e avaliadores sintáticos.
-- [D] Deve ser aplicada apenas se a operação `pop()` for reconfigurada para remover da base da pilha em tempo linear $O(n)$.
-- [E] Impede a atuação do coletor de lixo da JVM, provocando vazamento generalizado de memória física no disco rígido.
-
----
-
-### Questão 12 - Pilha com Array Estático: Indexação Sentinela e Estados
-
-Em uma implementação clássica de Pilha baseada em array estático de inteiros com capacidade $C = 5$, o ponteiro que rastreia a posição ativa é uma variável escalar inteira denominada `topo`.
-
-A representação canônica adota a convenção de indexação baseada em zero:
-- Quando a pilha contém 1 elemento, `topo = 0`.
-- Quando a pilha está totalmente vazia, `topo = -1`.
-
-Considere que sobre uma pilha inicialmente vazia ($C = 5$) foram executadas as seguintes chamadas sequenciais de métodos:
-
-```java
-pilha.push(10);
-pilha.push(20);
-pilha.push(30);
-int a = pilha.pop();
-pilha.push(40);
-int b = pilha.peek();
-```
-
-Ao término dessas operações, o valor retornado na variável `b`, o valor corrente da variável de controle `topo` e o estado físico dos dados no array subjacente são, respectivamente:
-
-- [A] `b = 40`; `topo = 2`; o array mantém os valores `[10, 20, 40]` nas posições 0, 1 e 2, enquanto a posição 3 mantém fisicamente o valor `30` residual (exclusão lógica).
-- [B] `b = 30`; `topo = 3`; o array foi completamente reescrito para `[10, 20, 30, 40]`.
-- [C] `b = 40`; `topo = 1`; a operação `pop()` zerou fisicamente todo o array por segurança da memória RAM.
-- [D] `b = 20`; `topo = 0`; a invocação de `peek()` desempilhou o valor 40 automaticamente.
-- [E] Ocorreu uma exceção de *Stack Overflow* durante a chamada `pilha.push(40)`, impedindo a leitura de `b`.
-
----
-
-## Simulado 2 - Questões Discursivas
-
-### Questão 13 - Modelagem Conceitual e Implementação de TAD de Atendimento
-
-#### Contexto e Enunciado
-Uma clínica médica especializada em exames laboratoriais necessita de um sistema informatizado para gerenciar a fila de espera de pacientes na recepção. O sistema deve ser concebido estritamente sob os conceitos de Tipos Abstratos de Dados (TAD) e estruturas lineares dinâmicas aprendidos na disciplina, sem fazer uso de classes utilitárias da *Java Collections Framework* (como `ArrayList` ou `LinkedList`).
-
-Cada `Paciente` possui obrigatoriamente:
-- `nome` (`String`)
-- `idade` (`int`)
-- `numeroConsulta` (`int`, identificador único)
-
-O atendimento segue a disciplina FIFO (*First-In, First-Out*), admitindo também cancelamentos extemporâneos por desistência do paciente.
-
-#### Tarefa Solicitada
-1. Explique formalmente a separação entre a interface pública do TAD e sua realização em memória.
-2. Apresente o código Java completo e compilável das classes `Paciente`, `No` e da classe controladora `FilaAtendimento` contendo:
-   - Atributos privados fundamentais (`inicio`, `fim`, `tamanho`);
-   - Método `enfileirar(Paciente p)`: inclusão no final em tempo constante $O(1)$;
-   - Método `chamarProximo()`: remoção e retorno do primeiro paciente em tempo constante $O(1)$;
-   - Método `estaVazia()`: verificação em tempo $O(1)$.
-3. Desenhe um diagrama Mermaid estrutural representando o estado da cadeia de nós após a inserção sequencial de três pacientes: Ana (Cons. 101), Bruno (Cons. 102) e Carlos (Cons. 103).
-
----
-
-### Questão 14 - Dedução Matemática Formal de Inserções em Memória Contígua
-
-#### Contexto e Enunciado
-Um engenheiro de software júnior propôs a utilização de uma lista linear sequencial baseada em vetor estático (`int[] elementos`) para gerenciar um histórico de eventos de auditoria. No projeto proposto, cada novo evento deve ser obrigatoriamente inserido na primeira posição física do arranjo (índice `0`), de modo que o evento mais recente esteja sempre imediatamente acessível no índice zero.
-
-Considere que o vetor possui capacidade suficiente e que a lista contém atualmente $n$ elementos ocupando os índices de `0` até $n-1$.
-
-#### Tarefa Solicitada
-1. Descreva o algoritmo passo a passo necessário para viabilizar a inserção de um novo elemento no índice `0`, detalhando o sentido do deslocamento de memória (*shifting*) e explicando o que ocorreria se o sentido da varredura fosse invertido.
-2. Deduza formalmente a quantidade total de operações de cópia de memória necessárias para inserir $m$ novos elementos consecutivamente na cabeça de uma lista que partiu inicialmente com $0$ elementos até atingir $m$ elementos, demonstrando matematicamente o somatório resultante e sua classificação final na Notação Big O.
-3. Compare o custo assintótico dessa operação com a inserção no início em uma Lista Simplesmente Encadeada (`adicionarInicio`), justificando a diferença estrutural com base no modelo de alocação de memória na JVM.
-
----
-
-### Questão 15 - Engenharia de Listas Ligadas: Algoritmo Robusto de Cancelamento
-
-#### Contexto e Enunciado
-Em listas encadeadas dinâmicas, operações de remoção no meio ou no fim da estrutura exigem tratamento rigoroso de ponteiros para evitar perda de encadeamento, vazamentos de memória e lançamento de exceções `NullPointerException`. 
-
-No contexto do sistema clínico do Trabalho AV1, a operação `cancelarConsulta(int numeroConsulta)` deve localizar o nó correspondente à consulta informada e removê-lo da cadeia linear, mantendo os ponteiros `inicio`, `fim` e a variável `tamanho` rigorosamente íntegros.
-
-#### Tarefa Solicitada
-1. Apresente o código Java completo do método `public boolean cancelarConsulta(int numeroConsulta)`, tratando com precisão todos os seguintes casos de borda:
-   - Lista inicialmente vazia;
-   - Elemento a ser removido está na cabeça da lista (`inicio`);
-   - Elemento a ser removido é o único elemento da lista (caso unitário onde `inicio == fim`);
-   - Elemento a ser removido está no meio da lista;
-   - Elemento a ser removido está na cauda da lista (`fim`);
-   - Elemento pesquisado não existe na coleção.
-2. Apresente um diagrama de sequência Mermaid ilustrando o processo de religamento de ponteiros e isolamento de um nó intermediário para coleta pelo *Garbage Collector*.
-3. Classifique a complexidade assintótica de tempo da operação no melhor caso ($\Omega$) e no pior caso ($O$), justificando a resposta a partir do número de nós visitados.
-
----
-
-### Questão 16 - Pilha Estática, Invariantes do Topo e Vazamento de Memória
-
-#### Contexto e Enunciado
-Durante a Aula 06, o Prof. Wesley Soares demonstrou a implementação do Tipo Abstrato de Dados Pilha utilizando um vetor primitivo estático (`int[] elementos`) controlado por um índice escalar denominado `topo`. A convenção pedagógica e industrial adota `topo = -1` para representar a ausência total de elementos úteis.
-
-#### Tarefa Solicitada
-1. Explique a fundamentação matemática da indexação baseada em zero que justifica o uso do valor `-1` para denotar pilha vazia.
-2. Apresente a implementação Java dos métodos `push(int valor)` e `pop()`, demonstrando os testes de salvaguarda contra **Stack Overflow** e **Stack Underflow** com lançamento de exceções apropriadas.
-3. Explique detalhadamente a diferença entre **exclusão lógica** e **exclusão física** na estrutura de pilha baseada em array.
-4. *(Aprofundamento em Engenharia de Software):* Se em vez de um vetor de tipos primitivos (`int[]`) a pilha armazenasse objetos de negócio (`Object[]` ou `Paciente[]`), que problema de vazamento de referências (*memory leak* / retenção indevida de objetos no Heap) ocorreria caso o método `pop()` apenas decrementasse o índice com `topo--` sem atribuir `null` à posição desempilhada?
-
----
-
-### Questão 17 - Decisão Arquitetural de Engenharia: Localidade de Cache e Sobrecarga
-
-#### Contexto e Enunciado
-Um arquiteto de software de um sistema de processamento de alto volume foi consultado por sua equipe técnica para decidir entre a utilização de uma Lista Linear Sequencial baseada em Array (`ArrayList`) e uma Lista Simplesmente Ligada (`LinkedList`). O time júnior sugeriu adotar a Lista Ligada para todos os módulos do sistema, alegando que "estruturas ligadas são dinâmicas e nunca gastam memória com vetores superdimensionados".
-
-O arquiteto refutou a generalização, afirmando que a decisão depende de dois fatores fundamentais de hardware e arquitetura de computadores:
-1. **Localidade espacial de referência e comportamento do Cache da CPU (L1/L2/L3)**;
-2. **Sobrecarga de memória (*memory overhead*) por elemento armazenado**.
-
-#### Tarefa Solicitada
-1. Explique conceitualmente o princípio da localidade espacial de referência e explique por que a iteração sequencial sobre um vetor contíguo é fisicamente mais rápida para a CPU do que o percurso sobre nós encadeados dispersos na memória Heap.
-2. Demonstre matematicamente a sobrecarga de memória calculando o consumo de bytes exigido para armazenar $1.000.000$ de números inteiros de 32 bits (`int`) em:
-   - Um vetor primitivo contíguo `int[1.000.000]`;
-   - Uma lista encadeada composta por $1.000.000$ de instâncias da classe `No` (considere arquitetura de 64 bits com ponteiro de referência consumindo 8 bytes e overhead de cabeçalho de objeto da JVM consumindo 16 bytes por instância de Nó).
-3. Conclua com uma recomendação arquitetural clara indicando em qual cenário prático a Lista Ligada supera o Vetor Sequencial e em qual cenário ela jamais deve ser utilizada.
-
----
-
-## Gabarito Comentado
-
-### Gabarito do Simulado 1 (Objetivas)
-
----
-
-#### Questão 01 - Fundamentos e Propriedades Formais de Algoritmos
-- **Alternativa Correta:** **[B]**
-- **Justificativa Técnica:** As seis propriedades essenciais de um algoritmo exigem rigor matemático absoluto. A **precisão** (*definiteness*) determina que cada instrução deve ser clara, determinística e unívoca, sem margem para subjetividade. A **executabilidade** (*effectiveness*) estabelece que cada operação deve ser realizável na prática por um agente mecânico em tempo finito. Instruções como "adicione quantias proporcionais ao bom senso do operador" falham categoricamente em ambas as propriedades, pois computadores não possuem discernimento subjetivo e não podem executar instruções desprovidas de formalização lógico-matemática.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* A entrada (*input*) diz respeito aos dados brutos recebidos pelo algoritmo do domínio do problema, independentemente de tipagem física prévia em sistema operacional.
-  - *C está errada:* O comando "Enquanto" é a base do controle de fluxo iterativo condicional e só gera laço infinito quando a condição de guarda não é alterada satisfatoriamente no corpo do loop.
-  - *D está errada:* A equação de Niklaus Wirth ($\text{Algoritmos} + \text{Estruturas de Dados} = \text{Programas}$) coloca ambos os conceitos em simetria de importância; um não é superior ao outro.
-  - *E está errada:* Nenhuma etapa de modelagem formal de algoritmos tolera subjetividade conceitual; pseudocódigos e diagramas exigem estrito determinismo causal.
-
----
-
-#### Questão 02 - Tipos Abstratos de Dados e Encapsulamento
-- **Alternativa Correta:** **[A]**
-- **Justificativa Técnica:** Ambas as asserções são verdadeiras e a asserção II é a justificativa teórica direta da asserção I. O propósito primordial de um Tipo Abstrato de Dados (TAD) é estabelecer um contrato público formal (a interface) separando a especificação do comportamento da sua representação física na memória. O encapsulamento atua como barreira protetora: o código cliente manipula o ponto exclusivamente através de suas rotinas públicas autorizadas (`criar`, `obterX`, `distancia`). Caso a equipe decida refatorar a estrutura interna de coordenadas cartesianas $(x, y)$ para coordenadas polares $(r, \theta)$, nenhum sistema cliente é impactado, pois a interface pública não expõe os atributos privados.
-- **Análise das Alternativas Distratoras:**
-  - *B está errada:* A asserção II é exatamente a justificativa causal da asserção I, não podendo ser tratada como argumento desconectado.
-  - *C, D e E estão erradas:* Ambas as afirmações são canônicas na teoria da programação orientada a objetos e tipos abstratos de dados.
-
----
-
-#### Questão 03 - Metodologia de Análise Assintótica versus Medição Empírica
-- **Alternativa Correta:** **[B]**
-- **Justificativa Técnica:** A medição empírica de relógio depende de um ecossistema volátil e não reproduzível: capacidade de processamento da CPU, frequência instantânea da máquina, concorrência de processos em background, latência de barramento e alocação de memória cache. A análise analítica assintótica isola essas contingências externas, adotando uma abordagem puramente matemática: conta-se o número de operações fundamentais em função do tamanho da entrada $n$ e estuda-se o comportamento do algoritmo no limite em que $n \to \infty$.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* O compilador JIT não é capaz de alterar a complexidade assintótica intrínseca de um algoritmo; laços quadráticos continuam exigindo operações quadráticas em tempo de execução.
-  - *C está errada:* A incompatibilidade não é a escala contínua do tempo, mas sim a dependência do hardware e do ambiente físico.
-  - *D está errada:* A afirmação inverte as ordens assintóticas: a Busca Sequencial é linear $O(n)$ e a Busca Binária é logarítmica $O(\log n)$.
-  - *E está errada:* A notação Big O mede primariamente a complexidade temporal (número de instruções executadas pela CPU), além de poder ser aplicada também ao consumo espacial de memória auxiliar.
-
----
-
-#### Questão 04 - Análise de Laços Dependentes e Progressão Aritmética
-- **Alternativa Correta:** **[C]**
-- **Justificativa Técnica:** No método `contarIguais`, o laço externo executa com $i$ variando de $0$ até $n-1$. O laço interno inicia em $j = i + 1$ e vai até $n-1$.
-  - Para $i = 0$, $j$ executa $n - 1$ vezes;
-  - Para $i = 1$, $j$ executa $n - 2$ vezes;
-  - ...
-  - Para $i = n - 2$, $j$ executa $1$ vez;
-  - Para $i = n - 1$, $j$ executa $0$ vezes.
-  
-  O total de comparações é a soma de uma Progressão Aritmética:
-  ```math
-  S = (n-1) + (n-2) + \dots + 1 = \sum_{k=1}^{n-1} k = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n
-  ```
-  
-  Pelas regras fundamentais da análise assintótica, descarta-se o termo de menor ordem ($-\frac{1}{2}n$) e elimina-se a constante multiplicativa ($\frac{1}{2}$), resultando estritamente em $O(n^2)$.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* A redução proporcional não anula o termo quadrático dominante; o comportamento assintótico continua sendo uma parábola de crescimento quadrático.
-  - *B está errada:* O algoritmo não divide o espaço de busca pela metade; ele apenas decrementa o ponto de partida linearmente em 1 unidade a cada iteração.
-  - *D está errada:* Mesmo sem duplicatas, a condição `if` precisa ser avaliada em todas as iterações da PA, mantendo o custo $\Omega(n^2)$ no melhor caso.
-  - *E está errada:* O laço é polinomial quadrático, não exponencial.
-
----
-
-#### Questão 05 - Complexidade de Laços com Redução Logarítmica
-- **Alternativa Correta:** **[D]**
-- **Justificativa Técnica:** A cada iteração do laço `while (n > 1)`, o valor de $n$ é dividido por 2. Sejam as iterações $k = 1, 2, 3 \dots$:
-  - Estado inicial: $n$
-  - Após iteração 1: $\frac{n}{2}$
-  - Após iteração 2: $\frac{n}{4} = \frac{n}{2^2}$
-  - Após iteração $k$: $\frac{n}{2^k}$
-  
-  O laço encerra quando a variável atinge um valor menor ou igual a 1:
-  ```math
-  \frac{n}{2^k} \le 1 \implies 2^k \ge n \implies k = \lceil \log_2 n \rceil
-  ```
-  Portanto, o número total de repetições é proporcional a $`\log_2 n`$, caracterizando complexidade estrita $O(\log n)$.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* Para ser linear $O(n)$, o passo deveria subtrair uma constante (`n = n - 1`), e não dividir sucessivamente por 2.
-  - *B está errada:* O número de passos varia conforme o valor de $n$; por exemplo, para $n = 1.024$ são 10 passos, para $n = 1.048.576$ são 20 passos.
-  - *C está errada:* Divisões de números inteiros na CPU são operações aritméticas de tempo elementar $O(1)$.
-  - *E está errada:* Não há laço aninhado para gerar a ordem linearítmica $O(n \log n)$.
-
----
-
-#### Questão 06 - Custo Estrutural de Listas Sequenciais e Shifting
-- **Alternativa Correta:** **[C]**
-- **Justificativa Técnica:** Na lista linear sequencial, a contiguidade física de memória exige que os elementos ocupem gavetas adjacentes sem lacunas. Se temos $n = 50$ elementos ativos (índices `0` a `49`) e desejamos inserir uma nova chave no índice `0`, cada elemento já existente deve ser copiado uma casa para a direita para liberar o espaço inicial:
-  - O elemento do índice `49` deve ser movido para o índice `50`;
-  - O elemento do índice `48` para o `49`;
-  - ... até que o elemento do índice `0` seja movido para o índice `1`.
-  
-  Isso perfaz exatamente 50 operações de cópia de memória. Como essa quantidade de deslocamentos escala de forma estritamente proporcional a $n$, o custo no pior caso para inserção na cabeça de um array é $O(n)$.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* Apenas a inserção no final do array (quando há capacidade ociosa) custa $O(1)$.
-  - *B está errada:* Não há divisão do espaço de busca que justifique comportamento logarítmico.
-  - *D está errada:* Apenas os elementos ativos ($n = 50$) precisam ser deslocados; as 50 posições ociosas finais não realizam operações de cópia.
-  - *E está errada:* Arrays em Java são blocos contíguos de memória fixa; não existe mágica de rearranjo atômico sem cópia de valores.
-
----
-
-#### Questão 07 - Modelo de Memória da JVM: Stack, Heap e Referências
-- **Alternativa Correta:** **[B]**
-- **Justificativa Técnica:** 
-  1. `No p1 = new No(10);` cria um objeto no Heap; `p1` na Stack armazena seu endereço (ex: `0x1000`).
-  2. `No p2 = new No(20);` cria outro objeto no Heap; `p2` na Stack armazena seu endereço (ex: `0x2000`).
-  3. `p1.proximo = p2;` conecta o objeto em `0x1000` ao objeto em `0x2000`.
-  4. `No p3 = p1;` copia a referência de endereço (`0x1000`) para `p3`. Nenhuma nova instância é criada.
-  5. `p3.valor = 99;` altera a carga útil do objeto em `0x1000`.
-  6. `p1 = null;` anula a variável `p1` na Stack. Contudo, o objeto em `0x1000` permanece diretamente alcançável através de `p3`, e o objeto em `0x2000` continua alcançável via `p2` e via `p3.proximo`.
-  Portanto, as regras de alcançabilidade (*root reachability*) impedem que o Garbage Collector colete qualquer objeto.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* O GC só coleta objetos inalcançáveis a partir das raízes ativas (*GC Roots*). Como `p3` ainda aponta para o nó, ele não é recolhido.
-  - *C está errada:* A atribuição de variáveis de classe em Java copia apenas o endereço da referência (ponteiro), nunca o objeto completo.
-  - *D está errada:* Variáveis primitivas e referências residem no escopo de ativação de métodos na Stack; objetos instanciados com `new` sempre habitam o Heap.
-  - *E está errada:* Não ocorre exceção, pois `p3` detém uma referência válida e não nula para o objeto no momento da alteração de `p3.valor`.
-
----
-
-#### Questão 08 - Inserção Terminal em Listas Encadeadas e Ponteiro de Cauda
-- **Alternativa Correta:** **[B]**
-- **Justificativa Técnica:** Quando uma lista simplesmente encadeada mantém apenas o ponteiro `inicio`, qualquer inserção na cauda obriga o algoritmo a posicionar um ponteiro auxiliar no `inicio` e percorrer todos os nós através do laço `while (atual.proximo != null) atual = atual.proximo;`. Para uma lista com $n$ elementos, o laço executa $n - 1$ saltos de memória. Conforme $n$ cresce para milhões de elementos, essa operação consome tempo linear $O(n)$. Manter a referência de cauda (`fim`) é uma decisão de design que viabiliza o religamento direto `fim.proximo = novo; fim = novo;` em tempo constante $O(1)$.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* A JVM não possui ponteiros mágicos implícitos em classes customizadas pelo programador; apenas os atributos explicitamente declarados existem.
-  - *C está errada:* Listas simplesmente ligadas não permitem busca binária ou saltos logarítmicos, pois não possuem indexação contígua em memória física.
-  - *D está errada:* A inserção no final continua sendo possível sem o ponteiro de cauda; ela apenas se torna ineficiente ($O(n)$).
-  - *E está errada:* A disciplina LIFO é característica de pilhas (inserção e remoção na mesma extremidade); a lista ligada sem cauda continua sendo uma lista com inserção no fim e leitura no início se assim for programada.
-
----
-
-#### Questão 09 - Encadeamento e Religamento Crítico de Referências
-- **Alternativa Correta:** **[B]**
-- **Justificativa Técnica:** Na inserção intermediária em uma lista ligada simples, a ordem dos passos é crítica para a integridade da estrutura:
-  1. Primeiro, deve-se salvaguardar a referência do restante da lista: `novo.proximo = atual.proximo;`. Agora o novo nó sabe quem vem depois dele (`[30]`).
-  2. Em seguida, conecta-se a primeira parte ao novo nó: `atual.proximo = novo;`.
-  
-  Se executarmos a Proposta Beta (`atual.proximo = novo;` seguido de `novo.proximo = atual.proximo;`), no primeiro comando o campo `atual.proximo` deixa de apontar para `[30]` e passa a apontar para `novo`. No segundo comando, ao fazer `novo.proximo = atual.proximo`, estamos fazendo `novo.proximo = novo`! Cria-se um ciclo de auto-referência fechado e perde-se irremediavelmente a referência para os nós `[30]` e `[40]`.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* A atribuição de ponteiros é estritamente sequencial e sensível à ordem cronológica; não é comutativa.
-  - *C está errada:* A Proposta Beta destrói a lista.
-  - *D está errada:* A leitura de `atual.proximo` é perfeitamente segura na Proposta Alpha, pois `atual` é um nó válido e seu campo contém a referência do nó seguinte.
-  - *E está errada:* A Proposta Alpha é o padrão canônico e correto de inserção em listas dinâmicas.
-
----
-
-#### Questão 10 - Matriz de Decisão Arquitetural: Vetor versus Lista Ligada
-- **Alternativa Correta:** **[C]**
-- **Justificativa Técnica:** 
-  - **Cenário 1:** Exige altíssima taxa de acesso aleatório por índice matemático (`obter(i)`). Em vetores (arrays), isso é resolvido em tempo estritamente constante $O(1)$ via cálculo de ponteiro em hardware. Além disso, vetores possuem contiguidade física na memória RAM, aproveitando as linhas de cache L1/L2 da CPU (*cache lines prefetching*). A Lista Ligada exigiria tempo linear $O(i)$ a cada leitura, inviabilizando o sistema gráfico. Logo, o Cenário 1 exige **Lista Sequencial (Array)**.
-  - **Cenário 2:** Apresenta fluxo ininterrupto de inserções e remoções no início, fim e meio, sem demanda por acesso direto via índice. Na lista ligada, as mutações na cabeça e cauda custam $O(1)$ sem necessidade de deslocamento de blocos de memória (*shifting*). Logo, o Cenário 2 exige **Lista Ligada Dinâmica**.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* Inverte completamente as indicações técnicas de ambas as estruturas.
-  - *B e D estão erradas:* Sugerem pilhas e filas para um cenário gráfico que necessita de acesso indexado aleatório multidimensional irrestrito.
-  - *E está errada:* Listas encadeadas são amplamente empregadas na construção de kernels de sistemas operacionais, gerenciadores de filas assíncronas e alocadores de memória.
-
----
-
-#### Questão 11 - Tipos Abstratos Restritos: Semântica e Disciplina da Pilha
-- **Alternativa Correta:** **[C]**
-- **Justificativa Técnica:** O princípio dos Tipos Abstratos de Dados estabelece que certas estruturas existem deliberadamente para **limitar** a liberdade de acesso em prol da segurança das invariantes de negócio. Uma Pilha é estritamente LIFO. Se um desenvolvedor expuser um método como `obterElementoIntermediario(indice)`, ele quebra a abstração e transforma a pilha em um vetor desprotegido. Se um módulo externo alterar ou ler elementos do meio da pilha de execução de uma máquina virtual ou de um mecanismo de transações (*rollback*), o algoritmo de reversão falhará catastroficamente.
-- **Análise das Alternativas Distratoras:**
-  - *A está errada:* Permitir leitura arbitrária viola frontalmente a semântica da pilha; não é uma modernização, é uma regressão de design.
-  - *B está errada:* Em Java, os atributos de uma classe bem encapsulada são declarados como `private`; o mundo exterior não possui acesso nativo aos arrays internos a menos que métodos públicos os exponham.
-  - *D está errada:* A disciplina LIFO exige que todas as operações ocorram no topo, nunca na base.
-  - *E está errada:* Falhas conceituais de encapsulamento não têm relação direta com alocação em disco rígido pelo coletor de lixo.
-
----
-
-#### Questão 12 - Pilha com Array Estático: Indexação Sentinela e Estados
-- **Alternativa Correta:** **[A]**
-- **Justificativa Técnica:**
-  Rastreando as instruções passo a passo:
-  1. `pilha.push(10);` $\to$ `topo` pré-incrementado de `-1` para `0`; `elementos[0] = 10`.
-  2. `pilha.push(20);` $\to$ `topo` pré-incrementado de `0` para `1`; `elementos[1] = 20`.
-  3. `pilha.push(30);` $\to$ `topo` pré-incrementado de `1` para `2`; `elementos[2] = 30`.
-  4. `int a = pilha.pop();` $\to$ lê `elementos[2]` (retorna `30`); `topo` decrementado de `2` para `1`. O valor 30 permanece gravado na célula 2 do array, mas torna-se inacessível logicamente (**exclusão lógica**).
-  5. `pilha.push(40);` $\to$ `topo` pré-incrementado de `1` para `2`; `elementos[2] = 40` (sobrescreve o 30 antigo).
-  6. `int b = pilha.peek();` $\to$ inspeciona `elementos[topo]` (que é `elementos[2]`), retornando `40`. A variável `topo` permanece com valor `2`.
-  
-  Assim, `b = 40`, `topo = 2` e os dados válidos são `[10, 20, 40]`. A posição `3` contém resíduo ou valor padrão zero de alocação inicial.
-- **Análise das Alternativas Distratoras:**
-  - *B está errada:* O valor 30 foi removido logicamente pelo `pop()`; ele não permanece na lista de elementos ativos.
-  - *C está errada:* O `pop()` não zera fisicamente o vetor em tipos primitivos; apenas recua o ponteiro `topo`.
-  - *D está errada:* A operação `peek()` apenas consulta o topo; ela não remove elementos da pilha.
-  - *E está errada:* A pilha possuía capacidade $C = 5$ e atingiu no máximo 3 elementos concomitantes; não ocorreu estouro de capacidade.
-
----
-
-### Gabarito do Simulado 2 (Discursivas)
-
----
-
-#### Questão 13 - Modelagem Conceitual e Implementação de TAD de Atendimento
-
-##### Resposta Modelo Esperada
-
-###### 1. Justificativa Teórica e Separação de Camadas
-Um Tipo Abstrato de Dados (TAD) define um modelo matemático de dados associado a um conjunto de operações que respeitam invariantes rígidas de negócio. A interface pública do TAD responde estritamente **O QUE** a estrutura faz (contrato: métodos públicos como `enfileirar`, `chamarProximo` e `estaVazia`), enquanto a camada de implementação responde **COMO** os dados são armazenados na memória (detalhes técnicos: alocação dinâmica em nós encadeados dispersos na memória Heap através dos atributos privados `inicio`, `fim` e `tamanho`). 
-
-Ao blindar os nós através do encapsulamento, o código cliente é impedido de acoplar-se à topologia dos ponteiros, assegurando que as regras de integridade do atendimento (disciplina FIFO) nunca sejam corrompidas externamente.
-
-###### 2. Código Java Completo
-
-```java
-// Entidade de Domínio: Paciente
-public class Paciente {
-    private String nome;
-    private int idade;
-    private int numeroConsulta;
-
-    public Paciente(String nome, int idade, int numeroConsulta) {
-        this.nome = nome;
-        this.idade = idade;
-        this.numeroConsulta = numeroConsulta;
+public class OrdenacaoNotas {
+
+    public static class Metricas {
+        public long comparacoes = 0;
+        public long trocas = 0;
     }
 
-    public String getNome() { return nome; }
-    public int getIdade() { return idade; }
-    public int getNumeroConsulta() { return numeroConsulta; }
+    public static Metricas bubbleSort(int[] vetor) {
+        Metricas m = new Metricas();
+        int n = vetor.length;
 
-    @Override
-    public String toString() {
-        return "Paciente [Consulta #" + numeroConsulta + " | " + nome + " (" + idade + " anos)]";
-    }
-}
-
-// Unidade Estrutural: Nó da Lista Ligada
-public class No {
-    public Paciente elemento;
-    public No proximo;
-
-    public No(Paciente elemento) {
-        this.elemento = elemento;
-        this.proximo = null;
-    }
-}
-
-// Controladora do TAD: FilaAtendimento
-public class FilaAtendimento {
-    private No inicio;
-    private No fim;
-    private int tamanho;
-
-    public FilaAtendimento() {
-        this.inicio = null;
-        this.fim = null;
-        this.tamanho = 0;
-    }
-
-    public boolean estaVazia() {
-        return this.inicio == null;
-    }
-
-    public int getTamanho() {
-        return this.tamanho;
-    }
-
-    // Inserção no final da fila em O(1)
-    public void enfileirar(Paciente p) {
-        if (p == null) {
-            throw new IllegalArgumentException("Paciente não pode ser nulo.");
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                m.comparacoes++;
+                if (vetor[j] > vetor[j + 1]) {
+                    int temp = vetor[j];
+                    vetor[j] = vetor[j + 1];
+                    vetor[j + 1] = temp;
+                    m.trocas++;
+                }
+            }
         }
-
-        No novo = new No(p);
-
-        if (estaVazia()) {
-            this.inicio = novo;
-            this.fim = novo;
-        } else {
-            this.fim.proximo = novo;
-            this.fim = novo;
-        }
-
-        this.tamanho++;
+        return m;
     }
 
-    // Remoção do primeiro da fila (FIFO) em O(1)
-    public Paciente chamarProximo() {
-        if (estaVazia()) {
-            throw new IllegalStateException("A fila de atendimento está vazia.");
+    public static Metricas selectionSort(int[] vetor) {
+        Metricas m = new Metricas();
+        int n = vetor.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            int indiceMenor = i;
+            for (int j = i + 1; j < n; j++) {
+                m.comparacoes++;
+                if (vetor[j] < vetor[indiceMenor]) {
+                    indiceMenor = j;
+                }
+            }
+            // Troca física garantida na implementação canônica
+            int temp = vetor[i];
+            vetor[i] = vetor[indiceMenor];
+            vetor[indiceMenor] = temp;
+            if (indiceMenor != i) {
+                m.trocas++; // Contabiliza trocas efetivas entre posições distintas
+            }
         }
+        return m;
+    }
 
-        Paciente atendido = this.inicio.elemento;
-        this.inicio = this.inicio.proximo;
+    public static void main(String[] args) {
+        int[] original = {8, 5, 10, 3, 7, 2, 9, 6};
 
-        // Se a fila ficou vazia após o atendimento, limpa o ponteiro de cauda
-        if (this.inicio == null) {
-            this.fim = null;
-        }
+        // Isolamento de memória via cópia profunda (deep copy)
+        int[] copiaBubble = original.clone();
+        int[] copiaSelection = original.clone();
 
-        this.tamanho--;
-        return atendido;
+        Metricas mBubble = bubbleSort(copiaBubble);
+        Metricas mSelection = selectionSort(copiaSelection);
+
+        System.out.println("Bubble Sort -> Comparações: " + mBubble.comparacoes + ", Trocas: " + mBubble.trocas);
+        System.out.println("Selection Sort -> Comparações: " + mSelection.comparacoes + ", Trocas: " + mSelection.trocas);
     }
 }
 ```
 
-###### 3. Diagrama Mermaid de Estado da Fila
+#### Gabarito Analítico das Questões do Formulário Avaliativo
 
-```mermaid
-flowchart LR
-    subgraph Controladora["FilaAtendimento"]
-        ptrInicio["inicio"]
-        ptrFim["fim"]
-        valTam["tamanho = 3"]
-    end
-
-    subgraph MemoriaHeap["Cadeia de Nós na Memória Heap"]
-        N1["Nó 1<br/>Ana (Cons. 101)<br/>proximo: Nó 2"]
-        N2["Nó 2<br/>Bruno (Cons. 102)<br/>proximo: Nó 3"]
-        N3["Nó 3<br/>Carlos (Cons. 103)<br/>proximo: null"]
-    end
-
-    ptrInicio --> N1
-    ptrFim --> N3
-    N1 --> N2
-    N2 --> N3
-```
-
-##### Rubrica de Avaliação Analítica
-
-| Critério Avaliado | Peso | Descrição do Nível de Excelência |
-| :--- | :---: | :--- |
-| **Conceituação de TAD e Encapsulamento** | 20% | Explicação precisa da cisão entre interface pública (contrato) e implementação interna privada, citando a preservação da regra FIFO. |
-| **Corretude das Classes `Paciente` e `No`** | 20% | Implementação com atributos privados, construtores e integridade de tipos. |
-| **Operação `enfileirar` com Cauda em $O(1)$** | 20% | Uso correto do ponteiro `fim`, tratamento obrigatório do caso de fila vazia e atualização correta de `tamanho`. |
-| **Operação `chamarProximo` em $O(1)$ e Limpeza** | 20% | Remoção na cabeça com retorno do paciente, salvaguarda contra fila vazia (`IllegalStateException`) e reatribuição `fim = null` quando a lista esvazia. |
-| **Diagrama Estrutural Mermaid** | 20% | Modelagem limpa demonstrando os ponteiros `inicio` no nó 1, `fim` no nó 3 e os apontamentos de `proximo`. |
-
-##### Armadilhas e Erros Comuns
-- Esquecer de atualizar o ponteiro `this.fim = null` quando o último paciente é chamado, deixando a estrutura com `inicio == null`, mas `fim` apontando para um nó descartado (invariante violada).
-- Percorrer a lista com laço `while` para adicionar no final, degradando a operação para $O(n)$ por não utilizar o ponteiro `fim`.
-
----
-
-#### Questão 14 - Dedução Matemática Formal de Inserções em Memória Contígua
-
-##### Resposta Modelo Esperada
-
-###### 1. Algoritmo de Inserção no Índice 0 e Sentido do Deslocamento
-Para inserir uma chave no índice `0` de uma lista sequencial contendo $n$ elementos armazenados nas posições de `0` até $n-1$:
-1. Verifica-se se há espaço disponível (`tamanho < capacidade`).
-2. É obrigatório deslocar cada elemento para o índice imediatamente sucessor ($i \to i + 1$).
-3. **Sentido do deslocamento:** O deslocamento deve ser realizado **da direita para a esquerda** (de trás para frente), iniciando no índice $n-1$ e progredindo até o índice $0$:
-   ```text
-   vetor[i + 1] = vetor[i];  // para i iniciando em n - 1 decrescendo até 0
+1. **Quantas comparações cada algoritmo realizou?**
+   - Ambos os algoritmos realizaram exatamente **28 comparações**.
+   - *Memória de cálculo matemática:* Como $ `n = 8` $, a soma das passagens é dada pela progressão aritmética:
+   ```math
+   C(8) = \frac{n(n - 1)}{2} = \frac{8 \times 7}{2} = 28
    ```
-4. **Armadilha do sentido inverso:** Se o deslocamento for iniciado da esquerda para a direita (do índice 0 para o final), o elemento `vetor[0]` sobrescreverá `vetor[1]`. Na iteração seguinte, o novo `vetor[1]` (que agora possui o valor do 0) sobrescreverá `vetor[2]`, e assim sucessivamente. Ao final, todos os elementos da lista serão substituídos pelo primeiro elemento, corrompendo irreversivelmente os dados do sistema.
-5. Após o deslocamento completo, atribui-se o novo dado à vaga aberta: `vetor[0] = novoValor;`, e incrementa-se o contador: `tamanho++;`.
-
-###### 2. Dedução Matemática Formal do Somatório de Cópia
-Considere a inserção consecutiva de $m$ novos elementos na primeira posição física de uma lista inicialmente vazia ($n = 0$):
-- Na 1ª inserção (tamanho atual 0): $0$ deslocamentos;
-- Na 2ª inserção (tamanho atual 1): $1$ deslocamento;
-- Na 3ª inserção (tamanho atual 2): $2$ deslocamentos;
-- ...
-- Na $m$-ésima inserção (tamanho atual $m-1$): $m - 1$ deslocamentos.
-
-A quantidade total de cópias de memória $S(m)$ executadas é o somatório dos termos de uma Progressão Aritmética de razão 1:
-
-```math
-S(m) = \sum_{k=0}^{m-1} k = 0 + 1 + 2 + \dots + (m - 1)
-```
-
-Aplicando a fórmula da soma dos termos de uma PA:
-
-$$S(m) = \frac{(0 + (m - 1)) \times m}{2} = \frac{m(m - 1)}{2} = \frac{1}{2}m^2 - \frac{1}{2}m$$
-
-Na análise assintótica com a Notação Big O, descartam-se os termos de menor ordem ($-\frac{1}{2}m$) e eliminam-se os coeficientes multiplicativos constantes ($\frac{1}{2}$). 
-
-Conclui-se formalmente que o custo acumulado de $m$ inserções no início de um vetor sequencial pertence à classe de complexidade **$O(m^2)$** (quadrática).
-
-###### 3. Confronto com Lista Simplesmente Ligada e Modelo JVM
-Em uma Lista Simplesmente Ligada, a operação `adicionarInicio(valor)` opera através de:
-```java
-No novo = new No(valor);
-novo.proximo = this.inicio;
-this.inicio = novo;
-```
-Essa rotina não exige cópia nem remanejamento de nenhum elemento preexistente. Ela apenas instancia o nó no Heap e atualiza dois apontamentos de ponteiros na memória. 
-
-- Cada inserção unitária custa rigorosamente **$O(1)$** (tempo constante).
-- Consequentemente, para inserir $m$ elementos sucessivos no início da lista ligada, o custo total é:
-  ```math
-  \sum_{k=1}^{m} O(1) = m \times O(1) = O(m) \quad \text{(linear)}
-  ```
-
-**Conclusão de Engenharia:** Para inserções no início, a lista ligada é assintoticamente superior à lista sequencial por ordens de magnitude ($O(m)$ versus $O(m^2)$). A contiguidade física do array na memória RAM cobra um preço proibitivo de movimentação de blocos na CPU a cada nova inserção na cabeça.
-
-##### Rubrica de Avaliação Analítica
-
-| Critério Avaliado | Peso | Descrição do Nível de Excelência |
-| :--- | :---: | :--- |
-| **Descrição do Algoritmo e Sentido do Shifting** | 30% | Explicação clara do remanejamento de trás para frente e demonstração do erro de sobrescrita caso executado da frente para trás. |
-| **Dedução Matemática e Notação Big O** | 40% | Construção formal do somatório da Progressão Aritmética $\frac{m(m-1)}{2}$, descarte fundamentado de constantes e conclusão $O(m^2)$. |
-| **Comparativo com Lista Ligada e Modelo JVM** | 30% | Explicação do ajuste de referências em tempo $O(1)$ na lista ligada, acumulando $O(m)$ no total, contrastando com o modelo contíguo de array. |
+2. **Quantas trocas foram realizadas por cada algoritmo?**
+   - **Bubble Sort:** Realizou **15 trocas**. Como opera por trocas contínuas entre adjacentes invertidos, cada inversão no arranjo exige uma movimentação física em memória.
+   - **Selection Sort:** Realizou **6 trocas efetivas** (ou 7 trocas se computada a auto-troca neutra na iteração em que o menor elemento já ocupava a fronteira $ `i` $). O algoritmo isola o menor elemento e move-o apenas uma vez por passagem externa.
+3. **O resultado final foi o mesmo? Por quê?**
+   - **Sim**, ambos os vetores resultaram rigorosamente em `[2, 3, 5, 6, 7, 8, 9, 10]`. Porque tanto o Bubble Sort quanto o Selection Sort são algoritmos deterministicamente corretos para ordenação total baseada em comparação, convergindo para a mesma permutação ordenada final independentemente das estratégias intermediárias de movimentação.
+4. **Qual algoritmo realiza menos trocas na implementação apresentada?**
+   - O **Selection Sort**. Sua complexidade de movimentações em memória é de ordem estritamente linear **$ `O(n)` $** (no máximo $ `n - 1` $ trocas), enquanto o Bubble Sort exibe complexidade de trocas quadrática **$ `O(n^2)` $**.
+5. **O que aconteceria com o desempenho se o vetor tivesse 1.000 elementos?**
+   - Ocorrerá uma severa degradação de desempenho devido ao crescimento quadrático das operações. Para $ `n = 1.000` $, a quantidade de comparações salta de 28 para:
+   ```math
+   \frac{1.000 \times 999}{2} = 499.500 \text{ comparações}
+   ```
+   No caso do Bubble Sort, o volume de trocas pode atingir centenas de milhares de operações em memória, inviabilizando sua aplicação em sistemas corporativos de larga escala e exigindo o emprego de algoritmos $ `O(n \log n)` $ (Merge Sort ou Quick Sort).
+6. **Se as notas já estivessem ordenadas, qual algoritmo poderia ser otimizado para encerrar mais cedo?**
+   - O **Bubble Sort**. Incorporando um sinalizador booleano de controle (`houveTroca`), o algoritmo constata a ausência total de permutas logo na primeira passagem ($ `n - 1 = 7` $ comparações) e finaliza sua execução em tempo linear **$ `O(n)` $**. O Selection Sort canônico, por não rastrear se os dados já estavam organizados, executará obrigatoriamente todas as 28 comparações em qualquer cenário.
 
 ---
 
-#### Questão 15 - Engenharia de Listas Ligadas: Algoritmo Robusto de Cancelamento
+## 11. Roteiro Metodológico de Engenharia para Resolução de Problemas e Provas
 
-##### Resposta Modelo Esperada
-
-###### 1. Implementação Completa em Java do Método `cancelarConsulta`
-
-```java
-public boolean cancelarConsulta(int numeroConsulta) {
-    // Caso de Borda 1: Lista inicialmente vazia
-    if (estaVazia()) {
-        return false;
-    }
-
-    // Caso de Borda 2 e 3: Elemento a ser removido é o primeiro da lista
-    if (this.inicio.elemento.getNumeroConsulta() == numeroConsulta) {
-        this.inicio = this.inicio.proximo;
-        
-        // Se a lista tornou-se vazia (era caso unitário onde inicio == fim)
-        if (this.inicio == null) {
-            this.fim = null;
-        }
-
-        this.tamanho--;
-        return true;
-    }
-
-    // Caso 4 e 5: Elemento a ser removido está no meio ou na cauda
-    No anterior = this.inicio;
-    No atual = this.inicio.proximo;
-
-    // Varredura linear em busca da chave identificadora
-    while (atual != null && atual.elemento.getNumeroConsulta() != numeroConsulta) {
-        anterior = atual;
-        atual = atual.proximo;
-    }
-
-    // Caso 6: Elemento pesquisado não existe na coleção
-    if (atual == null) {
-        return false;
-    }
-
-    // Religamento dos ponteiros: desconecta o nó atual da cadeia
-    anterior.proximo = atual.proximo;
-
-    // Se o elemento removido era o último, atualiza o ponteiro fim
-    if (atual == this.fim) {
-        this.fim = anterior;
-    }
-
-    // Boa prática de engenharia: isola o nó removido para facilitar a coleta pelo GC
-    atual.proximo = null;
-
-    this.tamanho--;
-    return true;
-}
-```
-
-###### 2. Diagrama de Sequência Mermaid: Religamento e Isolamento
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Cliente as Sistema de Atendimento
-    participant Lista as ListaLigada
-    participant Ant as anterior: Nó (Cons. 101)
-    participant Atu as atual: Nó (Cons. 102)
-    participant Prox as proximo: Nó (Cons. 103)
-    participant GC as Garbage Collector
-
-    Cliente->>Lista: cancelarConsulta(102)
-    Note over Lista,Atu: Localiza atual (102) e rastreia anterior (101)
-    Lista->>Ant: 1. anterior.proximo = atual.proximo (103)
-    Note over Ant,Prox: Nó 101 agora aponta diretamente para o Nó 103
-    Lista->>Atu: 2. atual.proximo = null
-    Note over Atu: Nó 102 perde todas as referências para a lista
-    Atu-->>GC: 3. Objeto inalcançável coletado no Heap
-    Lista-->>Cliente: Retorna true (Cancelamento com sucesso)
-```
-
-###### 3. Análise Assintótica Formal
-- **Melhor Caso ($\Omega(1)$):** Ocorre quando a consulta cancelada pertence ao primeiro nó da lista (`inicio`). O algoritmo executa apenas comparações constantes e uma reatribuição de ponteiro sem percorrer o laço `while`. Complexidade: **$\Omega(1)$** (constante).
-- **Pior Caso ($O(n)$):** Ocorre quando a consulta a ser cancelada está no último nó da lista (`fim`) ou simplesmente não existe na coleção. O algoritmo é obrigado a percorrer integralmente todos os $n$ nós da estrutura encadeada. Complexidade: **$O(n)$** (linear).
-
-##### Rubrica de Avaliação Analítica
-
-| Critério Avaliado | Peso | Descrição do Nível de Excelência |
-| :--- | :---: | :--- |
-| **Tratamento de Lista Vazia e Inexistência** | 20% | Retorno `false` sem disparar `NullPointerException` para lista vazia e chave não encontrada. |
-| **Tratamento da Cabeça e Lista Unitária** | 25% | Remoção correta em `this.inicio`, com atualização rigorosa de `this.fim = null` quando a lista fica vazia. |
-| **Remoção Intermediária e Atualização da Cauda** | 25% | Religamento `anterior.proximo = atual.proximo` e reatribuição `this.fim = anterior` se o removido for a cauda. |
-| **Diagrama de Sequência Mermaid** | 15% | Representação visual precisa das etapas de bypass e isolamento do nó. |
-| **Análise de Complexidade ($\Omega$ e $O$)** | 15% | Identificação fundamentada do melhor caso $\Omega(1)$ e pior caso $O(n)$. |
-
----
-
-#### Questão 16 - Pilha Estática, Invariantes do Topo e Vazamento de Memória
-
-##### Resposta Modelo Esperada
-
-###### 1. Fundamentação Matemática da Sentinela `topo = -1`
-Em linguagens com indexação baseada em zero (como C, C++, Java e C#), o primeiro índice válido de qualquer vetor reside na posição `0`.
-- Se a pilha contém $K = 1$ elemento, ele ocupa a posição física `elementos[0]`. Portanto, `topo = 0`.
-- Se a pilha contém $K$ elementos ativos, o elemento do topo reside na posição `elementos[K - 1]`. Portanto, `topo = K - 1`.
-- Seguindo a equação matemática para uma pilha contendo $K = 0$ elementos (vazia):
-  $$\text{topo} = 0 - 1 = -1$$
-Portanto, o valor `-1` atua como sentinela formal de vacuidade, indicando que nenhuma posição indexável do array contém dado útil.
-
-###### 2. Implementação Java dos Métodos `push` e `pop`
-
-```java
-public class Pilha {
-    private int[] elementos;
-    private int topo;
-
-    public Pilha(int capacidade) {
-        if (capacidade <= 0) {
-            throw new IllegalArgumentException("A capacidade deve ser maior que zero.");
-        }
-        this.elementos = new int[capacidade];
-        this.topo = -1; // Inicialização da sentinela de vacuidade
-    }
-
-    public boolean estaVazia() {
-        return this.topo == -1;
-    }
-
-    public boolean estaCheia() {
-        return this.topo == this.elementos.length - 1;
-    }
-
-    public void push(int valor) {
-        // Salvaguarda contra estouro de capacidade: Stack Overflow
-        if (estaCheia()) {
-            throw new IllegalStateException("Erro: Stack Overflow. A pilha atingiu a capacidade máxima.");
-        }
-
-        // Pré-incremento do ponteiro seguido de atribuição
-        this.topo++;
-        this.elementos[this.topo] = valor;
-    }
-
-    public int pop() {
-        // Salvaguarda contra subfluxo de dados: Stack Underflow
-        if (estaVazia()) {
-            throw new IllegalStateException("Erro: Stack Underflow. Não é possível remover de uma pilha vazia.");
-        }
-
-        // Leitura do dado seguida de pós-decremento do ponteiro
-        int valorDesempilhado = this.elementos[this.topo];
-        this.topo--;
-        return valorDesempilhado;
-    }
-}
-```
-
-###### 3. Exclusão Lógica versus Exclusão Física
-- **Exclusão Lógica:** Ocorre quando uma estrutura invalida o acesso a determinado dado apenas atualizando seus marcadores ou ponteiros de controle, sem limpar os bytes da célula física de memória. No método `pop()` acima, a execução de `this.topo--` faz com que o índice aponte para a casa anterior. O valor numérico primitivo anterior continua gravado na célula do array, mas deixa de existir para a lógica do TAD. Qualquer chamada subsequente de `push` sobrescreverá o dado residual.
-- **Exclusão Física:** Consiste em efetivamente apagar ou zerar os dados da memória (por exemplo, preencher o endereço com zeros ou desvincular referências de objetos atribuindo `null`), garantindo que nenhum resíduo permaneça no estado do hardware.
-
-###### 4. Vazamento de Referências (*Memory Leak*) em Objetos no Heap
-Em uma pilha de tipos primitivos (`int[]`), a exclusão lógica é perfeitamente segura e comum. Contudo, se a pilha armazenar referências de objetos (`Object[]` ou `Paciente[]`), a simples execução de `this.topo--` cria um grave **vazamento de memória (*loitering/memory leak*)**:
-
-```java
-// IMPLEMENTAÇÃO PROBLEMÁTICA PARA OBJETOS:
-public Paciente popIncorreto() {
-    if (estaVazia()) throw new IllegalStateException("Pilha Vazia");
-    return this.elementos[this.topo--]; // O array interno ainda retém a referência!
-}
-```
-
-**Mecanismo do Erro:** Mesmo que a pilha considere aquele elemento logicamente excluído, a célula `elementos[topo + 1]` do array continua armazenando o endereço de memória da instância de `Paciente` no Heap. Como o array faz parte de uma raiz ativa (*GC Root*), o *Garbage Collector* da JVM assume que o objeto ainda é necessário e **nunca coleta sua memória**, mesmo que nenhuma outra parte do sistema o utilize.
-
-**Correção de Engenharia:** Na remoção de objetos em arrays, é mandatário realizar a limpeza explícita da referência:
-```java
-public Paciente popCorreto() {
-    if (estaVazia()) throw new IllegalStateException("Pilha Vazia");
-    Paciente removido = this.elementos[this.topo];
-    this.elementos[this.topo] = null; // Libera explicitamente para o Garbage Collector
-    this.topo--;
-    return removido;
-}
-```
-
-##### Rubrica de Avaliação Analítica
-
-| Critério Avaliado | Peso | Descrição do Nível de Excelência |
-| :--- | :---: | :--- |
-| **Fundamentação Matemática do Topo -1** | 20% | Demonstração clara da relação de índices baseados em zero e dedução $K - 1 = -1$ para $K = 0$. |
-| **Implementação de `push` e `pop` com Exceções** | 30% | Código correto com validações de capacidade máxima (*Overflow*) e vacuidade (*Underflow*) lançando exceções de estado. |
-| **Distinção entre Exclusão Lógica e Física** | 25% | Explicação do recuo do ponteiro versus limpeza e sobrescrita de bytes em memória. |
-| **Análise do Vazamento de Referências na JVM** | 25% | Identificação da retenção indevida de referências no array (*loitering*) impedindo a atuação do Garbage Collector e solução com `null`. |
-
----
-
-#### Questão 17 - Decisão Arquitetural de Engenharia: Localidade de Cache e Sobrecarga
-
-##### Resposta Modelo Esperada
-
-###### 1. Princípio da Localidade Espacial de Referência e Hardware
-O princípio da **localidade espacial de referência** estabelece que, ao acessar uma determinada posição de memória, há altíssima probabilidade de que posições de memória fisicamente adjacentes sejam acessadas em um futuro imediato.
-
-Os processadores modernos mitigam o gargalo de velocidade entre a CPU e a memória RAM (*Memory Wall*) através de memórias cache ultrarrápidas organizadas em hierarquia (L1, L2 e L3). A CPU nunca transfere uma variável isolada da memória RAM; ela transfere um bloco contíguo de dados denominado **Linha de Cache** (*Cache Line*, tipicamente com 64 bytes de largura).
+Para obter êxito técnico em avaliações formais e no desenvolvimento de software de alta performance, o discente deve aplicar sistematicamente o roteiro de seis passos consolidado na Aula 07:
 
 ```mermaid
 flowchart TD
-    subgraph MemoriaContigua["Vetor Contíguo (ArrayList / int[])"]
-        A0["[0]: 4 bytes"] --- A1["[1]: 4 bytes"] --- A2["[2]: 4 bytes"] --- A3["[3]: 4 bytes"]
-    end
-    MemoriaContigua -->|Carregamento em Bloco de 64 bytes| CacheCPU["Linha de Cache da CPU (L1/L2)<br/>Alta taxa de Cache Hit (Execução Imediata)"]
-
-    subgraph MemoriaDispersa["Lista Ligada Dinâmica (Nós no Heap)"]
-        N1["Nó 1 (0x10A0)"] -.->|Ponteiro| N2["Nó 2 (0x7F40)"]
-        N2 -.->|Ponteiro| N3["Nó 3 (0x00C0)"]
-    end
-    MemoriaDispersa -->|Endereços Fragmentados| CacheMiss["Múltiplos Cache Misses<br/>CPU trava aguardando barramento da RAM"]
+    E1["Passo 1: Identificar a Entrada e o Tamanho n"] --> E2["Passo 2: Identificar as Operações Fundamentais"]
+    E2 --> E3["Passo 3: Mapear Laços e Estruturas de Repetição"]
+    E3 --> E4["Passo 4: Analisar a Estrutura de Armazenamento Utilizada"]
+    E4 --> E5["Passo 5: Derivar a Complexidade Assintótica Big-O"]
+    E5 --> E6["Passo 6: Mapear o Comportamento Físico na Memória (Stack vs Heap)"]
 ```
 
-- **No Vetor Contíguo (`ArrayList` ou array nativo):** Como os elementos residem em endereços rigorosamente vizinhos, a leitura do índice `0` carrega automaticamente para o cache os índices de `1` a `15`. As iterações seguintes encontram os dados diretamente no cache da CPU (**Cache Hit**), operando em velocidade de frações de nanossegundos por ciclo de clock.
-- **Na Lista Ligada (`LinkedList`):** Cada nó é alocado individualmente via operador `new` em momentos distintos, ficando espalhado em regiões fragmentadas da memória Heap. Ao avançar `atual = atual.proximo`, o ponteiro aponta para um endereço distante na RAM. A CPU quase certamente sofrerá uma falta de dados no cache (**Cache Miss**), sendo forçada a paralisar o pipeline de execução e aguardar a transferência lenta do barramento principal da placa-mãe.
+1. **Identificar a Entrada e o Tamanho $ `n` $:**
+   - Qual é a grandeza determinante do problema? (Quantidade de registros em um vetor, nós em uma lista encadeada ou valor escalar de controle).
+2. **Identificar as Operações Fundamentais:**
+   - Quais instruções executam o trabalho crítico? (Comparações de chaves, leituras de índices, movimentações de ponteiros de referência ou atribuições aritméticas).
+3. **Mapear Laços e Estruturas de Repetição:**
+   - O algoritmo possui laços sequenciais independentes ($ `n + n \implies O(n)` $)?
+   - Possui laços aninhados independentes ($ `n \times n \implies O(n^2)` $)?
+   - Possui laços aninhados dependentes com redução triangular ($ `\frac{n(n-1)}{2} \implies O(n^2)` $)?
+   - Possui divisões sucessivas do espaço de busca por potências ($ `\implies O(\log n)` $)?
+4. **Analisar a Estrutura de Armazenamento Utilizada:**
+   - Se for vetor: considerar o custo $ `O(1)` $ de leitura indexada e o gargalo de deslocamento $ `O(n)` $ em inserções não terminais.
+   - Se for lista encadeada: considerar o religamento em $ `O(1)` $ e a perda do acesso aleatório (percurso sequencial $ `O(n)` $).
+   - Se for pilha: garantir a preservação do encapsulamento LIFO.
+5. **Derivar a Complexidade Assintótica Big-O:**
+   - Formular a equação de custo $ `T(n)` $, isolar o termo de maior ordem e descartar as constantes multiplicativas. Avaliar separadamente o Pior Caso, Melhor Caso e Caso Médio.
+6. **Mapear o Comportamento Físico na Memória (Stack vs Heap):**
+   - As referências foram devidamente atualizadas?
+   - Há risco de referências perdidas gerando *memory leaks* ou objetos órfãos inacessíveis?
+   - As invariantes estruturais (ponteiros de cauda, contadores de cardinalidade) permanecem consistentes após a conclusão da rotina?
 
-###### 2. Cálculo Matemático da Sobrecarga de Memória (*Memory Overhead*)
-Considere o armazenamento de $N = 1.000.000$ de números inteiros de 32 bits (4 bytes cada) sob arquitetura de 64 bits:
+---
 
-**A. Vetor Primitivo Contíguo (`int[1.000.000]`):**
-- Cada inteiro consome estritamente $4$ bytes de memória física contígua.
-- Overhead de cabeçalho do array na JVM: aproximadamente $24$ bytes (cabeçalho de objeto de 16 bytes + 4 bytes de tamanho + 4 bytes de padding).
-$$\text{Memória Total} = (1.000.000 \times 4 \text{ bytes}) + 24 \text{ bytes} \approx 4.000.024 \text{ bytes} \approx \mathbf{3{,}81\text{ MB}}$$
+## 12. Glossário Técnico Consolidado
 
-**B. Lista Ligada (`1.000.000` de instâncias da classe `No`):**
-Cada nó isolado contém:
-- Cabeçalho de objeto da JVM (*Object Header* em 64 bits): $16$ bytes;
-- Carga útil primitiva (`int valor`): $4$ bytes;
-- Alinhamento de memória / padding interno do objeto: $4$ bytes;
-- Ponteiro de referência para o próximo nó (`No proximo` em 64 bits): $8$ bytes.
-- Total por cada nó instanciado: $16 + 4 + 4 + 8 = 32$ bytes.
-
-Calculando para um milhão de nós:
-$$\text{Memória dos Nós} = 1.000.000 \times 32 \text{ bytes} = 32.000.000 \text{ bytes}$$
-
-Adicionando os objetos controladores e referências:
-$$\text{Memória Total} \approx \mathbf{30{,}51\text{ MB}}$$
-
-**Análise Comparativa:**
-A lista simplesmente encadeada consome **mais de 8 vezes a quantidade de memória RAM** do vetor primitivo contíguo para armazenar rigorosamente a mesma massa de dados brutos ($30{,}51\text{ MB}$ contra $3{,}81\text{ MB}$), devido ao acúmulo de cabeçalhos de objetos e ponteiros de 64 bits.
-
-###### 3. Recomendação Arquitetural de Engenharia
-- **Adotar Lista Ligada:** Estruturas encadeadas superam o vetor em cenários onde a aplicação executa um volume maciço e contínuo de **inserções e remoções no início ou no meio da coleção**, e onde o volume de elementos varia drasticamente sem previsibilidade de tamanho, dispensando o acesso aleatório indexado (`obter(i)`). Exemplos clássicos: filas de mensagens assíncronas em sistemas operacionais e gerenciamento de buffers de entrada/saída em tempo real.
-- **Jamais Adotar Lista Ligada:** Deve ser sumariamente evitada em sistemas que realizam varreduras e cálculos analíticos massivos sobre os dados (processamento científico, renderização de jogos, big data, machine learning) ou que necessitam de consultas arbitrárias por posição. Nesses casos, o vetor contíguo oferece desempenho de hardware incomensuravelmente superior graças ao aproveitamento do cache L1/L2 e à sobrecarga nula de ponteiros.
-
-##### Rubrica de Avaliação Analítica
-
-| Critério Avaliado | Peso | Descrição do Nível de Excelência |
-| :--- | :---: | :--- |
-| **Localidade de Referência e Cache Lines** | 35% | Explicação precisa do conceito de localidade espacial, linhas de cache de 64 bytes e distinção entre *Cache Hit* no vetor e *Cache Miss* na lista ligada. |
-| **Cálculo Matemático da Sobrecarga de Memória** | 35% | Demonstração numérica precisa dos consumos (~3,81 MB vs ~30,51 MB), considerando tamanhos de inteiros, ponteiros de 64 bits e headers da JVM. |
-| **Recomendação Arquitetural de Engenharia** | 30% | Apresentação de cenários reais adequados para cada estrutura com embasamento em complexidade e limitações de hardware. |
+- **Algoritmo:** Sequência finita, ordenada e não ambígua de instruções computáveis que converte entradas em saídas resolutivas em tempo finito.
+- **Análise Assintótica:** Estudo do comportamento matemático e do consumo de recursos de uma função de custo quando o tamanho da entrada tende ao infinito ($ `n \to \infty` $).
+- **Auto-Referenciamento:** Recurso de modelagem no qual uma classe possui um atributo cujo tipo é a própria classe (exemplo: `public No proximo;`).
+- **Big-O ($ `O` $):** Notação matemática que expressa o limite superior assintótico (o pior cenário de custo) de um algoritmo.
+- **Bubble Sort:** Algoritmo elementar de ordenação que estabiliza o arranjo através de sucessivas comparações e trocas entre pares de elementos adjacentes.
+- **Cache Hit / Cache Miss:** Ocorrência de sucesso ou falha no resgate imediato de dados armazenados nas memórias ultrarrápidas (L1/L2/L3) integradas ao processador.
+- **Contiguidade de Memória:** Propriedade física na qual elementos adjacentes de uma coleção residem em bytes sucessivos da memória RAM.
+- **Deep Copy (Cópia Profunda):** Duplicação integral e desacoplada de uma estrutura de dados e de seus elementos em um novo bloco de memória, garantindo isolamento total de mutações.
+- **Encapsulamento:** Princípio de engenharia de software que oculta os detalhes físicos e variáveis de estado de um componente atrás de uma interface pública segura.
+- **FIFO (*First In, First Out*):** Disciplina de acesso linear onde o primeiro elemento enfileirado é obrigatoriamente o primeiro a ser atendido.
+- **Finitude:** Propriedade mandante que determina que um algoritmo deve obrigatoriamente cessar sua execução após número finito de operações.
+- **Garbage Collector (GC):** Mecanismo autônomo do runtime Java encarregado de desalocar a memória Heap ocupada por objetos inalcançáveis.
+- **Invariante de Laço:** Condição lógica que permanece rigorosamente verdadeira antes e depois de cada iteração de uma estrutura de repetição.
+- **LIFO (*Last In, First Out*):** Disciplina de acesso linear onde o último elemento inserido no topo é o primeiro a ser desempilhado.
+- **Localidade Espacial:** Tendência de sistemas computacionais de acessar posições de memória fisicamente próximas a posições recém-consultadas.
+- **Nó (*Node*):** Unidade atômica constituinte de estruturas encadeadas, agregando a carga útil de dados e um ou mais ponteiros de referência.
+- **Notação Big-Omega ($ `\Omega` $):** Limite inferior assintótico que expressa o consumo mínimo teórico de recursos de um algoritmo.
+- **Notação Big-Theta ($ `\Theta` $):** Limite assintótico justo que delimita inferior e superiormente a ordem de crescimento de um algoritmo.
+- **Pilha (*Stack*):** Tipo Abstrato de Dados linear restrito que limita todas as mutações e consultas exclusivamente à sua extremidade de topo.
+- **Ponteiro de Cauda (`fim`):** Referência explícita mantida por listas ligadas para apontar para o último nó, otimizando inserções terminais para $ `O(1)` $.
+- **Refinamento Sucessivo:** Técnica de engenharia consistente em desdobrar um problema abstrato em subproblemas progressivamente menores e implementáveis.
+- **Selection Sort:** Algoritmo de ordenação que isola o menor elemento da partição não ordenada e posiciona-o na fronteira da partição ordenada com trocas mínimas.
+- **Stack Frame:** Bloco de memória alocado na pilha de execução para custodiar variáveis locais e endereços de retorno de um método ativo.
+- **Stack Overflow:** Condição de erro gerada pela tentativa de inserção em uma pilha que já atingiu o limite de sua capacidade física alocada.
+- **Stack Underflow:** Condição de erro disparada pela tentativa de desempilhar ou inspecionar o topo de uma pilha que se encontra vazia.
+- **TAD (Tipo Abstrato de Dados):** Especificação matemática formal que declara o comportamento e operações de uma coleção sem prescrever sua disposição em memória.
+- **Tempo Constante ($ `O(1)` $):** Classe de complexidade onde o consumo de tempo independe inteiramente do volume da entrada processada.
+- **Tempo Linear ($ `O(n)` $):** Classe de complexidade onde o trabalho cresce em proporção estritamente direta ao aumento do volume de dados da entrada.
+- **Tempo Quadrático ($ `O(n^2)` $):** Classe de complexidade típica de laços aninhados sobre a mesma entrada, com multiplicação exponencial do custo.
 
 ---
 
 ## Fontes e Metadados
 
 - Turma no Classroom: estrutura de dados 1 2026/02
-- Itens processados: 0 materiais, 2 tarefas, 7 avisos
-- Gerado em: 24/09/2026, 13:23:20 (BRT) via classroom-sync
+- Itens processados: 0 materiais, 3 tarefas, 9 avisos
+- Gerado em: 20/10/2026, 21:49:33 (BRT) via classroom-sync

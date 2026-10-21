@@ -27,10 +27,10 @@
 
 | Atividade | Prazo | Pontuação |
 | :--- | :--- | :--- |
-| [APRESENTAÇÃO MÉTODOS DE PROCESSOS DE SOFTWARES](Trabalhos/APRESENTA%C3%87%C3%83O%20M%C3%89TODOS%20DE%20PROCESSOS%20DE%20SOFTWARES/detalhes.md) | 15/04/2026 às 20:59 | 4 pontos |
+| [APRESENTAÇÃO MÉTODOS DE PROCESSOS DE SOFTWARES](Trabalhos/APRESENTA%C3%87%C3%83O%20M%C3%89TODOS%20DE%20PROCESSOS%20DE%20SOFTWARES/detalhes.md) | 14/04/2026 às 21:00 | 4 pontos |
 | [ATIVIDADE AVALIATIVA 01 - ESTUDO DE CASO](Trabalhos/ATIVIDADE%20AVALIATIVA%2001%20-%20ESTUDO%20DE%20CASO/detalhes.md) | 03/03/2026 às 23:59 | 2 pontos |
 | [Atividade Avaliativa Modelos de Processos de Software](Trabalhos/Atividade%20Avaliativa%20Modelos%20de%20Processos%20de%20Software/detalhes.md) | sem prazo | 2 pontos |
-| [Atividade Avaliativa Prática 02 - Atores e Diagrama de Classes Fase de Análise](Trabalhos/Atividade%20Avaliativa%20Pr%C3%A1tica%2002%20-%20Atores%20e%20Diagrama%20de%20Classes%20Fase%20de%20An%C3%A1lise/detalhes.md) | 11/03/2026 às 20:59 | 2 pontos |
+| [Atividade Avaliativa Prática 02 - Atores e Diagrama de Classes Fase de Análise](Trabalhos/Atividade%20Avaliativa%20Pr%C3%A1tica%2002%20-%20Atores%20e%20Diagrama%20de%20Classes%20Fase%20de%20An%C3%A1lise/detalhes.md) | 10/03/2026 às 21:00 | 2 pontos |
 
 ## Provas
 

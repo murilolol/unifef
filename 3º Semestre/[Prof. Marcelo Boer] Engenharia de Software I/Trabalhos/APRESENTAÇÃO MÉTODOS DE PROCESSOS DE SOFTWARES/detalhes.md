@@ -2,7 +2,7 @@
 
 > **Professor:** Marcelo Boer
 > **Disciplina:** Engenharia de Software I (3º Semestre)
-> **Prazo de Entrega:** 15/04/2026 às 20:59
+> **Prazo de Entrega:** 14/04/2026 às 21:00
 > **Pontuação Máxima:** 4 pontos
 > **Conteúdo cobrado:**
 > - [Aula 01 - Processo de Abstração e Levantamento de Requisitos](../../Aulas/Aula%2001%20-%20Processo%20de%20Abstra%C3%A7%C3%A3o%20e%20Levantamento%20de%20Requisitos/detalhes.md)
@@ -61,7 +61,7 @@ A disciplina de Engenharia de Software I foca primariamente na estruturação do
 
 ### Requisitos Explícitos
 1. **Envio da Apresentação:** Upload do arquivo de slides (PDF ou PPTX) contendo a síntese técnica dos modelos de processos atribuídos aos grupos de estudo.
-2. **Postagem no Prazo:** Submissão formal via Google Classroom até o limite estipulado de 15/04/2026 às 20:59.
+2. **Postagem no Prazo:** Submissão formal via Google Classroom até o limite estipulado de 14/04/2026 às 21:00.
 3. **Composição em Equipe:** Material desenvolvido de acordo com as diretrizes de apresentação oral e formalização conceitual em sala.
 
 ### Requisitos Implícitos e Critérios de Rigor Acadêmico
@@ -918,7 +918,7 @@ Tarefas essenciais para garantir o sucesso pleno na atividade e na apresentaçã
 - [ ] **Exercícios Analíticos Concluídos:** O grupo domina os argumentos técnicos dos 4 exercícios resolvidos (Cascata vs Incremental, Quadrantes da Espiral, Fases/Marcos do RUP e Estudo de Caso Ferrovia vs Fintech).
 - [ ] **Simulador de Boehm Compreendido:** Os membros do grupo compreendem o código em Python demonstrativo da Exposição de Riscos ($P \times I$) e a curva exponencial de retrabalho.
 - [ ] **Ensaio Cronometrado:** O grupo realizou ao menos dois ensaios formais de fala, respeitando o teto de 15 a 20 minutos estipulado pelo Prof. Marcelo Boer.
-- [ ] **Postagem Formal no Google Classroom:** O arquivo consolidado da apresentação foi postado até o prazo de 15/04/2026 às 20:59.
+- [ ] **Postagem Formal no Google Classroom:** O arquivo consolidado da apresentação foi postado até o prazo de 14/04/2026 às 21:00.
 
 ## Código prático de apoio
 

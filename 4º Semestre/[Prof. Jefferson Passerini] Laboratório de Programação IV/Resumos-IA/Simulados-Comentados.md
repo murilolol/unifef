@@ -1,344 +1,351 @@
 # Simulados Comentados - Laboratório de Programação IV
 
-> **Instituição:** Centro Universitário de Votuporanga (UniFEF)  
+> **Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
 > **Curso:** Bacharelado em Sistemas de Informação (4º Semestre)  
 > **Disciplina:** Laboratório de Programação IV  
 > **Docente:** Prof. Jefferson Passerini  
-> **Tema Central:** Engenharia de Software Backend com Java 21, Spring Boot 3, JPA/Hibernate, PostgreSQL, Liquibase, Arquitetura REST e Governança com Git/Maven  
-> **Projeto de Referência:** Suporte OS 2026 (`suporteos2026`)
+> **Projeto de Referência:** Suporte OS 2026 (`suporteos2026`)  
+> **Escopo do Conteúdo:** Aulas 00 a 07 (Controle de Versão, Configuração de Ambiente, Fundamentos REST e HTTP, Modelagem de Domínio Rico com Java Puro, Persistência com JPA/PostgreSQL e Liquibase, Spring Data JPA, Serviços e Transações, Evolução de Esquema e Padrão Expand-Migrate-Contract, DTOs com Java Records, Bean Validation e Tratamento Global de Exceções).
 
 ---
 
-## Sumário
-
-- [Apresentação e Orientações Pedagógicas](#apresentação-e-orientações-pedagógicas)
-- [Simulado 1 - Questões Objetivas](#simulado-1---questões-objetivas)
-  - [Questão 01 - Modelo de Dados e Grafo Acíclico Dirigido no Git](#questão-01---modelo-de-dados-e-grafo-acíclico-dirigido-no-git)
-  - [Questão 02 - Arquitetura da JVM e Resolução de Comandos no Sistema Operacional](#questão-02---arquitetura-da-jvm-e-resolução-de-comandos-no-sistema-operacional)
-  - [Questão 03 - Reprodutibilidade de Build com Maven Wrapper e Ciclo de Vida](#questão-03---reprodutibilidade-de-build-com-maven-wrapper-e-ciclo-de-vida)
-  - [Questão 04 - Semântica HTTP, Métodos Seguros e Idempotência na RFC 9110](#questão-04---semântica-http-métodos-seguros-e-idempotência-na-rfc-9110)
-  - [Questão 05 - Aritmética de Ponto Flutuante e Encapsulamento com BigDecimal](#questão-05---aritmética-de-ponto-flutuante-e-encapsulamento-com-bigdecimal)
-  - [Questão 06 - Integridade de Associações 1:N Bidirecionais em Memória](#questão-06---integridade-de-associações-1n-bidirecionais-em-memória)
-  - [Questão 07 - Camada de Persistência e Estratégia ddl-auto](#questão-07---camada-de-persistência-e-estratégia-ddl-auto)
-  - [Questão 08 - Governança de Esquema Relacional com Liquibase e Checksums](#questão-08---governança-de-esquema-relacional-com-liquibase-e-checksums)
-  - [Questão 09 - Proxies Dinâmicos e Consultas Derivadas no Spring Data JPA](#questão-09---proxies-dinâmicos-e-consultas-derivadas-no-spring-data-jpa)
-  - [Questão 10 - Gerenciamento Transacional Declarativo e Dirty Checking](#questão-10---gerenciamento-transacional-declarativo-e-dirty-checking)
-  - [Questão 11 - Evolução de Esquema com o Padrão Expand-Migrate-Contract](#questão-11---evolução-de-esquema-com-o-padrão-expand-migrate-contract)
-  - [Questão 12 - Blindagem da Borda da Aplicação com Records, DTOs e Bean Validation](#questão-12---blindagem-da-borda-da-aplicação-com-records-dtos-e-bean-validation)
-- [Simulado 2 - Questões Discursivas](#simulado-2---questões-discursivas)
-  - [Questão Discursiva 01 - Refatoração de Domínio Anêmico para Domínio Rico](#questão-discursiva-01---refatoração-de-domínio-anêmico-para-domínio-rico)
-  - [Questão Discursiva 02 - Fronteiras Transacionais, Estados de Entidades e Rollback no Spring Data JPA](#questão-discursiva-02---fronteiras-transacionais-estados-de-entidades-e-rollback-no-spring-data-jpa)
-  - [Questão Discursiva 03 - Evolução de Esquema com Liquibase sob Carga sem Interrupção de Serviço](#questão-discursiva-03---evolução-de-esquema-com-liquibase-sob-carga-sem-interrupção-de-serviço)
-  - [Questão Discursiva 04 - Arquitetura em Camadas, Mapeamento Puro e Tratamento Global de Erros](#questão-discursiva-04---arquitetura-em-camadas-mapeamento-puro-e-tratamento-global-de-erros)
-  - [Questão Discursiva 05 - Paridade de Ambientes, Governança de Segredos e Reprodutibilidade de Build](#questão-discursiva-05---paridade-de-ambientes-governança-de-segredos-e-reprodutibilidade-de-build)
-- [Gabarito Comentado - Simulado 1 (Objetivas)](#gabarito-comentado---simulado-1-objetivas)
-- [Gabarito Comentado - Simulado 2 (Discursivas)](#gabarito-comentado---simulado-2-discursivas)
+## Simulado 1 - Questões Objetivas (12 questões, alternativas A-E, estilo ENADE)
 
 ---
 
-## Apresentação e Orientações Pedagógicas
+### Questão 01 - Controle de Versão e Estrutura de Dados do Git (Aula 00)
 
-Este material de estudo reúne simulados técnicos para a disciplina de **Laboratório de Programação IV**, correspondente ao 4º semestre do curso de Sistemas de Informação da UniFEF, ministrada pelo Prof. Jefferson Passerini. O conteúdo integra as Aulas 00 a 07 da disciplina e a preparação para a Avaliação 1 (A1).
+O Git é um sistema de controle de versão distribuído (*DVCS*) concebido sobre o conceito de Grafo Acíclico Dirigido (*Directed Acyclic Graph* — DAG). Diferente de sistemas legados que registram diferenças baseadas em arquivos (*deltas*), o Git fundamenta seu modelo em uma série temporal de *snapshots* imutáveis indexados criptograficamente.
 
-O instrumento divide-se em:
-1. **Simulado 1 (Objetivas):** 12 questões de múltipla escolha elaboradas no formato padrão ENADE / Concursos Públicos de Tecnologia da Informação, contendo contextualização de problemas práticos de engenharia, código-fonte e avaliação conceitual de causa e efeito.
-2. **Simulado 2 (Discursivas):** 5 questões discursivas de projeto, refatoração de código e justificativa arquitetural, contendo as respectivas rubricas de avaliação analítica por pontos.
-3. **Gabarito Comentado:** Resolução detalhada de cada questão objetiva (justificando a opção correta e refutando cada uma das quatro distratoras) e respostas modelo completas para as questões discursivas, acompanhadas de diagramas em sintaxe nativa Mermaid e implementações em Java 21 / Spring Boot 3.
+Considere o grafo de commits apresentado a seguir, que retrata o fluxo de desenvolvimento inicial do projeto `suporteos2026`:
 
----
-
-## Simulado 1 - Questões Objetivas
-
-### Questão 01 - Modelo de Dados e Grafo Acíclico Dirigido no Git
-
-Um engenheiro de software júnior integrando a equipe de desenvolvimento do projeto `suporteos2026` questionou o motivo pelo qual operações de criação de ramificações (`git branch feature/estoque`) e alternância de ponteiros (`git switch feature/estoque`) são executadas em milissegundos, independentemente do volume total de arquivos contidos no repositório. Paralelamente, ao inspecionar o diretório `.git`, observou que commits anteriores permaneciam inalterados, mesmo após comandos de mesclagem e reescrita de mensagens.
-
-Considerando a estrutura matemática e a modelagem interna do Git, assinale a opção que descreve corretamente a razão técnica para esse comportamento:
-
-A) O Git opera como um sistema de arquivos delta-baseado, calculando diferenças textuais em tempo real por meio de consultas recursivas ao servidor central hospedado no GitHub, mantendo cópias apenas dos arquivos modificados.  
-B) O Git modela o histórico como um Grafo Acíclico Dirigido (DAG) de snapshots imutáveis indexados por funções hash criptográficas, em que uma branch é unicamente um arquivo de texto de 41 bytes contendo um ponteiro móvel para o hash de um commit.  
-C) As branches no Git representam cópias físicas completas da árvore de diretórios armazenadas em diretórios temporários compactados dentro da pasta `.git/refs/heads`, o que isola o disco rígido principal contra acessos concorrentes.  
-D) A imutabilidade dos commits decorre da camada de proteção do protocolo SSH (porta 22), que bloqueia modificações estruturais no repositório local caso a chave privada `id_ed25519` não possua privilégios administrativos no sistema operacional.  
-E) O ponteiro especial `HEAD` mantém uma trava física exclusiva de leitura e gravação no banco de dados SQLite interno do Git, impedindo que múltiplos vértices do grafo apontem para o mesmo nó ancestral.
-
----
-
-### Questão 02 - Arquitetura da JVM e Resolução de Comandos no Sistema Operacional
-
-Durante a configuração do ambiente de desenvolvimento corporativo para a disciplina de Laboratório de Programação IV, um estudante instalou o pacote Eclipse Temurin JDK 21 em sua estação de trabalho Windows 11. No entanto, ao abrir o terminal PowerShell e executar a sequência de diagnósticos:
-
-```powershell
-java -version
-javac -version
+```mermaid
+gitGraph
+ commit id: "c1-init"
+ commit id: "c2-infra"
+ branch feature/dominio
+ checkout feature/dominio
+ commit id: "c3-entidades"
+ commit id: "c4-regras"
+ checkout main
+ commit id: "c5-docs" tag: "aula-00-v1"
+ merge feature/dominio id: "c6-merge"
 ```
 
-Obteve o seguinte resultado:
+Com base na teoria de grafos aplicada ao Git e no gerenciamento de referências em baixo nível, analise as seguintes asserções e a relação proposta entre elas:
+
+I. Uma *branch* no Git é estruturada internamente como um arquivo de texto simples de 41 bytes, localizado no diretório `.git/refs/heads/`, que armazena unicamente o *hash* SHA do commit mais recente daquela linha de desenvolvimento, avançando automaticamente a cada novo registro de *snapshot*.
+
+**PORQUE**
+
+II. Um *commit* no Git é um objeto rigorosamente imutável; qualquer alteração em seu conteúdo textual, metadados de autoria ou ponteiro para o commit-pai resulta na geração de um novo identificador *hash*, impedindo a mutação direta de nós existentes no grafo sem reescrever a árvore criptográfica subsequente.
+
+A respeito dessas asserções, assinale a opção correta:
+
+A) As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.  
+B) As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.  
+C) A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.  
+D) A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.  
+E) As asserções I e II são proposições falsas.
+
+---
+
+### Questão 02 - Arquitetura da JVM e Resolução de Ambiente (Aula 01)
+
+A execução profissional de aplicações corporativas baseadas em Java 21 exige o alinhamento rigoroso entre as ferramentas do sistema operacional e o ecossistema de compilação da plataforma. Durante a inicialização de uma esteira de integração contínua (CI) para compilar o projeto `suporteos2026`, o engenheiro de software deparou-se com o seguinte erro em tempo de execução após a etapa de empacotamento:
 
 ```text
-openjdk version "17.0.10" 2024-01-16
-javac : O termo 'javac' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa operável.
+java.lang.UnsupportedClassVersionError: com/curso/suporteos/SuporteOsApplication 
+has been compiled by a more recent version of the Java Runtime (class file version 65.0), 
+this version of the Java Runtime only recognizes class file versions up to 61.0
 ```
 
-Após análise com o comando `where.exe java`, o estudante descobriu a existência de uma entrada legada apontando para `C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe` posicionada no início da variável `PATH`.
+Simultaneamente, ao auditar a máquina local de desenvolvimento, verificou-se que o comando `where.exe java` (no Windows) retornava duas entradas:
+1. `C:\Program Files (x86)\Common Files\Oracle\Java\javapath\java.exe` (Java 17)
+2. `C:\Program Files\Eclipse Adoptium\jdk-21.0.2-hotspot\bin\java.exe` (Java 21)
 
-Com base na arquitetura da plataforma Java (JVM, JRE, JDK) e no mecanismo de resolução de processos dos sistemas operacionais, assinale a alternativa correta:
+A variável de ambiente `JAVA_HOME` apontava corretamente para `C:\Program Files\Eclipse Adoptium\jdk-21.0.2-hotspot`, enquanto o Maven Wrapper (`mvnw`) era executado com sucesso no terminal.
 
-A) A presença do comando `java` funcional atesta que o JDK 21 está instalado e operacional, bastando criar um alias no PowerShell apontando `javac` para o mesmo binário, uma vez que a JVM unificou o compilador na JRE a partir do Java 9.  
-B) O sistema operacional resolveu uma JRE legada presente no início da variável `PATH`, que contém apenas a JVM e as bibliotecas padrão de tempo de execução, carecendo das ferramentas de desenvolvimento presentes exclusivamente no JDK, como o compilador `javac`.  
-C) O erro de execução do `javac` ocorre porque variáveis de ambiente do usuário possuem precedência estrita sobre variáveis de ambiente de sistema, exigindo a desinstalação imediata do PowerShell para que o Git Bash assuma a execução.  
-D) A variável `JAVA_HOME` é a única responsável pela resolução de executáveis disparados no terminal interativo, tornando irrelevante a ordem e os diretórios configurados na variável de ambiente `PATH`.  
-E) A discrepância de versões reportada decorre do descompasso entre o carregador de classes da JVM e a compilação *Just-In-Time* (JIT), que compila o código-fonte diretamente para binários x86_64 sem necessidade física do utilitário `javac`.
+Considerando o ciclo de vida do *bytecode*, a arquitetura em pilha (*stack-based*) da JVM e os mecanismos de resolução de binários do sistema operacional, avalie as afirmações a seguir:
 
----
+I. O número de versão de arquivo de classe `65.0` corresponde ao bytecode gerado pelo compilador do Java 21, enquanto `61.0` corresponde ao ambiente de execução do Java 17.  
+II. O erro de execução ocorreu porque o interpretador de comandos do sistema operacional consulta a variável `PATH` de forma sequencial; como o caminho da JRE 17 precedia o caminho do JDK 21, o comando `java` acionou uma JVM incompatível com o bytecode gerado.  
+III. O Maven Wrapper falhou na compilação porque depende exclusivamente da primeira entrada listada na variável `PATH` para localizar o compilador `javac`, ignorando a variável `JAVA_HOME`.  
+IV. A substituição do Maven Wrapper pelo comando `javac *.java` executado na raiz do projeto resolveria o problema, pois o compilador do Java compila nativamente o código para a versão da JVM mais antiga encontrada no disco.
 
-### Questão 03 - Reprodutibilidade de Build com Maven Wrapper e Ciclo de Vida
-
-Analise o seguinte fragmento extraído do arquivo `pom.xml` de um projeto Spring Boot corporativo:
-
-```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.3</version>
-        <relativePath/>
-    </parent>
-    <groupId>com.curso</groupId>
-    <artifactId>suporteos</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>suporteos</name>
-    <properties>
-        <java.version>21</java.version>
-    </properties>
-    <!-- Dependências omitidas -->
-</project>
-```
-
-Em uma esteira de Integração Contínua (CI), um pipeline de compilação disparou a instrução:
-
-```bash
-./mvnw clean package
-```
-
-Considerando o funcionamento do Apache Maven e do utilitário Maven Wrapper, avalie as assertivas a seguir:
-
-I. O script `mvnw` intercepta a chamada, consulta o arquivo `.mvn/wrapper/maven-wrapper.properties` e faz o download automático da distribuição exata do Maven especificada no projeto caso ela não esteja presente no cache local do usuário, garantindo a neutralidade de ambiente.  
-II. O comando `package` executa de forma cumulativa e ordenada as fases precedentes do ciclo de vida padrão do Maven, tais como `validate`, `compile`, `test-compile` e `test`, abortando a compilação caso algum teste unitário falhe.  
-III. A herança de `spring-boot-starter-parent` define o gerenciamento centralizado de versões de dependências através da seção `<dependencyManagement>`, eliminando a necessidade de declarar tags `<version>` para dependências homologadas pelo ecossistema Spring.  
-IV. O Maven Wrapper dispensa a instalação prévia de um Java Development Kit (JDK 21) na máquina de execução, pois o próprio script `./mvnw` embute uma JVM portátil em tempo de compilação.
-
-Estão corretas apenas as afirmativas:
-
-A) I e IV.  
-B) II e III.  
-C) I, II e III.  
-D) II, III e IV.  
-E) I, II, III e IV.
-
----
-
-### Questão 04 - Semântica HTTP, Métodos Seguros e Idempotência na RFC 9110
-
-Considere que uma API RESTful de controle de suporte técnico exponha as seguintes operações para gerenciamento do recurso `OrdemServico`:
-
-- Operação 1: `GET /api/ordens-servico/15`
-- Operação 2: `POST /api/ordens-servico`
-- Operação 3: `PUT /api/ordens-servico/15`
-- Operação 4: `DELETE /api/ordens-servico/15`
-
-De acordo com a especificação formal do protocolo HTTP (RFC 9110), os métodos HTTP são categorizados segundo suas propriedades de segurança (*safety*) e idempotência (*idempotence*).
-
-A esse respeito, assinale a afirmativa correta:
-
-A) A Operação 2 (`POST`) é considerada idempotente, pois submeter o mesmo corpo JSON múltiplas vezes em sucessão resultará no mesmo recurso armazenado no banco de dados com a mesma chave primária gerada.  
-B) As Operações 1 (`GET`), 3 (`PUT`) e 4 (`DELETE`) são idempotentes, pois execuções sucessivas de qualquer uma dessas requisições com os mesmos parâmetros produzem o mesmo efeito de estado final no servidor que uma única execução.  
-C) A Operação 4 (`DELETE`) é considerada um método seguro, pois caso o recurso já tenha sido excluído na primeira chamada, as invocações subsequentes não alterarão o banco de dados e retornarão `404 Not Found`.  
-D) A Operação 3 (`PUT`) só é considerada idempotente caso seja implementada com atualização parcial de campos, comportando-se de forma equivalente ao método `PATCH`.  
-E) A segurança de um método HTTP impede que o servidor emita cabeçalhos de resposta que instruam o cliente ou proxies a realizarem cache da representação enviada.
-
----
-
-### Questão 05 - Aritmética de Ponto Flutuante e Encapsulamento com BigDecimal
-
-Considere o seguinte cenário de teste unitário implementado para avaliar o cálculo financeiro do valor total retido em estoque de uma determinada mercadoria:
-
-```java
-@Test
-void deveDemonstrarCalculoDeEstoque() {
-    double precoDouble = 0.1;
-    double quantidadeDouble = 0.2;
-    double totalDouble = precoDouble * quantidadeDouble;
-
-    BigDecimal precoBD = new BigDecimal("0.10");
-    BigDecimal quantidadeBD = new BigDecimal("0.200");
-    BigDecimal totalBD = precoBD.multiply(quantidadeBD).setScale(2, RoundingMode.HALF_UP);
-
-    BigDecimal valorComparacao = new BigDecimal("0.02");
-
-    // Avaliação das variáveis
-}
-```
-
-Com base na representação de tipos de dados numéricos em Java e nas regras de modelagem de domínio corporativo, avalie as afirmações:
-
-I. O valor da variável `totalDouble` não é rigorosamente `0.02`, mas sim uma aproximação periódica binária resultante da especificação IEEE 754 adotada pelos tipos primitivos `double` e `float`, gerando imprecisões inaceitáveis para cálculos contábeis.  
-II. A instanciação de `BigDecimal` através do construtor recebendo literal numérico de ponto flutuante (ex.: `new BigDecimal(0.1)`) neutraliza as imprecisões do IEEE 754, sendo matematicamente equivalente à instanciação por `String`.  
-III. A invocação `totalBD.equals(valorComparacao)` retorna `true`, visto que ambos os objetos representam a quantia decimal numérica de dois centésimos.  
-IV. A invocação `totalBD.compareTo(valorComparacao) == 0` avalia com precisão a igualdade de grandeza matemática entre os valores, ignorando eventuais divergências na escala declarada dos objetos.
-
-Estão corretas apenas as afirmativas:
+É correto apenas o que se afirma em:
 
 A) I e II.  
-B) I e IV.  
-C) II e III.  
-D) I, III e IV.  
+B) I e III.  
+C) II e IV.  
+D) I, II e III.  
 E) II, III e IV.
 
 ---
 
-### Questão 06 - Integridade de Associações 1:N Bidirecionais em Memória
+### Questão 03 - Semântica HTTP, Idempotência e Arquitetura REST (Aula 02)
 
-Analise o diagrama de classes que modela a associação bidirecional entre `GrupoProduto` e `Produto` no projeto de referência:
+O estilo arquitetural REST (*Representational State Transfer*), fundamentado sobre as primitivas da RFC 9110 do protocolo HTTP, estabelece propriedades formais para os métodos de requisição, categorizando-os segundo as garantias de **Segurança** e **Idempotência**.
+
+Um sistema distribuído é modelado para que operações consecutivas idênticas não gerem corrupção de estado. Do ponto de vista matemático, uma operação $`f`$ é definida como idempotente se a sua aplicação sucessiva produzir o mesmo efeito final no estado do servidor que uma única execução, isto é:
+
+```math
+f(f(x)) = f(x)
+```
+
+Considere os seguintes cenários hipotéticos de requisições HTTP enviadas à API do sistema `suporteos2026`:
 
 ```mermaid
-classDiagram
-    class GrupoProduto {
-        -Long id
-        -String nome
-        -Status status
-        -List~Produto~ produtos
-        +adicionarProduto(Produto produto) void
-        +getProdutos() List~Produto~
-    }
-    class Produto {
-        -Long id
-        -String codigoBarras
-        -String descricao
-        -GrupoProduto grupo
-        ~associarAo(GrupoProduto grupo) void
-        +getGrupo() GrupoProduto
-    }
-    GrupoProduto "1" o-- "0..*" Produto : classifica
+flowchart TD
+ subgraph Cenarios ["Operações Submetidas ao Servidor"]
+ C1["Cenário 1: POST /api/produtos/84/reajuste HTTP/1.1<br>Payload: {'percentual': 10.0}"]
+ C2["Cenário 2: PUT /api/produtos/84 HTTP/1.1<br>Payload: {'valorUnitario': 299.90, 'descricao': 'Teclado'}"]
+ C3["Cenário 3: DELETE /api/produtos/84 HTTP/1.1"]
+ C4["Cenário 4: GET /api/produtos/84 HTTP/1.1"]
+ end
 ```
 
-Para garantir que o grafo de objetos em memória permaneça consistente sem depender da intervenção do banco de dados, o arquiteto do projeto estabeleceu que o método `adicionarProduto` em `GrupoProduto` deve ser o único ponto de entrada para vincular um item ao seu respectivo grupo.
+Com base na semântica formal do protocolo HTTP, assinale a opção correta:
 
-Assinale a opção que apresenta a justificativa técnica e o padrão de encapsulamento corretos para essa decisão de design:
-
-A) A exposição pública de um método `setGrupo(GrupoProduto g)` em `Produto` é mandatória pelo padrão JavaBeans, permitindo que serviços externos gerenciem a lista interna do grupo via reflexão direta.  
-B) A atribuição da visibilidade de pacote (*package-private*) ao método `associarAo(GrupoProduto g)` em `Produto` assegura que apenas a classe coordenadora `GrupoProduto` execute a amarração reversa, enquanto `getProdutos()` deve retornar `Collections.unmodifiableList(this.produtos)` para barrar adições diretas à lista que burlariam validações de unicidade.  
-C) A lista interna `produtos` deve ser exposta como `public ArrayList<Produto>` para permitir que a biblioteca de persistência do Hibernate realize inserções em lote (*batch inserts*) sem disparar exceções de acesso concorrente.  
-D) Relacionamentos bidirecionais em memória exigem o uso da anotação `@JsonBackReference` nas classes de domínio para impedir estouros de pilha (*StackOverflowError*) provocados pelo coletor de lixo da JVM durante a coleta de objetos órfãos.  
-E) Caso um produto seja transferido de um grupo A para um grupo B, a referência reversa deve ser anulada manualmente através do comando de terminal `git rm --cached`, prevenindo vazamento de memória no contêiner IoC.
+A) Os cenários 2 e 3 são idempotentes, pois execuções repetidas da substituição total do recurso via `PUT` ou de sua exclusão via `DELETE` deixam o servidor no mesmo estado representativo final, ainda que o código de resposta HTTP possa variar entre `204 No Content` e `404 Not Found`.  
+B) O cenário 1 é considerado um método seguro e idempotente, visto que a alteração de preço constitui uma atualização de valor atômica calculada deterministicamente pelo processador.  
+C) O cenário 2 não é idempotente, pois se o cliente submeter o mesmo payload duas vezes, o servidor criará uma duplicata do recurso com um identificador artificial gerado sequencialmente.  
+D) O cenário 3 é classificado como seguro, uma vez que a eliminação do registro físico preserva a integridade referencial do banco de dados relacional.  
+E) Os cenários 1 e 4 compartilham a mesma classificação de segurança, pois ambos trafegam payloads textuais sob o cabeçalho `Content-Type: application/json`.
 
 ---
 
-### Questão 07 - Camada de Persistência e Estratégia ddl-auto
+### Questão 04 - Inversão de Controle, Injeção de Dependências e Beans no Spring Boot (Aulas 02 e 05)
 
-Em um projeto empresarial baseado em Spring Boot 3 e PostgreSQL, a equipe de desenvolvimento deparou-se com a seguinte linha inserida no arquivo `application.properties`:
+No framework Spring Boot, os conceitos de Inversão de Controle (*Inversion of Control* — IoC) e Injeção de Dependências (*Dependency Injection* — DI) governam a instanciação, a configuração e o ciclo de vida dos componentes de software (*Spring Beans*).
 
-```properties
-spring.jpa.hibernate.ddl-auto=update
-```
-
-Sob o ponto de vista das boas práticas de engenharia de software e da integridade de bancos de dados relacionais em produção, a utilização dessa diretiva é fortemente desaconselhada porque:
-
-A) O Hibernate falha em converter anotações JPA em dialeto SQL quando conectado ao PostgreSQL, exigindo que o driver JDBC opere exclusivamente sob o modo `create-drop`.  
-B) A propriedade `ddl-auto=update` não gerencia histórico versionado, não suporta renomeação segura de colunas (gerando colunas novas e mantendo as antigas órfãs com dados), ignora a integridade referencial preexistente em tabelas populadas e pode provocar bloqueios de tabela (*locks*) destrutivos em ambiente compartilhado.  
-C) O Spring Data JPA rejeita a inicialização do contêiner de Inversão de Controle caso identifique que as entidades de domínio possuem atributos mapeados com a anotação `@Column(nullable = false)`.  
-D) Essa estratégia força o recálculo imediato de todos os índices B-Tree do PostgreSQL a cada requisição HTTP recebida, degradando a performance das consultas para complexidade algorítmica $O(2^n)$.  
-E) A propriedade impede que o framework realize o mapeamento de tipos modernos do Java, tais como `java.time.LocalDate` e `java.math.BigDecimal`, revertendo-os silenciosamente para tipos `VARCHAR(255)`.
-
----
-
-### Questão 08 - Governança de Esquema Relacional com Liquibase e Checksums
-
-O Liquibase controla a execução determinística de alterações de banco de dados através das tabelas de metadados `DATABASECHANGELOG` e `DATABASECHANGELOGLOCK`.
-
-Considere que o seguinte `changeSet` foi aplicado com sucesso em ambiente de homologação:
-
-```yaml
-databaseChangeLog:
-  - changeSet:
-      id: 001-create-grupo-produto
-      author: jefferson
-      changes:
-        - createTable:
-            tableName: grupo_produto
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    primaryKeyName: pk_grupo_produto
-              - column:
-                  name: nome
-                  type: VARCHAR(120)
-                  constraints:
-                    nullable: false
-```
-
-Posteriormente, um desenvolvedor editou diretamente o arquivo original, alterando o tamanho da coluna `nome` de `VARCHAR(120)` para `VARCHAR(150)` e disparou a aplicação novamente.
-
-Ao inicializar, a aplicação abortou com a mensagem de erro:
-
-```text
-liquibase.exception.ValidationFailedException: Validation Failed:
-    1 change sets check sum
-          db/changelog/001-create-grupo-produto.yaml::001-create-grupo-produto::jefferson was: 9:a1b2c3... but is now: 9:f4e5d6...
-```
-
-Assinale a opção que explica corretamente o mecanismo violado e a ação corretiva adequada:
-
-A) O Liquibase identificou que o banco de dados sofreu um *deadlock* na tabela `DATABASECHANGELOGLOCK`, sendo necessário alterar manualmente a flag `locked` para `1` via comando `UPDATE`.  
-B) A tríade identificadora `(id, author, filename)` está vinculada a uma soma de verificação (*checksum*) criptográfica imutável calculada na execução; a alteração retroativa do arquivo corrompe a garantia de rastreabilidade, sendo mandatório reverter o arquivo modificado e criar um **novo** `changeSet` incremental (ex.: `002-alter-grupo-produto-tamanho-nome.yaml`).  
-C) O erro ocorre porque o Liquibase exige que colunas do tipo `VARCHAR` tenham seus tamanhos especificados exclusivamente em múltiplos de 32 bytes no dialeto PostgreSQL.  
-D) Para resolver o erro sem alterar o histórico, deve-se trocar o banco de dados para H2 em memória, pois o H2 ignora a coluna `md5sum` gravada no catálogo relacional.  
-E) O desenvolvedor deve apagar o registro correspondente diretamente na tabela `DATABASECHANGELOG` em produção através de uma consulta SQL ad-hoc, permitindo que o Liquibase recrie a tabela do zero.
-
----
-
-### Questão 09 - Proxies Dinâmicos e Consultas Derivadas no Spring Data JPA
-
-Considere a seguinte interface de repositório declarada em uma aplicação corporativa:
+Considere os dois modelos de injeção de dependências apresentados a seguir para a classe `ProdutoService`:
 
 ```java
-public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-    
-    Optional<Produto> findByCodigoBarras(String codigoBarras);
-    
-    List<Produto> findByGrupo_IdAndStatusOrderByDescricaoAsc(Long grupoId, Status status);
-    
-    boolean existsByCodigoBarras(String codigoBarras);
+// Modelo A: Injeção por Campo
+@Service
+public class ProdutoServiceA {
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    @Autowired
+    private GrupoProdutoRepository grupoRepository;
+}
+
+// Modelo B: Injeção Explícita por Construtor
+@Service
+public class ProdutoServiceB {
+    private final ProdutoRepository produtoRepository;
+    private final GrupoProdutoRepository grupoRepository;
+
+    public ProdutoServiceB(ProdutoRepository produtoRepository, GrupoProdutoRepository grupoRepository) {
+        this.produtoRepository = produtoRepository;
+        this.grupoRepository = grupoRepository;
+    }
 }
 ```
 
-Sobre o funcionamento interno do Spring Data JPA na gestão dessa interface, analise as afirmativas:
+Avalie as seguintes asserções técnicas a respeito da manutenção, testabilidade e robustez arquitetural desses modelos:
 
-I. Durante o bootstrap da aplicação, o Spring Data inspeciona o classpath, detecta a interface filha de `Repository` e cria em tempo de execução uma instância de proxy dinâmico acoplada à implementação base `SimpleJpaRepository`, registrando-a como um Spring Bean gerenciado.  
-II. O método `findByCodigoBarras` é traduzido em uma consulta JPQL pelo analisador de métodos derivados do framework, que decompõe o nome a partir da palavra reservada `By` e gera uma restrição de igualdade sobre o atributo correspondente da entidade `Produto`.  
-III. A partícula `Grupo_Id` utiliza a convenção de travessia explícita (*property traversal*) com sublinhado, instruindo o framework a navegar pela associação `grupo` até a chave primária `id` do grupo vinculado, evitando ambiguidades conceituais.  
-IV. Métodos de repositório que retornam tipos `Optional<T>` disparam obrigatoriamente uma `EntityNotFoundException` caso a consulta retorne vazio, dispensando o tratamento na camada de serviço.
+I. O Modelo B viabiliza a criação de campos com o modificador `final`, garantindo a imutabilidade das referências após a instanciação do bean e prevenindo mutações acidentais de ponteiro durante a execução concorrente.  
+II. O Modelo A dificulta a escrita de testes unitários isolados com JUnit 5 puro, pois a injeção via reflexão exige a inicialização pesada do `ApplicationContext` do Spring ou o uso invasivo de frameworks de reflexão para preencher os atributos privados.  
+III. O Modelo B permite que o compilador do Java e o próprio contêiner Spring identifiquem antecipadamente dependências cíclicas durante o processo de inicialização (*bootstrap*), disparando uma falha rápida (*fail-fast*).  
+IV. No Spring Boot contemporâneo, o Modelo B dispensa o uso explícito da anotação `@Autowired` sobre o construtor quando a classe possui um único construtor público declarado.
 
-Estão corretas apenas as afirmativas:
+Assinale a alternativa correta:
 
-A) I e IV.  
-B) II e III.  
-C) I, II e III.  
-D) II, III e IV.  
+A) Apenas as afirmativas I e III estão corretas.  
+B) Apenas as afirmativas II e IV estão corretas.  
+C) Apenas as afirmativas I, II e IV estão corretas.  
+D) Apenas as afirmativas II, III e IV estão corretas.  
+E) Todas as afirmativas (I, II, III e IV) estão corretas.
+
+---
+
+### Questão 05 - Modelagem Orientada a Domínio e Modelo Rico vs. Anêmico (Aula 03)
+
+O Domain-Driven Design (DDD) e as boas práticas de Orientação a Objetos estabelecem que as regras de negócio devem ser encapsuladas no núcleo do domínio (*Core Domain*), blindando as entidades contra estados inválidos. 
+
+Considere o seguinte diagrama de classes que ilustra a refatoração de uma entidade de estoque:
+
+```mermaid
+classDiagram
+ class ModeloAnemicoProduto {
+ -Long id
+ -String codigoBarras
+ -BigDecimal saldoEstoque
+ +getSaldoEstoque() BigDecimal
+ +setSaldoEstoque(BigDecimal saldo) void
+ }
+
+ class ModeloRicoProduto {
+ -Long id
+ -String codigoBarras
+ -BigDecimal saldoEstoque
+ -BigDecimal estoqueMinimo
+ -Status status
+ +receberEstoque(BigDecimal quantidade) void
+ +retirarEstoque(BigDecimal quantidade) void
+ +inativar() void
+ -validarQuantidadePositiva(BigDecimal q) void
+ }
+```
+
+Analise a implementação do método `retirarEstoque` contido na classe `ModeloRicoProduto`:
+
+```java
+public void retirarEstoque(BigDecimal quantidade) {
+    if (this.status != Status.ATIVO) {
+        throw new IllegalStateException("Operação negada: o produto está inativo.");
+    }
+    if (quantidade == null || quantidade.compareTo(BigDecimal.ZERO) <= 0) {
+        throw new IllegalArgumentException("A quantidade retirada deve ser estritamente positiva.");
+    }
+    if (this.saldoEstoque.compareTo(quantidade) < 0) {
+        throw new IllegalArgumentException("Saldo insuficiente para efetivar a retirada de estoque.");
+    }
+    this.saldoEstoque = this.saldoEstoque.subtract(quantidade);
+}
+```
+
+Sobre os conceitos de Modelo Rico, Modelo Anêmico e Invariantes de Negócio, assinale a opção correta:
+
+A) O `ModeloAnemicoProduto` é preferível em sistemas empresariais com Spring Boot, pois frameworks ORM como o Hibernate exigem que todos os atributos possuam métodos `set` públicos para permitir a carga de dados via reflexão.  
+B) O `ModeloRicoProduto` viola o Princípio da Responsabilidade Única (SRP), pois a validação de saldo e o cálculo de subtração deveriam residir exclusivamente na camada de persistência (`Repository`) ou no banco de dados através de *triggers*.  
+C) No `ModeloRicoProduto`, as invariantes de negócio são asseguradas de forma defensiva; a entidade é incapaz de transicionar para um estado com saldo negativo ou aceitar retiradas de itens inativos, independentemente de qual serviço orquestre a operação.  
+D) A substituição de `setSaldoEstoque` por `retirarEstoque` impede a serialização do objeto em JSON pela biblioteca Jackson, gerando falha mandatória de compilação na camada de controle REST.  
+E) Caso uma classe externa necessite consultar o saldo do `ModeloRicoProduto`, a inexistência de um método `setSaldoEstoque` quebra o encapsulamento, forçando a visibilidade pública direta do atributo `saldoEstoque`.
+
+---
+
+### Questão 06 - Aritmética de Ponto Flutuante e Precisão Numérica com BigDecimal (Aula 03)
+
+Em sistemas corporativos financeiros, contábeis e de gestão de suprimentos, a precisão numérica é mandatória. Considere o trecho de código Java a seguir, executado em um teste unitário de cálculo de liquidação de estoque:
+
+```java
+public class AuditoriaEstoqueTest {
+    public static void main(String[] args) {
+        // Bloco 1: Aritmética binária primitiva
+        double d1 = 0.1;
+        double d2 = 0.2;
+        double somaDouble = d1 + d2;
+        boolean testeDouble = (somaDouble == 0.3);
+
+        // Bloco 2: BigDecimal com construtores distintos
+        BigDecimal bd1 = new BigDecimal(0.1);
+        BigDecimal bd2 = new BigDecimal("0.1");
+        BigDecimal bd3 = new BigDecimal("0.10");
+
+        // Bloco 3: Comparações de igualdade
+        boolean compEquals = bd2.equals(bd3);
+        int compCompareTo = bd2.compareTo(bd3);
+
+        System.out.println("D: " + testeDouble + " | E: " + compEquals + " | C: " + compCompareTo);
+    }
+}
+```
+
+Considerando o padrão IEEE 754 de representação de ponto flutuante binário e o funcionamento interno da classe `java.math.BigDecimal`, o resultado impresso no console pelo método `main` é:
+
+A) `D: true | E: true | C: 0`  
+B) `D: false | E: true | C: 0`  
+C) `D: false | E: false | C: 0`  
+D) `D: true | E: false | C: -1`  
+E) `D: false | E: false | C: -1`
+
+---
+
+### Questão 07 - Associação Bidirecional 1:N e Encapsulamento de Coleções em Memória (Aula 03)
+
+Considere a associação bidirecional de cardinalidade 1:N entre as entidades `GrupoProduto` e `Produto`. No paradigma orientado a objetos, ambos os lados mantêm referências ativas em memória: o grupo armazena uma lista de produtos subordinados, e cada produto referencia seu grupo delimitador.
+
+```mermaid
+sequenceDiagram
+ autonumber
+ actor Servico as Caso de Uso (Service)
+ participant Grupo as grupo:GrupoProduto
+ participant Prod as produto:Produto
+
+ Servico->>Grupo: adicionarProduto(produto)
+ Note over Grupo: 1. Valida nulidade e duplicidade
+ Grupo->>Prod: associarAo(this)
+ Note over Prod: 2. Vincula ponteiro do grupo pai
+ Grupo->>Grupo: 3. Insere na coleção interna
+ Grupo-->>Servico: Operação concluída com integridade mútua
+```
+
+Para garantir que a integridade referencial nunca seja rompida por manipulações externas indevidas, qual conjunto de decisões arquiteturais deve ser adotado na implementação das entidades Java puras?
+
+A) Definir métodos `setProdutos(List<Produto> lista)` e `setGrupo(GrupoProduto g)` como públicos em ambas as classes, permitindo que a camada de aplicação substitua a lista inteira arbitrariamente.  
+B) Disponibilizar o método `adicionarProduto(Produto p)` como único ponto público de entrada no `GrupoProduto`, fazer com que este método invoque um método de ligação com visibilidade de pacote (`package-private`) em `Produto`, e retornar `Collections.unmodifiableList(this.produtos)` no método de consulta `getProdutos()`.  
+C) Declarar a lista de produtos como `public List<Produto> produtos = new ArrayList<>()`, dispensando métodos assessores e permitindo a adição direta via `grupo.produtos.add(produto)`.  
+D) Utilizar a anotação `@Transient` na lista de produtos para evitar que o Java carregue os itens na memória, forçando a busca manual via SQL sempre que um produto precisar ser vinculado.  
+E) Instanciar um novo `GrupoProduto` dentro do construtor de `Produto`, garantindo que um produto nunca exista sem um grupo, tornando desnecessário o armazenamento de listas no lado do grupo classificador.
+
+---
+
+### Questão 08 - Mapeamento Objeto-Relacional, Hibernate e ddl-auto (Aula 04)
+
+O desencontro de impedância objeto-relacional (*Object-Relational Impedance Mismatch*) decorre das diferenças fundamentais entre a teoria dos conjuntos/lógica relacional e o paradigma de orientação a objetos.
+
+Em aplicações profissionais baseadas em Spring Boot e PostgreSQL, o arquivo `application.properties` define o comportamento do provedor de persistência (Hibernate) por meio da propriedade:
+
+```properties
+spring.jpa.hibernate.ddl-auto=validate
+```
+
+Assinale a opção que justifica tecnicamente a obrigatoriedade da configuração `ddl-auto=validate` em ambientes integrados com ferramentas de migração de esquema (como o Liquibase):
+
+A) A configuração `validate` faz com que o Hibernate crie automaticamente tabelas e chaves estrangeiras temporárias em memória, destruindo-as logo após a execução das baterias de testes unitários.  
+B) O valor `validate` delega ao Hibernate a função de alterar colunas e renomear tabelas de forma silenciosa, sem exigir a criação manual de novos arquivos de migração.  
+C) O uso de `validate` assegura que a única fonte de verdade da estrutura DDL seja o histórico controlado de migrações; o Hibernate atua estritamente inspecionando se os metadados das classes anotadas (`@Entity`) convergem de modo idêntico com o catálogo relacional do PostgreSQL, abortando a inicialização do sistema caso haja divergências estruturais.  
+D) Configurar `validate` desativa o motor de geração de consultas JPQL do Spring Data JPA, forçando o desenvolvedor a escrever comandos SQL nativos em todos os repositórios da aplicação.  
+E) O parâmetro `validate` é obrigatório apenas quando se utiliza o banco de dados em memória H2, sendo completamente ignorado pelo driver JDBC do PostgreSQL em perfis de desenvolvimento.
+
+---
+
+### Questão 09 - Versionamento Estruturado de Banco de Dados com Liquibase (Aula 04)
+
+O Liquibase gerencia a evolução estrutural de bancos de dados relacionais tratando o esquema como um histórico incremental, auditável e imutável. Para garantir a execução concorrente segura e a integridade das transações DDL, o Liquibase mantém duas tabelas operacionais no catálogo do PostgreSQL: `databasechangelog` e `databasechangeloglock`.
+
+Considere a representação do ciclo de verificação de um *changeSet* ilustrado no fluxo a seguir:
+
+```mermaid
+flowchart TD
+ Start([Início da Aplicação]) --> LockCheck{DATABASECHANGELOGLOCK<br>LOCKED == TRUE?}
+ LockCheck -- Sim --> Wait[Aguarda liberação do lock / Timeout]
+ LockCheck -- Não --> SetLock[Adquire Lock: LOCKED = TRUE]
+ SetLock --> ReadLog[Lê registros de DATABASECHANGELOG]
+ ReadLog --> CheckCS{ChangeSet já existe no histórico?}
+ CheckCS -- Não --> Exec[Executa DDL / DML do ChangeSet]
+ CheckCS -- Sim --> VerifyHash{Checksum MD5/SHA bate<br>com o valor gravado?}
+ VerifyHash -- Não --> Error[FALHA CRÍTICA:<br>Validation Failed - Checksum Mismatch]
+ VerifyHash -- Sim --> Next[Ignora execução e passa ao próximo]
+ Exec --> Record[Grava linha em DATABASECHANGELOG com novo Checksum]
+ Record --> Next
+ Next --> ReleaseLock[Libera Lock: LOCKED = FALSE]
+ ReleaseLock --> End([Aplicação Pronta para Conexões])
+```
+
+Com base na governança de migrações e na mecânica operacional do Liquibase, analise as afirmativas:
+
+I. A identidade única de um bloco de migração no Liquibase é determinada pela tupla composta por `id`, `author` e `filepath` (caminho relativo do arquivo de changelog).  
+II. Caso um desenvolvedor altere o conteúdo SQL ou YAML de um `changeSet` que já foi executado em ambiente de desenvolvimento compartilhado ou produção, o Liquibase recalculará o hash do arquivo e abortará a inicialização da aplicação acusando divergência de *checksum*.  
+III. Em caso de necessidade de alteração de uma tabela existente (ex.: adição de uma coluna), a boa prática de engenharia consiste em modificar o arquivo de migração original da tabela para manter o histórico enxuto.  
+IV. A tabela `databasechangeloglock` atua como um semáforo distribuído (*mutex*), prevenindo condições de corrida quando múltiplos nós ou microsserviços da aplicação inicializam simultaneamente sob a mesma base relacional.
+
+É correto o que se afirma em:
+
+A) I e III, apenas.  
+B) II e IV, apenas.  
+C) I, II e IV, apenas.  
+D) II, III e IV, apenas.  
 E) I, II, III e IV.
 
 ---
 
-### Questão 10 - Gerenciamento Transacional Declarativo e Dirty Checking
+### Questão 10 - Ciclo de Vida de Entidades JPA, Dirty Checking e Fronteiras Transacionais (Aula 05)
 
-Em um serviço de aplicação da classe `ProdutoService`, foi implementado o seguinte método de negócio:
+Considere o seguinte método de serviço executado dentro do contexto transacional gerenciado pelo Spring Boot:
 
 ```java
 @Service
@@ -351,492 +358,447 @@ public class ProdutoService {
     }
 
     @Transactional
-    public void aplicarReajustePreco(Long produtoId, BigDecimal percentual) {
-        Produto produto = produtoRepository.findById(produtoId)
+    public void aplicarReajuste(Long idProduto, BigDecimal percentual) {
+        Produto produto = produtoRepository.findById(idProduto)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não localizado"));
-        
+
         produto.reajustarPreco(percentual);
-        // Observação: produtoRepository.save(produto) NÃO foi invocado explicitamente.
+        // Observação: Não há invocação explícita de produtoRepository.save(produto)
     }
 }
 ```
 
-Ao executar o método sob uma transação ativa, o desenvolvedor notou que o novo preço reajustado foi persistido com sucesso no banco de dados relacional PostgreSQL após o encerramento do método.
+A respeito dos estados das entidades no JPA (*Persistence Context*) e do mecanismo de detecção automática de modificações (*Dirty Checking*), assinale a opção correta:
 
-Assinale a alternativa que elucida o mecanismo da JPA/Hibernate responsável por esse comportamento:
-
-A) O repositório detecta chamadas de métodos mutadores através de bibliotecas de instrumentação de bytecode e emite imediatamente um comando SQL `UPDATE` no momento exato em que `produto.reajustarPreco(percentual)` é finalizado.  
-B) A anotação `@Transactional` força o recarregamento total do banco de dados na saída do método, persistindo todas as variáveis locais presentes na pilha de execução (*stack*) da thread.  
-C) Ao ser recuperada dentro de uma transação aberta, a entidade `Produto` passa a ocupar o estado **managed** no Contexto de Persistência; durante a fase de *flush* pré-commit, o Hibernate executa o mecanismo de **dirty checking**, comparando o estado atual do objeto com um snapshot original e emitindo o `UPDATE` automaticamente.  
-D) O método `save` foi invocado implicitamente através do coletor de lixo da JVM, que intercepta objetos marcados com `@Entity` antes de desalocá-los da memória Heap.  
-E) Caso o método fosse configurado como `@Transactional(readOnly = true)`, o Hibernate ignoraria o reajuste em memória, mas o driver JDBC executaria a gravação diretamente por meio de um canal de autocommit secundário.
+A) A alteração no preço do produto não será persistida no PostgreSQL, pois a ausência do comando `produtoRepository.save(produto)` faz com que o objeto seja descartado da memória da JVM ao final da execução.  
+B) Ao ser retornado pelo método `findById`, o objeto `produto` entra no estado *managed* (gerenciado) dentro do contexto de persistência; no encerramento do método, o interceptador do `@Transactional` sincroniza o estado (*flush*) e o Hibernate emite automaticamente um comando SQL `UPDATE` para as colunas alteradas.  
+C) O método deveria ser anotado obrigatoriamente com `@Transactional(readOnly = true)` para permitir que o Hibernate identifique mutações em atributos numéricos como `BigDecimal`.  
+D) Se a entidade `Produto` contiver um relacionamento com carregamento preguiçoso (`FetchType.LAZY`), a sua leitura dentro de um método anotado com `@Transactional` disparará inevitavelmente uma `LazyInitializationException`.  
+E) A anotação `@Transactional` intercepta a chamada ao banco por meio de JDBC puro e impede o mecanismo de *rollback* mesmo caso ocorra uma `RuntimeException` durante a execução de `reajustarPreco`.
 
 ---
 
-### Questão 11 - Evolução de Esquema com o Padrão Expand-Migrate-Contract
+### Questão 11 - Evolução Segura de Esquema e Padrão Expand-Migrate-Contract (Aula 06)
 
-Deseja-se adicionar uma coluna obrigatória (`NOT NULL`) denominada `estoque_minimo` na tabela `produto`, a qual já possui mais de 500.000 registros ativos gravados no PostgreSQL de produção.
+Durante a evolução do projeto `suporteos2026`, a equipe de engenharia recebeu o requisito de introduzir o campo `estoque_minimo` na tabela `produto`. A regra de negócio estabelece que a coluna deve ser estritamente obrigatória (`NOT NULL`) e não pode admitir valores negativos (`CHECK (estoque_minimo >= 0)`). 
 
-A aplicação direta de um comando SQL:
+No entanto, a tabela já armazena centenas de milhares de registros operacionais em produção.
 
-```sql
-ALTER TABLE produto ADD COLUMN estoque_minimo NUMERIC(18, 3) NOT NULL;
+```mermaid
+stateDiagram-v2
+ [*] --> FaseExpand: 1. Expand (Adiciona coluna NULLABLE)
+ FaseExpand --> FaseMigrate: 2. Migrate (Backfill com valor padrão)
+ FaseMigrate --> FaseContract: 3. Contract (Aplica NOT NULL e CHECK)
+ FaseContract --> [*]: Esquema Estável e Seguro
 ```
 
-Resultará em falha catastrófica no banco de dados:
+Para aplicar a transição estrutural sem provocar indisponibilidade no sistema e sem violar restrições de integridade relacional do PostgreSQL, a estratégia em fases denominada **Expand-Migrate-Contract** prescreve a seguinte sequência de ações:
 
-```text
-ERROR: column "estoque_minimo" of relation "produto" contains null values
-```
-
-Para mitigar esse problema aplicando o padrão arquitetural **Expand-Migrate-Contract** com Liquibase, qual sequência ordenada de operações deve ser estruturada em `changeSets` atômicos?
-
-A) Adicionar a coluna com restrição `NOT NULL` e valor padrão `DEFAULT 0` diretamente no mesmo comando DDL, forçando o PostgreSQL a bloquear a tabela para leitura e escrita durante a reindexação completa.  
-B) 1. Expandir: Criar a coluna `estoque_minimo` permitindo valores nulos (`nullable: true`).  
-   2. Migrar: Executar instrução de atualização de dados (*backfill*) populando as linhas existentes que estejam com valor nulo (`UPDATE produto SET estoque_minimo = 0 WHERE estoque_minimo IS NULL`).  
-   3. Contrair: Aplicar a restrição de obrigatoriedade (`addNotNullConstraint`) e adicionar a regra de validação física (`addCheckConstraint` validando valor $\ge 0$).  
-C) Dropar a tabela `produto`, recriá-la com o novo esquema contendo a coluna obrigatória e importar os dados históricos a partir de um arquivo de dump CSV desprovido de integridade referencial.  
-D) Mudar o tipo da coluna no Java para `Optional<BigDecimal>` e manter o banco de dados sem a coluna física, deixando o controle de valor padrão inteiramente a cargo do construtor protegido do JPA.  
-E) Executar a ferramenta `liquibase:diff` apontando para o banco de produção ativo com a flag `--force-drop-columns=true`, para que o plugin normalize a tabela automaticamente.
+A) Executar imediatamente um comando `ALTER TABLE produto ADD COLUMN estoque_minimo NUMERIC(18,3) NOT NULL;`, confiando que o PostgreSQL preencherá automaticamente os registros nulos com zero.  
+B) Excluir temporariamente as linhas existentes na tabela `produto`, aplicar a migração definitiva com a restrição `NOT NULL`, e restaurar os dados via arquivo de backup manual.  
+C) Fase Expand: adicionar a coluna `estoque_minimo` permitindo valores nulos (`nullable: true`); Fase Migrate: executar um comando DML (`UPDATE produto SET estoque_minimo = 0 WHERE estoque_minimo IS NULL;`) para preenchimento dos dados pré-existentes (*backfill*); Fase Contract: aplicar a restrição definitiva `NOT NULL` e a constraint `CHECK` sobre a coluna devidamente saneada.  
+D) Executar o comando `mvn liquibase:diff` e aplicar o changelog gerado diretamente no banco de produção sem revisão de código, pois o plugin detecta dados nulos e reescreve o histórico do banco de dados automaticamente.  
+E) Criar uma tabela separada denominada `produto_estoque_minimo` contendo apenas a chave primária e o novo atributo, mantendo a tabela principal `produto` intocada para evitar o uso de ferramentas de migração.
 
 ---
 
-### Questão 12 - Blindagem da Borda da Aplicação com Records, DTOs e Bean Validation
+### Questão 12 - Camada Web RESTful, DTOs com Java Records e Validação Declarativa (Aula 07)
 
-Analise o seguinte controlador REST desenvolvido em Spring Boot 3:
+No projeto de APIs corporativas com Spring Boot, expor entidades JPA diretamente na camada de controle (`@RestController`) acarreta severos riscos arquiteturais e de segurança, tais como acoplamento ao modelo de persistência, ataques de atribuição em massa (*Mass Assignment*) e estouro de pilha (*StackOverflowError*) por serialização cíclica de associações bidirecionais.
 
-```java
-@RestController
-@RequestMapping("/api/grupos-produtos")
-public class GrupoProdutoController {
+Para solucionar essas vulnerabilidades, adota-se a separação estrita de contratos utilizando DTOs (*Data Transfer Objects*) imutáveis implementados como Java Records e validados declarativamente via Jakarta Bean Validation.
 
-    private final GrupoProdutoService service;
-    private final GrupoProdutoMapper mapper;
-
-    public GrupoProdutoController(GrupoProdutoService service, GrupoProdutoMapper mapper) {
-        this.service = service;
-        this.mapper = mapper;
-    }
-
-    @PostMapping
-    public ResponseEntity<GrupoProdutoResponse> cadastrar(@RequestBody @Valid GrupoProdutoRequest request) {
-        GrupoProduto grupo = mapper.toEntity(request);
-        GrupoProduto salvo = service.cadastrar(grupo);
-        GrupoProdutoResponse response = mapper.toResponse(salvo);
-        
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.id())
-                .toUri();
-                
-        return ResponseEntity.created(uri).body(response);
-    }
-}
-```
-
-O payload de entrada é governado pelo seguinte DTO estruturado como Java Record:
+Considere a definição do DTO a seguir:
 
 ```java
-public record GrupoProdutoRequest(
-    @NotBlank(message = "O nome do grupo é obrigatório")
-    @Size(min = 2, max = 120, message = "O nome deve conter entre 2 e 120 caracteres")
-    String nome
+public record ProdutoRequest(
+    @NotBlank(message = "O código de barras é obrigatório.")
+    @Size(max = 50, message = "O código de barras não pode ultrapassar 50 caracteres.")
+    String codigoBarras,
+
+    @NotBlank(message = "A descrição é obrigatória.")
+    @Size(max = 150, message = "A descrição não pode ultrapassar 150 caracteres.")
+    String descricao,
+
+    @NotNull(message = "O valor unitário é obrigatório.")
+    @Positive(message = "O valor unitário deve ser estritamente maior que zero.")
+    BigDecimal valorUnitario,
+
+    @NotNull(message = "O identificador do grupo é obrigatório.")
+    Long grupoId
 ) {}
 ```
 
-Com relação ao design dessa arquitetura de borda, avalie as assertivas:
+Analise as afirmativas a respeito da arquitetura da camada de API:
 
-I. O uso de Java Records como DTOs confere imutabilidade estrita aos dados trafegados na camada web, eliminando métodos *setters* que poderiam introduzir efeitos colaterais pós-desserialização.  
-II. A ausência da anotação `@Valid` antes de `@RequestBody` faria com que o Spring Boot ignorasse silenciosamente as anotações do Bean Validation (`@NotBlank`, `@Size`), permitindo que strings em branco chegassem à camada de aplicação.  
-III. Retornar diretamente a entidade JPA `@Entity GrupoProduto` no método do controlador melhoraria a performance da API, pois evitaria o overhead de instanciação de objetos DTO e permitiria que o Jackson serializasse relacionamentos bidirecionais sem risco de loops infinitos.  
-IV. A emissão do status HTTP `201 Created` acompanhado pelo cabeçalho `Location` contendo a URI canônica do novo recurso cumpre estritamente o protocolo RESTful especificado na RFC 9110.
+I. O uso de Java Records como DTOs assegura a imutabilidade dos dados trafegados na requisição, pois todos os campos são implicitamente declarados como `private final` e a estrutura não gera métodos modificadores (*setters*).  
+II. A anotação `@Valid` inserida no parâmetro do método do `@RestController` (ex.: `public ResponseEntity<?> cadastrar(@Valid @RequestBody ProdutoRequest request)`) instrui o Spring a interceptar a carga útil e disparar as asserções declaradas no DTO antes da invocação do método do controlador.  
+III. Caso o payload enviado viole uma anotação como `@Positive`, o framework lança a exceção `MethodArgumentNotValidException`, a qual pode ser capturada por uma classe anotada com `@RestControllerAdvice` para padronizar o retorno em um objeto `ApiError` com status `400 Bad Request`.  
+IV. A validação declarativa do Bean Validation substitui integralmente a necessidade de validação de invariantes nos construtores das entidades de domínio (`Produto`), tornando desnecessárias as regras defensivas em classes puras Java.
 
-Estão corretas apenas as afirmativas:
+É correto apenas o que se afirma em:
 
-A) I e III.  
-B) II e IV.  
-C) I, II e IV.  
-D) II, III e IV.  
-E) I, II, III e IV.
+A) I e IV.  
+B) II e III.  
+C) I, II e III.  
+D) I, III e IV.  
+E) II, III e IV.
 
 ---
 
-## Simulado 2 - Questões Discursivas
+## Simulado 2 - Questões Discursivas (5 questões, com rubrica do que uma resposta nota máxima deve conter)
 
-### Questão Discursiva 01 - Refatoração de Domínio Anêmico para Domínio Rico
+---
 
-Em uma revisão de código (*code review*) no âmbito do projeto `suporteos2026`, o líder técnico deparou-se com a seguinte implementação da classe de domínio `Produto`:
+### Questão Discursiva 01 - Modelagem de Domínio Rico e Encapsulamento em Java Puro
+
+**Contexto e Cenário:**  
+No sistema `suporteos2026`, o módulo de controle de almoxarifado exige que a movimentação de estoque seja imune a corrupções de dados. A entidade `Produto` pertence a um `GrupoProduto` (associação 1:N bidirecional) e deve garantir suas invariantes de negócio na memória da JVM de forma estritamente desacoplada de frameworks ou bancos de dados.
+
+**Comando:**  
+Apresente a implementação em Java 21 puro para a entidade `Produto`, atendendo aos seguintes requisitos de Engenharia de Software:
+1. Construtor canônico rico que valide obrigatoriedade de campos (`codigoBarras`, `descricao`, `valorUnitario`, `estoqueMinimo`) e impeça a criação de instâncias em estado inválido;
+2. Encapsulamento estrito do atributo `saldoEstoque`, impedindo mutações arbitrárias via métodos modificadores genéricos (*setters*);
+3. Implementação dos métodos de negócio `receberEstoque(BigDecimal quantidade)` e `retirarEstoque(BigDecimal quantidade)`, aplicando validações defensivas com mensagens claras via `IllegalArgumentException`;
+4. Uso mandatório de `BigDecimal` com cálculo exato do valor financeiro total do estoque do item (`calcularValorEstoque()`), aplicando controle explícito de escala para 2 casas decimais e política de arredondamento bancário `RoundingMode.HALF_UP`;
+5. Método de ligação `associarAo(GrupoProduto grupo)` com visibilidade restrita ao pacote (*package-private*), garantindo que a associação seja coordenada exclusivamente pelo agregado raiz (`GrupoProduto`).
+
+> **Rubrica de Avaliação (O que a resposta nota máxima deve conter):**  
+> - **Imutabilidade e Encapsulamento (20%):** Atributos declarados como `private`, ausência completa de setters públicos para saldo ou identidade.  
+> - **Invariantes no Construtor (20%):** Validação fail-fast no construtor impedindo dados nulos, strings em branco ou valores numéricos negativos. Construtor protegido sem argumentos presente para conformidade com JPA.  
+> - **Métodos de Negócio Defensivos (20%):** Métodos semânticos (`receberEstoque`, `retirarEstoque`) que validam argumentos estritamente positivos ($`> 0`$) e barram retiradas que excedam o saldo disponível.  
+> - **Precisão Monetária (20%):** Cálculo de multiplicação utilizando métodos nativos de `BigDecimal`, definindo `.setScale(2, RoundingMode.HALF_UP)` e evitando conversões para `double`.  
+> - **Acoplamento e Integridade Bidirecional (20%):** Visibilidade de pacote no método que recebe `GrupoProduto` e integridade referencial protegida.
+
+---
+
+### Questão Discursiva 02 - Persistência Relacional, Paridade Tecnológica e Governança de Esquema
+
+**Contexto e Cenário:**  
+Muitos projetos de desenvolvimento backend adotam o banco em memória H2 para a execução de testes automatizados e confiam na propriedade `spring.jpa.hibernate.ddl-auto=update` para sincronizar tabelas em tempo de desenvolvimento. Na disciplina de Laboratório de Programação IV, o Prof. Jefferson Passerini proibiu expressamente ambas as práticas para o projeto `suporteos2026`.
+
+**Comando:**  
+Redija um texto técnico-dissertativo articulando os seguintes tópicos:
+1. **Quebra de Paridade de Ambientes:** Justifique tecnicamente por que o uso de H2 em perfis de teste (`test`) em paralelo com PostgreSQL em produção (`prod`) viola os princípios de confiabilidade da engenharia de software contemporânea, citando ao menos duas diferenças estruturais (dialetos, constraints, concorrência ou tipos de dados).
+2. **Riscos da Geração Automática por ORM:** Explique detalhadamente por que a diretiva `ddl-auto=update` do Hibernate é perigosa em bases relacionais persistentes, demonstrando o que ocorre no banco quando um atributo Java é renomeado ou quando uma restrição `NOT NULL` é adicionada sobre uma tabela populada.
+3. **Mecanismo de Defesa em Múltiplas Camadas:** Demonstre como a configuração conjunta de `ddl-auto=validate` com o Liquibase concretiza a estratégia de "Defesa em Profundidade" (*Defense in Depth*), diferenciando os papéis da aplicação (Java) e do SGBD (PostgreSQL) na preservação da integridade dos dados.
+
+> **Rubrica de Avaliação (O que a resposta nota máxima deve conter):**  
+> - **Crítica ao H2 e Paridade de Ambientes (30%):** Explicação clara da discrepância de dialetos SQL, divergência no tratamento de transações concorrentes/bloqueios e suporte a tipos avançados do PostgreSQL (como `NUMERIC(p,s)` exato e constraints `CHECK`), gerando falsos positivos em suítes de teste.  
+> - **Desmistificação de ddl-auto=update (35%):** Demonstração do comportamento destrutivo ou negligente do Hibernate ao renomear campos (abandono de colunas órfãs e criação de colunas novas vazias) e incapacidade de orquestrar transições seguras de dados legados.  
+> - **Defesa em Profundidade e Liquibase (35%):** Explicação do papel do Liquibase como autoridade DDL soberana e versionada no Git, atuação do Hibernate estritamente como auditor de compatibilidade (`validate`), e articulação da complementariedade entre validação fail-fast no código Java e garantias de integridade física no SGBD (`PK`, `FK`, `UNIQUE`, `CHECK`).
+
+---
+
+### Questão Discursiva 03 - Transações Declarativas, Ciclo de Vida JPA e Dirty Checking
+
+**Contexto e Cenário:**  
+Um desenvolvedor júnior implementou um serviço corporativo de movimentação de produtos e notou comportamentos aparentemente contraditórios: em alguns métodos, entidades foram atualizadas no PostgreSQL mesmo sem chamar o método `.save()` do repositório; em outros, operações de leitura tornaram-se lentas ou falharam ao acessar relacionamentos fora do serviço.
+
+**Comando:**  
+Com base na arquitetura do Spring Data JPA e do motor Hibernate:
+1. Esquematize e descreva os quatro estados possíveis de uma entidade durante o seu ciclo de vida no JPA: *Transient* (Novo), *Managed* (Gerenciado), *Detached* (Desanexado) e *Removed* (Removido).
+2. Explique detalhadamente o funcionamento do mecanismo de **Dirty Checking** (detecção automática de alterações) executado pelo Hibernate, identificando em que instante exato o SQL `UPDATE` é despachado para o banco de dados.
+3. Justifique o impacto arquitetural do uso do parâmetro `@Transactional(readOnly = true)` em métodos de consulta, explicitando os ganhos de desempenho obtidos na sessão do Hibernate e no driver JDBC.
+4. Explique como o mecanismo de interceptação AOP do Spring lida com exceções lançadas dentro de um método `@Transactional`, diferenciando o comportamento padrão para subclasses de `RuntimeException` em relação a *checked exceptions* (`java.lang.Exception`).
+
+> **Rubrica de Avaliação (O que a resposta nota máxima deve conter):**  
+> - **Os Quatro Estados da Entidade (25%):** Definição precisa de *transient* (objeto em memória sem ID e sem contexto), *managed* (atrelado ao `PersistenceContext`, rastreado ativamente), *detached* (possui ID mas a sessão foi encerrada) e *removed* (marcado para exclusão física).  
+> - **Mecânica do Dirty Checking (25%):** Explicação de que o Hibernate guarda um *snapshot* do estado da entidade ao carregá-la; na fase de *flush* da transação, compara o estado atual com o snapshot e emite o `UPDATE` automaticamente.  
+> - **Otimização de readOnly = true (25%):** Menção à desativação da geração de snapshots para dirty checking no Hibernate (economia de CPU e memória) e possíveis otimizações do driver JDBC/PostgreSQL para conexões de leitura.  
+> - **Tratamento de Rollback Transacional (25%):** Esclarecimento de que exceções não checadas (`RuntimeException` e `Error`) disparam `ROLLBACK` automático por padrão, enquanto exceções checadas realizam `COMMIT` a menos que configuradas com `rollbackFor`.
+
+---
+
+### Questão Discursiva 04 - Evolução Segura de Esquema com o Padrão Expand-Migrate-Contract
+
+**Contexto e Cenário:**  
+A aplicação `suporteos2026` opera em produção com a tabela `produto` contendo mais de 500.000 registros ativos. O novo requisito da versão exige a criação de uma coluna obrigatória denominada `estoque_minimo` (`NUMERIC(18,3)`), cujo valor não pode ser nulo (`NOT NULL`) e deve ser maior ou igual a zero (`CHECK (estoque_minimo >= 0)`). 
+
+Se um script executar diretamente `ALTER TABLE produto ADD COLUMN estoque_minimo NUMERIC(18,3) NOT NULL;`, o PostgreSQL rejeitará a instrução imediatamente com falha catastrófica devido à existência de linhas prévias sem valor definido.
+
+**Comando:**  
+Elabore o planejamento formal da migração estrutural utilizando o padrão **Expand-Migrate-Contract** e apresente o arquivo de changelog correspondente no formato **YAML estruturado do Liquibase**, contendo:
+1. O *changeSet* da fase de expansão (**Expand**), adicionando a coluna sem restrição de obrigatoriedade;
+2. O *changeSet* da fase de migração de dados (**Migrate**), executando a instrução DML de *backfill* para preencher registros legados com o valor neutro padrão `0.000`;
+3. O *changeSet* da fase de contração (**Contract**), aplicando a restrição `NOT NULL`, a constraint `CHECK` de valor não negativo e criando as diretivas de reversão (*rollback*) correspondentes para cada etapa.
+
+> **Rubrica de Avaliação (O que a resposta nota máxima deve conter):**  
+> - **Fundamentação do Padrão Expand-Migrate-Contract (25%):** Explicação clara da motivação da quebra em três fases atômicas para mitigar bloqueios de tabela e rejeições de constraints.  
+> - **Fase 1 - Expand no Liquibase (25%):** `changeSet` sintaticamente correto utilizando a tag `addColumn` com `nullable: true` e bloco de rollback associado.  
+> - **Fase 2 - Migrate de Dados (25%):** `changeSet` contendo comando SQL de atualização atômica (`UPDATE produto SET estoque_minimo = 0 WHERE estoque_minimo IS NULL;`) para sanear dados pré-existentes.  
+> - **Fase 3 - Contract e Integridade Relacional (25%):** `changeSet` aplicando `addNotNullConstraint` e `addCheckConstraint` com nome explícito (`ck_produto_estoque_minimo`), incluindo instruções de reversão reversa (`dropNotNullConstraint`, `dropCheckConstraint`).
+
+---
+
+### Questão Discursiva 05 - Camada Web RESTful, DTOs com Java Records e Blindagem da Aplicação
+
+**Contexto e Cenário:**  
+Durante a revisão de código de um endpoint da API de produtos, a equipe de arquitetura vetou o seguinte controlador:
 
 ```java
-// Implementação submetida (Modelo Anêmico)
-public class Produto {
-    public Long id;
-    public String codigoBarras;
-    public String descricao;
-    public double saldoEstoque;
-    public double valorUnitario;
-    public LocalDate dataCadastro;
-    public String status;
-    public GrupoProduto grupo;
+// Código vetado pela arquitetura
+@RestController
+@RequestMapping("/produtos")
+public class ProdutoControllerRuim {
+    @Autowired
+    private ProdutoRepository repository;
 
-    public Produto() {}
-
-    // Getters e Setters públicos triviais para todos os campos, sem validações
-    public double getSaldoEstoque() { return saldoEstoque; }
-    public void setSaldoEstoque(double saldoEstoque) { this.saldoEstoque = saldoEstoque; }
-    public void setValorUnitario(double valorUnitario) { this.valorUnitario = valorUnitario; }
-}
-```
-
-O serviço de aplicação que consome essa classe executava rotinas do tipo:
-
-```java
-produto.setSaldoEstoque(produto.getSaldoEstoque() - quantidadeSolicitada);
-```
-
-**Com base nos conceitos de Domain-Driven Design (DDD) e Engenharia de Software Orientada a Objetos, realize as seguintes tarefas:**
-
-1. Explique conceitualmente por que essa implementação caracteriza o antipadrão **Modelo de Domínio Anêmico (Anemic Domain Model)** e aponte os riscos de integridade que ela impõe ao ciclo de vida da aplicação.
-2. Apresente o código Java refatorado da classe `Produto` aplicando o **Modelo Rico**, contemplando:
-   - Encapsulamento rigoroso de atributos privados;
-   - Construtor canônico rico com validação de invariantes (código de barras obrigatório, descrição obrigatória, saldo e valor não negativos);
-   - Construtor protegido sem argumentos exigido pela especificação JPA;
-   - Substituição de tipos primitivos `double` pelo tipo exato `java.math.BigDecimal`;
-   - Métodos de negócio expressivos para `receberEstoque(BigDecimal quantidade)` e `retirarEstoque(BigDecimal quantidade)` contendo proteção contra saldos negativos;
-   - Método de cálculo `calcularValorEstoque()` com controle explícito de escala e arredondamento `HALF_UP`.
-
----
-
-### Questão Discursiva 02 - Fronteiras Transacionais, Estados de Entidades e Rollback no Spring Data JPA
-
-Considere o seguinte fluxo de negócio onde a criação de uma `OrdemServico` exige a baixa imediata de peças no estoque através do método `retirarEstoque` das entidades `Produto` envolvidas. Caso o estoque de qualquer um dos itens seja insuficiente, nenhuma alteração pode ser persistida no banco de dados.
-
-Analise o diagrama de sequência representativo:
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Cliente as Cliente HTTP
-    participant Ctrl as OrdemServicoController
-    participant Srv as OrdemServicoService (@Transactional)
-    participant RepoProd as ProdutoRepository
-    participant EntProd as produto:Produto (Managed)
-    participant DB as PostgreSQL
-
-    Cliente->>Ctrl: POST /api/ordens-servico
-    Ctrl->>Srv: criarOrdemServico(request)
-    Note over Srv: Abertura de Transação (BEGIN)
-    Srv->>RepoProd: findById(10L)
-    RepoProd->>DB: SELECT * FROM produto WHERE id = 10
-    DB-->>RepoProd: Dados da tupla
-    RepoProd-->>Srv: Instância gerenciada (Managed)
-    Srv->>EntProd: retirarEstoque(50)
-    Note over EntProd: Lança IllegalArgumentException<br/>(Saldo insuficiente)
-    Srv--xCtrl: Propaga Exceção de Negócio
-    Note over Srv: Interceptador AOP executa ROLLBACK
-    Ctrl-->>Cliente: Resposta HTTP 400 Bad Request
-```
-
-**Com base nos fundamentos de persistência e gerenciamento transacional do Spring Boot:**
-
-1. Descreva o ciclo de vida de uma entidade JPA, conceituando e diferenciando os quatro estados fundamentais: **transient**, **managed**, **detached** e **removed**. Em qual desses estados a entidade `Produto` se encontra no momento em que seu método `retirarEstoque` é invocado no diagrama?
-2. Explique o que é o mecanismo de **dirty checking** do Hibernate e justifique por que não foi necessário invocar `produtoRepository.save(produto)` para persistir as alterações caso o método tivesse sido concluído com êxito.
-3. Explique a regra padrão de rollback da anotação `@Transactional` do Spring Framework em relação a exceções checadas (*checked exceptions*) e não-checadas (*unchecked / RuntimeException*). O que teria ocorrido com os dados no banco se o método tivesse capturado a `IllegalArgumentException` internamente em um bloco `try/catch` genérico sem relançá-la?
-
----
-
-### Questão Discursiva 03 - Evolução de Esquema com Liquibase sob Carga sem Interrupção de Serviço
-
-Uma grande organização de tecnologia opera a aplicação `suporteos2026` com PostgreSQL 16 em produção, suportando centenas de transações simultâneas por segundo. Surgiu a necessidade de negócio de adicionar o campo obrigatório `cnpj` (VARCHAR de 14 dígitos, único e não-nulo) e a chave estrangeira `fornecedor_id` (opcional) na tabela `produto`, que conta atualmente com 2 milhões de tuplas ativas.
-
-**Com base na governança estrita de banco de dados via Liquibase:**
-
-1. Justifique tecnicamente por que a execução de um script SQL imperativo manual executado diretamente no console de produção (*pgAdmin* ou *psql*) sem versionamento é proibida pela engenharia de software corporativa.
-2. Explique por que a chave estrangeira `fornecedor_id` deve nascer com cardinalidade relacional **opcional** (`nullable = true`) em sistemas legados em produção, correlacionando essa decisão com a compatibilidade retroativa.
-3. Escreva um arquivo de migração declarativo do Liquibase em formato **YAML** estruturado em múltiplos `changeSets` atômicos aplicando o padrão **Expand-Migrate-Contract** para a introdução da coluna de auditoria `codigo_rastreio` como obrigatória (`NOT NULL`) na tabela `produto`, incluindo o comando de *backfill* e regras de reversão (*rollback*).
-
----
-
-### Questão Discursiva 04 - Arquitetura em Camadas, Mapeamento Puro e Tratamento Global de Erros
-
-Um desenvolvedor iniciante propôs o seguinte método dentro de uma classe anotada com `@RestController`:
-
-```java
-// Código submetido para avaliação
-@PostMapping("/api/cadastrarProduto")
-public Produto salvarDireto(@RequestBody Produto produto) {
-    if (produto.getDescricao() == null || produto.getDescricao().isBlank()) {
-        throw new RuntimeException("Descrição inválida!");
+    @PostMapping("/cadastrar")
+    public Produto salvar(@RequestBody Produto produto) {
+        return repository.save(produto);
     }
-    return produtoRepository.save(produto);
 }
 ```
 
-Aponte as violações arquiteturais presentes nesse trecho de código e reestruture a solução de ponta a ponta:
+**Comando:**  
+Projete a arquitetura correta para o caso de uso de criação de produtos (`POST /api/produtos`), demonstrando a separação estrita de responsabilidades. Sua resposta deve apresentar:
+1. A justificativa técnica formal dos três principais erros arquiteturais e de segurança presentes no código vetado;
+2. O código do DTO de entrada `ProdutoRequest` implementado como um `record` imutável em Java 21, contendo validações declarativas do Jakarta Bean Validation (`@NotBlank`, `@NotNull`, `@Positive`, etc.);
+3. O código do controlador reescrito (`ProdutoController`), contendo a rota padronizada no padrão REST, uso de injeção de dependência por construtor, ativação da validação com `@Valid`, delegação do caso de uso para a camada de serviço (`ProdutoService`), conversão via mapeador desacoplado (`ProdutoMapper`) e emissão da resposta HTTP semântica `201 Created` acompanhada do cabeçalho de redirecionamento `Location`;
+4. A estrutura de dados de uma classe padronizada de resposta a falhas (`ApiError`), explicando como o tratador global `@RestControllerAdvice` captura a exceção `MethodArgumentNotValidException` para devolver um status `400 Bad Request` legível com a lista de campos inválidos.
 
-1. Identifique e justifique ao menos **três violações graves** de design de software no código apresentado (considere REST, acoplamento de camadas, segurança e tratamento de erros).
-2. Apresente a implementação completa da classe manipuladora global de exceções anotada com `@RestControllerAdvice`, especializada em capturar:
-   - Exceções de validação de argumentos da API (`MethodArgumentNotValidException`);
-   - Exceções de regras de negócio personalizadas (`RecursoNaoEncontradoException` e `RegraNegocioException`).
-3. Modele e apresente o Java Record `ApiError` que padronizará o corpo das respostas de erro (RFC 7807 / padrão corporativo), contendo timestamp, código HTTP, mensagem descritiva, rota acessada e lista de campos violados.
-
----
-
-### Questão Discursiva 05 - Paridade de Ambientes, Governança de Segredos e Reprodutibilidade de Build
-
-No início do semestre letivo, um grupo de estudantes sugeriu simplificar a configuração de desenvolvimento do projeto temático adotando o banco de dados em memória **H2** para o perfil de testes e desenvolvimento local, mantendo o **PostgreSQL** unicamente no servidor de produção. Adicionalmente, sugeriram versionar as senhas do banco de dados diretamente no arquivo `application.properties` principal dentro do Git para evitar "perda de tempo configurando variáveis de ambiente".
-
-**Com base nos princípios de governança de software (The Twelve-Factor App) e segurança da informação:**
-
-1. Refute a proposta de adoção do H2, demonstrando formalmente as razões pelas quais a disciplina de Laboratório de Programação IV exige a **paridade estrita de ambientes** utilizando instâncias reais do PostgreSQL isoladas para os perfis `dev` e `test`.
-2. Explique a vulnerabilidade de segurança e os riscos de auditoria associados ao commit de senhas e segredos no controle de versão Git (mesmo em repositórios privados). Descreva como o arquivo `.env`, o arquivo `.env.example` e a propriedade `.gitignore` devem ser orquestrados para blindar a aplicação.
-3. Demonstre a estrutura de propriedades do Spring Boot (`application.properties`, `application-dev.properties` e `application-test.properties`), detalhando como o mecanismo de interpolação de variáveis de ambiente (`${DB_PASSWORD}`) opera para injetar as credenciais em tempo de execução sem exposição no código.
+> **Rubrica de Avaliação (O que a resposta nota máxima deve conter):**  
+> - **Identificação de Vulnerabilidades do Código Vetado (20%):** Exposição direta de entidade JPA, rota em estilo RPC com verbo na URL (`/cadastrar`), injeção por campo via `@Autowired`, falta de validação sintática e ausência de camada de serviço e transação.  
+> - **DTO Imutável como Record com Bean Validation (25%):** Sintaxe concisa de `record`, tipagem adequada (`BigDecimal`), e anotações pertinentes de validação (`@NotBlank`, `@NotNull`, `@Positive`, `@Size`).  
+> - **Controller RESTful Robusto (30%):** `@RestController`, rota substantiva `/api/produtos`, injeção por construtor, `@Valid`, montagem de URI do recurso e retorno de `ResponseEntity.created(location).body(response)`.  
+> - **Tratamento Global de Erros com ApiError (25%):** Representação do modelo `ApiError` (timestamp, status, erro, caminho, lista de violações de campos) e funcionamento do `@RestControllerAdvice`.
 
 ---
 
-## Gabarito Comentado - Simulado 1 (Objetivas)
-
-### Questão 01 - Modelo de Dados e Grafo Acíclico Dirigido no Git
-- **Gabarito:** **B**
-- **Justificativa Técnica:** O Git modela o histórico de um repositório como um Grafo Acíclico Dirigido (*Directed Acyclic Graph* - DAG), composto por nós imutáveis que representam snapshots integrais do projeto (objetos do tipo `commit`), identificados unicamente por hashes criptográficos (SHA-1 ou SHA-256). Uma branch não duplica pastas nem armazena deltas em árvores separadas; ela é estritamente uma referência leve (um arquivo de 41 bytes, contendo 40 caracteres hexadecimais mais uma quebra de linha) alocada em `.git/refs/heads/<nome-da-branch>`, que aponta diretamente para o hash do commit mais recente daquela linha de desenvolvimento. Mover ou criar branches resume-se a ler e gravar 41 bytes no disco, o que confere velocidade instantânea à operação independentemente do tamanho do código-fonte.
-- **Análise dos Distratores:**
-  - *A está incorreta* porque o Git **não** é delta-baseado (como eram o SCCS ou o CVS) e **não** depende de conexões recursivas com o GitHub para operações locais; o Git é um sistema de controle de versão distribuído que armazena snapshots completos offline no diretório local `.git`.
-  - *C está incorreta* porque as branches não criam cópias físicas completas de diretórios; essa premissa descreve ferramentas arcaicas baseadas em cópias manuais de pastas (ex.: `projeto_copia_final`). No Git, o diretório de trabalho é compartilhado e gerenciado pelo ponteiro `HEAD`.
-  - *D está incorreta* porque o protocolo SSH atua unicamente na camada de transporte de rede durante operações remotas (`push`/`pull`). A imutabilidade dos commits é uma propriedade matemática do DAG: alterar qualquer arquivo ou metadado altera o hash do commit, gerando um novo nó e quebrando a integridade de todos os nós filhos subsequentes.
-  - *E está incorreta* porque o Git não utiliza o banco de dados relacional SQLite para controlar seus ponteiros ou árvores; ele utiliza um armazenamento de objetos endereçado por conteúdo (*content-addressable key-value store*) puramente baseado em arquivos planos organizados no diretório `.git/objects`.
+## Gabarito Comentado
 
 ---
 
-### Questão 02 - Arquitetura da JVM e Resolução de Comandos no Sistema Operacional
-- **Gabarito:** **B**
-- **Justificativa Técnica:** A plataforma Java divide-se estruturalmente em JVM (motor de execução de bytecode), JRE (JVM + bibliotecas de tempo de execução como `java.base`) e JDK (JRE + ferramentas de compilação e diagnóstico como `javac`, `javap`, `jcmd`). O utilitário `javac` é o compilador Java-para-bytecode e existe exclusivamente no JDK. Quando o sistema operacional recebe um comando interativo no terminal, ele varre sequencialmente os diretórios cadastrados na variável de ambiente `PATH`. O resultado `where.exe java` revelou que um diretório contendo uma JRE 17 legada (`Oracle\Java\javapath`) estava posicionado à frente do diretório do JDK 21. Assim, o terminal encontrou e disparou o binário `java.exe` da JRE 17 e, ao buscar `javac`, abortou com erro por ser incapaz de localizar o compilador, que não existe em uma JRE.
-- **Análise dos Distratores:**
-  - *A está incorreta* porque criar um alias apontando `javac` para `java.exe` provocará falha estrutural; `java` é o lançador da máquina virtual que executa classes compiladas, enquanto `javac` é um binário completamente distinto com parâmetros próprios que realiza análise léxica, sintática e emissão de bytecode.
-  - *C está incorreta* porque a ordem entre variáveis de usuário e de sistema no Windows é padronizada (o sistema concatena as duas listas), e a troca de terminais (PowerShell por Git Bash) não resolve o problema subjacente de ausência do caminho do compilador no `PATH`.
-  - *D está incorreta* porque o terminal interativo não executa comandos consultando primariamente `JAVA_HOME`. A variável `JAVA_HOME` é uma convenção corporativa consumida por ferramentas externas (como Maven, Gradle e Tomcat); o interpretador de comandos do sistema operacional consulta exclusivamente a variável `PATH`.
-  - *E está incorreta* porque a compilação JIT (*Just-In-Time*) ocorre em tempo de execução dentro da JVM a partir de bytecode previamente gerado, não tendo relação com a compilação estática do código-fonte `.java` para `.class`, que exige obrigatoriamente o `javac`.
+### Gabarito Comentado - Simulado 1 (Objetivas)
 
 ---
 
-### Questão 03 - Reprodutibilidade de Build com Maven Wrapper e Ciclo de Vida
-- **Gabarito:** **C**
-- **Justificativa Técnica:** As afirmativas I, II e III são rigorosamente verdadeiras. O Maven Wrapper garante que o projeto declare e execute uma versão canônica do Apache Maven sem depender da existência de um Maven global previamente configurado na máquina (I). O ciclo de vida de build padrão (*default lifecycle*) do Maven é ordenado e estritamente cumulativo: executar a fase `package` dispara automaticamente as fases `validate`, `compile`, `test` etc., interrompendo o fluxo imediatamente caso um teste falhe (II). O artefato `spring-boot-starter-parent` provê uma seção centralizada de gerenciamento de dependências e plugins, permitindo que dependências oficiais do Spring e de terceiros (como Jackson, Hibernate e PostgreSQL Driver) omitam versões no `pom.xml` filho (III).
-- **Análise dos Distratores:**
-  - *A afirmativa IV é falsa* porque o Maven Wrapper é apenas um script disparador escrito em shell script/batch acoplado a um pequeno arquivo JAR de download (`maven-wrapper.jar`). Ele **não** embute uma JVM nem faz o download do JDK; o wrapper exige expressamente que a máquina hospedeira já possua um Java Runtime/JDK compatível configurado no `PATH` ou no `JAVA_HOME`. Assim, qualquer opção que contenha o item IV (A, D, E) está errada.
-  - A alternativa **C** contempla unicamente as assertivas verdadeiras (I, II e III).
+#### Questão 01
+- **Alternativa Correta:** **A** (As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I).
+- **Justificativa Técnica:**  
+  A asserção I descreve rigorosamente a implementação física de uma branch no Git. Uma branch local nada mais é do que um ponteiro de referência móvel (*head reference*) armazenado no arquivo `.git/refs/heads/<nome-da-branch>`. Este arquivo contém exatamente os 40 caracteres hexadecimais do hash SHA-1 (ou 64 caracteres no SHA-256) seguidos de um caractere delimitador de quebra de linha (`\n`), totalizando 41 bytes no formato tradicional. Quando um novo commit é gerado sob a branch ativa, o Git atualiza unicamente o conteúdo desse arquivo de ponteiro para o hash do nó recém-criado.  
+  A asserção II é verdadeira e justifica formalmente a asserção I: como os objetos de commit são estruturados como vértices imutáveis em um Grafo Acíclico Dirigido (DAG), calculados a partir da árvore de diretórios, dados do autor e referência ao commit pai, é matematicamente impossível alterar o conteúdo de um commit existente sem alterar seu hash identificador. Portanto, para fazer uma linha de desenvolvimento "crescer", o Git não modifica o nó anterior; ele simplesmente adiciona um novo vértice apontando para o anterior e avança o arquivo de texto da branch (ponteiro) para esse novo nó.
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *B:* Incorreta. A asserção II é precisamente o fundamento matemático e arquitetural que justifica a asserção I. Se os commits fossem mutáveis em disco, branches poderiam ser árvores estáticas sobrescritas, e não ponteiros dinâmicos em um DAG imutável.  
+  - *C:* Incorreta. A asserção II é integralmente verdadeira. A integridade criptográfica é o princípio basilar do Git.  
+  - *D:* Incorreta. A asserção I é verdadeira em todos os seus termos técnicos e estruturais de diretórios.  
+  - *E:* Incorreta. Ambas as asserções são verdadeiras e fundamentais no estudo de sistemas de controle de versão.
 
 ---
 
-### Questão 04 - Semântica HTTP, Métodos Seguros e Idempotência na RFC 9110
-- **Gabarito:** **B**
-- **Justificativa Técnica:** Na especificação HTTP (RFC 9110), um método é **idempotente** se o efeito colateral no estado do servidor decorrente de múltiplas requisições idênticas consecutivas for exatamente o mesmo que o de uma única requisição. O método `GET` é seguro e inerentemente idempotente (apenas lê representações). O método `PUT` substitui integralmente a representação do recurso identificado; submeter o mesmo corpo JSON repetidamente deixará o recurso no mesmo estado final. O método `DELETE` remove o recurso do sistema; na primeira chamada o item é deletado, e nas chamadas subsequentes o recurso permanecerá deletado (o fato do status code mudar de `204 No Content` para `404 Not Found` não viola a idempotência, pois esta diz respeito ao **estado do servidor**, e não ao código de resposta).
-- **Análise dos Distratores:**
-  - *A está incorreta* porque o método `POST` não é idempotente; submeter um `POST` três vezes consecutivas instrui o servidor a instanciar e gravar três recursos distintos com identidades e chaves primárias diferentes.
-  - *C está incorreta* porque `DELETE` **não** é um método seguro. Um método seguro (*safe*) não pode provocar alterações no estado do servidor; `DELETE` altera o estado destruindo dados.
-  - *D está incorreta* porque atualizações parciais são semântica nativa do método `PATCH`, que não é formalmente garantido como idempotente pela RFC 9110. O `PUT` é a substituição integral de recurso e é idempotente por definição.
-  - *E está incorreta* porque a segurança de um método (como no `GET`) é precisamente a precondição primária que autoriza navegadores e proxies intermediários a cachearem respostas para economizar tráfego de rede.
+#### Questão 02
+- **Alternativa Correta:** **A** (Apenas as afirmativas I e II estão corretas).
+- **Justificativa Técnica:**  
+  - A afirmativa I está correta: A especificação da Máquina Virtual Java mapeia o número de versão principal (*major version*) do arquivo de classe compilado da seguinte forma: Java 8 = 52, Java 11 = 55, Java 17 = 61 e Java 21 = 65. A fórmula de correspondência direta é $`\text{major\_version} = \text{versão\_java} + 44`$. Portanto, para o Java 21: $`21 + 44 = 65`$.  
+  - A afirmativa II está correta: O sistema operacional resolve binários executáveis consultando a variável `PATH` na ordem linear em que os diretórios aparecem registrados. Se o atalho da Oracle apontando para a JRE 17 estiver posicionado antes do diretório `bin` do Eclipse Temurin JDK 21, o comando `java` disparará a JVM 17. Ao tentar carregar uma classe compilada com versão 65.0, a JVM 17 rejeita o arquivo emitindo a exceção fatal `UnsupportedClassVersionError`.  
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *Afirmativa III incorreta:* O script do Maven Wrapper (`mvnw` / `mvnw.cmd`) foi expressamente desenhado para inspecionar prioritariamente a variável `JAVA_HOME`. Se `JAVA_HOME` estiver configurada apontando para um JDK válido, o Maven Wrapper a utiliza diretamente para encontrar o compilador `javac`, ignorando qualquer poluição presente na variável `PATH`.  
+  - *Afirmativa IV incorreta:* O comando `javac` padrão compila para a versão do próprio compilador executado, a menos que sinalizadores explícitos como `--release` ou `--target` sejam fornecidos. Além disso, executar `javac *.java` manualmente quebra a resolução de dependências corporativas gerenciadas pelo Maven no `pom.xml`.  
+  - *Alternativas B, C, D e E:* Incorretas por considerarem afirmativas falsas como verdadeiras ou omitirem afirmativas corretas.
 
 ---
 
-### Questão 05 - Aritmética de Ponto Flutuante e Encapsulamento com BigDecimal
-- **Gabarito:** **B**
-- **Justificativa Técnica:** A afirmativa I é verdadeira: na representação binária IEEE 754 de 32 e 64 bits (`float` e `double`), frações decimais simples como 0.1 e 0.2 tornam-se dízimas periódicas binárias infinitas, culminando em resíduos de arredondamento como `totalDouble = 0.020000000000000004`. A afirmativa IV é verdadeira: o método `compareTo` de `BigDecimal` avalia exclusivamente a grandeza matemática do número, retornando `0` para valores equivalentes (`0.02` vs `0.020`).
-- **Análise dos Distratores:**
-  - *A afirmativa II é falsa* porque instanciar `new BigDecimal(0.1)` transfere a imprecisão binária preexistente do literal de ponto flutuante para a representação do objeto, resultando internamente no valor `0.1000000000000000055511151231257827021181583404541015625`. A única forma segura é instanciar via `new BigDecimal("0.1")` ou `BigDecimal.valueOf(0.1)`.
-  - *A afirmativa III é falsa* porque o método `equals` de `BigDecimal` avalia o valor numérico **e** a escala (`scale`). Como `totalBD` possui escala 2 (`0.02`) e uma variável com escala 3 (`0.020`) possui quantidade diferente de zeros à direita, `equals` retorna `false`. Para comparações contábeis e testes unitários, o uso de `compareTo() == 0` é mandatório.
-  - Portanto, apenas as assertivas I e IV são corretas (Alternativa **B**).
+#### Questão 03
+- **Alternativa Correta:** **A** (Os cenários 2 e 3 são idempotentes, pois execuções repetidas da substituição total do recurso via PUT ou de sua exclusão via DELETE deixam o servidor no mesmo estado representativo final...).
+- **Justificativa Técnica:**  
+  Segundo a RFC 9110 (seção 9.2.2), um método HTTP é **idempotente** se o efeito pretendido no servidor de múltiplas requisições idênticas for o mesmo que o de uma única requisição. 
+  - O método `PUT` (Cenário 2) é inerentemente idempotente: ele realiza a substituição total do estado do recurso identificado pela URI. Se enviado uma ou dez vezes com o mesmo payload, o recurso `/api/produtos/84` conterá exatamente os mesmos valores em disco.
+  - O método `DELETE` (Cenário 3) é igualmente idempotente: a intenção da operação é garantir que o recurso deixe de existir no sistema. Na primeira execução, o item é removido e o servidor pode responder `204 No Content` ou `200 OK`. Em invocações subsequentes, o item já inexiste, e o servidor responderá tipicamente `404 Not Found`. Apesar da divergência no código de status retornado, **o estado do servidor permanece inalterado** (o recurso continua inexistente), satisfazendo a definição matemática de idempotência.
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *B:* Incorreta. O Cenário 1 utiliza o método `POST` para aplicar um cálculo cumulativo (reajuste percentual). Se executado 3 vezes consecutivas, o preço será aumentado 3 vezes compostas ($`preco \times 1.10^3`$). A operação altera o estado a cada disparo, não sendo nem segura e nem idempotente.  
+  - *C:* Incorreta. O `PUT` opera sobre a URI explícita do recurso já identificado (`/84`). Ele não gera identificadores sequenciais secundários; ele substitui o recurso naquela coordenada. Criação com identificador gerado pelo servidor é responsabilidade de `POST` sobre a coleção `/api/produtos`.  
+  - *D:* Incorreta. Um método é classificado como **seguro** se sua invocação for estritamente de consulta (leitura), sem produzir efeitos colaterais no estado do servidor (`GET`, `HEAD`, `OPTIONS`). `DELETE` causa mutação destrutiva de dados, não sendo seguro.  
+  - *E:* Incorreta. O Cenário 4 (`GET`) é um método seguro e idempotente que apenas recupera dados. O Cenário 1 (`POST`) causa mutações cumulativas no estado do servidor.
 
 ---
 
-### Questão 06 - Integridade de Associações 1:N Bidirecionais em Memória
-- **Gabarito:** **B**
-- **Justificativa Técnica:** Em programação orientada a objetos pura, as associações bidirecionais exigem que os dois ponteiros de memória estejam sincronizados. Permitir que classes de fora do agregado manipulem a lista ou o ponteiro reverso de forma desregulada causa corrupção de estado (um produto aponta para o grupo G1, mas a lista de G1 não contém o produto). Ao conferir visibilidade de pacote (*package-private*) ao método `associarAo` em `Produto`, garante-se que apenas as classes do mesmo pacote (como `GrupoProduto`) possam manusear o vínculo reverso. Paralelamente, `GrupoProduto.getProdutos()` deve retornar `Collections.unmodifiableList(this.produtos)` para impedir que código cliente execute `grupo.getProdutos().add(p)`, o que burlaria validações de duplicidade de código de barras.
-- **Análise dos Distratores:**
-  - *A está incorreta* porque expor setters públicos anula o encapsulamento, produz o antipadrão Modelo Anêmico e impede que a entidade garanta suas invariantes de consistência.
-  - *C está incorreta* porque expor campos como `public` viola o princípio básico de encapsulamento da POO, além de acoplar o domínio à implementação concreta `ArrayList`.
-  - *D está incorreta* porque `@JsonBackReference` é uma anotação de serialização JSON da biblioteca Jackson (camada de apresentação/API), que jamais deve ser introduzida em regras fundamentais de domínio em memória pura para gerenciar o coletor de lixo da JVM.
-  - *E está incorreta* porque o comando `git rm --cached` é uma instrução de linha de comando do Git para remover arquivos do índice de versionamento, não tendo qualquer relação com gerenciamento de memória em tempo de execução na JVM.
+#### Questão 04
+- **Alternativa Correta:** **E** (Todas as afirmativas I, II, III e IV estão corretas).
+- **Justificativa Técnica:**  
+  - *Afirmativa I (Correta):* Atributos injetados por construtor podem receber o modificador `final`. Isso garante que as referências sejam imutáveis após a instanciação do objeto e assegura thread-safety na visibilidade de memória da JVM.  
+  - *Afirmativa II (Correta):* A injeção por campo (`@Autowired` direto no atributo privado) exige reflexão em baixo nível para definir o valor do campo em testes unitários ou requer a inicialização do contexto do Spring via `@SpringBootTest`, o que torna os testes excessivamente lentos. Com o construtor, basta instanciar a classe com `new ProdutoServiceB(mockRepo1, mockRepo2)`.  
+  - *Afirmativa III (Correta):* Se a classe `A` requer `B` no construtor e `B` requer `A` no construtor, a JVM não consegue instanciar nenhuma das duas classes, disparando imediatamente uma falha do tipo `BeanCurrentlyInCreationException` na inicialização da aplicação (*fail-fast*), alertando o engenheiro sobre uma falha de design.  
+  - *Afirmativa IV (Correta):* A partir do Spring Framework 4.3, se uma classe gerenciada como bean possuir apenas um construtor público, o contêiner assume implicitamente que aquele construtor deve ser utilizado para injeção de dependências, tornando a anotação `@Autowired` redundante.
+- **Análise das Distratoras:**  
+  - As opções A, B, C e D são distratoras incompletas, pois deixam de englobar a totalidade das asserções verdadeiras.
 
 ---
 
-### Questão 07 - Camada de Persistência e Estratégia ddl-auto
-- **Gabarito:** **B**
-- **Justificativa Técnica:** Em ambientes empresariais, a integridade do banco de dados relacional é governada exclusivamente por ferramentas de migração declarativas versionadas (como o Liquibase). O uso de `ddl-auto=update` do Hibernate é desastroso em produção pelos seguintes fatores: (1) ausência de rastreabilidade e versionamento do histórico de alterações; (2) incapacidade de efetuar renomeações de colunas com preservação de dados (ele cria a nova coluna vazia e mantém a antiga órfã); (3) incapacidade de planejar o ciclo de transição de dados para colunas `NOT NULL`; e (4) risco de contenção de travas de metadados (*table/catalog locks*) em servidores que iniciam múltiplas instâncias em cluster concorrente. O padrão corporativo estrito exige `spring.jpa.hibernate.ddl-auto=validate`.
-- **Análise dos Distratores:**
-  - *A está incorreta* porque o Hibernate possui dialeto nativo robusto para PostgreSQL (`PostgreSQLDialect`), e o modo `create-drop` destrói o banco a cada reinicialização, sendo inviável para produção.
-  - *C está incorreta* porque o Spring Data JPA gerencia entidades com restrições `@Column(nullable = false)` normalmente; é justamente o suporte a essas constraints que caracteriza o mapeamento relacional.
-  - *D está incorreta* porque a regeneração de índices B-Tree é governada pelo motor do PostgreSQL durante inserções e comandos DDL, não tendo complexidade $O(2^n)$ e não sendo disparada a cada requisição HTTP de consulta.
-  - *E está incorreta* porque desde o Java 8 e JPA 2.2, o Hibernate mapeia nativamente `LocalDate` para o tipo SQL `DATE` e `BigDecimal` para `NUMERIC`, sem revertê-los para `VARCHAR`.
+#### Questão 05
+- **Alternativa Correta:** **C** (No ModeloRicoProduto, as invariantes de negócio são asseguradas de forma defensiva; a entidade é incapaz de transicionar para um estado com saldo negativo ou aceitar retiradas de itens inativos...).
+- **Justificativa Técnica:**  
+  O encapsulamento rico reside no empacotamento coeso de dados e comportamentos que operam sobre esses dados. Ao transferir as regras de negócio para métodos semânticos dentro da própria entidade (`retirarEstoque`), garantimos que nenhuma operação externa corrompa o estado do objeto. Todas as transições passam obrigatoriamente pelas checagens de validação (*guard clauses*), tornando impossível que uma instância válida em memória atinja inconsistências (saldo negativo ou produto inativo operando).
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *A:* Incorreta. O Hibernate e a especificação JPA não exigem setters públicos. O provedor ORM é perfeitamente capaz de acessar e atribuir valores a campos privados através de reflexão direta nos atributos (`Field Access`), preservando o encapsulamento.  
+  - *B:* Incorreta. A verificação se a quantidade cabe no saldo do produto e a alteração aritmética do seu próprio atributo são responsabilidades nucleares da própria entidade de domínio, de acordo com o padrão *Information Expert* do GRASP.  
+  - *D:* Incorreta. O Jackson utiliza prioritariamente os métodos assessores de leitura (*getters*) para serialização em JSON. A ausência de setters afeta apenas a desserialização de entrada, a qual não deve utilizar entidades JPA diretamente, mas sim DTOs de transporte.  
+  - *E:* Incorreta. A leitura do saldo ocorre perfeitamente através de um método de consulta `getSaldoEstoque()`. O encapsulamento protege a **mutação** de estado desregulada, não o acesso a dados de leitura.
 
 ---
 
-### Questão 08 - Governança de Esquema Relacional com Liquibase e Checksums
-- **Gabarito:** **B**
-- **Justificativa Técnica:** O Liquibase garante a imutabilidade e a auditabilidade de cada transição de esquema calculando uma soma de verificação criptográfica (*checksum* MD5/SHA) sobre o conteúdo de cada `changeSet` no momento de sua primeira aplicação, gravando esse hash na coluna `md5sum` da tabela `DATABASECHANGELOG`. A cada inicialização subsequente, o Liquibase recalcula o checksum dos arquivos físicos e compara com o banco. Se um arquivo for alterado retroativamente, o framework detecta a divergência e aborta a execução para evitar que ambientes fiquem com esquemas divergentes. A única conduta tecnicamente correta é reverter o arquivo original e expressar a alteração como uma nova migração incremental.
-- **Análise dos Distratores:**
-  - *A está incorreta* porque o erro reportado é explicitamente `ValidationFailedException: check sum was X but is now Y`, não tendo relação com travamento de concorrência na tabela `DATABASECHANGELOGLOCK`.
-  - *C está incorreta* porque o tipo `VARCHAR(n)` no PostgreSQL e no Liquibase aceita qualquer tamanho inteiro positivo válido, não havendo restrição de múltiplos de 32 bytes.
-  - *D está incorreta* porque migrar para H2 em memória destrói a paridade de ambientes e oculta o problema real de governança de código de banco de dados.
-  - *E está incorreta* porque editar manualmente tabelas de metadados do Liquibase em produção é uma intervenção destrutiva sem auditoria, que pode corromper irremediavelmente a esteira de CI/CD.
+#### Questão 06
+- **Alternativa Correta:** **C** (`D: false | E: false | C: 0`).
+- **Justificativa Técnica:**  
+  1. **Bloco 1 (Ponto Flutuante IEEE 754):** Na base binária, frações decimais como `0.1` e `0.2` não possuem representação finita exata, transformando-se em dízimas periódicas. A soma binária de `0.1 + 0.2` resulta exatamente em `0.30000000000000004`. Logo, `0.30000000000000004 == 0.3` avalia para `false` (`D: false`).  
+  2. **Bloco 2 e 3 (Semântica de BigDecimal):**  
+     - O método `bd2.equals(bd3)` avalia se dois objetos `BigDecimal` são estritamente idênticos tanto em **valor numérico** quanto em **escala** (`scale`). O objeto `bd2` foi construído com `"0.1"` (escala = 1), enquanto `bd3` foi construído com `"0.10"` (escala = 2). Como as escalas diferem, `equals()` retorna impreterivelmente `false` (`E: false`).  
+     - A interface `Comparable<BigDecimal>` e o método `bd2.compareTo(bd3)` avaliam com exclusividade o **valor matemático real**, desconsiderando variações puramente representativas de escala decimal. Como $`0.1 = 0.10`$, `compareTo` retorna `0` indicando equivalência matemática (`C: 0`).
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *A:* Erra em D (ignora a imprecisão binária de double) e erra em E (assume que equals ignora a escala).  
+  - *B:* Erra em E ao considerar que `equals()` trata `"0.1"` e `"0.10"` como iguais. Esta é uma das armadilhas mais comuns em código Java.  
+  - *D:* Erra em D (double não soma perfeitamente 0.3) e erra em C (assume que compareTo retorna -1 por ter menos casas).  
+  - *E:* Erra em C ao assumir que `compareTo` avalia as escalas em vez dos valores matemáticos absolutos.
 
 ---
 
-### Questão 09 - Proxies Dinâmicos e Consultas Derivadas no Spring Data JPA
-- **Gabarito:** **C**
-- **Justificativa Técnica:** As assertivas I, II e III são corretas. O Spring Data JPA utiliza o mecanismo de Dynamic Proxies da JVM para materializar implementações em tempo de execução baseadas na classe `SimpleJpaRepository`, vinculando-as ao contexto de Injeção de Dependências (I). As assinaturas dos métodos são decompostas pelo analisador sintático a partir do prefixo delimitador `By` para geração do código JPQL e SQL nativo correspondente (II). O uso de sublinhado (`_`) é o padrão oficial do Spring Data para desambiguar a navegação estrutural entre propriedades aninhadas, forçando o framework a buscar a propriedade `id` dentro do objeto associado `grupo` (III).
-- **Análise dos Distratores:**
-  - *A assertiva IV é falsa* porque o tipo de retorno `Optional<T>` do Java foi concebido exatamente para representar a **ausência opcional** de um valor sem lançar exceções automaticamente. O método retorna `Optional.empty()`; cabe à camada de serviço inspecionar o retorno e invocar `.orElseThrow(() -> new RecursoNaoEncontradoException(...))` caso deseje transformar o resultado vazio em uma exceção de negócio. Portanto, opções que contêm o item IV estão incorretas.
+#### Questão 07
+- **Alternativa Correta:** **B** (Disponibilizar o método adicionarProduto(Produto p) como único ponto público de entrada no GrupoProduto, fazer com que este método invoque um método de ligação com visibilidade de pacote...).
+- **Justificativa Técnica:**  
+  Para garantir a integridade de uma associação bidirecional em memória, deve existir uma única porta de entrada governada pelo Agregado Raiz (*Aggregate Root*), que é o `GrupoProduto`. O método `adicionarProduto` centraliza validações de duplicidade e regras de negócio. Para amarrar o ponteiro inverso na instância de `Produto`, utiliza-se um método com visibilidade de pacote (*package-private*), permitindo que apenas classes do mesmo pacote de domínio participem da coreografia de amarração, sem expor um método `setGrupo` indiscriminado para todo o sistema. Por fim, `Collections.unmodifiableList()` encapsula a lista interna, lançando `UnsupportedOperationException` caso código externo tente invocar `.add()` diretamente na coleção obtida via `getProdutos()`.
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *A:* Incorreta. Setters públicos desprotegidos permitem criar inconsistências onde o produto aponta para o Grupo A, mas a lista do Grupo A não contém o produto, ou listas inteiras são substituídas limpando referências órfãs.  
+  - *C:* Incorreta. Expor a coleção interna como atributo `public` destrói completamente o encapsulamento da classe.  
+  - *D:* Incorreta. `@Transient` é uma anotação de persistência do JPA; seu uso aqui não soluciona a modelagem de domínio em memória e cria dependência precoce de infraestrutura.  
+  - *E:* Incorreta. Instanciar o agregador pai dentro do filho acopla as classes e impede a reutilização de uma instância de grupo para múltiplos produtos cadastrados.
 
 ---
 
-### Questão 10 - Gerenciamento Transacional Declarativo e Dirty Checking
-- **Gabarito:** **C**
-- **Justificativa Técnica:** Uma entidade recuperada através de um repositório dentro de um método delimitado por `@Transactional` entra automaticamente no estado **managed** (gerenciado) do Contexto de Persistência (*Persistence Context* associado à `Session` do Hibernate). O Hibernate armazena uma cópia profunda (*snapshot*) dos atributos no momento da leitura. Ao final do método transacional, durante a fase de sincronização (*flush*) que antecede o `COMMIT`, o motor de persistência executa o mecanismo de **dirty checking** (verificação de sujeira), comparando o estado atual de cada entidade gerenciada com o seu snapshot original. Se houver discrepância em qualquer campo, o Hibernate agenda e executa as instruções SQL `UPDATE` necessárias de forma transparente, sem qualquer necessidade de invocar explicitamente `repository.save()`.
-- **Análise dos Distratores:**
-  - *A está incorreta* porque o Hibernate não emite instruções SQL no exato momento da invocação do método na memória; as alterações são acumuladas no contexto e sincronizadas em lote no momento do *flush*.
-  - *B está incorreta* porque o contexto de persistência não inspeciona variáveis da pilha da thread (`stack`), mas sim o grafo de entidades gerenciadas alocadas na memória Heap.
-  - *D está incorreta* porque o Garbage Collector da JVM atua puramente na reciclagem de memória desreferenciada no Heap do sistema operacional, não possuindo conhecimento sobre semântica de frameworks de banco de dados.
-  - *E está incorreta* porque o modo `@Transactional(readOnly = true)` desativa a geração de snapshots de dirty checking para economizar CPU e memória; as alterações feitas em memória são sumariamente ignoradas no flush e não são gravadas no banco de dados.
+#### Questão 08
+- **Alternativa Correta:** **C** (O uso de validate assegura que a única fonte de verdade da estrutura DDL seja o histórico controlado de migrações; o Hibernate atua estritamente inspecionando se os metadados das classes anotadas convergem de modo idêntico com o catálogo relacional...).
+- **Justificativa Técnica:**  
+  Em arquiteturas empresariais com controle formal de esquema, o ciclo de vida do DDL pertence a ferramentas de migração versionadas (Liquibase). O Hibernate não deve ter permissão de alterar o banco dinamicamente em tempo de execução. Ao utilizar `ddl-auto=validate`, o Hibernate faz uma auditoria rigorosa durante a subida do contêiner: ele compara nomes de tabelas, nomes de colunas, restrições de nulidade e tipos de dados das classes `@Entity` contra o banco de dados PostgreSQL. Se o desenvolvedor esquecer de criar uma migração no Liquibase para um novo atributo mapeado no Java, o sistema aborta a inicialização (*fail-fast*), impedindo a execução de consultas contra colunas inexistentes.
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *A:* Incorreta. A criação e destruição temporária de tabelas em testes é comportamento de `create-drop`, e não de `validate`.  
+  - *B:* Incorreta. O modo que altera tabelas e colunas dinamicamente é o `update`, proibido em produção. O `validate` é estritamente somente-leitura.  
+  - *D:* Incorreta. O `validate` não desativa consultas JPQL; ele valida a conformidade das entidades para que o JPQL execute com garantia de integridade relacional.  
+  - *E:* Incorreta. O `validate` opera perfeitamente sobre o PostgreSQL e é mandatório em ambientes corporativos que utilizam esse SGBD.
 
 ---
 
-### Questão 11 - Evolução de Esquema com o Padrão Expand-Migrate-Contract
-- **Gabarito:** **B**
-- **Justificativa Técnica:** Quando uma tabela relacional em produção já possui dados, a imposição direta de uma restrição `NOT NULL` sem tratamento prévio falha, pois as linhas pré-existentes não possuem valores para preencher a nova coluna física. O padrão **Expand-Migrate-Contract** resolve o impasse de forma não-disruptiva em três fases:
-  1. *Expandir (Expand):* A coluna é adicionada ao banco permitindo valores nulos (`nullable: true`), garantindo que a aplicação antiga em execução continue operando sem falhas de inserção.
-  2. *Migrar (Migrate):* Uma instrução DML de *backfill* é executada (`UPDATE`), preenchendo todos os registros históricos nulos com um valor padrão condizente com as regras de negócio.
-  3. *Contrair (Contract):* Com a garantia de que não existem mais linhas nulas na tabela, adiciona-se com segurança a restrição de obrigatoriedade física (`addNotNullConstraint`) e as constraints de integridade (`addCheckConstraint`).
-- **Análise dos Distratores:**
-  - *A está incorreta* porque adicionar valores padrão e constraints pesadas em comandos únicos em tabelas gigantescas provoca travamento exclusivo de tabela (*access exclusive lock*), paralisando o sistema para os clientes.
-  - *C está incorreta* porque deletar a tabela de produção acarreta perda catastrófica de dados corporativos e interrupção completa da continuidade do negócio.
-  - *D está incorreta* porque manter o banco desprovido de integridade física e confiar apenas em código de aplicação viola o princípio de defesa em profundidade, permitindo inserções corrompidas por scripts manuais ou integrações externas.
-  - *E está incorreta* porque `liquibase:diff` não executa transformações destrutivas com flags arbitrárias em produção; o diff é uma ferramenta auxiliar de desenvolvimento para gerar rascunhos comparativos.
+#### Questão 09
+- **Alternativa Correta:** **C** (Apenas as afirmativas I, II e IV estão corretas).
+- **Justificativa Técnica:**  
+  - *Afirmativa I (Correta):* O Liquibase identifica cada bloco de alteração no banco de dados pela chave composta: `(id, author, filepath)`. Se qualquer um desses três valores divergir, o motor de migração tratará o bloco como um registro distinto.  
+  - *Afirmativa II (Correta):* O Liquibase calcula o hash criptográfico MD5/SHA do conteúdo de cada `changeSet` no momento de sua primeira aplicação e o grava na coluna `md5sum` da tabela `databasechangelog`. Se o arquivo for editado retroativamente, a verificação comparativa na inicialização falhará com o erro `Checksum Check Failed`, paralisando o boot do sistema para evitar corrupção de estado.  
+  - *Afirmativa IV (Correta):* A tabela `databasechangeloglock` contém uma flag booleana `locked`. O primeiro nó que sobe define `locked = true`, executa as migrações em uma transação exclusiva e redefine `locked = false`. Nós concorrentes entram em espera (*polling*), prevenindo execuções simultâneas e inconsistências de DDL no PostgreSQL.
+- **Análise das Distratoras (Por que a III está incorreta?):**  
+  - *Afirmativa III incorreta:* Migrações de banco de dados constituem um histórico transacional **append-only**. Jamais se altera um `changeSet` já executado e propagado em repositório compartilhado. Toda e qualquer alteração de esquema subsequente (como criar nova coluna ou constraint) deve ser obrigatoriamente formalizada através de um **novo** `changeSet` incremental.  
+  - *Alternativas A, B, D e E:* Incorretas por incluírem a afirmativa III ou omitirem afirmativas verdadeiras.
 
 ---
 
-### Questão 12 - Blindagem da Borda da Aplicação com Records, DTOs e Bean Validation
-- **Gabarito:** **C**
-- **Justificativa Técnica:** As assertivas I, II e IV são rigorosamente verdadeiras. Java Records são imutáveis por especificação de linguagem, tornando-os ideais para contratos DTO de entrada e saída (I). A anotação `@Valid` (ou `@Validated`) no parâmetro do controlador é o gatilho obrigatório que aciona o mecanismo de validação do Hibernate Validator / Jakarta Bean Validation antes da execução do corpo do método; sua omissão faz com que o Spring receba dados inválidos sem disparar erros (II). Retornar o código de resposta HTTP `201 Created` associado ao cabeçalho padrão `Location` contendo a URI direta de acesso ao recurso recém-criado obedece à especificação clássica de APIs RESTful padronizada na RFC 9110 (IV).
-- **Análise dos Distratores:**
-  - *A assertiva III é categoricamente falsa.* Retornar entidades JPA diretamente na camada Web é um gravíssimo antipadrão arquitetural que: (1) vaza a estrutura interna e colunas do banco de dados; (2) expõe o sistema a ataques de atribuição em massa (*Mass Assignment*); (3) provoca falhas de `LazyInitializationException` ao serializar propriedades tardias fora da sessão transacional; e (4) provoca estouro de pilha (`StackOverflowError`) devido a recursão infinita na serialização de relacionamentos bidirecionais entre entidades. Portanto, qualquer alternativa contendo o item III (A, D, E) está incorreta.
+#### Questão 10
+- **Alternativa Correta:** **B** (Ao ser retornado pelo método findById, o objeto produto entra no estado managed dentro do contexto de persistência; no encerramento do método, o interceptador do @Transactional sincroniza o estado e o Hibernate emite automaticamente um comando SQL UPDATE...).
+- **Justificativa Técnica:**  
+  Quando uma entidade é recuperada via repositório dentro de um método delimitado por `@Transactional`, ela é vinculada ao `PersistenceContext` da sessão corrente do Hibernate no estado **Managed**. O Hibernate armazena uma cópia interna (*snapshot*) dos valores primitivos de seus atributos naquele momento. Quando o método de negócio `reajustarPreco` é executado, o estado em memória é alterado. No momento em que o método do serviço finaliza com sucesso, o interceptador AOP do Spring inicia o processo de *commit*. O Hibernate dispara o evento de *flush*, executando o mecanismo de **Dirty Checking**: compara o estado atual da entidade com o snapshot inicial, detecta quais campos foram modificados e gera automaticamente o comando SQL `UPDATE produto SET valor_unitario = ? WHERE id = ?`. A chamada a `.save()` é tecnicamente desnecessária para entidades gerenciadas.
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *A:* Incorreta. O `.save()` é obrigatório apenas para persistir novas entidades no estado *transient*. Entidades *managed* são persistidas automaticamente pelo mecanismo de Dirty Checking.  
+  - *C:* Incorreta. Se o método for anotado com `readOnly = true`, o Hibernate desativa intencionalmente a geração de snapshots e o dirty checking; consequentemente, as alterações de preço seriam ignoradas e descartadas na saída da transação.  
+  - *D:* Incorreta. Ocorre o oposto: como a transação está aberta e o método está anotado com `@Transactional`, a sessão do Hibernate permanece ativa, permitindo a inicialização preguiçosa de coleções e associações `LAZY` sem disparar `LazyInitializationException`.  
+  - *E:* Incorreta. Por padrão, o `@Transactional` captura qualquer subclasse de `RuntimeException` ou `Error` que cruzar a fronteira do serviço e aciona imediatamente a rotina de `ROLLBACK` junto à conexão JDBC.
 
 ---
 
-## Gabarito Comentado - Simulado 2 (Discursivas)
+#### Questão 11
+- **Alternativa Correta:** **C** (Fase Expand: adicionar a coluna estoque_minimo permitindo valores nulos; Fase Migrate: executar um comando DML para preenchimento dos dados pré-existentes; Fase Contract: aplicar a restrição definitiva NOT NULL e a constraint CHECK...).
+- **Justificativa Técnica:**  
+  O padrão **Expand-Migrate-Contract** é a técnica mandatória de engenharia de software para aplicar alterações não compatíveis com o estado anterior (*breaking changes*) em bancos de dados de produção:
+  1. **Fase Expand:** O esquema é expandido para aceitar a nova estrutura sem romper com o estado pré-existente. A coluna `estoque_minimo` é criada com `nullable: true`.
+  2. **Fase Migrate:** Os dados legados são saneados. Executa-se uma instrução DML controlada preenchendo as tuplas que possuem `estoque_minimo IS NULL` com o valor padrão do negócio (ex.: `0.000`).
+  3. **Fase Contract:** Com 100% da base populada de forma homogênea, o esquema é contraído: aplica-se a restrição de obrigatoriedade `NOT NULL` e a regra relacional de consistência `CHECK (estoque_minimo >= 0)`. Nenhuma linha violará a constraint e não haverá interrupção de serviço.
+- **Análise das Distratoras (Por que estão incorretas?):**  
+  - *A:* Incorreta. O PostgreSQL abortará imediatamente o comando com o erro `column "estoque_minimo" of relation "produto" contains null values`, pois não há valor padrão em linha na instrução e existem tuplas populadas.  
+  - *B:* Incorreta. Destruir dados de produção é uma violação gravíssima de disponibilidade e governança de dados empresariais.  
+  - *D:* Incorreta. Ferramentas automatizadas de diff apenas comparam catálogos estáticos; elas não compreendem a semântica dos dados pré-existentes e frequentemente geram comandos DDL que travam ou quebram em bases populadas.  
+  - *E:* Incorreta. Criar tabelas paralelas artificiais introduz complexidade excessiva de junções (*joins*) relacionais para resolver um problema perfeitamente tratável via evolução segura de esquema.
 
-### Questão Discursiva 01 - Refatoração de Domínio Anêmico para Domínio Rico
+---
 
-#### 1. Análise Crítica do Modelo Anêmico
-A classe apresentada no enunciado caracteriza o antipadrão **Modelo de Domínio Anêmico (Anemic Domain Model)** porque suas propriedades de estado estão completamente desprotegidas e separadas dos seus comportamentos de negócio. Ao fornecer campos públicos ou métodos *getters* e *setters* triviais desprovidos de validações, a classe abre mão da sua responsabilidade primária na Programação Orientada a Objetos: **manter suas invariantes de integridade válidas durante todo o ciclo de vida**.
+#### Questão 12
+- **Alternativa Correta:** **C** (Apenas as afirmativas I, II e III estão corretas).
+- **Justificativa Técnica:**  
+  - *Afirmativa I (Correta):* Os Java Records foram projetados especificamente como portadores transparentes e imutáveis de dados. Ao serem declarados, o compilador define todos os campos como privados e finais, impedindo alterações posteriores à sua criação. Isso blinda a API contra mutações de dados durante o tráfego interno.  
+  - *Afirmativa II (Correta):* A anotação `@Valid` do pacote `jakarta.validation` funciona como o gatilho que aciona o provedor do Bean Validation (Hibernate Validator). Ela inspeciona os atributos do DTO de entrada antes que a primeira linha do método do `@RestController` seja executada.  
+  - *Afirmativa III (Correta):* Quando ocorre violação de uma restrição declarativa (ex.: valor negativo em campo anotado com `@Positive`), o Spring dispara uma `MethodArgumentNotValidException`. Uma classe global anotada com `@RestControllerAdvice` e métodos `@ExceptionHandler` intercepta essa exceção, extrai as mensagens de erro de cada campo e constrói uma resposta estruturada padronizada com o código `400 Bad Request`.
+- **Análise das Distratoras (Por que a IV está incorreta?):**  
+  - *Afirmativa IV incorreta:* O Bean Validation na camada de DTOs valida exclusivamente o **formato sintático da entrada de rede** (borda da aplicação). Ele não substitui a validação de invariantes nas entidades de domínio. A entidade é o núcleo do sistema; ela pode ser instanciada por migrações, scripts em lote, rotinas de mensageria ou testes unitários sem passar pela API REST. Portanto, a entidade deve permanecer rica e capaz de defender a si própria contra estados inválidos.  
+  - *Alternativas A, B, D e E:* Incorretas por considerarem a afirmativa IV como verdadeira ou omitirem afirmativas corretas.
 
-Os principais riscos de engenharia identificados são:
-1. **Corrupção Silenciosa de Estado:** Qualquer serviço ou teste pode instanciar um `Produto` incompleto (ex.: sem código de barras ou sem grupo) ou atribuir saldos negativos (`setSaldoEstoque(-10)`), deixando o objeto em estado inválido na memória.
-2. **Dispersão e Duplicação de Regras:** A lógica de validação de saldo suficiente fica espalhada em múltiplos controladores e serviços procedurais. Caso uma nova rotina esqueça de verificar o saldo antes de debitar, uma falha de negócio grave ocorrerá.
-3. **Inadequação Numérica com Ponto Flutuante:** O uso de tipos primitivos `double` para grandezas financeiras e de estoque introduz imprecisões binárias acumulativas regidas pelo padrão IEEE 754, divergindo balanços contábeis e fiscais.
+---
 
-#### 2. Código Java Refatorado (Modelo Rico)
+### Gabarito Comentado - Simulado 2 (Discursivas)
+
+---
+
+#### Questão Discursiva 01 - Modelagem de Domínio Rico e Encapsulamento em Java Puro
+
+##### Resposta Modelo
 
 ```java
 package com.curso.suporteos.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
-@Table(
-    name = "produto",
-    uniqueConstraints = @UniqueConstraint(
-        name = "uk_produto_codigo_barras",
-        columnNames = "codigo_barras"
-    )
-)
 public class Produto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "codigo_barras", nullable = false, length = 50)
-    private String codigoBarras;
-
-    @Column(nullable = false, length = 150)
+    private final String codigoBarras;
     private String descricao;
-
-    @Column(name = "saldo_estoque", nullable = false, precision = 18, scale = 3)
     private BigDecimal saldoEstoque;
-
-    @Column(name = "valor_unitario", nullable = false, precision = 18, scale = 2)
     private BigDecimal valorUnitario;
-
-    @Column(name = "estoque_minimo", nullable = false, precision = 18, scale = 3)
     private BigDecimal estoqueMinimo;
-
-    @Column(name = "data_cadastro", nullable = false, updatable = false)
-    private LocalDate dataCadastro;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    private final LocalDate dataCadastro;
     private Status status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "grupo_produto_id",
-        nullable = false,
-        foreignKey = @ForeignKey(name = "fk_produto_grupo_produto")
-    )
     private GrupoProduto grupo;
 
-    /**
-     * Construtor protegido sem argumentos exigido pela especificação JPA
-     * para reidratação reflexiva de estado pelo Hibernate.
-     */
+    // Construtor protegido sem argumentos exigido pela especificação JPA
     protected Produto() {
+        this.codigoBarras = null;
+        this.dataCadastro = null;
     }
 
-    /**
-     * Construtor de domínio rico com validação mandatória de invariantes.
-     */
+    // Construtor canônico rico com validação fail-fast de invariantes
     public Produto(String codigoBarras, String descricao, BigDecimal valorUnitario, BigDecimal estoqueMinimo) {
-        this.codigoBarras = validarTextoObrigatorio(codigoBarras, "Código de barras é obrigatório");
-        this.descricao = validarTextoObrigatorio(descricao, "Descrição é obrigatória");
-        this.valorUnitario = validarNaoNegativo(valorUnitario, "Valor unitário não pode ser negativo");
-        this.estoqueMinimo = validarNaoNegativo(estoqueMinimo, "Estoque mínimo não pode ser negativo");
+        this.codigoBarras = validarTexto(codigoBarras, "Código de barras é obrigatório.");
+        this.descricao = validarTexto(descricao, "Descrição do produto é obrigatória.");
+        this.valorUnitario = validarPositivo(valorUnitario, "Valor unitário deve ser estritamente maior que zero.");
+        this.estoqueMinimo = validarNaoNegativo(estoqueMinimo, "Estoque mínimo não pode ser negativo.");
         this.saldoEstoque = BigDecimal.ZERO.setScale(3, RoundingMode.HALF_UP);
         this.dataCadastro = LocalDate.now();
         this.status = Status.ATIVO;
     }
 
-    // Métodos de Negócio Expressivos
+    // Operação de negócio: Entrada física no estoque
     public void receberEstoque(BigDecimal quantidade) {
-        validarPositivo(quantidade, "A quantidade de entrada deve ser estritamente positiva");
-        this.saldoEstoque = this.saldoEstoque.add(quantidade).setScale(3, RoundingMode.HALF_UP);
+        validarEstadoAtivo();
+        validarPositivo(quantidade, "Quantidade recebida deve ser estritamente maior que zero.");
+        this.saldoEstoque = this.saldoEstoque.add(quantidade);
     }
 
+    // Operação de negócio: Saída física do estoque com garantia de não-negatividade
     public void retirarEstoque(BigDecimal quantidade) {
-        validarPositivo(quantidade, "A quantidade de retirada deve ser estritamente positiva");
+        validarEstadoAtivo();
+        validarPositivo(quantidade, "Quantidade retirada deve ser estritamente maior que zero.");
+
         if (this.saldoEstoque.compareTo(quantidade) < 0) {
-            throw new IllegalArgumentException("Saldo insuficiente em estoque para efetuar a retirada");
+            throw new IllegalArgumentException("Saldo insuficiente. Saldo disponível: " + this.saldoEstoque);
         }
-        this.saldoEstoque = this.saldoEstoque.subtract(quantidade).setScale(3, RoundingMode.HALF_UP);
+
+        this.saldoEstoque = this.saldoEstoque.subtract(quantidade);
     }
 
+    // Cálculo patrimonial exato com controle de escala monetária e arredondamento bancário
     public BigDecimal calcularValorEstoque() {
         return this.saldoEstoque.multiply(this.valorUnitario).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    // Método de amarração bidirecional com visibilidade restrita ao pacote (package-private)
+    void associarAo(GrupoProduto grupo) {
+        this.grupo = Objects.requireNonNull(grupo, "Grupo classificador não pode ser nulo.");
     }
 
     public void inativar() {
@@ -847,27 +809,25 @@ public class Produto {
         this.status = Status.ATIVO;
     }
 
-    void associarAo(GrupoProduto grupo) {
-        this.grupo = Objects.requireNonNull(grupo, "Grupo de produtos não pode ser nulo");
+    // Validações defensivas internas
+    private void validarEstadoAtivo() {
+        if (this.status != Status.ATIVO) {
+            throw new IllegalStateException("Operação rejeitada: o produto encontra-se inativo no sistema.");
+        }
     }
 
-    // Getters de Leitura
-    public Long getId() { return id; }
-    public String getCodigoBarras() { return codigoBarras; }
-    public String getDescricao() { return descricao; }
-    public BigDecimal getSaldoEstoque() { return saldoEstoque; }
-    public BigDecimal getValorUnitario() { return valorUnitario; }
-    public BigDecimal getEstoqueMinimo() { return estoqueMinimo; }
-    public LocalDate getDataCadastro() { return dataCadastro; }
-    public Status getStatus() { return status; }
-    public GrupoProduto getGrupo() { return grupo; }
-
-    // Validadores Privados de Invariantes
-    private static String validarTextoObrigatorio(String texto, String mensagem) {
+    private static String validarTexto(String texto, String mensagem) {
         if (texto == null || texto.isBlank()) {
             throw new IllegalArgumentException(mensagem);
         }
         return texto.trim();
+    }
+
+    private static BigDecimal validarPositivo(BigDecimal valor, String mensagem) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(mensagem);
+        }
+        return valor;
     }
 
     private static BigDecimal validarNaoNegativo(BigDecimal valor, String mensagem) {
@@ -877,183 +837,321 @@ public class Produto {
         return valor;
     }
 
-    private static void validarPositivo(BigDecimal valor, String mensagem) {
-        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException(mensagem);
-        }
-    }
+    // Métodos assessores de leitura (Getters puros) - Sem setters para manter a integridade
+    public Long getId() { return id; }
+    public String getCodigoBarras() { return codigoBarras; }
+    public String getDescricao() { return descricao; }
+    public BigDecimal getSaldoEstoque() { return saldoEstoque; }
+    public BigDecimal getValorUnitario() { return valorUnitario; }
+    public BigDecimal getEstoqueMinimo() { return estoqueMinimo; }
+    public LocalDate getDataCadastro() { return dataCadastro; }
+    public Status getStatus() { return status; }
+    public GrupoProduto getGrupo() { return grupo; }
 }
 ```
 
-#### Rubrica de Avaliação da Questão Discursiva 01
+##### Rubrica de Avaliação Detalhada
 
-| Critério Avaliado | Pontuação Máxima | Evidências Necessárias para Nota Máxima |
-|---|---|---|
-| **Conceituação do Modelo Anêmico** | 20 pontos | Explicação teórica clara sobre a separação nociva entre dados e comportamentos, identificação da quebra de encapsulamento e riscos de inconsistência concorrente. |
-| **Encapsulamento e Invariantes** | 25 pontos | Atributos declarados como estritamente `private`, eliminação de `setters` públicos permissivos e criação de construtor rico que barra dados nulos/inválidos no ato da criação. |
-| **Precisão Numérica com BigDecimal** | 20 pontos | Eliminação de `double`/`float`, emprego de `BigDecimal` com manipulação matemática via métodos próprios (`add`, `subtract`, `multiply`) e escalas explícitas com `RoundingMode.HALF_UP`. |
-| **Métodos de Negócio Expressivos** | 20 pontos | Implementação de `receberEstoque`, `retirarEstoque` com barreira para saldo insuficiente e cálculo contábil em `calcularValorEstoque`. |
-| **Conformidade JPA e Compilação** | 15 pontos | Presença do construtor protegido sem argumentos exigido pela JPA, visibilidade de pacote em `associarAo` e código sintaticamente correto em Java 21. |
+```mermaid
+flowchart TD
+ R1["Critério 1 (20%):<br>Imutabilidade e Encapsulamento"]
+ R2["Critério 2 (20%):<br>Invariantes no Construtor"]
+ R3["Critério 3 (20%):<br>Métodos de Negócio Ricos"]
+ R4["Critério 4 (20%):<br>Aritmética com BigDecimal"]
+ R5["Critério 5 (20%):<br>Associação Bidirecional Protegida"]
+ 
+ Total["Nota Máxima: 100%"]
+ R1 & R2 & R3 & R4 & R5 --> Total
+```
+
+*Detalhamento dos Descontos:*
+- **Imutabilidade e Encapsulamento (20%):** Perde 10% se declarar métodos setters públicos para saldo, código de barras ou status. Perde 5% se não declarar atributos como `private`.
+- **Invariantes no Construtor (20%):** Perde 10% se o construtor aceitar valores em branco ou nulos sem lançar exceção. Perde 5% se esquecer o construtor protegido sem argumentos (necessário para JPA).
+- **Métodos de Negócio Ricos (20%):** Perde 10% se o método `retirarEstoque` permitir retirada superior ao saldo. Perde 5% se não checar se o produto está ativo antes de alterar o estoque.
+- **Aritmética com BigDecimal (20%):** Perde 10% se converter para `double` ou `float` para efetuar cálculos. Perde 10% se esquecer de definir a escala explícita (2 casas) e o arredondamento (`RoundingMode.HALF_UP`).
+- **Associação Bidirecional Protegida (20%):** Perde 15% se o método de amarração for declarado como `public` (permitindo violação do Agregado Raiz). Perde 5% se permitir vincular grupo nulo.
 
 ---
 
-### Questão Discursiva 02 - Fronteiras Transacionais, Estados de Entidades e Rollback no Spring Data JPA
+#### Questão Discursiva 02 - Persistência Relacional, Paridade Tecnológica e Governança de Esquema
 
-#### 1. Ciclo de Vida de Entidades JPA e Estado no Cenário
-As entidades gerenciadas pelo provedor de persistência (Hibernate) transitam por quatro estados bem delineados:
+##### Resposta Modelo
+
+A governança da camada de persistência corporativa em sistemas modernos assenta-se sobre três pilares técnicos: a paridade de ambientes de execução, o controle declarativo do histórico de banco de dados e a arquitetura de defesa em profundidade.
+
+###### 1. Quebra de Paridade de Ambientes e os Riscos do H2
+O uso do banco em memória H2 para perfis de teste (`test`), enquanto o ambiente de produção opera sobre o PostgreSQL, viola o décimo princípio dos *Twelve-Factor Apps* (Dev/Prod Parity). Embora conveniente pela ausência de dependências externas, o H2 mascara falhas graves que se manifestam exclusivamente em produção:
+- **Divergência de Tipos de Dados e Precisão Numérica:** O PostgreSQL implementa o tipo `NUMERIC(18,3)` com aritmética arbitrária estrita e regras rígidas de truncamento. O H2 possui tolerâncias de conversão diferentes e suporte incompleto a operadores analíticos específicos do PostgreSQL.
+- **Diferenças em Dialetos de Constraints e Bloqueios Concorrentes:** O PostgreSQL suporta restrições condicionais `CHECK` complexas e gerencia concorrência por controle de versão multiversão (MVCC) com semânticas detalhadas de lock em linha (`FOR UPDATE`). O H2 trata locks e isolamento transacional de maneira divergente, criando cenários de falsos positivos (testes que passam no H2, mas falham por contenção de conexões ou deadlocks no PostgreSQL) e falsos negativos.
+
+###### 2. Riscos da Geração Dinâmica de Esquema por ORM (`ddl-auto=update`)
+A diretiva `spring.jpa.hibernate.ddl-auto=update` atribui ao Hibernate o poder de modificar o catálogo do SGBD durante a inicialização da JVM. Esse mecanismo é terminantemente proibido em bases com dados persistentes:
+- **Perda de Rastreabilidade e Não-Determinismo:** O Hibernate não documenta as alterações feitas, não gera histórico no controle de versão (Git) e opera de forma dependente do estado anterior da base, impedindo a reprodução determinística do banco em novas máquinas.
+- **Incapacidade de Renomeação Segura e Degradação Estrutural:** Se a entidade Java alterar o atributo `nome` para `razaoSocial`, o Hibernate em modo `update` não detecta a intenção semântica de renomeação. Ele executa `ALTER TABLE ... ADD COLUMN razao_social`, deixando a coluna antiga `nome` abandonada no banco como lixo estrutural órfão.
+- **Falha com Dados Pré-existentes:** Ao transformar um atributo opcional em obrigatório (`nullable = false`), o Hibernate tenta emitir `ALTER TABLE ... ALTER COLUMN ... SET NOT NULL`. Havendo registros anteriores com valores nulos, o PostgreSQL rejeita a transação e o sistema falha ao subir.
+
+###### 3. Defesa em Profundidade com `ddl-auto=validate` e Liquibase
+A arquitetura adota a estratégia de Defesa em Profundidade (*Defense in Depth*), onde aplicação e SGBD atuam de forma complementar:
+
+```mermaid
+flowchart LR
+ subgraph Camada_Aplicacao ["Fronteira 1: Aplicação (Java 21)"]
+ C["Construtores e Métodos Ricos"] -->|"Fail-Fast"| BV["Bean Validation (@Valid)"]
+ end
+ subgraph Camada_Persistencia ["Fronteira 2: Auditoria (Hibernate)"]
+ BV --> HIB["ddl-auto = validate"]
+ end
+ subgraph Camada_Banco ["Fronteira 3: SGBD (PostgreSQL)"]
+ HIB --> PG["Constraints Invioláveis<br>(PK, FK, UNIQUE, CHECK)"]
+ end
+ LIQ["Liquibase (YAML)"] -->|"Fonte Única da Verdade"| PG
+```
+
+- **O Papel do Liquibase:** Constitui a autoridade única e soberana de DDL. Toda mutação é documentada em changelogs versionados no Git, executados de forma transacional, idempotente e protegidos por soma criptográfica de verificação (*checksum*).
+- **O Papel de `ddl-auto=validate`:** O Hibernate é destituído de permissões de escrita de catálogo. Ele apenas atesta a conformidade das entidades mapeadas contra a estrutura real criada pelo Liquibase. Se houver divergência, o boot é abortado.
+- **A Dupla Camada de Integridade:** As validações Java agem na borda da aplicação permitindo falhas rápidas (*fail-fast*), enquanto o PostgreSQL aplica restrições físicas invioláveis (`PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `CHECK`), assegurando que comandos SQL externos ou outros serviços nunca corrompam a base.
+
+##### Rubrica de Avaliação Detalhada
+- **Crítica Fundamentada ao H2 (30%):** Explicação da quebra do *Dev/Prod Parity*, divergência de dialetos e comportamento de concorrência/locks.
+- **Riscos de ddl-auto=update (35%):** Demonstração do abandono de colunas órfãs na renomeação de atributos e falha ao adicionar constraints em tabelas populadas.
+- **Defesa em Profundidade e Liquibase (35%):** Articulação do Liquibase como autoridade DDL, atuação passiva de auditoria do `validate` e complementariedade entre regras de código e constraints de banco.
+
+---
+
+#### Questão Discursiva 03 - Transações Declarativas, Ciclo de Vida JPA e Dirty Checking
+
+##### Resposta Modelo
+
+###### 1. Os Quatro Estados do Ciclo de Vida de uma Entidade JPA
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Transient : new Entidade()
-    Transient --> Managed : em.persist() / repo.save()
-    Managed --> Detached : Transação encerra / em.clear() / em.detach()
-    Detached --> Managed : em.merge()
-    Managed --> Removed : em.remove() / repo.delete()
-    Removed --> [*] : Commit da transação (DELETE SQL)
+ [*] --> Transient: new Entidade()
+ Transient --> Managed: persist() / save()
+ 
+ Managed --> Detached: close() / clear() / fim da transação
+ Detached --> Managed: merge()
+ 
+ Managed --> Removed: remove() / delete()
+ Removed --> [*]: Commit / Flush no banco
+ 
+ Managed --> Managed: Dirty Checking (Modificação em memória)
 ```
 
-- **Transient (Novo/Transitório):** O objeto foi instanciado em memória comum via operador `new`. Não possui identificador persistente (`id == null`) e não está associado a nenhuma sessão do `EntityManager`. Se a aplicação for reiniciada, o objeto desaparece.
-- **Managed (Gerenciado):** O objeto está associado a um Contexto de Persistência ativo e possui representação unívoca no banco de dados. Qualquer alteração em seus atributos de estado é monitorada e sincronizada automaticamente (*dirty checking*).
-- **Detached (Desanexado):** O objeto possui uma identidade de chave primária no banco, mas a transação ou sessão que o gerenciava encerrou. Mutações em suas propriedades não surtem efeito na base de dados a menos que o objeto seja reanexado via `merge`.
-- **Removed (Removido):** O objeto está agendado para exclusão física no banco de dados relacional ao término da transação.
+1. **Transient (Novo):** O objeto foi instanciado na memória da JVM via operador `new`. Não possui identificador de chave primária (`id == null`) e não mantém qualquer vínculo com o contexto de persistência (*EntityManager*).
+2. **Managed (Gerenciado):** A entidade está associada ativamente à sessão do contexto de persistência corrente. Possui representação no banco de dados (ou chave gerada) e todas as suas mutações de atributos em memória são monitoradas pelo provedor JPA.
+3. **Detached (Desanexado):** A entidade possui chave primária correspondente a uma tupla no banco, mas o contexto de persistência que a gerenciava foi encerrado (por exemplo, ao término de um método de serviço `@Transactional`). Mutações em objetos desanexados não são detectadas automaticamente.
+4. **Removed (Removido):** A entidade ainda reside na memória da JVM, mas foi agendada para deleção física no banco de dados relacional através de `remove()`, sendo eliminada ao final da transação.
 
-**No momento em que `retirarEstoque` é invocado no diagrama:** A entidade `Produto` encontra-se categoricamente no estado **MANAGED**, pois foi carregada da base de dados através do método `produtoRepository.findById(10L)` sob a vigência da transação aberta pela anotação `@Transactional` de `OrdemServicoService`.
+###### 2. Mecanismo de Dirty Checking e Sincronização
+O **Dirty Checking** (detecção automática de modificações) é uma responsabilidade interna do Hibernate:
+1. Quando uma entidade transiciona para o estado *Managed* (seja por consulta via `findById`, seja por `persist`), o Hibernate armazena em memória um *snapshot* binário de todos os seus atributos.
+2. Durante o fluxo de negócio, o desenvolvedor apenas invoca métodos que alteram o estado da entidade (ex.: `produto.reajustarPreco(10)`).
+3. Ao término do método anotado com `@Transactional`, o interceptador AOP inicia a fase de confirmação da transação e dispara o evento de **flush**.
+4. O Hibernate itera sobre as entidades gerenciadas no contexto, compara o estado atual de cada objeto contra o seu snapshot original e monta dinamicamente o comando SQL `UPDATE` contendo exclusivamente os campos divergentes. O SQL é despachado imediatamente para a conexão JDBC antes da emissão do `COMMIT`.
 
-#### 2. Mecanismo de Dirty Checking
-O **Dirty Checking** (verificação de modificações) é a capacidade intrínseca do Hibernate de detectar automaticamente mudanças de estado nas entidades gerenciadas sem a necessidade de comandos manuais de salvamento. 
+###### 3. Otimizações com `@Transactional(readOnly = true)`
+Ao declarar um método com `readOnly = true`:
+- **Na Sessão do Hibernate:** O provedor define o modo de *FlushMode.MANUAL* e não gera a árvore de snapshots das entidades carregadas. Isso reduz drasticamente o consumo de memória RAM da JVM e economiza ciclos de processamento de CPU, já que a fase de Dirty Checking é completamente ignorada.
+- **Na Conexão e Driver JDBC:** O Spring pode repassar a instrução de somente-leitura para a conexão física do PostgreSQL (`connection.setReadOnly(true)`), permitindo que o planejador de consultas do banco execute otimizações e direcione requisições para réplicas secundárias de leitura em clusters distribuídos.
 
-Quando a entidade foi carregada do banco na etapa 4, o Hibernate registrou uma cópia idêntica de seus atributos em um registro interno de memória (*snapshot*). Ao final da execução de um método `@Transactional` bem-sucedido, o Spring intercepta o encerramento e invoca o método `flush()` do `EntityManager`. Nesse instante, o motor compara o estado atual da entidade com o snapshot inicial. Havendo diferenças, ele constrói e executa as instruções SQL `UPDATE` correspondentes diretamente no PostgreSQL. Por isso, a chamada explícita `produtoRepository.save(produto)` é redundante e desnecessária para entidades que já se encontram no estado managed.
+###### 4. Interceptação AOP e Políticas de Rollback
+O `@Transactional` opera por Programação Orientada a Aspectos (AOP), envolvendo o bean do serviço em um proxy dinâmico. O tratamento de falhas obedece a regras de classificação de exceções:
+- **Unchecked Exceptions (`RuntimeException` e `Error`):** Por padrão arquitetural da especificação Spring, caso qualquer exceção não verificada cruze a fronteira do proxy do serviço, a transação interceptada executa imediatamente o `ROLLBACK`, invalidando todas as instruções SQL enviadas ao banco naquela unidade lógica de trabalho.
+- **Checked Exceptions (`Exception` pura / verificada):** O Spring assume historicamente que exceções verificadas representam retornos alternativos de negócio dos quais a aplicação poderia se recuperar; portanto, a ocorrência de uma checked exception executa o `COMMIT` por padrão, a menos que o desenvolvedor declare explicitamente a diretiva `@Transactional(rollbackFor = MinhaCheckedException.class)`.
 
-#### 3. Regras de Rollback e Tratamento Incorreto de Exceções
-Por padrão de arquitetura do Spring Framework, as transações declarativas `@Transactional` operam com a seguinte política de reversão:
-- **Rollback Automático:** Disparado exclusivamente para exceções **não-checadas** (subclasses de `java.lang.RuntimeException` e `java.lang.Error`).
-- **Commit Padrão:** Não ocorre rollback diante de exceções **checadas** (subclasses de `java.lang.Exception` que não herdam de `RuntimeException`), a menos que expressamente configurado via `@Transactional(rollbackFor = Exception.class)`.
-
-A classe `IllegalArgumentException` é uma subclasse de `RuntimeException`. Logo, ao ser lançada por `retirarEstoque`, o interceptador transacional do Spring (AOP) captura o erro em trânsito e emite a instrução SQL `ROLLBACK` para o PostgreSQL, cancelando todas as alterações pendentes.
-
-**Cenário de Falha (Abafamento com try/catch):**
-Se o desenvolvedor capturasse a `IllegalArgumentException` dentro do método de serviço com um bloco `try/catch` genérico e não relançasse a exceção (nem assinalasse manualmente `TransactionAspectSupport.currentTransactionStatus().setRollbackOnly()`), o interceptador AOP do Spring assumiria que a execução terminou com sucesso normal. Como consequência, o Spring emitiria a instrução `COMMIT`, gravando parcialmente a `OrdemServico` ou deixando dados inconsistentes no banco de dados, configurando uma severa quebra de atomicidade (propriedades ACID).
-
-#### Rubrica de Avaliação da Questão Discursiva 02
-
-| Critério Avaliado | Pontuação Máxima | Evidências Necessárias para Nota Máxima |
-|---|---|---|
-| **Ciclo de Vida JPA** | 30 pontos | Conceituação formal dos 4 estados (`transient`, `managed`, `detached`, `removed`) e identificação precisa do estado `managed` no cenário proposto. |
-| **Mecanismo de Dirty Checking** | 25 pontos | Explicação técnica do mecanismo de snapshot, comparação no flush pré-commit e justificativa da redundância do método `save()`. |
-| **Políticas de Rollback no Spring** | 25 pontos | Diferenciação estrita entre exceções checadas e não-checadas (`RuntimeException`) perante o `@Transactional`. |
-| **Análise de Abafamento de Exceções** | 20 pontos | Demonstração clara das consequências desastrosas de silenciar exceções com `try/catch` (ocorrência de commit indevido e violação de integridade ACID). |
+##### Rubrica de Avaliação Detalhada
+- **Estados da Entidade (25%):** Definição precisa e conceitualmente correta dos estados *Transient*, *Managed*, *Detached* e *Removed*.
+- **Dirty Checking (25%):** Explicação da comparação entre o estado em memória e o snapshot gerado na carga da entidade, culminando no `UPDATE` automático no momento do flush.
+- **readOnly = true (25%):** Citação da eliminação do snapshot/dirty checking no Hibernate (ganho de memória/CPU) e sinalização ao driver/banco para conexões de leitura.
+- **Políticas de Rollback AOP (25%):** Diferenciação formal do comportamento padrão de rollback para `RuntimeException` versus commit em *checked exceptions*.
 
 ---
 
-### Questão Discursiva 03 - Evolução de Esquema com Liquibase sob Carga sem Interrupção de Serviço
+#### Questão Discursiva 04 - Evolução Segura de Esquema com o Padrão Expand-Migrate-Contract
 
-#### 1. Justificativa contra Scripts SQL Ad-hoc em Produção
-A execução de scripts manuais em ferramentas como pgAdmin viola preceitos elementares de governança de software pelos seguintes motivos:
-- **Ausência de Reprodutibilidade:** Não é possível garantir que o mesmo script executado em produção tenha sido testado de forma idêntica em desenvolvimento e homologação.
-- **Quebra da Cadeia de CI/CD:** A esteira de automação torna-se cega em relação ao estado real do banco de dados, provocando divergências entre o código da aplicação e o esquema.
-- **Ausência de Rastreabilidade e Auditoria:** Não há registro imutável no controle de versão Git de quem autorizou, quem executou, qual o hash do arquivo e qual a data exata da migração.
-- **Risco de Erro Humano Operacional:** Um comando executado sem cláusula `WHERE` ou sem transação aberta pode derrubar a base de dados de produção sem capacidade de recuperação rápida.
+##### Resposta Modelo
 
-#### 2. Racional da Opcionalidade na Chave Estrangeira `fornecedor_id`
-Ao evoluir um sistema que já possui milhões de registros de produtos gravados, impor a obrigatoriedade imediata (`nullable = false`) na chave estrangeira `fornecedor_id` paralisaria o sistema. Produtos legados cadastrados antes da existência da entidade `Fornecedor` não possuem essa informação. Para que a coluna pudesse nascer obrigatória, o time seria forçado a vincular arbitrariamente um fornecedor "fictício" a todos os produtos legados (gerando corrupção de dados) ou bloquear o sistema para recadastramento manual. Ao defini-la como opcional (`nullable = true`), o sistema preserva **compatibilidade retroativa** (*backward compatibility*), permitindo que produtos antigos continuem existindo enquanto novos produtos passam a ter a amarração de forma progressiva.
+###### 1. Fundamentação Técnica da Estratégia
+Em bancos de dados relacionais que operam sob alta concorrência com grandes volumes de dados (500.000+ tuplas), alterações estruturais não podem impor bloqueios exclusivos longos de tabela (*table-level exclusive locks*) ou violar restrições lógicas imediatas. 
+A inclusão de uma coluna `NOT NULL` sem valor padrão sobre uma tabela populada é rejeitada pelo PostgreSQL pelo fato de que o motor físico não pode gerar valores nulos em colunas que possuem restrição de presença. O padrão **Expand-Migrate-Contract** divide a transição estrutural em etapas atômicas independentes, garantindo integridade e compatibilidade com aplicações ativas.
 
-#### 3. Changelog YAML com Padrão Expand-Migrate-Contract
+###### 2. Implementação do Changelog Liquibase em YAML
 
 ```yaml
 databaseChangeLog:
-  # FASE 1: EXPAND (Adiciona a coluna permitindo nulos)
+  # =========================================================================
+  # FASE 1: EXPAND (Adiciona a coluna permitindo nulos para não quebrar a base)
+  # =========================================================================
   - changeSet:
-      id: 004-expand-produto-codigo-rastreio
-      author: jefferson
+      id: 004-expand-add-estoque-minimo
+      author: jefferson.passerini
       changes:
         - addColumn:
             tableName: produto
             columns:
               - column:
-                  name: codigo_rastreio
-                  type: VARCHAR(36)
+                  name: estoque_minimo
+                  type: NUMERIC(18, 3)
                   constraints:
                     nullable: true
       rollback:
         - dropColumn:
             tableName: produto
-            columnName: codigo_rastreio
+            columnName: estoque_minimo
 
-  # FASE 2: MIGRATE (Backfill dos dados históricos legados)
+  # =========================================================================
+  # FASE 2: MIGRATE (Saneamento dos registros pré-existentes via DML / Backfill)
+  # =========================================================================
   - changeSet:
-      id: 005-migrate-produto-codigo-rastreio-backfill
-      author: jefferson
+      id: 005-migrate-backfill-estoque-minimo
+      author: jefferson.passerini
       changes:
         - sql:
-            sql: >
-              UPDATE produto 
-              SET codigo_rastreio = 'LEGADO-' || id 
-              WHERE codigo_rastreio IS NULL;
+            sql: "UPDATE produto SET estoque_minimo = 0.000 WHERE estoque_minimo IS NULL;"
       rollback:
+        # Reversão neutra: restaura nulo caso necessário retroceder a fase
         - sql:
-            sql: >
-              UPDATE produto 
-              SET codigo_rastreio = NULL 
-              WHERE codigo_rastreio LIKE 'LEGADO-%';
+            sql: "UPDATE produto SET estoque_minimo = NULL WHERE estoque_minimo = 0.000;"
 
-  # FASE 3: CONTRACT (Aplica restrição NOT NULL e constraints de integridade)
+  # =========================================================================
+  # FASE 3: CONTRACT (Aplica a restrição de obrigatoriedade e validação de negócio)
+  # =========================================================================
   - changeSet:
-      id: 006-contract-produto-codigo-rastreio-constraints
-      author: jefferson
+      id: 006-contract-constrain-estoque-minimo
+      author: jefferson.passerini
       changes:
         - addNotNullConstraint:
             tableName: produto
-            columnName: codigo_rastreio
-            columnDataType: VARCHAR(36)
-        - addUniqueConstraint:
-            tableName: produto
-            columnNames: codigo_rastreio
-            constraintName: uk_produto_codigo_rastreio
+            columnName: estoque_minimo
+            columnDataType: NUMERIC(18, 3)
         - addCheckConstraint:
             tableName: produto
-            constraintName: ck_produto_codigo_rastreio_nao_vazio
-            checkCondition: "LENGTH(TRIM(codigo_rastreio)) >= 5"
+            constraintName: ck_produto_estoque_minimo
+            checkConstraint: "estoque_minimo >= 0"
       rollback:
-        - dropUniqueConstraint:
-            tableName: produto
-            constraintName: uk_produto_codigo_rastreio
         - dropCheckConstraint:
             tableName: produto
-            constraintName: ck_produto_codigo_rastreio_nao_vazio
+            constraintName: ck_produto_estoque_minimo
         - dropNotNullConstraint:
             tableName: produto
-            columnName: codigo_rastreio
-            columnDataType: VARCHAR(36)
+            columnName: estoque_minimo
+            columnDataType: NUMERIC(18, 3)
 ```
 
-#### Rubrica de Avaliação da Questão Discursiva 03
-
-| Critério Avaliado | Pontuação Máxima | Evidências Necessárias para Nota Máxima |
-|---|---|---|
-| **Governança de Banco vs Scripts Manuais** | 20 pontos | Articulação consistente sobre rastreabilidade, CI/CD, reprodutibilidade e prevenção de falhas humanas em ambientes corporativos. |
-| **Compatibilidade Retroativa de FK** | 20 pontos | Explicação lúcida sobre por que relacionamentos novos sobre dados legados devem nascer opcionais para não corromper histórico. |
-| **Faseamento Expand-Migrate-Contract** | 35 pontos | Divisão estrita em 3 `changeSets` atômicos no YAML: criação anulável, backfill relacional (`UPDATE`) e aplicação final de `NOT NULL`/`UNIQUE`/`CHECK`. |
-| **Estrutura de Rollback Reversível** | 15 pontos | Presença de instruções de rollback correspondentes e simétricas para todas as alterações declaradas no YAML. |
-| **Sintaxe e Validação Liquibase** | 10 pontos | YAML estruturado rigorosamente nos padrões do Liquibase, sem tabulações ilegais e com tipos SQL adequados. |
+##### Rubrica de Avaliação Detalhada
+- **Fundamentação Conceitual (25%):** Explicação da necessidade de isolar a adição da coluna da imposição de constraints em tabelas já populadas.
+- **Fase 1 - Expand (25%):** `changeSet` sintaticamente correto adicionando a coluna como `nullable: true`, incluindo instrução de `rollback` via `dropColumn`.
+- **Fase 2 - Migrate (25%):** `changeSet` com comando SQL atômico de *backfill* atualizando os valores nulos residuais para zero.
+- **Fase 3 - Contract (25%):** `changeSet` aplicando `addNotNullConstraint` e `addCheckConstraint` nomeada (`ck_produto_estoque_minimo`), acompanhados de seus respectivos blocos de reversão espelhados.
 
 ---
 
-### Questão Discursiva 04 - Arquitetura em Camadas, Mapeamento Puro e Tratamento Global de Erros
+#### Questão Discursiva 05 - Camada Web RESTful, DTOs com Java Records e Blindagem da Aplicação
 
-#### 1. Violações Arquiteturais do Código Submetido
-1. **Acoplamento Indevido de Camadas e Exposição de Entidades:** O controlador expõe diretamente a entidade de banco de dados `@Entity Produto` como parâmetro de entrada e de saída. Isso permite ataques de atribuição em massa (*Mass Assignment*), quebra de encapsulamento, riscos de loops infinitos na serialização JSON e falhas de `LazyInitializationException`.
-2. **Inversão de Dependências e Violação de Separação de Responsabilidades:** O controlador injeta e aciona diretamente o `produtoRepository`. A orquestração de persistência, validações de negócio e controle transacional competem exclusivamente à camada de serviço (`ProdutoService`).
-3. **Tratamento de Exceções Inadequado e Falta de Semântica REST:** A validação é feita de forma procedural no meio do controller lançando uma `RuntimeException` genérica, que resultará em erro `500 Internal Server Error` na saída, mascarando um erro causado pelo próprio cliente que deveria retornar `400 Bad Request`. A rota `/api/cadastrarProduto` também viola a convenção REST ao utilizar um verbo em vez de substantivo no plural (`/api/produtos`).
+##### Resposta Modelo
 
-#### 2. Implementação do Tratador Global (@RestControllerAdvice)
+###### 1. Justificativa Técnica das Falhas do Código Vetado
+O código submetido à revisão incorre em graves falhas de arquitetura e segurança:
+1. **Violação do Padrão REST na Modelagem de Rotas:** A URI `/produtos/cadastrar` utiliza um verbo imperativo de ação no estilo RPC (*Remote Procedure Call*). Em REST, as URIs identificam substantivos plurais representativos de recursos (`/api/produtos`), enquanto a intenção de cadastro é transmitida semanticamente pelo verbo HTTP `POST`.
+2. **Exposição Direta de Entidades JPA e Vulnerabilidade de Mass Assignment:** Ao receber e retornar diretamente a classe `@Entity Produto`, o sistema abre brecha para ataques de atribuição em massa (o cliente pode injetar valores em campos como `id`, `saldoEstoque` ou `status`), além de provocar acoplamento extremo entre a API pública e as colunas do banco relacional, sem contar o risco de `StackOverflowError` na serialização JSON de associações bidirecionais.
+3. **Ausência de Camada de Aplicação e Transação:** O controlador invoca diretamente o `ProdutoRepository` sem passar por um `@Service`. Com isso, suprime-se a fronteira transacional (`@Transactional`), impedindo regras de negócio complexas, auditorias e garantias atômicas de integridade.
+
+###### 2. Implementação do DTO Imutável com Java 21 Record e Bean Validation
 
 ```java
-package com.curso.suporteos.api.handler;
+package com.curso.suporteos.api.dto;
 
-import com.curso.suporteos.api.dto.ApiError;
-import com.curso.suporteos.api.dto.FieldViolation;
-import com.curso.suporteos.domain.exception.RecursoNaoEncontradoException;
-import com.curso.suporteos.domain.exception.RegraNegocioException;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
+
+public record ProdutoRequest(
+    @NotBlank(message = "O código de barras é obrigatório.")
+    @Size(max = 50, message = "O código de barras não deve exceder 50 caracteres.")
+    String codigoBarras,
+
+    @NotBlank(message = "A descrição é obrigatória.")
+    @Size(max = 150, message = "A descrição não deve exceder 150 caracteres.")
+    String descricao,
+
+    @NotNull(message = "O valor unitário é obrigatório.")
+    @Positive(message = "O valor unitário deve ser estritamente maior que zero.")
+    BigDecimal valorUnitario,
+
+    @NotNull(message = "O estoque mínimo é obrigatório.")
+    @PositiveOrZero(message = "O estoque mínimo não pode ser negativo.")
+    BigDecimal estoqueMinimo,
+
+    @NotNull(message = "O ID do grupo classificador é obrigatório.")
+    Long grupoId
+) {}
+```
+
+###### 3. Implementação do Controlador RESTful Robusto
+
+```java
+package com.curso.suporteos.api.controller;
+
+import com.curso.suporteos.api.dto.ProdutoRequest;
+import com.curso.suporteos.api.dto.ProdutoResponse;
+import com.curso.suporteos.api.mapper.ProdutoMapper;
+import com.curso.suporteos.application.ProdutoService;
+import com.curso.suporteos.domain.Produto;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping("/api/produtos")
+public class ProdutoController {
+
+    private final ProdutoService produtoService;
+    private final ProdutoMapper produtoMapper;
+
+    // Injeção de dependências estritamente por construtor
+    public ProdutoController(ProdutoService produtoService, ProdutoMapper produtoMapper) {
+        this.produtoService = produtoService;
+        this.produtoMapper = produtoMapper;
+    }
+
+    @PostMapping
+    public ResponseEntity<ProdutoResponse> cadastrar(
+            @Valid @RequestBody ProdutoRequest request,
+            UriComponentsBuilder uriBuilder) {
+
+        // 1. Converte DTO em entidade de domínio
+        Produto novoProduto = produtoMapper.toEntity(request);
+
+        // 2. Executa o caso de uso na camada de aplicação
+        Produto produtoSalvo = produtoService.cadastrar(novoProduto, request.grupoId());
+
+        // 3. Monta a URI do recurso recém-criado para o cabeçalho Location
+        URI location = uriBuilder
+                .path("/api/produtos/{id}")
+                .buildAndExpand(produtoSalvo.getId())
+                .toUri();
+
+        // 4. Retorna status HTTP 201 Created com Location e representação pública DTO
+        return ResponseEntity.created(location).body(produtoMapper.toResponse(produtoSalvo));
+    }
+}
+```
+
+###### 4. Tratamento Global de Exceções com `@RestControllerAdvice` e `ApiError`
+
+```java
+package com.curso.suporteos.api.exception;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -1063,214 +1161,54 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+// Estrutura padronizada de payload para erros da API
+public record ApiError(
+    Instant timestamp,
+    Integer status,
+    String erro,
+    String mensagem,
+    String path,
+    Map<String, String> validacoes
+) {
+    public static ApiError deValidacao(String path, Map<String, String> validacoes) {
+        return new ApiError(
+            Instant.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Erro de Validação de Entrada",
+            "Um ou mais atributos da requisição violam as restrições de formato.",
+            path,
+            validacoes
+        );
+    }
+}
 
 @RestControllerAdvice
-public class ApiExceptionHandler {
+class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> handleValidationErrors(
+    public ResponseEntity<ApiError> tratarValidacao(
             MethodArgumentNotValidException ex, 
             HttpServletRequest request) {
-        
-        List<FieldViolation> errosCampos = ex.getBindingResult().getFieldErrors().stream()
-                .map(erro -> new FieldViolation(erro.getField(), erro.getDefaultMessage()))
-                .toList();
 
-        ApiError erro = new ApiError(
-                Instant.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Requisição Inválida",
-                "Erro de validação nos campos informados",
-                request.getRequestURI(),
-                errosCampos
-        );
+        Map<String, String> errosCampos = new HashMap<>();
+        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+            errosCampos.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
-    }
-
-    @ExceptionHandler(RecursoNaoEncontradoException.class)
-    public ResponseEntity<ApiError> handleRecursoNaoEncontrado(
-            RecursoNaoEncontradoException ex, 
-            HttpServletRequest request) {
-
-        ApiError erro = new ApiError(
-                Instant.now(),
-                HttpStatus.NOT_FOUND.value(),
-                "Recurso Não Encontrado",
-                ex.getMessage(),
-                request.getRequestURI(),
-                List.of()
-        );
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
-    }
-
-    @ExceptionHandler(RegraNegocioException.class)
-    public ResponseEntity<ApiError> handleRegraNegocio(
-            RegraNegocioException ex, 
-            HttpServletRequest request) {
-
-        ApiError erro = new ApiError(
-                Instant.now(),
-                HttpStatus.CONFLICT.value(),
-                "Conflito de Regra de Negócio",
-                ex.getMessage(),
-                request.getRequestURI(),
-                List.of()
-        );
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> handleErroInesperado(
-            Exception ex, 
-            HttpServletRequest request) {
-
-        ApiError erro = new ApiError(
-                Instant.now(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Erro Interno",
-                "Ocorreu um erro interno inesperado no servidor.",
-                request.getRequestURI(),
-                List.of()
-        );
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(erro);
+        ApiError apiError = ApiError.deValidacao(request.getRequestURI(), errosCampos);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
 }
 ```
 
-#### 3. Modelagem dos DTOs de Erro (Java Records)
-
-```java
-package com.curso.suporteos.api.dto;
-
-import java.time.Instant;
-import java.util.List;
-
-public record ApiError(
-    Instant timestamp,
-    Integer status,
-    String error,
-    String message,
-    String path,
-    List<FieldViolation> fieldErrors
-) {}
-```
-
-```java
-package com.curso.suporteos.api.dto;
-
-public record FieldViolation(
-    String field,
-    String message
-) {}
-```
-
-#### Rubrica de Avaliação da Questão Discursiva 04
-
-| Critério Avaliado | Pontuação Máxima | Evidências Necessárias para Nota Máxima |
-|---|---|---|
-| **Diagnóstico de Violações Arquiteturais** | 25 pontos | Identificação precisa de: exposição direta de entidade JPA, pulo de camada de serviço (acoplamento com repositório) e violação de convenções REST. |
-| **Tratamento de Validação de Borda** | 25 pontos | Captura especializada de `MethodArgumentNotValidException` mapeando `FieldError` para estruturas aninhadas sem quebra de contrato. |
-| **Tratamento de Negócio e HTTP Status** | 20 pontos | Mapeamento adequado de `RecursoNaoEncontradoException` para `404` e `RegraNegocioException` para `409/400`. |
-| **Modelagem de DTOs com Java Records** | 20 pontos | Criação dos records `ApiError` e `FieldViolation` aderentes aos padrões de transparência de erros (RFC 7807). |
-| **Qualidade e Estilo do Código** | 10 pontos | Código limpo, utilização correta da API Stream do Java 21 e semântica estrita de injeção de dependências. |
-
----
-
-### Questão Discursiva 05 - Paridade de Ambientes, Governança de Segredos e Reprodutibilidade de Build
-
-#### 1. Refutação do H2 e Paridade Estrita de Ambientes
-A proposta de utilizar H2 em memória em desenvolvimento/testes e PostgreSQL em produção fere gravemente o princípio de **Paridade de Ambientes** preconizado pela metodologia *The Twelve-Factor App* (Fator X - Dev/Prod Parity). 
-
-As razões técnicas mandatórias para rejeitar o H2 são:
-1. **Divergência de Dialetos e Recursos de SQL:** O PostgreSQL suporta tipos avançados (como `NUMERIC(18,3)` com precisão arbitrária, enums nativos, tipos de data/hora ISO-8601 estritos e operadores JSONB) que o H2 apenas emula de forma imperfeita. Sintaxes válidas no H2 frequentemente quebram no PostgreSQL e vice-versa.
-2. **Diferenças em Mecanismos de Transação e Lock:** O PostgreSQL adota MVCC (*Multi-Version Concurrency Control*) rigoroso. Testes de concorrência ou rollback que passam no H2 podem mascarar deadlocks e anomalias de isolamento transacional que ocorrerão em produção.
-3. **Incompatibilidade com o Liquibase:** O Liquibase gera comandos DDL otimizados para o dialeto do PostgreSQL. Rodar changelogs complexos no H2 costuma gerar falhas sintáticas que obrigam os desenvolvedores a criar gambiarras condicionais de banco.
-4. **Isolamento de Bases Reais:** A solução profissional consiste em manter instâncias locais do PostgreSQL via Docker, separando bancos lógicos: `suporteos2026_dev` para testes manuais e `suporteos2026_test` para a execução limpa de suítes de testes do JUnit 5.
-
-#### 2. Governança de Segredos com `.env`, `.env.example` e `.gitignore`
-Versionar credenciais e senhas no Git é uma vulnerabilidade crítica de segurança. Mesmo em repositórios privados, o histórico criptográfico de commits é permanente: qualquer colaborador com acesso ao código ou invasor com acesso a chaves clonará todas as senhas que já foram comitadas na história do projeto.
-
-A blindagem opera sob o seguinte tripé:
-- **`.env` (Privado e Local):** Arquivo contendo as variáveis reais com credenciais de banco e chaves de API da máquina local do desenvolvedor. **Nunca é enviado ao Git**.
-- **`.gitignore` (Sentinela de Governança):** Contém a regra explícita `.env`, instruindo o motor do Git a ignorar sumariamente o arquivo, impedindo commits acidentais.
-- **`.env.example` (Gabarito Público Versionado):** Contém a lista de todas as variáveis exigidas pela aplicação com valores fictícios de exemplo (ex.: `DB_PASSWORD=sua_senha_aqui`), servindo de documentação executável para novos desenvolvedores que clonarem o repositório.
-
-#### 3. Orquestração e Interpolação de Propriedades no Spring Boot
-
-```mermaid
-flowchart TD
-    subgraph Host ["Ambiente do Sistema Operacional"]
-        ENV[".env / Variáveis de Ambiente do SO"]
-    end
-
-    subgraph Spring ["Spring Environment & Property Sources"]
-        P1["application.properties (Base Geral)"]
-        P2["application-dev.properties (Profile Dev)"]
-        P3["application-test.properties (Profile Test)"]
-    end
-
-    ENV -->|"Interpolação ${VAR}"| P1
-    P1 --> P2
-    P1 --> P3
-```
-
-##### Arquivo `application.properties` (Base Geral)
-```properties
-# Nome da Aplicação e Configurações Gerais
-spring.application.name=suporteos
-spring.jpa.open-in-view=false
-
-# Validação Estrita de Esquema pelo Hibernate
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.properties.hibernate.format_sql=true
-
-# Ativação do Perfil Padrão de Desenvolvimento caso nenhum seja informado
-spring.profiles.default=dev
-
-# Habilitação do Liquibase
-spring.liquibase.enabled=true
-spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.yaml
-```
-
-##### Arquivo `application-dev.properties` (Perfil de Desenvolvimento)
-```properties
-# Interpolação das variáveis carregadas do .env para o banco dev
-spring.datasource.url=${DB_DEV_URL:jdbc:postgresql://localhost:5432/suporteos2026_dev}
-spring.datasource.username=${DB_DEV_USERNAME:suporteos_app}
-spring.datasource.password=${DB_DEV_PASSWORD}
-spring.datasource.driver-class-name=org.postgresql.Driver
-
-# Logs detalhados de SQL para depuração em tempo de design
-spring.jpa.show-sql=true
-```
-
-##### Arquivo `application-test.properties` (Perfil de Testes Automatizados)
-```properties
-# Conexão direcionada ao banco isolado de testes
-spring.datasource.url=${DB_TEST_URL:jdbc:postgresql://localhost:5432/suporteos2026_test}
-spring.datasource.username=${DB_TEST_USERNAME:suporteos_app}
-spring.datasource.password=${DB_TEST_PASSWORD}
-spring.datasource.driver-class-name=org.postgresql.Driver
-
-# Em testes, desativa-se logs excessivos no console para otimizar velocidade
-spring.jpa.show-sql=false
-```
-
-Quando a aplicação inicializa, o Spring Boot resolve a sintaxe `${VAR_NAME:default_value}`. Se a variável `DB_DEV_PASSWORD` existir no ambiente (injetada a partir do `.env` ou do contêiner), seu valor é aplicado; se uma variável obrigatória sem valor padrão não for encontrada, o framework aborta a inicialização (*fail-fast*), impedindo a subida de instâncias inseguras.
-
-#### Rubrica de Avaliação da Questão Discursiva 05
-
-| Critério Avaliado | Pontuação Máxima | Evidências Necessárias para Nota Máxima |
-|---|---|---|
-| **Refutação do H2 e Paridade de Ambientes** | 30 pontos | Demonstração clara das divergências de dialeto SQL, motores de concorrência/lock e incompatibilidades do Liquibase entre H2 e PostgreSQL. |
-| **Segurança e Higiene de Repositório** | 25 pontos | Articulação precisa sobre a orquestração segura entre `.env` (ignorado), `.gitignore` e `.env.example` (documentação pública). |
-| **Arquitetura de Perfis do Spring** | 25 pontos | Estruturação de `application.properties`, `application-dev.properties` e `application-test.properties` com isolamento de responsabilidades. |
-| **Mecanismo de Interpolação de Variáveis** | 20 pontos | Demonstração do funcionamento da sintaxe `${NOME_VARIAVEL}` e justificativa do comportamento fail-fast em runtime. |
+##### Rubrica de Avaliação Detalhada
+- **Crítica às Vulnerabilidades (20%):** Identificação fundamentada do estilo RPC (`/cadastrar`), riscos de mass assignment/exposição de entidades JPA e ausência de camada de serviço transacional.
+- **DTO com Record e Validações Declarativas (25%):** Definição com sintaxe concisa de `record`, tipagem de precisão numérica e anotações `@NotBlank`, `@NotNull`, `@Positive`, `@PositiveOrZero` com mensagens amigáveis.
+- **Implementação do Controller (30%):** Rota correta (`POST /api/produtos`), uso de `@Valid`, injeção por construtor, orquestração entre Mapper e Service, geração de URI no cabeçalho `Location` e emissão do status `201 Created`.
+- **Tratamento Centralizado e Formato ApiError (25%):** Modelo de retorno bem delimitado com campos rastreáveis (timestamp, path, lista de violações) e captura via `@RestControllerAdvice` com status `400 Bad Request`.
 
 ---
 
@@ -1278,4 +1216,4 @@ Quando a aplicação inicializa, o Spring Boot resolve a sintaxe `${VAR_NAME:def
 
 - Turma no Classroom: 2026 2S Lab 4
 - Itens processados: 0 materiais, 1 tarefas, 1 avisos
-- Gerado em: 25/09/2026, 00:13:54 (BRT) via classroom-sync
+- Gerado em: 19/10/2026, 02:08:44 (BRT) via classroom-sync

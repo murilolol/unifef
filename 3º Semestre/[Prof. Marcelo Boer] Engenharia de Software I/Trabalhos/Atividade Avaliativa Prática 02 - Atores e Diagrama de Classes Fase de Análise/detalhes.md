@@ -2,7 +2,7 @@
 
 > **Professor:** Marcelo Boer
 > **Disciplina:** Engenharia de Software I (3º Semestre)
-> **Prazo de Entrega:** 11/03/2026 às 20:59
+> **Prazo de Entrega:** 10/03/2026 às 21:00
 > **Pontuação Máxima:** 2 pontos
 > **Conteúdo cobrado:** [Aula 01 - Processo de Abstração e Levantamento de Requisitos](../../Aulas/Aula%2001%20-%20Processo%20de%20Abstra%C3%A7%C3%A3o%20e%20Levantamento%20de%20Requisitos/detalhes.md), [Aula 02 - Configuração e Licenciamento do Astah UML](../../Aulas/Aula%2002%20-%20Configura%C3%A7%C3%A3o%20e%20Licenciamento%20do%20Astah%20UML/detalhes.md), [Aula 03 - Revisão de Requisitos de Software para AV1](../../Aulas/Aula%2003%20-%20Revis%C3%A3o%20de%20Requisitos%20de%20Software%20para%20AV1/detalhes.md), [Aula 04 - Abstração e Modelagem de Requisitos](../../Aulas/Aula%2004%20-%20Abstra%C3%A7%C3%A3o%20e%20Modelagem%20de%20Requisitos/detalhes.md), [Aula 05 - Descrição Textual de Casos de Uso](../../Aulas/Aula%2005%20-%20Descri%C3%A7%C3%A3o%20Textual%20de%20Casos%20de%20Uso/detalhes.md), [Aula 06 - Modelo de Apresentação da Fase Análise](../../Aulas/Aula%2006%20-%20Modelo%20de%20Apresenta%C3%A7%C3%A3o%20da%20Fase%20An%C3%A1lise/detalhes.md)
 
@@ -761,7 +761,7 @@ Antes de submeter o arquivo final da Atividade 02 no Google Classroom, certifiqu
 - [ ] **Formatação e Prazos:**
   - [ ] O documento atende aos padrões formais de cabeçalho da UniFEF e modelo de apresentação (Aula 06).
   - [ ] O arquivo final foi gerado em PDF/DOCX e verificado visualmente quanto a quebras de páginas ou cortes em diagramas.
-  - [ ] A submissão está programada para ocorrer antes do prazo limite de **11/03/2026 às 20:59**.
+  - [ ] A submissão está programada para ocorrer antes do prazo limite de **10/03/2026 às 21:00**.
 
 ## Código prático de apoio
 

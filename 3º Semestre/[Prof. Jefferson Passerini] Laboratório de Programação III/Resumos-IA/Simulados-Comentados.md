@@ -1,897 +1,462 @@
-# Manual de Estudos e Referência Integrada: Laboratório de Programação III
+# Manual de Estudos e Pratica — Laboratório de Programacao III
 
-**Instituição:** Centro Universitário de Fernandópolis (UniFEF)  
-**Curso:** Bacharelado em Sistemas de Informação (3º Semestre)  
-**Disciplina:** Laboratório de Programação III  
-**Docente:** Prof. Jefferson Passerini  
-
----
-
-## Sumário
-
-- [Visão Geral da Disciplina e Planejamento Semestral](#visão-geral-da-disciplina-e-planejamento-semestral)
-  - [Ementa e Objetivos Pedagógicos](#ementa-e-objetivos-pedagógicos)
-  - [Linha do Tempo das Atividades e Avaliações](#linha-do-tempo-das-atividades-e-avaliações)
-  - [Mapa Conceitual da Disciplina](#mapa-conceitual-da-disciplina)
-- [Fundamentos de Programação Orientada a Objetos Avançada](#fundamentos-de-programação-orientada-a-objetos-avançada)
-  - [Encapsulamento e Invariantes de Estado](#encapsulamento-e-invariantes-de-estado)
-  - [Herança e o Princípio de Substituição de Liskov](#herança-e-o-princípio-de-substituição-de-liskov)
-  - [Polimorfismo e Ligação Tardia](#polimorfismo-e-ligação-tardia)
-  - [Abstração: Classes Abstratas versus Interfaces](#abstração-classes-abstratas-versus-interfaces)
-  - [Coleções Dinâmicas e Ordenação](#coleções-dinâmicas-e-ordenação)
-  - [Hierarquia e Tratamento Robusto de Exceções](#hierarquia-e-tratamento-robusto-de-exceções)
-- [Configuração do Ambiente e Arquitetura Monolítica Java EE](#configuração-do-ambiente-e-arquitetura-monolítica-java-ee)
-  - [Arquitetura da Plataforma Java: JDK, JRE e JVM](#arquitetura-da-plataforma-java-jdk-jre-e-jvm)
-  - [O Container Web Apache Tomcat 9 e a Cisão Jakarta EE](#o-container-web-apache-tomcat-9-e-a-cisão-jakarta-ee)
-  - [Configuração da IDE Apache NetBeans 24 e Apache Ant](#configuração-da-ide-apache-netbeans-24-e-apache-ant)
-  - [Monólitos Corporativos versus Microsserviços](#monólitos-corporativos-versus-microsserviços)
-  - [O Padrão Arquitetural MVC e Estrutura de Pacotes](#o-padrão-arquitetural-mvc-e-estrutura-de-pacotes)
-- [Camada de Apresentação com JSP e Tecnologias Frontend](#camada-de-apresentação-com-jsp-e-tecnologias-frontend)
-  - [Ciclo de Vida e Processamento de JavaServer Pages](#ciclo-de-vida-e-processamento-de-javaserver-pages)
-  - [Modularização com jsp:include e Resolução de ContextPath](#modularização-com-jspinclude-e-resolução-de-contextpath)
-  - [A Biblioteca Padrão JSTL: Core e Formatting](#a-biblioteca-padrão-jstl-core-e-formatting)
-  - [Bibliotecas Frontend e Validação no Cliente com Módulo 11](#bibliotecas-frontend-e-validação-no-cliente-com-módulo-11)
-- [Camada de Persistência Relacional com PostgreSQL e JDBC](#camada-de-persistência-relacional-com-postgresql-e-jdbc)
-  - [SGBD PostgreSQL, Tipagem Segura e Sequências](#sgbd-postgresql-tipagem-segura-e-sequências)
-  - [O Padrão Criacional Singleton: SingleConnection](#o-padrão-criacional-singleton-singleconnection)
-  - [Controle Transacional Manual e Propriedades ACID](#controle-transacional-manual-e-propriedades-acid)
-  - [Interceptação de Requisições com Servlet Filters](#interceptação-de-requisições-com-servlet-filters)
-- [Implementação da Consulta e Listagem no Padrão MVC](#implementação-da-consulta-e-listagem-no-padrão-mvc)
-  - [O Modelo de Dados JavaBean e o Contrato de Identidade](#o-modelo-de-dados-javabean-e-o-contrato-de-identidade)
-  - [Contratos de Acesso a Dados com a Interface GenericDAO](#contratos-de-acesso-a-dados-com-a-interface-genericdao)
-  - [Ciclo de Vida de Servlets e o Controlador de Listagem](#ciclo-de-vida-de-servlets-e-o-controlador-de-listagem)
-  - [Renderização Dinâmica com JSTL e DataTables](#renderização-dinâmica-com-jstl-e-datatables)
-- [Operações de Manutenção Completa do Cadastro](#operações-de-manutenção-completa-do-cadastro)
-  - [Bifurcação de Persistência na DAO](#bifurcação-de-persistência-na-dao)
-  - [Prevenção de SQL Injection e Mapeamento de Datas](#prevenção-de-sql-injection-e-mapeamento-de-datas)
-  - [Verificação Assíncrona de Unicidade e AJAX](#verificação-assíncrona-de-unicidade-e-ajax)
-  - [Validação Algorítmica Centralizada no Backend](#validação-algorítmica-centralizada-no-backend)
-  - [Fluxo de Alteração e o Método Carregar](#fluxo-de-alteração-e-o-método-carregar)
-- [Projetos Práticos e Trabalhos da Disciplina](#projetos-práticos-e-trabalhos-da-disciplina)
-  - [Trabalho de Programação: Módulo de Livros](#trabalho-de-programação-módulo-de-livros)
-  - [Trabalho de Programação: Módulo de Estados Federativos](#trabalho-de-programação-módulo-de-estados-federativos)
-- [Exames e Avaliações do Semestre](#exames-e-avaliações-do-semestre)
-  - [Avaliação 1: POO Avançada e Folha de Pagamento](#avaliação-1-poo-avançada-e-folha-de-pagamento)
-  - [Avaliação II: CRUD de Produtos com JDBC e Exceções](#avaliação-ii-crud-de-produtos-com-jdbc-e-exceções)
-  - [Avaliação Substitutiva: Hierarquias, Interfaces e Tributação](#avaliação-substitutiva-hierarquias-interfaces-e-tributação)
-- [Guia de Diagnóstico de Falhas e Boas Práticas](#guia-de-diagnóstico-de-falhas-e-boas-práticas)
-  - [Resolução de Erros Clássicos de Compilação e Execução](#resolução-de-erros-clássicos-de-compilação-e-execução)
-  - [Boas Práticas de Engenharia e Segurança Web](#boas-práticas-de-engenharia-e-segurança-web)
-- [Apêndices Acadêmicos](#apêndices-acadêmicos)
-  - [Glossário Técnico](#glossário-técnico)
-  - [Banco de Questões e Respostas para Revisão](#banco-de-questões-e-respostas-para-revisão)
-  - [Checklist de Homologação de Projetos](#checklist-de-homologação-de-projetos)
+> **Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
+> **Curso:** Bacharelado em Sistemas de Informação (3º Semestre)  
+> **Disciplina:** Laboratório de Programação III  
+> **Docente:** Prof. Jefferson Passerini  
+> **Tema Central:** Engenharia de Aplicações Web Corporativas com Java EE 8, Apache Tomcat 9, NetBeans 24, Arquitetura MVC Monolítica, Persistência Relacional PostgreSQL via JDBC e Interface Dinâmica JSP/JSTL/AJAX
 
 ---
 
-## Visão Geral da Disciplina e Planejamento Semestral
+## Sumario
 
-### Ementa e Objetivos Pedagógicos
-
-A disciplina de **Laboratório de Programação III**, ministrada no 3º semestre do curso de Sistemas de Informação da UniFEF pelo **Prof. Jefferson Passerini**, estabelece a ponte definitiva entre o paradigma de Orientação a Objetos puro (desenvolvido prioritariamente em aplicações desktop e consoles locais) e a engenharia de software voltada a sistemas corporativos distribuídos na plataforma Java Web.
-
-Os objetivos centrais da formação estruturam-se em:
-1. **Consolidação dos Pilares de POO**: Capacitar o estudante a projetar modelos de domínio ricos, aplicando encapsulamento defensivo, hierarquias de herança semântica, polimorfismo dinâmico e abstrações via classes abstratas e interfaces.
-2. **Dominar o Padrão Arquitetural MVC**: Estruturar monólitos corporativos em camadas físicas e lógicas rigorosamente desacopladas: Visão (JSP, JSTL, EL, Bootstrap, jQuery), Controle (Servlets HTTP, Web Filters) e Modelo/Persistência (JavaBeans, GenericDAO, JDBC, PostgreSQL).
-3. **Persistência Relacional Segura**: Compreender o ciclo de vida de conexões JDBC, a parametrização contra vulnerabilidades de injeção de SQL via `PreparedStatement` e o controle transacional atômico (`commit`/`rollback`).
-4. **Resolução de Problemas no Frontend Corporativo**: Desenvolver interfaces modulares com fragmentação de telas, validação de regras matemáticas oficiais (Módulo 11 para documentos federais) e comunicação assíncrona baseada em AJAX.
+- [Modulo 1 — Configuracao de Ambiente, Ecossistema Java EE e Arquitetura Monolitica](#modulo-1--configuracao-de-ambiente-ecossistema-java-ee-e-arquitetura-monolitica)
+  - [1.1 Ecossistema Java: JDK 17 LTS (Eclipse Temurin), JRE e JVM](#11-ecossistema-java-jdk-17-lts-eclipse-temurin-jre-e-jvm)
+  - [1.2 Servidor de Aplicacao Web: Apache Tomcat 9 e a Transicao para Jakarta EE](#12-servidor-de-aplicacao-web-apache-tomcat-9-e-a-transicao-para-jakarta-ee)
+  - [1.3 Ambiente Integrado: Apache NetBeans 24 e Automacao Apache Ant](#13-ambiente-integrado-apache-netbeans-24-e-automacao-apache-ant)
+  - [1.4 Arquitetura de Software: Monolito Modular versus Microsservicos](#14-arquitetura-de-software-monolito-modular-versus-microsservicos)
+  - [1.5 Padrao Arquitetural MVC no Contexto Web Java](#15-padrao-arquitetural-mvc-no-contexto-web-java)
+  - [1.6 Estruturacao em Camadas e Pacotes Java: View, Filter, Controller, Model, DAO e Utils](#16-estruturacao-em-camadas-e-pacotes-java-view-filter-controller-model-dao-e-utils)
+- [Modulo 2 — Camada de Apresentacao Modular com JSP, JSTL e Frontend](#modulo-2--camada-de-apresentacao-modular-com-jsp-jstl-e-frontend)
+  - [2.1 Modularizacao Visual e Decomposicao de Paginas](#21-modularizacao-visual-e-decomposicao-de-paginas)
+  - [2.2 Inclusao Dinamica (jsp:include) versus Inclusao Estatica (<%@include%>)](#22-inclusao-dinamica-jspinclude-versus-inclusao-estatica-include)
+  - [2.3 Biblioteca de Tags Padronizadas (JSTL Core e Formatting) e Diretiva taglib](#23-biblioteca-de-tags-padronizadas-jstl-core-e-formatting-e-diretiva-taglib)
+  - [2.4 Resolucao Dinamica de Rotas com Expression Language](#24-resolucao-dinamica-de-rotas-com-expression-language)
+  - [2.5 Arquitetura de Ativos Estaticos e Ordem Critica de Scripts](#25-arquitetura-de-ativos-estaticos-e-ordem-critica-de-scripts)
+- [Modulo 3 — Persistencia Relacional, JDBC, Singleton e Interceptacao](#modulo-3--persistencia-relacional-jdbc-singleton-e-interceptacao)
+  - [3.1 Modelagem e Administracao no PostgreSQL e pgAdmin 4](#31-modelagem-e-administracao-no-postgresql-e-pgadmin-4)
+  - [3.2 DDL da Tabela usuario, Chaves Primarias SERIAL e Tipagem Financeira](#32-ddl-da-tabela-usuario-chaves-primarias-serial-e-tipagem-financeira)
+  - [3.3 Versionamento de Infraestrutura de Dados: Script banco.sql no Pacote utils](#33-versionamento-de-infraestrutura-de-dados-script-bancosql-no-pacote-utils)
+  - [3.4 Padrao de Projeto Criacional Singleton: Estrutura, Vantagens e Riscos](#34-padrao-de-projeto-criacional-singleton-estrutura-vantagens-e-riscos)
+  - [3.5 Implementacao da Conexao Centralizada com a Classe SingleConnection](#35-implementacao-da-conexao-centralizada-com-a-classe-singleconnection)
+  - [3.6 Controle Transacional Manual e Propriedades ACID](#36-controle-transacional-manual-e-propriedades-acid)
+  - [3.7 Interceptacao de Requisicoes com Servlet Filters](#37-interceptacao-de-requisicoes-com-servlet-filters)
+  - [3.8 Depuracao de Software e Diretrizes de Acessibilidade](#38-depuracao-de-software-e-diretrizes-de-acessibilidade)
+- [Modulo 4 — Implementacao da Consulta no Modelo MVC (Listar)](#modulo-4--implementacao-da-consulta-no-modelo-mvc-listar)
+  - [4.1 Construcao do JavaBean Usuario (Encapsulamento, Construtores, equals e hashCode)](#41-construcao-do-javabean-usuario-encapsulamento-construtores-equals-e-hashcode)
+  - [4.2 Interfaces em Java: Teoria, Desacoplamento e Contratos de Persistencia](#42-interfaces-em-java-teoria-desacoplamento-e-contratos-de-persistencia)
+  - [4.3 Criacao da Interface GenericDAO e Analise de Object versus Generics](#43-criacao-da-interface-genericdao-e-analise-de-object-versus-generics)
+  - [4.4 Implementacao da UsuarioDAO: Metodo listar(), PreparedStatement e Cursor ResultSet](#44-implementacao-da-usuariodao-metodo-listar-preparedstatement-e-cursor-resultset)
+  - [4.5 Servlets HTTP: Ciclo de Vida, Metodos doGet/doPost e o Controlador UsuarioListar](#45-servlets-http-ciclo-de-vida-metodos-dogetdopost-e-o-controlador-usuariolistar)
+  - [4.6 Compartilhamento de Escopo e Despacho via RequestDispatcher](#46-compartilhamento-de-escopo-e-despacho-via-requestdispatcher)
+  - [4.7 Construcao da View usuarioListar.jsp: Tabelas Dinamicas, Formatacao JSTL e DataTables](#47-construcao-da-view-usuariolistarjsp-tabelas-dinamicas-formatacao-jstl-e-datatables)
+- [Modulo 5 — Manutencao Cadastral Completa (Inclusao, Validacoes Assincronas e Edicao)](#modulo-5--manutencao-cadastral-completa-inclusao-validacoes-assincronas-e-edicao)
+  - [5.1 Decisao de Persistencia na DAO: Bifurcacao por Identificador (id == 0)](#51-decisao-de-persistencia-na-dao-bifurcacao-por-identificador-id--0)
+  - [5.2 Implementacao do Metodo inserir() com PreparedStatement e Tratamento de Datas](#52-implementacao-do-metodo-inserir-com-preparedstatement-e-tratamento-de-datas)
+  - [5.3 Verificacao de Duplicidade no Banco: Metodo cpfExiste() com COUNT(*)](#53-verificacao-de-duplicidade-no-banco-metodo-cpfexiste-com-count)
+  - [5.4 Validacao Algoritmica de Documentos: Modulo 11 para CPF e CNPJ](#54-validacao-algoritmica-de-documentos-modulo-11-para-cpf-e-cnpj)
+  - [5.5 Metodos Estaticos versus Metodos de Instancia na Engenharia de Software](#55-metodos-estaticos-versus-metodos-de-instancia-na-engenharia-de-software)
+  - [5.6 Servlet Assincrono UsuarioVerificarCPF para Validacao via AJAX](#56-servlet-assincrono-usuarioverificarcpf-para-validacao-via-ajax)
+  - [5.7 Servlet de Inicializacao UsuarioNovo e Encaminhamento com Modelo Vazio](#57-servlet-de-inicializacao-usuarionovo-e-encaminhamento-com-modelo-vazio)
+  - [5.8 Servlet Controlador UsuarioCadastrar: Parse de Tipos, Higienizacao e Codigos de Retorno](#58-servlet-controlador-usuariocadastrar-parse-de-tipos-higienizacao-e-codigos-de-retorno)
+  - [5.9 Interface de Manutencao usuarioCadastrar.jsp: Formulario Hibrido, Mascaras e AJAX](#59-interface-de-manutencao-usuariocadastrarjsp-formulario-hibrido-mascaras-e-ajax)
+  - [5.10 Metodo carregar() na DAO e Fluxo de Atualizacao Cadastral](#510-metodo-carregar-na-dao-e-fluxo-de-atualizacao-cadastral)
+- [Codigo-Fonte Consolidado da Aplicacao](#codigo-fonte-consolidado-da-aplicacao)
+- [Bateria de Exercicios Praticos e Dissertativos](#bateria-de-exercicios-praticos-e-dissertativos)
+- [Erros Comuns, Diagnosticos e Boas Praticas de Engenharia](#erros-comuns-diagnosticos-e-boas-praticas-de-engenharia)
+- [Glossario Tecnico e Termos Essenciais](#glossario-tecnico-e-termos-essenciais)
+- [Pontos-Chave para Avaliacoes e Provas](#pontos-chave-para-avaliacoes-e-provas)
+- [Banco de Questoes para Fixacao (JSONL)](#banco-de-questoes-para-fixacao-jsonl)
+- [Checklist Geral de Revisao e Implantacao](#checklist-geral-de-revisao-e-implantacao)
 
 ---
 
-### Linha do Tempo das Atividades e Avaliações
+## Modulo 1 — Configuracao de Ambiente, Ecossistema Java EE e Arquitetura Monolitica
 
-A execução do semestre letivo distribuiu-se em aulas expositivas de laboratório, entregas de trabalhos práticos de desenvolvimento em equipe e exames formais individuais, conforme registrado nos cronogramas acadêmicos oficiais:
+### 1.1 Ecossistema Java: JDK 17 LTS (Eclipse Temurin), JRE e JVM
+
+O desenvolvimento corporativo sobre a plataforma Java assenta-se em uma hierarquia de componentes de software que viabilizam a compilação, distribuição e execução independente de arquitetura de hardware:
 
 ```mermaid
-timeline
-    title Linha do Tempo Oficial da Disciplina (3º Semestre)
-    2026-03-23 : Avaliação 1 (AV1) : Foco em POO, herança, polimorfismo e invariantes
-    2026-04-27 : Trabalho de Programação : Cadastro e Manutenção de Livros (Prazo 2026-05-07)
-    2026-05-11 : Trabalho de Programação : Módulo de Estados Federativos (Prazo 2026-05-25)
-    2026-06-08 : Avaliação II (AV2) : CRUD completo com JDBC, arquitetura em camadas e SQLite/PostgreSQL
-    2026-06-25 : Avaliação Substitutiva : Síntese integral de POO, interfaces, coleções e exceções
+flowchart TD
+    subgraph JDK["Java Development Kit (JDK 17 LTS)"]
+        subgraph JRE["Java Runtime Environment (JRE)"]
+            subgraph JVM["Java Virtual Machine (JVM)"]
+                Hotspot["Hotspot Engine: JIT Compiler e Garbage Collector"]
+            end
+            CoreLibs["Bibliotecas da API Base (java.base, java.sql, etc.)"]
+        end
+        Compilador["Compilador javac"]
+        DevTools["Utilitarios: jar, javadoc, jdb, jshell"]
+    end
+    Source["Codigo-Fonte (.java)"] --> Compilador
+    Compilador --> Bytecode["Bytecode Intermediario (.class)"]
+    Bytecode --> JVM
+    JVM --> OS["Sistema Operacional (Windows / Linux / macOS)"]
 ```
+
+#### Definições Formais
+- **Java Virtual Machine (JVM):** Máquina abstrata baseada em pilha (*stack-based virtual machine*) que carrega arquivos `.class`, verifica a segurança estrutural do bytecode através do *Bytecode Verifier*, executa as instruções interpretadas e compila trechos de alto consumo de processamento para linguagem de máquina nativa via *Just-In-Time Compiler* (JIT), além de automatizar a gestão de memória pelo *Garbage Collector*.
+- **Java Runtime Environment (JRE):** Agrupamento mínimo executável contendo a JVM e as bibliotecas essenciais do Java Standard Edition.
+- **Java Development Kit (JDK):** Superconjunto do JRE que agrega ferramentas de diagnóstico, empacotamento (`jar`) e o compilador primário (`javac`).
+
+#### Motivação da Escolha da Versão 17 LTS (Eclipse Temurin)
+A versão Java 17 constitui um marco de suporte de longo prazo (*Long-Term Support* - LTS). Lançada sob governança do consórcio Eclipse Adoptium, a distribuição Temurin oferece estabilidade operacional, garantia contínua de correções de vulnerabilidades críticas (CVEs) e previsibilidade de ciclo de vida, evitando a volatilidade semestral das versões intermediárias não-LTS.
+
+#### Armadilhas e Verificações Operacionais
+A coexistência de múltiplos runtimes Java em estações Windows frequentemente corrompe a variável de ambiente `PATH`, fazendo com que o comando `java` invoque uma versão diferente daquela invocada por `javac`. É obrigatório executar a auditoria no terminal:
+
+```powershell
+java -version
+javac -version
+```
+
+Ambas as saídas devem atestar estritamente o build `17.0.x`. A divergência de versões acarreta erros de compilação ou incompatibilidade de versão de formato de classe (`UnsupportedClassVersionError: Unsupported major.minor version`).
 
 ---
 
-### Mapa Conceitual da Disciplina
+### 1.2 Servidor de Aplicacao Web: Apache Tomcat 9 e a Transicao para Jakarta EE
 
-O ecossistema abordado pelo Prof. Jefferson Passerini interliga componentes de interface, motores de execução na JVM e mecanismos de persistência relacional sob um fluxo contínuo de controle:
+O Apache Tomcat não opera como um servidor de aplicação Full Java EE (como WildFly ou Payara), mas sim como um **Servlet Container** e **JSP Engine** de alta performance. Ele implementa as especificações centrais do ecossistema Web:
 
-```mermaid
-mindmap
-  root((Lab Prog III UniFEF))
-    Fundamentos POO
-      Encapsulamento
-      Heranca e LSP
-      Polimorfismo e vtable
-      Classes Abstratas
-      Interfaces e Contratos
-      Tratamento de Excecoes
-    Infraestrutura e Servidor
-      JDK 17 LTS Temurin
-      Apache Tomcat 9
-      Tomcat 10 e Cisao Jakarta
-      Apache NetBeans 24
-      Apache Ant
-    Camada View
-      JSP e Engine Jasper
-      jsp include modular
-      JSTL Core e Fmt
-      Expression Language
-      Bootstrap e DataTables
-      Validacao Modulo 11
-    Camada Controller
-      Servlets HTTP
-      doGet e doPost
-      RequestDispatcher forward
-      Servlet Filters
-      Post Redirect Get
-    Camada Model e Persistencia
-      JavaBeans
-      GenericDAO
-      JDBC e PreparedStatement
-      Singleton SingleConnection
-      PostgreSQL e DDL DML
-      Transacoes Manuais ACID
-```
-
----
-
-## Fundamentos de Programação Orientada a Objetos Avançada
-
-### Encapsulamento e Invariantes de Estado
-
-#### Definição
-O encapsulamento é o mecanismo estrutural de isolamento que restringe o acesso direto ao estado interno de um objeto, expondo unicamente métodos públicos que governam as transições de estado permitidas e asseguram suas **invariantes de estado**. Uma invariante de estado é uma condição lógica ou regra de negócio que deve obrigatoriamente manter-se verdadeira durante todo o ciclo de vida do objeto na memória heap.
-
-#### Motivação
-Em sistemas empresariais, permitir que atributos de entidades recebam valores diretamente sem passar por validação acarreta corrupção silenciosa de dados. Se o atributo `salarioBase` de um colaborador puder ser manipulado livremente, cálculos tributários, folha de pagamento e emissão bancária falharão em momentos tardios e imprevisíveis.
-
-#### Exemplo Prático de Encapsulamento Rigoroso
-```java
-package br.com.unifef.dominio;
-
-public class Funcionario {
-    private String nome;
-    private int matricula;
-    private double salarioBase;
-
-    public Funcionario(String nome, int matricula, double salarioBase) {
-        setNome(nome);
-        setMatricula(matricula);
-        setSalarioBase(salarioBase);
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Violacao de invariante: O nome nao pode ser nulo ou vazio.");
-        }
-        this.nome = nome.trim();
-    }
-
-    public int getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(int matricula) {
-        if (matricula <= 0) {
-            throw new IllegalArgumentException("Violacao de invariante: A matricula deve ser estritamente positiva.");
-        }
-        this.matricula = matricula;
-    }
-
-    public double getSalarioBase() {
-        return salarioBase;
-    }
-
-    public void setSalarioBase(double salarioBase) {
-        if (salarioBase <= 0.0) {
-            throw new IllegalArgumentException("Violacao de invariante: O salario base deve ser maior do que zero.");
-        }
-        this.salarioBase = salarioBase;
-    }
-
-    public double calcularSalario() {
-        return this.salarioBase;
-    }
-}
-```
-
-#### Contraexemplo
-```java
-// Anti-pattern: Modelo anêmico com atributos públicos sem defesa
-public class FuncionarioInseguro {
-    public String nome;
-    public int matricula;
-    public double salarioBase;
-    // Qualquer trecho do sistema pode executar:
-    // funcionario.salarioBase = -50000.00;
-}
-```
-
-#### Armadilhas Comuns
-- **Getters e Setters Automáticos sem Validação**: Gerar automaticamente mutadores públicos através da IDE sem incluir filtros condicionais cria apenas uma ilusão sintática de encapsulamento, funcionando identicamente a campos públicos.
-- **Vazamento de Referências Mutáveis**: Retornar coleções ou objetos mutáveis diretamente nos métodos `get` (por exemplo, retornar o ponteiro direto de `java.util.Date` ou `List`) permite que classes externas alterem o conteúdo interno do objeto sem passar pelos métodos de validação. A boa prática exige retornar cópias defensivas (`new Date(data.getTime())` ou `Collections.unmodifiableList(lista)`).
-
----
-
-### Herança e o Princípio de Substituição de Liskov
-
-#### Definição
-A herança é a relação estrutural em que uma classe derivada (subclasse) herda campos e comportamentos de uma classe superior (superclasse), estabelecendo um vínculo semântico do tipo "É-UM" (*is-a*). O **Princípio de Substituição de Liskov (LSP)**, formulado por Barbara Liskov, preconiza que se $S$ é um subtipo de $T$, objetos do tipo $T$ devem poder ser substituídos por objetos do tipo $S$ em qualquer parte do programa sem alterar nenhuma das propriedades desejáveis de correção desse programa.
-
-#### Motivação
-A herança viabiliza o reuso sistemático de código estrutural e previne a duplicação desnecessária (*Don't Repeat Yourself*). O respeito estrito ao LSP garante que métodos polimórficos de alto nível possam processar qualquer subclasse sem surpresas comportamentais ou lançamento de exceções inesperadas.
-
-```mermaid
-classDiagram
-    class Funcionario {
-        -String nome
-        -int matricula
-        -double salarioBase
-        +Funcionario(nome, matricula, salarioBase)
-        +getSalarioBase() double
-        +calcularSalario() double
-    }
-    class Gerente {
-        -double bonusAnual
-        +Gerente(nome, matricula, salarioBase, bonusAnual)
-        +getBonusAnual() double
-        +setBonusAnual(double) void
-        +calcularSalario() double
-    }
-    class Desenvolvedor {
-        -double adicionalNoturno
-        +Desenvolvedor(nome, matricula, salarioBase, adicionalNoturno)
-        +getAdicionalNoturno() double
-        +setAdicionalNoturno(double) void
-        +calcularSalario() double
-    }
-    Funcionario <|-- Gerente : Especializa
-    Funcionario <|-- Desenvolvedor : Especializa
-```
-
-#### Exemplo Prático com Respeito ao LSP
-```java
-package br.com.unifef.dominio;
-
-public class Gerente extends Funcionario {
-    private double bonusAnual;
-
-    public Gerente(String nome, int matricula, double salarioBase, double bonusAnual) {
-        super(nome, matricula, salarioBase);
-        setBonusAnual(bonusAnual);
-    }
-
-    public double getBonusAnual() {
-        return bonusAnual;
-    }
-
-    public void setBonusAnual(double bonusAnual) {
-        if (bonusAnual < 0.0) {
-            throw new IllegalArgumentException("O bonus anual nao pode ser negativo.");
-        }
-        this.bonusAnual = bonusAnual;
-    }
-
-    @Override
-    public double calcularSalario() {
-        // Estende o comportamento mantendo a previsibilidade do contrato
-        return super.calcularSalario() + (this.bonusAnual / 12.0);
-    }
-}
-```
-
-#### Contraexemplo (Violação Clássica de Liskov)
-```java
-public class EstagiarioVoluntario extends Funcionario {
-    public EstagiarioVoluntario(String nome, int matricula) {
-        super(nome, matricula, 1.0); // Burlar invariante da superclasse
-    }
-
-    @Override
-    public double calcularSalario() {
-        // Quebra grave: lanca excecao onde o cliente esperava receber um double
-        throw new UnsupportedOperationException("Estagiarios voluntarios nao possuem salario.");
-    }
-}
-```
-
-#### Armadilhas Comuns
-- **Herança por Conveniência**: Estender uma classe apenas para reaproveitar métodos utilitários, quando a semântica "É-UM" não existe (exemplo clássico: fazer uma classe `Pessoa` herdar de `ArrayList` para aproveitar os métodos de inserção). A composição deve ser preferida nesses cenários.
-- **Fragilidade da Superclasse**: Alterar atributos protegidos (`protected`) ou comportamentos de uma superclasse pode causar efeitos colaterais catastróficos em subclasses distribuídas em outros pacotes.
-
----
-
-### Polimorfismo e Ligação Tardia
-
-#### Definição
-O polimorfismo é a capacidade de invocar a mesma assinatura de método sobre referências de um tipo genérico, disparando comportamentos distintos conforme o tipo concreto da instância instanciada em tempo de execução. O mecanismo subjacente é a **ligação tardia** (*dynamic binding*), na qual a JVM utiliza tabelas de métodos virtuais (*vtable*) e o bytecode `invokevirtual` para descobrir o método exato em runtime, em vez de determiná-lo durante a compilação.
-
-#### Motivação
-Elimina a necessidade de estruturas condicionais encadeadas (`if-else`, `switch-case`) e operadores de checagem de tipo em tempo de execução (`instanceof`). Novas especializações de classes podem ser incorporadas ao sistema sem exigir modificação nas classes consumidoras de alto nível, atendendo plenamente ao Princípio Aberto/Fechado (OCP - *Open/Closed Principle*).
-
-#### Diagrama de Sequência de Despacho Dinâmico
 ```mermaid
 sequenceDiagram
     autonumber
-    actor RH as Modulo de Folha
-    participant Lista as List~Funcionario~
-    participant Ref as Funcionario (Referencia)
-    participant Ger as Instancia Gerente
-    participant Dev as Instancia Desenvolvedor
+    actor Navegador as Navegador Web (Cliente)
+    participant Conector as Conector HTTP (Porta 8080)
+    participant Catalina as Engine Catalina (Servlet Container)
+    participant Jasper as Engine Jasper (JSP Compiler)
+    participant Servlet as Servlet / Contexto da Aplicacao
 
-    RH->>Lista: iterar elementos
-    loop Para cada elemento
-        Lista->>Ref: calcularSalario()
-        alt Instancia Concreta Gerente
-            Ref->>Ger: invokevirtual Gerente.calcularSalario()
-            Ger-->>RH: Retorna base + (bonus / 12)
-        else Instancia Concreta Desenvolvedor
-            Ref->>Dev: invokevirtual Desenvolvedor.calcularSalario()
-            Dev-->>RH: Retorna base + adicional
-        end
-    end
+    Navegador->>Conector: Requisicao HTTP GET /aplcurso/index.jsp
+    Conector->>Catalina: Cria HttpServletRequest e HttpServletResponse
+    Catalina->>Jasper: Intercepta documento JSP
+    Jasper->>Jasper: Traduz JSP para classe Java (.java) e compila (.class)
+    Jasper->>Servlet: Invoca metodo _jspService(request, response)
+    Servlet-->>Catalina: Escreve fluxo HTML no buffer de saida
+    Catalina-->>Conector: Converte buffer em pacote TCP HTTP 200 OK
+    Conector-->>Navegador: Entrega documento HTML puro
 ```
 
-#### Exemplo Prático de Processamento Polimórfico
-```java
-package br.com.unifef.servico;
+#### A Ruptura Histórica: Tomcat 9 versus Tomcat 10+
+Em decorrência da transferência dos direitos da marca Java EE da Oracle para a Eclipse Foundation, houve uma quebra de retrocompatibilidade a partir da especificação Jakarta EE 9. O pacote raiz corporativo `javax.*` foi compulsoriamente renomeado para `jakarta.*`.
 
-import br.com.unifef.dominio.Funcionario;
-import java.util.List;
+| Versão do Apache Tomcat | Especificação Servlet | Especificação JSP | Namespace dos Pacotes | Compatibilidade com Java EE 8 Web |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tomcat 8.5.x** | Servlet 3.1 | JSP 2.3 | `javax.servlet.*` | Compatível (Legado) |
+| **Tomcat 9.0.x** | **Servlet 4.0** | **JSP 2.3** | `javax.servlet.*` | **Padrão Exigido na Disciplina** |
+| **Tomcat 10.0.x / 10.1.x** | Servlet 5.0 / 6.0 | JSP 3.0 / 3.1 | `jakarta.servlet.*` | Incompatível (`ClassNotFoundException`) |
+| **Tomcat 11.0.x** | Servlet 6.1 | JSP 4.0 | `jakarta.servlet.*` | Incompatível (`ClassNotFoundException`) |
 
-public class ServicoFolhaPagamento {
-
-    public double processarFolhaTotal(List<Funcionario> colaboradores) {
-        if (colaboradores == null) {
-            throw new IllegalArgumentException("A lista de colaboradores nao pode ser nula.");
-        }
-        
-        double totalizador = 0.0;
-        for (Funcionario f : colaboradores) {
-            // Chamada polimorfica pura: desacoplada do tipo especifico de funcionario
-            totalizador += f.calcularSalario();
-        }
-        return totalizador;
-    }
-}
-```
+> **Nota de Alerta Técnico:** No projeto pedagógico estruturado sobre o padrão Java EE 8, o uso do Apache Tomcat 10+ lança exceções imediatas em tempo de implantação (*deployment failure*), pois as bibliotecas de dependência (como JSTL 1.2 e as anotações `@WebServlet`) buscam as classes sob o namespace `javax.servlet`. O contêiner de execução obrigatório é o **Apache Tomcat 9.0.x**.
 
 ---
 
-### Abstração: Classes Abstratas versus Interfaces
+### 1.3 Ambiente Integrado: Apache NetBeans 24 e Automacao Apache Ant
 
-#### Comparativo Teórico e Prático
-A abstração é o processo de isolar características fundamentais de um domínio sem incluir detalhes prematuros de implementação. Na linguagem Java, essa capacidade divide-se em dois tipos formais de referência:
+O Apache NetBeans 24 provê suporte maduro para desenvolvimento corporativo sem a necessidade de plugins instáveis de terceiros. 
 
-| Critério de Engenharia | Classe Abstrata (`abstract class`) | Interface (`interface`) |
+#### Características do Apache Ant no NetBeans
+Diferente do Apache Maven ou Gradle, que operam orientados a convenção e repositórios remotos centralizados, o **Apache Ant** opera orientado a tarefas imperativas definidas no arquivo XML `build.xml`. As dependências são vinculadas fisicamente no diretório de bibliotecas locais do projeto, assegurando autonomia de compilação em laboratórios sem conexão irrestrita à internet.
+
+---
+
+### 1.4 Arquitetura de Software: Monolito Modular versus Microsservicos
+
+#### Definição
+Uma arquitetura monolítica agrupa todos os componentes de software — apresentação visual, controle de fluxo, validações de domínio, acesso a dados e configuração de infraestrutura — dentro de uma **única base de código implantada como um único processo na Máquina Virtual Java**.
+
+```mermaid
+flowchart TD
+    subgraph Cliente["Camada Cliente"]
+        Navegador["Navegador Web (HTTP / Porta 8080)"]
+    end
+
+    subgraph Monolito["Aplicacao Monolitica (Processo Unico Tomcat JVM)"]
+        Apresentacao["Visao: JSP, JSTL, HTML5, CSS3, JS"]
+        Controle["Controle: Servlets HTTP e Filters"]
+        Negocio["Dominio e Validacao: Model e Utils"]
+        Persistencia["Acesso a Dados: DAOs e JDBC Nativo"]
+        Apresentacao <--> Controle
+        Controle <--> Negocio
+        Negocio <--> Persistencia
+    end
+
+    subgraph Armazenamento["Persistencia Relacional"]
+        PostgreSQL[("SGBD PostgreSQL (Porta 5432)")]
+    end
+
+    Navegador <--> Monolito
+    Persistencia <--> PostgreSQL
+```
+
+#### Comparativo Arquitetural
+
+| Eixo de Análise | Monólito Modular (Padrão da Disciplina) | Microsserviços Distribuídos |
 | :--- | :--- | :--- |
-| **Vínculo Semântico** | Relação de Identidade e Linhagem ("É-UM"). | Relação de Contrato e Capacidade ("FAZ-UM" / *Can-Do*). |
-| **Instanciação** | Proibida diretamente via operador `new`. | Proibida diretamente via operador `new`. |
-| **Herança na Linguagem Java** | Herança simples exclusiva (`extends`). | Múltipla implementação permitida (`implements A, B, C`). |
-| **Estado e Atributos** | Pode possuir atributos de instância privados e protegidos. | Apenas constantes públicas (`public static final`). |
-| **Implementação de Métodos** | Métodos abstratos e métodos concretos completos. | Métodos abstratos (ou métodos `default`/`static` a partir do Java 8). |
-| **Propósito Arquitetural** | Compartilhar estado interno estrutural e código base. | Desacoplar subsistemas através de contratos estritos. |
-
-#### Modelagem de Classes Abstratas e Contratos via Interface
-```mermaid
-classDiagram
-    class Tributavel {
-        <<interface>>
-        +calcularTributos() double
-    }
-
-    class Colaborador {
-        <<abstract>>
-        -String nome
-        -String matricula
-        -double salarioBase
-        +Colaborador(nome, matricula, salarioBase)
-        +getNome() String
-        +getMatricula() String
-        +getSalarioBase() double
-        +calcularSalarioLiquido()* double
-    }
-
-    class ColaboradorComissionado {
-        -double totalVendas
-        -double taxaComissao
-        +ColaboradorComissionado(nome, matricula, salarioBase, totalVendas, taxaComissao)
-        +calcularSalarioLiquido() double
-        +calcularTributos() double
-    }
-
-    class ServicoTributario {
-        +acumularImpostos(List~Tributavel~) double
-    }
-
-    Tributavel <|.. ColaboradorComissionado : implements
-    Colaborador <|-- ColaboradorComissionado : extends
-    ServicoTributario ..> Tributavel : processa
-```
-
-#### Código do Contrato e da Implementação Concreta
-```java
-package br.com.unifef.tributacao;
-
-public interface Tributavel {
-    double calcularTributos();
-}
-```
-
-```java
-package br.com.unifef.tributacao;
-
-import br.com.unifef.dominio.Funcionario;
-
-public class FuncionarioComissionado extends Funcionario implements Tributavel {
-    private double totalDeVendas;
-    private double percentualComissao;
-
-    public FuncionarioComissionado(String nome, int matricula, double salarioBase, 
-                                   double totalDeVendas, double percentualComissao) {
-        super(nome, matricula, salarioBase);
-        if (totalDeVendas < 0.0 || percentualComissao < 0.0) {
-            throw new IllegalArgumentException("Vendas e comissao devem ser valores positivos.");
-        }
-        this.totalDeVendas = totalDeVendas;
-        this.percentualComissao = percentualComissao;
-    }
-
-    @Override
-    public double calcularSalario() {
-        return getSalarioBase() + (this.totalDeVendas * (this.percentualComissao / 100.0));
-    }
-
-    @Override
-    public double calcularTributos() {
-        // Exemplo: 11% retido sobre a remuneracao bruta integral
-        return this.calcularSalario() * 0.11;
-    }
-}
-```
+| **Comunicação entre Camadas** | Invocação direta de métodos em memória (*In-memory calls*). | Chamadas de rede remotas (HTTP/REST, gRPC, Filas). |
+| **Latência Operacional** | Desprezível (nanossegundos entre métodos). | Relevante (milissegundos por chamada de rede). |
+| **Controle Transacional** | Transação local ACID gerenciada via conexão JDBC única. | Transações distribuídas complexas (Two-Phase Commit, Saga). |
+| **Complexidade de Deploy** | Simples: implantação de um único artefato `.war`. | Complexa: orquestração de múltiplos contêineres e gateways. |
+| **Ponto de Falha** | Um crash de memória derruba toda a aplicação. | Falhas podem ser isoladas por serviço (resiliência). |
 
 ---
 
-### Coleções Dinâmicas e Ordenação
+### 1.5 Padrao Arquitetural MVC no Contexto Web Java
 
-#### Definição e Vantagens sobre Arrays Primitivos
-O framework de coleções do Java (`java.util`) substitui a rigidez dos arrays estáticos (`Object[]`), cujo tamanho é imutável após a alocação. A interface `List<E>` representa uma sequência ordenada de elementos que admite duplicações e elementos nulos. Sua implementação mais comum, a classe `ArrayList<E>`, apoia-se em um vetor redimensionável com acesso posicional em tempo constante $O(1)$.
-
-O uso obrigatório de **Generics** (`List<Funcionario>` em vez da coleção crua `List`) garante segurança estática de tipos em tempo de compilação (*type-safety*), prevenindo que objetos estranhos entrem na estrutura e eliminando conversões forçadas (*typecasting*).
-
-#### Algoritmos de Ordenação com Comparator
-Para ordenar elementos segundo critérios dinâmicos de negócio (como ordenar colaboradores por remuneração decrescente), utiliza-se a interface funcional `java.util.Comparator<T>`:
-
-```java
-package br.com.unifef.servico;
-
-import br.com.unifef.dominio.Funcionario;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-public class OrdenadorFuncionarios {
-
-    public static List<Funcionario> ordenarPorSalarioDecrescente(List<Funcionario> original) {
-        if (original == null) {
-            return Collections.emptyList();
-        }
-        
-        // Criar copia defensiva para nao corromper a ordem da lista original
-        List<Funcionario> copia = new ArrayList<>(original);
-        
-        copia.sort(new Comparator<Funcionario>() {
-            @Override
-            public int compare(Funcionario f1, Funcionario f2) {
-                // Ordenacao decrescente: compara f2 com f1
-                return Double.compare(f2.calcularSalario(), f1.calcularSalario());
-            }
-        });
-        
-        return copia;
-    }
-}
-```
-
----
-
-### Hierarquia e Tratamento Robusto de Exceções
-
-#### Arquitetura de Tratamento de Falhas na JVM
-O modelo de exceções em Java deriva da classe raiz `java.lang.Throwable`, dividindo-se em duas ramificações operacionais distintas:
-
-```mermaid
-flowchart TD
-    Throwable["java.lang.Throwable"]
-    Error["java.lang.Error (Falhas irrecuperaveis da JVM: OutOfMemoryError)"]
-    Exception["java.lang.Exception (Falhas de Aplicacao)"]
-    RuntimeException["java.lang.RuntimeException (Nao checadas / Unchecked)"]
-    CheckedException["Excecoes Verificadas (Checadas / Checked)"]
-    DominioException["FuncionarioNaoEncontradoException (Regra de Negocio)"]
-
-    Throwable --> Error
-    Throwable --> Exception
-    Exception --> RuntimeException
-    Exception --> CheckedException
-    CheckedException --> DominioException
-```
-
-1. **Exceções Verificadas (*Checked Exceptions*)**: Subclasses diretas de `java.lang.Exception` (exceto `RuntimeException`). O compilador força obrigatoriamente a declaração formal da exceção na assinatura do método (`throws`) ou sua interceptação (`try-catch`). Devem ser aplicadas para eventos recuperáveis de negócio ou falhas previsíveis de infraestrutura externa (ex.: `SQLException`, `IOException`).
-2. **Exceções Não Verificadas (*Unchecked Exceptions*)**: Subclasses de `java.lang.RuntimeException`. Indicam falhas de codificação ou violações imediatas de pré-condições (ex.: `NullPointerException`, `IllegalArgumentException`, `IndexOutOfBoundsException`). O compilador não exige sintaxe de captura obrigatória.
-
-#### Criação e Uso de Exceção Customizada de Domínio
-```java
-package br.com.unifef.excecao;
-
-/**
- * Excecao checada de negocio que sinaliza falha na busca cadastral de entidades.
- */
-public class FuncionarioNaoEncontradoException extends Exception {
-    private static final long serialVersionUID = 1L;
-
-    public FuncionarioNaoEncontradoException(String mensagem) {
-        super(mensagem);
-    }
-
-    public FuncionarioNaoEncontradoException(String mensagem, Throwable causa) {
-        super(mensagem, causa);
-    }
-}
-```
-
----
-
-## Configuração do Ambiente e Arquitetura Monolítica Java EE
-
-### Arquitetura da Plataforma Java: JDK, JRE e JVM
-
-O desenvolvimento corporativo fundamenta-se na independência de plataforma operacional garantida pelo bytecode Java:
-
-```mermaid
-flowchart TD
-    subgraph JDK["Java Development Kit (JDK 17 LTS - Eclipse Temurin)"]
-        Compilador["Compilador javac"]
-        Ferramentas["Utilitarios: jar, jdb, jshell"]
-        subgraph JRE["Java Runtime Environment (JRE)"]
-            subgraph JVM["Java Virtual Machine (JVM)"]
-                Hotspot["Interpretador e Compilador JIT (HotSpot)"]
-                GC["Garbage Collector (Coletor de Lixo)"]
-            end
-            CoreAPI["Bibliotecas Base da API Java (rt.jar / Modulos)"]
-        end
-    end
-    Fonte[("Codigo Fonte: *.java")] --> Compilador
-    Compilador --> Bytecode[("Bytecode: *.class")]
-    Bytecode --> JVM
-    JVM --> SO["Sistema Operacional (Windows / Linux / macOS)"]
-```
-
-Na disciplina do Prof. Jefferson Passerini, adota-se o **Java JDK 17 LTS** distribuído pela fundação Eclipse sob o projeto **Adoptium (Eclipse Temurin)**. Versões LTS (*Long-Term Support*) asseguram suporte de segurança estendido e estabilidade de bytecode, prevenindo as oscilações de compatibilidade inerentes aos lançamentos semestrais da linguagem.
-
----
-
-### O Container Web Apache Tomcat 9 e a Cisão Jakarta EE
-
-#### O Papel do Container Web
-O Apache Tomcat não é um servidor de aplicações corporativo integral (como WildFly ou Payara), mas um **J2EE Web Container**. Ele é o processo servidor que implementa nativamente as especificações:
-- **Jakarta/Java Servlet**: interceptação de conexões de rede HTTP, decodificação de requisições (`HttpServletRequest`) e escrita de respostas (`HttpServletResponse`).
-- **JavaServer Pages (JSP)**: compilação sob demanda de páginas de interface em classes Java puras executáveis.
-- **Expression Language (EL)**: motor de avaliação de expressões de dados entre escopos.
-
-#### O Dilema da Transição Java EE para Jakarta EE (Tomcat 9 versus Tomcat 10+)
-A Oracle transferiu o controle formal do Java EE para a Eclipse Foundation. Devido a questões de registro da marca "Java", a especificação foi renomeada para **Jakarta EE**. A partir da versão Jakarta EE 9, todos os pacotes das APIs sofreram uma alteração drástica de nomenclatura:
-
-```math
-\text{javax.*} \longrightarrow \text{jakarta.*}
-```
-
-- **Apache Tomcat 9.0.x**: Executa sobre a especificação clássica **Java EE 8**, mantendo o namespace tradicional `javax.servlet.*` e `javax.servlet.jsp.*`.
-- **Apache Tomcat 10.0.x / 10.1.x / 11.0.x**: Adotam o novo namespace `jakarta.servlet.*`.
-
-Se um projeto desenvolvido em sala de aula (cujas bibliotecas internas, JSTL e código-fonte importam `javax.servlet.*`) for implantado no Apache Tomcat 10+, ocorrerão falhas catastróficas de implantação com erros de `ClassNotFoundException` ou `NoClassDefFoundError`. Portanto, a infraestrutura da disciplina exige estritamente o **Apache Tomcat versão 9**.
-
----
-
-### Configuração da IDE Apache NetBeans 24 e Apache Ant
-
-A disciplina emprega a IDE **Apache NetBeans 24**. Historicamente mantida pela Sun Microsystems e pela Oracle, a IDE foi doada à Apache Software Foundation e preserva integração nativa de excelência com o motor de compilação **Apache Ant**.
-
-Na criação de um novo projeto no NetBeans:
-1. Navega-se em: `File` -> `New Project...`.
-2. Seleciona-se a categoria `Java with Ant` -> `Java Web` -> `Web Application`.
-3. Informa-se o nome do projeto (exemplo: `AplCurso`) e o diretório de destino.
-4. Na tela de escolha do servidor e especificação:
-   - **Server**: `Apache Tomcat 9.0.x` (previamente associado à IDE apontando para a pasta raiz onde o Tomcat foi descompactado, ex.: `C:\apache-tomcat-9.0.102`).
-   - **Java EE Version**: `Java EE 8 Web`.
-   - **Context Path**: `/AplCurso` (definição da rota raiz no navegador).
-
----
-
-### Monólitos Corporativos versus Microsserviços
-
-A disciplina foca na estruturação arquitetural de aplicações **monolíticas modulares**. Em um monólito corporativo, a interface com o usuário, as rotinas de orquestração de negócio e as camadas de persistência residem no mesmo repositório e executam no mesmo processo de sistema operacional sob a mesma JVM:
+O padrão MVC desacopla a aplicação em três responsabilidades essenciais:
+1. **Model (Modelo):** Representa o estado e as estruturas de dados do domínio. Não conhece classes visuais e não processa requisições HTTP.
+2. **View (Visão):** Renderiza a saída para o cliente. Recebe dados preparados pela camada de controle através de atributos de requisição ou sessão, utilizando JSP, JSTL e Expression Language.
+3. **Controller (Controlador):** Atua como interceptador e orquestrador. Recebe requisições HTTP via Servlets, realiza a extração e conversão de parâmetros, invoca as regras de negócio e métodos da camada DAO e decide para qual View despachar o fluxo.
 
 ```mermaid
 flowchart LR
-    subgraph Monolito["Processo Unico da JVM (Apache Tomcat 9)"]
-        View["Visao: JSP / JSTL"]
-        Ctrl["Controle: Servlets / Filters"]
-        Negocio["Dominio: Regras e Modelos"]
-        Persist["Acesso a Dados: DAOs / JDBC"]
-        View <--> Ctrl
-        Ctrl <--> Negocio
-        Negocio <--> Persist
-    end
-    Navegador["Navegador Web"] <-->|"Protocolo HTTP (Porta 8080)"| Monolito
-    Persist <-->|"Conexao Socket TCP (Porta 5432)"| PostgreSQL[(SGBD PostgreSQL)]
+    Usuario((Usuario)) -->|"1. Requisicao HTTP"| Controller["Controller (Servlet)"]
+    Controller -->|"2. Invoca operacoes"| Model["Model / DAO"]
+    Model -->|"3. Executa comandos SQL"| DB[("PostgreSQL")]
+    DB -->|"4. Retorna dados brutos"| Model
+    Model -->|"5. Entrega objetos hidratados"| Controller
+    Controller -->|"6. Injeta atributos e despacha"| View["View (JSP / JSTL)"]
+    View -->|"7. HTML renderizado"| Usuario
 ```
-
-#### Comparativo de Decisão de Engenharia de Software
-
-| Dimensão de Análise | Monólito Modular (Java EE Web) | Arquitetura de Microsserviços |
-| :--- | :--- | :--- |
-| **Comunicação entre Módulos** | Chamadas diretas de métodos na memória local ($O(1)$ sem rede). | Chamadas remotas via HTTP/REST ou gRPC (alta latência de rede). |
-| **Integridade Transacional** | Transações locais atômicas ACID via JDBC puro na mesma conexão. | Transações distribuídas de alta complexidade (padrão Saga, 2PC). |
-| **Empacotamento e Deploy** | Um único artefato compilado (`.war`) implantado no container. | Múltiplos contêineres Docker orquestrados por clusters Kubernetes. |
-| **Custo Operacional Inicial** | Baixo; ideal para sistemas empresariais médios e aprendizado sólido. | Alto; requer observabilidade distribuída, service mesh e gateways. |
 
 ---
 
-### O Padrão Arquitetural MVC e Estrutura de Pacotes
+### 1.6 Estruturacao em Camadas e Pacotes Java: View, Filter, Controller, Model, DAO e Utils
 
-Para prevenir a formação de código espaguete, o monólito corporativo adota a separação estrita de responsabilidades do padrão **Model-View-Controller (MVC Modelo 2)**:
+A estrutura física do projeto Java Web sob o padrão NetBeans/Ant organiza-se no pacote raiz `br.com.aplcurso`:
+
+- `br.com.aplcurso.model`: Contém os JavaBeans/POJOs que representam as entidades do domínio do sistema (ex.: `Usuario.java`).
+- `br.com.aplcurso.dao`: Contém as classes que implementam o padrão *Data Access Object* e manipulam conexões JDBC (ex.: `GenericDAO.java`, `UsuarioDAO.java`).
+- `br.com.aplcurso.controller.usuario`: Contém as Servlets controladoras responsáveis pelo atendimento HTTP das operações cadastrais (ex.: `UsuarioListar.java`, `UsuarioCadastrar.java`, `UsuarioNovo.java`).
+- `br.com.aplcurso.filter`: Contém os interceptadores de ciclo de vida e autorização da aplicação (ex.: `FilterAutenticacao.java`).
+- `br.com.aplcurso.utils`: Classes transversais de infraestrutura, incluindo a gestão de conexões (`SingleConnection.java`), validadores matemáticos (`DocumentoValidador.java`) e scripts SQL de versionamento (`banco.sql`).
+- `Web Pages`: Diretório raiz do front-end contendo páginas JSP, subpastas para scripts (`/js`), folhas de estilo (`/css`) e o diretório restrito `WEB-INF`.
+
+---
+
+## Modulo 2 — Camada de Apresentacao Modular com JSP, JSTL e Frontend
+
+### 2.1 Modularizacao Visual e Decomposicao de Paginas
+
+#### Definição e Motivação
+A construção de aplicações corporativas demanda consistência de layout e facilidade de manutenção corretiva. A duplicação da marcação de cabeçalho (`<head>`, inclusão de CSS e scripts) e rodapé em todos os arquivos JSP viola o princípio DRY (*Don't Repeat Yourself*). Qualquer alteração de biblioteca exigiria refatoração em dezenas de arquivos.
+
+A arquitetura adota a **decomposição em fragmentos**:
+- `header.jsp`: Abre o documento HTML, define codificação, importa bibliotecas CSS/JS e abre o elemento `<body>`.
+- `menu.jsp`: Contém a barra de navegação responsiva e links dinâmicos.
+- *Página Específica (ex.: `usuarioListar.jsp`)*: Contém exclusivamente a marcação semântica do miolo da página.
+- `footer.jsp`: Fecha as seções abertas, inclui informações institucionais e finaliza as tags `</body>` e `</html>`.
 
 ```mermaid
 flowchart TD
-    Cliente["Navegador do Cliente"]
-    Filtro["Filter (FilterAutenticacao)"]
-    Servlet["Controller (Servlet)"]
-    DAO["DAO (UsuarioDAO)"]
-    BD[(PostgreSQL)]
-    JSP["View (JSP Modular)"]
-
-    Cliente -->|"1. Requisicao HTTP"| Filtro
-    Filtro -->|"2. Repassa cadeia (chain.doFilter)"| Servlet
-    Servlet -->|"3. Aciona operacoes"| DAO
-    DAO <-->|"4. Executa SQL via JDBC"| BD
-    DAO -.->|"5. Retorna Entidades / Colecoes"| Servlet
-    Servlet -->|"6. Injeta dados no escopo (request.setAttribute)"| JSP
-    Servlet -->|"7. Despacho interno (forward)"| JSP
-    JSP -.->|"8. Resposta HTTP (HTML renderizado)"| Cliente
+    Master["Pagina Mestra (home.jsp ou usuarioCadastrar.jsp)"]
+    Master -->|"jsp:include"| Header["header.jsp (DOCTYPE, Head, Scripts, Abertura Body)"]
+    Master -->|"jsp:include"| Menu["menu.jsp (Barra de Navegacao e Menus)"]
+    Master --> BodyContent["Conteudo Especifico (Tabela ou Formulario)"]
+    Master -->|"jsp:include"| Footer["footer.jsp (Encerramento de Scripts, Fecha Body e Html)"]
 ```
-
-#### Estrutura Canônica de Pacotes em `Source Packages`
-- `br.com.aplcurso.model`: Entidades de domínio estruturadas como JavaBeans/POJOs puras (ex.: `Usuario.java`).
-- `br.com.aplcurso.dao`: Classes de acesso a dados responsáveis pelas instruções SQL e manuseio de `PreparedStatement` e `ResultSet` (ex.: `UsuarioDAO.java`).
-- `br.com.aplcurso.controller.usuario`: Servlets HTTP mapeadas via anotação `@WebServlet` que processam os métodos `doGet` e `doPost` (ex.: `UsuarioListar.java`, `UsuarioCadastrar.java`).
-- `br.com.aplcurso.filter`: Filtros de ciclo de vida mapeados via `@WebFilter` para controle transversal de segurança e conexões (ex.: `FilterAutenticacao.java`).
-- `br.com.aplcurso.utils`: Classes auxiliares reutilizáveis, conector singleton, rotinas de validação de documentos e scripts SQL estruturais (ex.: `SingleConnection.java`, `DocumentoValidador.java`, `banco.sql`).
 
 ---
 
-## Camada de Apresentação com JSP e Tecnologias Frontend
+### 2.2 Inclusao Dinamica (jsp:include) versus Inclusao Estatica (<%@include%>)
 
-### Ciclo de Vida e Processamento de JavaServer Pages
-
-Páginas JSP não são arquivos estáticos servidos diretamente ao navegador. O container Tomcat possui um motor especializado denominado **Jasper** encarregado de processar os arquivos `.jsp`:
+A inclusão de fragmentos de páginas JSP pode ocorrer por meio de duas abordagens tecnicamente distintas:
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Cliente as Navegador Web
-    participant Tomcat as Servidor Tomcat
-    participant Jasper as Engine Jasper (JSP)
-    participant ServletJSP as Classe Java Compilada (.class)
+    actor Nav as Navegador
+    participant Tomcat as Container Tomcat
+    participant Pai as home.jsp
+    participant Filho as header.jsp
 
-    Cliente->>Tomcat: HTTP GET /AplCurso/index.jsp
-    Tomcat->>Jasper: Intercepta requisicao de arquivo .jsp
-    alt Primeira Requisicao (ou Arquivo Modificado)
-        Jasper->>Jasper: Traduz index.jsp em index_jsp.java
-        Jasper->>Jasper: Compila index_jsp.java em index_jsp.class
-        Jasper->>ServletJSP: Carrega classe no ClassLoader da JVM
-        ServletJSP->>ServletJSP: Invoca jspInit()
-    end
-    ServletJSP->>ServletJSP: Executa _jspService(request, response)
-    ServletJSP-->>Tomcat: Grava codigo HTML final no PrintWriter da resposta
-    Tomcat-->>Cliente: Resposta HTTP 200 OK (HTML Puro Renderizavel)
+    Note over Pai,Filho: Execucao com jsp:include (Dinamica)
+    Nav->>Tomcat: Requisicao HTTP
+    Tomcat->>Pai: Processa home.jsp
+    Pai->>Tomcat: Invoca RequestDispatcher.include()
+    Tomcat->>Filho: Processa header.jsp separadamente
+    Filho-->>Pai: Retorna buffer renderizado
+    Pai-->>Nav: HTML unificado consolidado
 ```
+
+| Critério de Comparação | Ação `<jsp:include page="..." />` | Diretiva `<%@include file="..." %>` |
+| :--- | :--- | :--- |
+| **Momento de Processamento** | Tempo de Requisição (*Request-time*). | Tempo de Tradução (*Translation-time*). |
+| **Mecanismo Operacional** | Invoca `RequestDispatcher.include()`. O fragmento é um servlet independente. | Copia textualmente o código do arquivo para dentro do JSP pai antes da compilação. |
+| **Escopo de Variáveis Java** | Isolado. Variáveis declaradas no arquivo incluído não existem no arquivo pai. | Compartilhado. Cria dependência direta de variáveis no mesmo escopo local de método. |
+| **Passagem de Parâmetros** | Suporta passagem de parâmetros dinâmicos via `<jsp:param>`. | Não suporta passagem de parâmetros. |
+| **Impacto de Alterações** | Modificações no fragmento refletem na próxima requisição sem compilar o pai. | Exige detecção de alteração e recompilação completa do JSP pai. |
 
 ---
 
-### Modularização com jsp:include e Resolução de ContextPath
+### 2.3 Biblioteca de Tags Padronizadas (JSTL Core e Formatting) e Diretiva taglib
 
-#### Inclusão Dinâmica (`jsp:include`) versus Inclusão Estática (`<%@include %>`)
-A separação de telas em fragmentos reutilizáveis garante manutenibilidade e atende ao princípio DRY:
+O uso de código Java bruto embutido em páginas HTML através de *scriptlets* (`<% ... %>`) degrada a manutenibilidade e abre brechas para vulnerabilidades de segurança como Cross-Site Scripting (XSS). A especificação JSTL substitui o código imperativo por tags declarativas baseadas em XML.
 
-- **`<jsp:include page="..." />` (Inclusão Dinâmica em Tempo de Execução)**: Executada durante o processamento da requisição HTTP via mecanismo interno equivalente a `RequestDispatcher.include()`. O arquivo incluído é tratado como um recurso independente. Alterações no arquivo incluído refletem imediatamente na próxima requisição sem exigir reinicialização do servidor. **É a abordagem padrão exigida no curso**.
-- **`<%@include file="..." %>` (Inclusão Estática em Tempo de Tradução)**: Funde o texto cru do arquivo incluído dentro do arquivo pai antes da compilação do arquivo Java correspondente. Qualquer alteração no fragmento pode exigir recompilação forçada da página mestre.
-
-#### Resolução Absoluta com Expression Language
-O uso de caminhos relativos em páginas web (exemplo: `<script src="../../js/app.js">`) é uma fonte constante de erros de carregamento, pois a rota no navegador depende da profundidade da URL disparada pelo Servlet. A forma robusta de resolver URLs na aplicação web é empregar a Expression Language apontando para o contexto raiz da aplicação:
-
-```jsp
-${pageContext.request.contextPath}/js/app.js
-```
-
-Se a aplicação estiver implantada em `/AplCurso`, a expressão será avaliada em tempo de execução como `/AplCurso/js/app.js`, garantindo carregamento absoluto de folhas de estilo e scripts.
-
----
-
-### A Biblioteca Padrão JSTL: Core e Formatting
-
-A JSTL (*JavaServer Pages Standard Tag Library*) elimina a necessidade de código scriptlet Java (`<% ... %>`) incrustado no HTML. Para utilizá-la, declara-se a diretiva `<%@taglib %>` no cabeçalho das páginas:
+#### Declaração das Bibliotecas via Diretiva taglib
+No topo de cada documento JSP que demande processamento condicional, laços ou formatação, inserem-se as diretivas:
 
 ```jsp
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 ```
 
-#### Tags Essenciais da JSTL
-- `<c:forEach items="${listaUsuarios}" var="usuario">`: Realiza a iteração sobre coleções (`List`, vetores ou conjuntos), instanciando a variável de iteração no escopo de página.
-- `<c:out value="${usuario.nome}" />`: Imprime valores no HTML realizando escape preventivo de caracteres especiais (`<`, `>`, `&`), evitando falhas de Cross-Site Scripting (XSS).
-- `<fmt:formatDate value="${usuario.dataNascimento}" pattern="dd/MM/yyyy" />`: Formata objetos do tipo `java.util.Date` para o padrão de data brasileiro.
-- `<fmt:formatNumber value="${usuario.salario}" type="currency" currencySymbol="R$" />`: Formata valores numéricos para o padrão monetário nacional com pontuação centesimal correta.
+- **Prefixo `c` (Core):** Controle de fluxo, iteração e manipulação de variáveis (`<c:forEach>`, `<c:if>`, `<c:choose>`, `<c:set>`).
+- **Prefixo `fmt` (Formatting):** Internacionalização, formatação de grandezas monetárias e tratamento de datas sensíveis ao fuso horário e localidade (`<fmt:formatDate>`, `<fmt:formatNumber>`).
 
 ---
 
-### Bibliotecas Frontend e Validação no Cliente com Módulo 11
+### 2.4 Resolucao Dinamica de Rotas com Expression Language
 
-#### Estrutura de Fragmentação de Layout
-Para padronizar a identidade visual e o fechamento do DOM, o projeto subdivide as telas em fragmentos:
+O uso de caminhos relativos para ativos estáticos ou URLs de servlets (como `../../js/app.js` ou `UsuarioListar`) gera falhas estruturais quando a aplicação é acessada a partir de subdiretórios ou despachada por controladores em diferentes profundidades de URI.
 
-1. **`header.jsp`**: Abre as tags estruturais `<!DOCTYPE html>`, `<html>`, `<head>`, inclui os metadados, links CSS do Bootstrap 4.3.1, fontes, bibliotecas jQuery 3.3.1, plugins de máscara, SweetAlert2 e abre a tag `<body>`.
-2. **`menu.jsp`**: Renderiza a barra de navegação responsiva com os links roteados via Servlet (`${pageContext.request.contextPath}/UsuarioListar`).
-3. **Página de Conteúdo (ex.: `home.jsp`, `usuarioCadastrar.jsp`)**: Contém exclusivamente o miolo da interface (títulos, tabelas e formulários).
-4. **`footer.jsp`**: Renderiza notas de rodapé corporativas e fecha formalmente as tags abertas no cabeçalho (`</body>` e `</html>`).
+A Expression Language (EL) resolve o caminho base dinamicamente através do objeto implícito `pageContext`:
 
-#### Algoritmo do Módulo 11 para Validação de CPF e CNPJ
-No Brasil, o Ministério da Fazenda (Receita Federal) estabelece o cálculo dos dígitos verificadores (DV) de documentos por meio de somatórios ponderados com base no Módulo 11.
+```jsp
+${pageContext.request.contextPath}/UsuarioListar
+```
 
-A validação de um CPF de 11 dígitos ($`d_1 d_2 \dots d_9 - d_{10} d_{11}`$) obedece a:
-
-1. Cálculo do primeiro dígito verificador ($`d_{10}`$):
-   ```math
-   S_1 = \sum_{i=1}^{9} d_i \times (11 - i)
-   ```
-   ```math
-   R_1 = S_1 \pmod{11}
-   ```
-   ```math
-   d_{10} = \begin{cases} 0, & \text{se } (11 - R_1) \ge 10 \\ 11 - R_1, & \text{caso contrário} \end{cases}
-   ```
-
-2. Cálculo do segundo dígito verificador ($`d_{11}`$):
-   ```math
-   S_2 = \left( \sum_{i=1}^{9} d_i \times (12 - i) \right) + (d_{10} \times 2)
-   ```
-   ```math
-   R_2 = S_2 \pmod{11}
-   ```
-   ```math
-   d_{11} = \begin{cases} 0, & \text{se } (11 - R_2) \ge 10 \\ 11 - R_2, & \text{caso contrário} \end{cases}
-   ```
-
-O arquivo `app.js` implementa essa rotina no cliente, combinada com máscaras dinâmicas baseadas na quantidade de caracteres digitados no campo unificado de documento.
+Caso o contexto de deploy no Apache Tomcat seja `/aplcurso`, o contêiner avalia a expressão em tempo de execução como `/aplcurso/UsuarioListar`, garantindo que a rota seja absoluta a partir da raiz da aplicação web, independentemente da pasta onde o arquivo JSP resida.
 
 ---
 
-## Camada de Persistência Relacional com PostgreSQL e JDBC
+### 2.5 Arquitetura de Ativos Estaticos e Ordem Critica de Scripts
 
-### SGBD PostgreSQL, Tipagem Segura e Sequências
+A inclusão de arquivos JavaScript na tag `<head>` dentro de `header.jsp` obedece a uma ordem estrita de dependências lineares. A inversão na declaração dos elementos acarreta no lançamento imediato de exceções `ReferenceError: $ is not defined` no console do navegador do cliente.
 
-O PostgreSQL é o Sistema Gerenciador de Banco de Dados Relacional adotado na infraestrutura de persistência. A criação da tabela de usuários com suas devidas restrições de integridade estrutural é executada no banco de dados `bdaplcurso`:
+```mermaid
+flowchart TD
+    JQ["1. jQuery Core (jquery-3.3.1.min.js)<br>Inicializa window.$ e window.jQuery"] --> Plugins["2. Plugins Baseados em jQuery<br>jquery.mask.min.js e jquery.maskMoney.min.js"]
+    Plugins --> App["3. Script de Dominio Local (app.js)<br>Aplica mascaras e regras de validacao"]
+    JQ --> Popper["4. Popper.js (popper.min.js)<br>Calculo de posicionamento visual"]
+    Popper --> Bootstrap["5. Bootstrap JS (bootstrap.min.js)<br>Manipulacao de componentes modais e grid"]
+    JQ --> DataTables["6. DataTables JS (jquery.dataTables.min.js)<br>Componentizacao de tabelas avancadas"]
+    SweetAlert["7. SweetAlert2 (sweetalert2.all.min.js)<br>Biblioteca independente de alertas visuais"]
+```
+
+---
+
+## Modulo 3 — Persistencia Relacional, JDBC, Singleton e Interceptacao
+
+### 3.1 Modelagem e Administracao no PostgreSQL e pgAdmin 4
+
+O PostgreSQL é um SGBD relacional de código aberto com conformidade estrita ao padrão ANSI SQL. A ferramenta gráfica pgAdmin 4 conecta-se ao servidor na porta padrão TCP `5432`.
+
+#### Armadilha Operacional de Atualização no pgAdmin
+Ao criar novos bancos de dados ou tabelas via scripts executados na ferramenta *Query Tool*, a árvore estrutural lateral do pgAdmin não sincroniza seu estado interno automaticamente. Torna-se indispensável acionar a opção **Refresh...** no menu de contexto do objeto pai para evitar falsos diagnósticos de ausência de objetos.
+
+---
+
+### 3.2 DDL da Tabela usuario, Chaves Primarias SERIAL e Tipagem Financeira
+
+A criação da infraestrutura física da tabela `usuario` no banco `bdaplcurso` deve garantir restrições de integridade ao nível do banco de dados:
 
 ```sql
--- DDL de Criacao da Infraestrutura Física: banco.sql
 CREATE TABLE usuario (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     datanascimento DATE NOT NULL,
-    cpf VARCHAR(11) UNIQUE NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(20) NOT NULL,
     salario DECIMAL(15,2) NOT NULL
 );
 ```
 
-#### O Mecanismo do Tipo `SERIAL`
-No dialeto PostgreSQL, o tipo de coluna `SERIAL` opera como um atalho sintático (*syntactic sugar*). Ao ser executado, o SGBD:
-1. Cria automaticamente um gerador de sequência nomeado `usuario_id_seq`.
-2. Define a coluna física subjacente como `INTEGER` (inteiro de 4 bytes com sinal).
-3. Configura o valor padrão da coluna para invocar a função atômica `nextval('usuario_id_seq')`.
-4. Transfere a propriedade da sequência para a coluna através de `OWNED BY usuario.id`.
+```mermaid
+erDiagram
+    USUARIO {
+        int id PK "SERIAL, autoincremento via sequence"
+        varchar_100 nome "NOT NULL, nome completo"
+        date datanascimento "NOT NULL, data pura sem hora"
+        varchar_14 cpf "UNIQUE, NOT NULL, com mascara"
+        varchar_100 email "UNIQUE, NOT NULL"
+        varchar_20 senha "NOT NULL, texto de autenticacao"
+        decimal_15_2 salario "NOT NULL, ponto fixo monetario"
+    }
+```
 
-#### Tipagem Monetária: `DECIMAL` versus Tipos de Ponto Flutuante
-Valores financeiros **nunca** devem ser modelados como `FLOAT`, `REAL` ou `DOUBLE PRECISION`. Os tipos de ponto flutuante binário da norma IEEE 754 não conseguem representar com exatidão frações decimais finitas (como $0,10$), provocando erros residuais de arredondamento em somatórios acumulados. O uso de `DECIMAL(15,2)` ou `NUMERIC(15,2)` assegura aritmética exata de ponto fixo.
+#### O Mecanismo Subjacente do Tipo SERIAL
+A instrução `id SERIAL PRIMARY KEY` executa internamente no PostgreSQL:
+1. Criação do gerador de sequência atômico: `CREATE SEQUENCE usuario_id_seq;`
+2. Associação da coluna ao tipo `INTEGER` assinado de 4 bytes.
+3. Definição do valor padrão: `DEFAULT nextval('usuario_id_seq')`.
+4. Definição de propriedade de dependência: `ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;`
+
+#### Tipagem Financeira: DECIMAL versus FLOAT
+Tipos de dados em ponto flutuante binário (`FLOAT`, `REAL`, `DOUBLE PRECISION`) obedecem à especificação IEEE 754, que armazena frações decimais através de aproximações de potências negativas de 2. Isso acarreta erros de arredondamento cumulativos em cálculos monetários. 
+
+O uso de `DECIMAL(15,2)` ou `NUMERIC(15,2)` impõe representação numérica de base 10 com ponto fixo, garantindo precisão matemática exata nos centavos.
 
 ---
 
-### O Padrão Criacional Singleton: SingleConnection
+### 3.3 Versionamento de Infraestrutura de Dados: Script banco.sql no Pacote utils
 
-#### Definição
-O padrão de projeto criacional **Singleton** (GoF) garante que uma classe possua apenas uma única instância ativa em memória durante toda a execução do programa e fornece um ponto de acesso global unificado para essa instância.
+Para garantir que as alterações no modelo de dados acompanhem os artefatos de código, o script de infraestrutura `banco.sql` é versionado dentro do pacote Java `br.com.aplcurso.utils` em `Source Packages`. Essa estratégia assegura a rastreabilidade das estruturas DDL no repositório de controle de versão (Git).
 
-#### Motivação e Abordagem Didática no Curso
-Em aplicações Java Web que operam sobre bancos de dados relacionais, o estabelecimento de uma conexão física via socket TCP/IP consome tempo e recursos computacionais consideráveis (troca de pacotes TCP, autenticação e alocação de buffers no SGBD). 
+---
 
-Na arquitetura da disciplina, para simplificar a didática e evitar a complexidade prematura de pools de conexões JNDI (como Apache DBCP ou HikariCP), utiliza-se a classe `SingleConnection` para reter e fornecer uma referência estática da conexão JDBC com o PostgreSQL:
+### 3.4 Padrao de Projeto Criacional Singleton: Estrutura, Vantagens e Riscos
+
+#### Definição Formal (GoF)
+O padrão de criação **Singleton** assegura que uma classe possua apenas uma única instância durante toda a execução da aplicação e fornece um ponto de acesso global e estático a essa instância.
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor DAO as UsuarioDAO
-    participant SC as SingleConnection
-    participant Driver as DriverManager
-    participant BD as SGBD PostgreSQL
-
-    DAO->>SC: SingleConnection.getConnection()
-    alt Conexao e Nula ou Fechada
-        SC->>Driver: getConnection(url, usuario, senha)
-        Driver->>BD: Abertura de Socket TCP (Porta 5432)
-        BD-->>Driver: Handshake e Autenticacao Aceita
-        Driver-->>SC: Retorna instancia ativa de java.sql.Connection
-        SC->>SC: setAutoCommit(false)
-    else Conexao ja Aberta em Memoria
-        SC-->>SC: Reutiliza a instancia conectada existente
-    end
-    SC-->>DAO: Retorna referencia java.sql.Connection
+classDiagram
+    class SingleConnection {
+        -Connection conexao$
+        -SingleConnection()
+        -conectar()$ void
+        +getConnection()$ Connection
+    }
 ```
 
-#### Código da Classe `SingleConnection.java`
+#### Vantagens na Abordagem Didática
+- Centraliza a leitura das credenciais de banco (Driver, URL, Usuário e Senha).
+- Evita o esgotamento do limite máximo de conexões simultâneas do PostgreSQL decorrente da abertura desenfreada de conexões não fechadas por múltiplas DAOs.
+
+#### Riscos e Desvantagens em Ambientes de Alta Concorrência
+- **Gargalo de Concorrência (*Bottleneck*):** Em servidores de produção multi-thread, o compartilhamento de um único objeto `Connection` entre dezenas de requisições simultâneas gera contenção de transações ou corrupção de estado de cursores JDBC. Em arquiteturas industriais, o Singleton sobre a conexão física é substituído por um **Pool de Conexões** (como Apache Commons DBCP ou HikariCP), mantendo o padrão Singleton aplicado ao próprio Pool gerenciador.
+
+---
+
+### 3.5 Implementacao da Conexao Centralizada com a Classe SingleConnection
+
+A classe `SingleConnection` é estruturada com construtor privado, bloco estático de carga de driver e método público estático de recuperação:
+
 ```java
 package br.com.aplcurso.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class SingleConnection {
-
-    private static final String BANCO = "bdaplcurso";
-    private static final String URL = "jdbc:postgresql://localhost:5432/" + BANCO;
-    private static final String USUARIO = "postgres";
-    private static final String SENHA = "root"; // Ajustar conforme ambiente local
+    
+    private static final String BANCO = "jdbc:postgresql://localhost:5432/bdaplcurso";
     private static final String DRIVER = "org.postgresql.Driver";
-
+    private static final String USUARIO = "postgres";
+    private static final String SENHA = "root";
+    
     private static Connection conexao = null;
-
+    
     static {
         conectar();
     }
-
-    public SingleConnection() {
-        conectar();
+    
+    private SingleConnection() {
     }
-
+    
     private static void conectar() {
         try {
             if (conexao == null || conexao.isClosed()) {
                 Class.forName(DRIVER);
-                conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
-                conexao.setAutoCommit(false); // Controle transacional manual
+                conexao = DriverManager.getConnection(BANCO, USUARIO, SENHA);
+                conexao.setAutoCommit(false);
             }
-        } catch (ClassNotFoundException e) {
-            System.err.println("Driver JDBC do PostgreSQL nao localizado no classpath! " + e.getMessage());
-        } catch (SQLException e) {
-            System.err.println("Falha ao abrir conexao com PostgreSQL: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Falha critica na conexao JDBC: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
+    
     public static Connection getConnection() {
         try {
             if (conexao == null || conexao.isClosed()) {
                 conectar();
             }
-        } catch (SQLException e) {
-            System.err.println("Erro ao validar estado da conexao: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return conexao;
     }
@@ -900,53 +465,1035 @@ public class SingleConnection {
 
 ---
 
-### Controle Transacional Manual e Propriedades ACID
+### 3.6 Controle Transacional Manual e Propriedades ACID
 
-#### Fundamentos ACID
-Uma transação é uma unidade lógica indivisível de trabalho sobre o banco de dados. Uma transação robusta deve satisfazer as quatro propriedades fundamentais:
-- **Atomicidade (Atomicity)**: Todas as operações do bloco transacional são executadas com sucesso ou nenhuma alteração é persistida.
-- **Consistência (Consistency)**: A transação conduz o banco de um estado válido a outro estado válido, respeitando todas as regras de integridade e constraints.
-- **Isolamento (Isolation)**: Os efeitos de transações concorrentes não são visíveis para outras transações antes da confirmação final.
-- **Durabilidade (Durability)**: Uma vez confirmada a transação, seus efeitos persistem permanentemente no armazenamento do disco, resistindo até mesmo a quedas de energia do servidor.
+Por padrão, a API JDBC opera em modo `autoCommit(true)`, persistindo imediatamente cada comando SQL executado. Para suportar consistência transacional sob o acrônimo **ACID**:
+- **Atomicidade:** A operação completa é confirmada com sucesso ou revertida em sua totalidade.
+- **Consistência:** O banco migra de um estado válido a outro, respeitando constraints.
+- **Isolamento:** Transações simultâneas não interferem no estado transiente umas das outras.
+- **Durabilidade:** Uma vez comitado, o dado persiste contra falhas de infraestrutura.
 
-#### Mecanismo de Controle Transacional em JDBC
-Por padrão, toda conexão JDBC inicia no modo `autoCommit = true`, onde cada comando SQL individual é comitado imediatamente após a execução. Ao invocar `conexao.setAutoCommit(false)`, a aplicação assume o controle manual:
-- **`conexao.commit()`**: Confirma formalmente todas as operações de escrita (`INSERT`, `UPDATE`, `DELETE`) executadas desde o início do bloco.
-- **`conexao.rollback()`**: Cancela integralmente todas as modificações pendentes no caso de lançamento de qualquer exceção, restaurando o estado original do banco.
+Ao executar `conexao.setAutoCommit(false)`, a aplicação toma a responsabilidade explícita de chamar `conexao.commit()` ao término do bloco de sucesso e `conexao.rollback()` dentro do bloco de tratamento de exceções `catch`.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Aberta : Conexao obtida (autoCommit = false)
-    Aberta --> EmTransacao : Inicio de operacoes DML (INSERT/UPDATE)
-    EmTransacao --> Comitada : Execucao com sucesso -> commit()
-    EmTransacao --> Revertida : Falha / Excecao -> rollback()
-    Comitada --> Aberta : Pronta para novo ciclo
-    Revertida --> Aberta : Pronta para novo ciclo
-    Aberta --> Fechada : Finalizacao da aplicacao
-    Fechada --> [*]
+    [*] --> AbertaTransacao: setAutoCommit(false)
+    AbertaTransacao --> ExecutandoComandos: stmt.execute()
+    ExecutandoComandos --> Confirmado: conexao.commit()
+    ExecutandoComandos --> Revertido: conexao.rollback() (em caso de erro)
+    Confirmado --> [*]
+    Revertido --> [*]
 ```
 
 ---
 
-### Interceptação de Requisições com Servlet Filters
+### 3.7 Interceptacao de Requisicoes com Servlet Filters
 
-#### Arquitetura de Interceptação
-Um **Servlet Filter** (especificação `javax.servlet.Filter`) atua como uma barreira interceptadora intermediária posicionada entre o navegador cliente e o Servlet de destino. Ele permite auditar, bloquear, redirecionar ou manipular as requisições e respostas de maneira transversal.
+A interface `javax.servlet.Filter` possibilita a interceptação transversal de requisições e respostas HTTP antes que atinjam a Servlet de destino ou retornem ao navegador.
 
 ```mermaid
 flowchart LR
-    Requisicao["Requisicao HTTP"] --> F1["FilterAutenticacao (init/doFilter)"]
-    F1 -->|"chain.doFilter()"| Servlet["Servlet de Destino (UsuarioListar)"]
-    Servlet -->|"Retorno da Resposta"| F1
-    F1 --> Resposta["Resposta HTTP ao Cliente"]
+    Req["Navegador (HTTP Request)"] --> Filtro["FilterAutenticacao (doFilter)"]
+    Filtro -->|"chain.doFilter()"| Target["Servlet Alvo (ex: UsuarioListar)"]
+    Target -->|"Processa dados"| Resposta["View JSP / Resposta"]
+    Resposta --> Filtro
+    Filtro --> Retorno["Navegador (HTTP Response)"]
 ```
 
 #### Ciclo de Vida do Filter
-1. **`init(FilterConfig config)`**: Invocado pelo container uma única vez durante a inicialização da aplicação web. Utilizado para carregar parâmetros de configuração ou inicializar conexões.
-2. **`doFilter(ServletRequest request, ServletResponse response, FilterChain chain)`**: Executado a cada requisição que coincida com o mapeamento de URL (`urlPatterns`). Invoca obrigatoriamente `chain.doFilter(request, response)` para permitir que o fluxo avance para o próximo filtro ou servlet da cadeia.
-3. **`destroy()`**: Invocado pelo container quando a aplicação é interrompida ou descarregada da memória, ideal para fechar recursos persistentes.
+1. `init(FilterConfig filterConfig)`: Executado uma única vez na inicialização da aplicação web pelo contêiner Tomcat. Utilizado para aquisição de recursos globais e conexão com o banco.
+2. `doFilter(ServletRequest request, ServletResponse response, FilterChain chain)`: Invocado a cada requisição correspondente ao mapeamento `@WebFilter("/*")`. A invocação do método `chain.doFilter(request, response)` transfere o controle para o próximo filtro na cadeia ou para o recurso final.
+3. `destroy()`: Executado pelo Tomcat na desativação ou encerramento da aplicação para liberar conexões e threads ativas.
 
-#### Código da Classe `FilterAutenticacao.java`
+---
+
+### 3.8 Depuracao de Software e Diretrizes de Acessibilidade
+
+O desenvolvimento em IDE exige a aplicação de técnicas formais de inspeção de estado interno de objetos em tempo de execução:
+- **Breakpoints (Ctrl + F8):** Interrompem o fluxo da thread no ponto selecionado.
+- **Watches e Variables Panel:** Permitem auditar os valores contidos em objetos `HttpServletRequest`, atributos de sessão e cursores `ResultSet`.
+
+#### Diretrizes para Desenvolvedores Cegos (Acessibilidade na Depuração)
+A inspeção puramente visual de janelas e árvores de variáveis em IDEs frequentemente oferece barreiras a leitores de tela como NVDA ou JAWS. 
+- **Boas Práticas de Engenharia:** Emprego de rastreamento padronizado em console de erro via `System.err.println()` ou frameworks estruturados como Log4j/SLF4J, emitindo linhas textuais descritivas lineares contendo identificador do método, estado das variáveis e rastro de pilhas formatado (`e.printStackTrace()`).
+
+---
+
+## Modulo 4 — Implementacao da Consulta no Modelo MVC (Listar)
+
+### 4.1 Construcao do JavaBean Usuario (Encapsulamento, Construtores, equals e hashCode)
+
+O JavaBean corporativo representa a entidade de negócio e implementa os contratos fundamentais de objeto da plataforma Java.
+
+```mermaid
+classDiagram
+    class Usuario {
+        -int id
+        -String nome
+        -Date dataNascimento
+        -String cpf
+        -String email
+        -String senha
+        -double salario
+        +Usuario()
+        +Usuario(int, String, Date, String, String, String, double)
+        +getId() int
+        +setId(int) void
+        +getNome() String
+        +setNome(String) void
+        +getDataNascimento() Date
+        +setDataNascimento(Date) void
+        +getCpf() String
+        +setCpf(String) void
+        +getEmail() String
+        +setEmail(String) void
+        +getSenha() String
+        +setSenha(String) void
+        +getSalario() double
+        +setSalario(double) void
+        +equals(Object) boolean
+        +hashCode() int
+    }
+```
+
+#### Contrato de Identidade: hashCode e equals
+Em coleções baseadas em tabelas hash (`HashSet`, `HashMap`), a comparação entre objetos exige a sobreposição sincronizada de `equals(Object)` e `hashCode()`. A igualdade de duas instâncias de `Usuario` deve ser balizada unicamente pelas chaves de negócio invariantes: a chave primária `id` e o identificador fiscal único `cpf`.
+
+```java
+@Override
+public int hashCode() {
+    int hash = 7;
+    hash = 89 * hash + this.id;
+    hash = 89 * hash + (this.cpf != null ? this.cpf.hashCode() : 0);
+    return hash;
+}
+
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    final Usuario other = (Usuario) obj;
+    if (this.id != other.id) return false;
+    return (this.cpf == null) ? (other.cpf == null) : this.cpf.equals(other.cpf);
+}
+```
+
+---
+
+### 4.2 Interfaces em Java: Teoria, Desacoplamento e Contratos de Persistencia
+
+Uma interface estabelece um contrato formal de serviços públicos que uma classe concreta deve honrar. O desacoplamento viabilizado por interfaces permite a substituição da tecnologia de persistência subjacente sem modificar o código das camadas consumidoras (Controllers).
+
+```mermaid
+classDiagram
+    class GenericDAO {
+        <<interface>>
+        +cadastrar(Object) Boolean
+        +inserir(Object) Boolean
+        +alterar(Object) Boolean
+        +excluir(int) Boolean
+        +carregar(int) Object
+        +listar() List~Object~
+    }
+    class UsuarioDAO {
+        -Connection conexao
+        +UsuarioDAO()
+        +cadastrar(Object) Boolean
+        +inserir(Object) Boolean
+        +alterar(Object) Boolean
+        +excluir(int) Boolean
+        +carregar(int) Object
+        +listar() List~Object~
+        +cpfExiste(String) boolean
+    }
+    GenericDAO <|.. UsuarioDAO
+```
+
+---
+
+### 4.3 Criacao da Interface GenericDAO e Analise de Object versus Generics
+
+A interface `GenericDAO` define a assinatura universal das operações CRUD do sistema:
+
+```java
+package br.com.aplcurso.dao;
+
+import java.util.List;
+
+public interface GenericDAO {
+    public Boolean cadastrar(Object objeto);
+    public Boolean inserir(Object objeto);
+    public Boolean alterar(Object objeto);
+    public Boolean excluir(int numero);
+    public Object carregar(int numero);
+    public List<Object> listar();
+}
+```
+
+#### Avaliação Crítica: Object versus Java Generics
+- **Abordagem com Object (Material Pedagógico):** Permite reutilizar a mesma interface para qualquer entidade (`Usuario`, `Produto`, `Fornecedor`) sem introduzir complexidade de sintaxe de tipos genéricos no início da disciplina.
+- **Armadilha Técnica:** A utilização de `Object` compromete a segurança de tipos em tempo de compilação (*Compile-time type safety*), forçando a realização de operações manuais de *casting* que podem deflagrar `ClassCastException` em tempo de execução.
+- **Complemento Técnico (Evolução Corporativa):** Em projetos industriais modernos, a interface é expressa com parâmetros de tipo:
+  ```java
+  public interface GenericDAO<T, K> {
+      public Boolean cadastrar(T objeto);
+      public T carregar(K id);
+      public List<T> listar();
+  }
+  ```
+
+---
+
+### 4.4 Implementacao da UsuarioDAO: Metodo listar(), PreparedStatement e Cursor ResultSet
+
+O método `listar()` extrai as tuplas da tabela `usuario`, itera sobre o cursor `ResultSet`, hidrata instâncias de `Usuario` e compõe uma coleção `List<Object>` retornada à controladora.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor C as UsuarioListar (Servlet)
+    participant D as UsuarioDAO
+    participant Conn as Connection
+    participant Stmt as PreparedStatement
+    participant RS as ResultSet
+    participant BD as PostgreSQL
+
+    C->>D: dao.listar()
+    D->>Conn: prepareStatement(SQL_LISTAR)
+    D->>Stmt: executeQuery()
+    Stmt->>BD: SELECT * FROM usuario ORDER BY id
+    BD-->>RS: Retorna cursor de registros
+    loop Enquanto rs.next() == true
+        D->>RS: rs.getInt("id"), rs.getString("nome"), etc.
+        D->>D: Instancia Usuario e popula atributos
+        D->>D: Adiciona usuario na lista resultado
+    end
+    D->>Stmt: Fecha Statement e ResultSet
+    D-->>C: Retorna List<Object>
+```
+
+#### Código Comentado do Método listar()
+
+```java
+@Override
+public List<Object> listar() {
+    List<Object> resultado = new ArrayList<>();
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    String sql = "SELECT * FROM usuario ORDER BY id";
+    try {
+        stmt = conexao.prepareStatement(sql);
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            Usuario oUsuario = new Usuario();
+            oUsuario.setId(rs.getInt("id"));
+            oUsuario.setNome(rs.getString("nome"));
+            oUsuario.setDataNascimento(rs.getDate("datanascimento"));
+            oUsuario.setCpf(rs.getString("cpf"));
+            oUsuario.setEmail(rs.getString("email"));
+            oUsuario.setSenha(rs.getString("senha"));
+            oUsuario.setSalario(rs.getDouble("salario"));
+            resultado.add(oUsuario);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Problemas ao listar Usuarios! Erro: " + ex.getMessage());
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    return resultado;
+}
+```
+
+---
+
+### 4.5 Servlets HTTP: Ciclo de Vida, Metodos doGet/doPost e o Controlador UsuarioListar
+
+As Servlets operam como os nós de controle do padrão MVC no Java Web. A anotação `@WebServlet` declara o mapeamento de URL dispensando configurações extensas no arquivo `web.xml`.
+
+```mermaid
+flowchart TD
+    Navegador["Navegador Web"] -->|"HTTP GET /aplcurso/UsuarioListar"| Service["Metodo service(request, response)"]
+    Service -->|"Encaminha requisicao GET"| DoGet["Metodo doGet()"]
+    Service -->|"Encaminha requisicao POST"| DoPost["Metodo doPost()"]
+    DoGet --> ProcessRequest["processRequest(request, response)"]
+    DoPost --> ProcessRequest
+    ProcessRequest --> ExecDAO["Executa UsuarioDAO.listar()"]
+    ExecDAO --> InjetaReq["request.setAttribute('usuarios', lista)"]
+    InjetaReq --> Forward["RequestDispatcher.forward() para JSP"]
+```
+
+#### Implementação de UsuarioListar.java
+
+```java
+package br.com.aplcurso.controller.usuario;
+
+import br.com.aplcurso.dao.GenericDAO;
+import br.com.aplcurso.dao.UsuarioDAO;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(name = "UsuarioListar", urlPatterns = {"/UsuarioListar"})
+public class UsuarioListar extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=iso-8859-1");
+        try {
+            GenericDAO dao = new UsuarioDAO();
+            request.setAttribute("usuarios", dao.listar());
+            request.getRequestDispatcher("/cadastros/usuario/usuarioListar.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Erro no Servlet UsuarioListar: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+}
+```
+
+---
+
+### 4.6 Compartilhamento de Escopo e Despacho via RequestDispatcher
+
+A transferência de informações e controle de fluxo entre a Servlet e a página JSP baseia-se em dois métodos primordiais da API Servlet:
+
+1. **Injeção de Escopo de Requisição (`request.setAttribute("chave", valor)`):**
+   Vincula o objeto de coleção à requisição em curso. Esse escopo tem ciclo de vida estritamente delimitado ao atendimento do protocolo HTTP atual, sendo descartado assim que a resposta final é entregue ao navegador. Evita-se armazenar dados transitórios na Sessão HTTP (`HttpSession`), o que degradaria a memória do servidor Tomcat.
+
+2. **Despacho no Servidor (`RequestDispatcher.forward(request, response)`):**
+   Executa um redirecionamento interno em memória no lado servidor. O navegador do cliente não tem ciência de que o processamento passou por uma Servlet e foi concluído por um JSP; a URL exibida no navegador permanece apontando para o Servlet (`/UsuarioListar`), preservando a URL controladora. 
+   *(Diferenciação Crítica: O comando `response.sendRedirect("url")` emite uma resposta HTTP 302 ao cliente ordenando uma nova requisição independente, descartando quaisquer atributos previamente alocados em `HttpServletRequest`).*
+
+---
+
+### 4.7 Construcao da View usuarioListar.jsp: Tabelas Dinamicas, Formatacao JSTL e DataTables
+
+O arquivo JSP consome a coleção enviada pela Servlet através da tag `<c:forEach>` e formata valores com a biblioteca `fmt`:
+
+```jsp
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+<jsp:include page="/header.jsp" />
+<jsp:include page="/menu.jsp" />
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">Relacao de Usuarios Cadastrados</h2>
+            <div class="text-right mb-3">
+                <a href="${pageContext.request.contextPath}/UsuarioNovo" class="btn btn-success">
+                    Novo Usuario
+                </a>
+            </div>
+            <table id="tabelaUsuarios" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data de Nascimento</th>
+                        <th>CPF</th>
+                        <th>E-mail</th>
+                        <th>Salario</th>
+                        <th>Acoes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="item" items="${usuarios}">
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.nome}</td>
+                            <td><fmt:formatDate value="${item.dataNascimento}" pattern="dd/MM/yyyy" /></td>
+                            <td>${item.cpf}</td>
+                            <td>${item.email}</td>
+                            <td><fmt:formatNumber value="${item.salario}" type="currency" currencySymbol="R$" /></td>
+                            <td class="text-center">
+                                <a href="${pageContext.request.contextPath}/UsuarioCarregar?id=${item.id}" class="btn btn-primary btn-sm">
+                                    Alterar
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tabelaUsuarios').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.22/i18n/Portuguese-Brasil.json"
+            }
+        });
+    });
+</script>
+
+<jsp:include page="/footer.jsp" />
+```
+
+---
+
+## Modulo 5 — Manutencao Cadastral Completa (Inclusao, Validacoes Assincronas e Edicao)
+
+### 5.1 Decisao de Persistencia na DAO: Bifurcacao por Identificador (id == 0)
+
+Para manter a controladora `UsuarioCadastrar` coesa e desacoplada, a responsabilidade de discernir se o registro deve ser inserido ou atualizado é encapsulada no método `cadastrar(Object objeto)` da `UsuarioDAO`:
+
+```mermaid
+flowchart TD
+    A["Entrada: cadastrar(Object objeto)"] --> B["Casting: Usuario oUsuario = (Usuario) objeto"]
+    B --> C{"oUsuario.getId() == 0?"}
+    C -- "Sim (Registro Novo)" --> D["Invoca: this.inserir(oUsuario)"]
+    C -- "Nao (Registro Ja Existente)" --> E["Invoca: this.alterar(oUsuario)"]
+    D --> F["Retorna Boolean"]
+    E --> F
+```
+
+#### Código da Decisão Polimórfica
+
+```java
+@Override
+public Boolean cadastrar(Object objeto) {
+    Usuario oUsuario = (Usuario) objeto;
+    Boolean retorno = false;
+    if (oUsuario.getId() == 0) {
+        retorno = this.inserir(oUsuario);
+    } else {
+        retorno = this.alterar(oUsuario);
+    }
+    return retorno;
+}
+```
+
+---
+
+### 5.2 Implementacao do Metodo inserir() com PreparedStatement e Tratamento de Datas
+
+O método `inserir` realiza a escrita física protegida contra injeção de SQL e converte os tipos de data da API utilitária Java para o padrão SQL:
+
+```java
+@Override
+public Boolean inserir(Object objeto) {
+    Usuario oUsuario = (Usuario) objeto;
+    PreparedStatement stmt = null;
+    String sql = "INSERT INTO usuario (nome, datanascimento, cpf, email, senha, salario) "
+               + "VALUES (?, ?, ?, ?, ?, ?)";
+    try {
+        stmt = conexao.prepareStatement(sql);
+        stmt.setString(1, oUsuario.getNome());
+        stmt.setDate(2, new java.sql.Date(oUsuario.getDataNascimento().getTime()));
+        stmt.setString(3, oUsuario.getCpf());
+        stmt.setString(4, oUsuario.getEmail());
+        stmt.setString(5, oUsuario.getSenha());
+        stmt.setDouble(6, oUsuario.getSalario());
+        
+        stmt.execute();
+        conexao.commit();
+        return true;
+    } catch (Exception ex) {
+        System.out.println("Falha ao inserir usuario! Erro: " + ex.getMessage());
+        ex.printStackTrace();
+        try {
+            conexao.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    } finally {
+        try {
+            if (stmt != null) stmt.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+```
+
+---
+
+### 5.3 Verificacao de Duplicidade no Banco: Metodo cpfExiste() com COUNT(*)
+
+Para permitir validações prévias via chamadas assíncronas do front-end sem depender do estouro de exceções de integridade (`PSQLException: duplicate key value violates unique constraint`), implementa-se uma busca leve via agregação:
+
+```java
+public boolean cpfExiste(String cpf) {
+    String sql = "SELECT COUNT(*) AS quantidade FROM usuario WHERE cpf = ?";
+    try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        stmt.setString(1, cpf);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("quantidade") > 0;
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Erro ao checar unicidade de CPF: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return false;
+}
+```
+
+---
+
+### 5.4 Validacao Algoritmica de Documentos: Modulo 11 para CPF e CNPJ
+
+A validação de documentos oficiais federais obedece ao algoritmo matemático de **Módulo 11**, exigindo pesos decrescentes e cálculo de restos de divisão inteira.
+
+#### Fundamentação Matemática do CPF
+Dado um CPF composto por 11 algarismos $`c_0, c_1, \dots, c_{10}`$:
+1. **Primeiro Dígito Verificador ($`d_1`$):**
+   Calcula-se o somatório ponderado dos 9 primeiros dígitos com pesos regressivos de 10 até 2:
+   ```math
+   S_1 = \sum_{i=0}^{8} c_i \times (10 - i)
+   ```
+   Aplica-se o cálculo do resto da divisão inteira:
+   ```math
+   R_1 = S_1 \pmod{11}
+   ```
+   A regra define:
+   ```math
+   d_1 = (11 - R_1) > 9 \;?\; 0 : (11 - R_1)
+   ```
+
+2. **Segundo Dígito Verificador ($`d_2`$):**
+   Calcula-se o somatório ponderado dos 9 primeiros dígitos com pesos de 11 até 3, somado ao dobro do primeiro dígito verificador calculado ($`d_1`$):
+   ```math
+   S_2 = \left(\sum_{i=0}^{8} c_i \times (11 - i)\right) + (d_1 \times 2)
+   ```
+   Calcula-se o resto:
+   ```math
+   R_2 = S_2 \pmod{11}
+   ```
+   A regra define:
+   ```math
+   d_2 = (11 - R_2) > 9 \;?\; 0 : (11 - R_2)
+   ```
+
+O documento é matematicamente autêntico se e somente se:
+```math
+d_1 = c_9 \quad \text{e} \quad d_2 = c_{10}
+```
+
+```mermaid
+flowchart TD
+    In["Entrada: String cpf"] --> Clean["Sanitizacao: replaceAll('[^\\d]', '')"]
+    Clean --> CheckSize{"Comprimento == 11 e nao repetidos?"}
+    CheckSize -- "Nao" --> RetFalse["Retorna false"]
+    CheckSize -- "Sim" --> LoopSomas["Laco 0 a 8: Acumula S1 e S2 com pesos"]
+    LoopSomas --> CalcD1["Calcula d1 = 11 - (S1 % 11); Se d1 > 9 entao d1 = 0"]
+    CalcD1 --> IncS2["Acumula d1 * 2 em S2"]
+    IncS2 --> CalcD2["Calcula d2 = 11 - (S2 % 11); Se d2 > 9 entao d2 = 0"]
+    CalcD2 --> CompDVs{"d1 == c[9] e d2 == c[10]?"}
+    CompDVs -- "Sim" --> RetTrue["Retorna true"]
+    CompDVs -- "Nao" --> RetFalse
+```
+
+#### Implementação de DocumentoValidador.java
+
+```java
+package br.com.aplcurso.utils;
+
+public class DocumentoValidador {
+
+    public static boolean isCPF(String cpf) {
+        if (cpf == null) return false;
+        cpf = cpf.replaceAll("[^\\d]", "");
+        if (cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+
+        try {
+            int d1 = 0, d2 = 0;
+            for (int i = 0; i < 9; i++) {
+                int digito = cpf.charAt(i) - '0';
+                d1 += digito * (10 - i);
+                d2 += digito * (11 - i);
+            }
+
+            d1 = 11 - (d1 % 11);
+            d1 = (d1 > 9) ? 0 : d1;
+            
+            d2 += d1 * 2;
+            d2 = 11 - (d2 % 11);
+            d2 = (d2 > 9) ? 0 : d2;
+
+            return (d1 == (cpf.charAt(9) - '0')) && (d2 == (cpf.charAt(10) - '0'));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isCNPJ(String cnpj) {
+        if (cnpj == null) return false;
+        cnpj = cnpj.replaceAll("[^\\d]", "");
+        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {
+            return false;
+        }
+
+        try {
+            int[] pesos1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+            int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+            int d1 = 0, d2 = 0;
+            for (int i = 0; i < 12; i++) {
+                int digito = cnpj.charAt(i) - '0';
+                d1 += digito * pesos1[i];
+                d2 += digito * pesos2[i];
+            }
+
+            d1 = d1 % 11;
+            d1 = (d1 < 2) ? 0 : 11 - d1;
+
+            d2 += d1 * pesos2[12];
+            d2 = d2 % 11;
+            d2 = (d2 < 2) ? 0 : 11 - d2;
+
+            return (d1 == (cnpj.charAt(12) - '0')) && (d2 == (cnpj.charAt(13) - '0'));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isDocumentoValido(String documento) {
+        if (documento == null) return false;
+        String limpo = documento.replaceAll("[^\\d]", "");
+        if (limpo.length() == 11) {
+            return isCPF(limpo);
+        } else if (limpo.length() == 14) {
+            return isCNPJ(limpo);
+        }
+        return false;
+    }
+}
+```
+
+---
+
+### 5.5 Metodos Estaticos versus Metodos de Instancia na Engenharia de Software
+
+- **Métodos Estáticos (`public static`):** Operam sem depender do estado de uma instância específica. Recebem parâmetros de entrada e produzem saídas através de funções puras determinísticas. Exemplos: `DocumentoValidador.isCPF(cpf)` e `SingleConnection.getConnection()`. Não alocam espaço individual na memória Heap por invocação.
+- **Métodos de Instância:** Manipulam variáveis de estado de um objeto em particular (`this.id`, `this.nome`). Exemplo: `oUsuario.setNome("Carlos")`.
+
+---
+
+### 5.6 Servlet Assincrono UsuarioVerificarCPF para Validacao via AJAX
+
+A Servlet `UsuarioVerificarCPF` é especializada em responder requisições assíncronas do jQuery sem carregar layouts HTML ou efetuar despachos:
+
+```java
+package br.com.aplcurso.controller.usuario;
+
+import br.com.aplcurso.dao.UsuarioDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(name = "UsuarioVerificarCPF", urlPatterns = {"/UsuarioVerificarCPF"})
+public class UsuarioVerificarCPF extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/plain;charset=iso-8859-1");
+        String cpf = request.getParameter("cpf");
+        try (PrintWriter out = response.getWriter()) {
+            UsuarioDAO dao = new UsuarioDAO();
+            if (dao.cpfExiste(cpf)) {
+                out.print("existe");
+            } else {
+                out.print("ok");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+}
+```
+
+---
+
+### 5.7 Servlet de Inicializacao UsuarioNovo e Encaminhamento com Modelo Vazio
+
+Ao requisitar o cadastro de um novo registro, a controladora `UsuarioNovo` instancia um objeto `Usuario` vazio com atributos neutros (evitando valores nulos no preenchimento de campos JSP) e despacha o fluxo:
+
+```java
+package br.com.aplcurso.controller.usuario;
+
+import br.com.aplcurso.model.Usuario;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(name = "UsuarioNovo", urlPatterns = {"/UsuarioNovo"})
+public class UsuarioNovo extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=iso-8859-1");
+        Usuario oUsuario = new Usuario();
+        request.setAttribute("usuario", oUsuario);
+        request.getRequestDispatcher("/cadastros/usuario/usuarioCadastrar.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+}
+```
+
+---
+
+### 5.8 Servlet Controlador UsuarioCadastrar: Parse de Tipos, Higienizacao e Codigos de Retorno
+
+A controladora `UsuarioCadastrar` centraliza o processamento de submissão do formulário:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Cliente as Navegador (AJAX jQuery)
+    participant Servlet as UsuarioCadastrar
+    participant Validador as DocumentoValidador
+    participant DAO as UsuarioDAO
+    participant BD as PostgreSQL
+
+    Cliente->>Servlet: POST /UsuarioCadastrar com dados serializados
+    Servlet->>Validador: isCPF(cpfRecebido)
+    alt CPF Matematicamente Invalido
+        Validador-->>Servlet: false
+        Servlet-->>Cliente: Codigo 2 (Documento Invalido)
+    else CPF Valido
+        Validador-->>Servlet: true
+        Servlet->>Servlet: Parse de Data e Moeda
+        Servlet->>DAO: cadastrar(oUsuario)
+        alt ID == 0
+            DAO->>BD: INSERT INTO usuario ...
+        else ID > 0
+            DAO->>BD: UPDATE usuario ...
+        end
+        BD-->>DAO: Sucesso (commit)
+        DAO-->>Servlet: true
+        Servlet-->>Cliente: Codigo 1 (Sucesso)
+    end
+```
+
+#### Implementação de UsuarioCadastrar.java
+
+```java
+package br.com.aplcurso.controller.usuario;
+
+import br.com.aplcurso.dao.GenericDAO;
+import br.com.aplcurso.dao.UsuarioDAO;
+import br.com.aplcurso.model.Usuario;
+import br.com.aplcurso.utils.DocumentoValidador;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(name = "UsuarioCadastrar", urlPatterns = {"/UsuarioCadastrar"})
+public class UsuarioCadastrar extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/plain;charset=iso-8859-1");
+        
+        try (PrintWriter out = response.getWriter()) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String nome = request.getParameter("nome");
+            String dataNascimentoStr = request.getParameter("dataNascimento");
+            String cpf = request.getParameter("cpf");
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String salarioStr = request.getParameter("salario");
+
+            // Validacao de integridade de documento
+            if (!DocumentoValidador.isCPF(cpf)) {
+                out.print("2"); // Codigo 2: Documento invalido
+                return;
+            }
+
+            // Tratamento de conversao de data
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date dataNascimento = formato.parse(dataNascimentoStr);
+
+            // Higienizacao de valor monetario recebido do front-end
+            String salarioLimpo = salarioStr.replace("R$", "").replace(".", "").replace(",", ".").trim();
+            double salario = Double.parseDouble(salarioLimpo);
+
+            Usuario oUsuario = new Usuario(id, nome, dataNascimento, cpf, email, senha, salario);
+            GenericDAO dao = new UsuarioDAO();
+
+            if (dao.cadastrar(oUsuario)) {
+                out.print("1"); // Codigo 1: Gravado com sucesso
+            } else {
+                out.print("0"); // Codigo 0: Falha na persistencia
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro no Servlet UsuarioCadastrar: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+}
+```
+
+---
+
+### 5.9 Interface de Manutencao usuarioCadastrar.jsp: Formulario Hibrido, Mascaras e AJAX
+
+A página atende tanto à inserção (quando `usuario.id == 0`) quanto à edição cadastral (quando `usuario.id > 0`):
+
+```jsp
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+<jsp:include page="/header.jsp" />
+<jsp:include page="/menu.jsp" />
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>Cadastro de Usuario</h4>
+        </div>
+        <div class="card-body">
+            <form id="formUsuario">
+                <input type="hidden" id="id" name="id" value="${usuario.id}" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nome">Nome Completo:</label>
+                        <input type="text" class="form-control" id="nome" name="nome" 
+                               value="${usuario.nome}" required maxlength="100" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="dataNascimento">Data de Nascimento:</label>
+                        <fmt:formatDate value="${usuario.dataNascimento}" pattern="yyyy-MM-dd" var="dataFmt" />
+                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" 
+                               value="${dataFmt}" required />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" 
+                               value="${usuario.cpf}" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">E-mail:</label>
+                        <input type="email" class="form-control" id="email" name="email" 
+                               value="${usuario.email}" required maxlength="100" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="senha">Senha:</label>
+                        <input type="password" class="form-control" id="senha" name="senha" 
+                               value="${usuario.senha}" required maxlength="20" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="salario">Salario (R$):</label>
+                        <input type="text" class="form-control" id="salario" name="salario" 
+                               value="${usuario.salario}" required />
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-success" onclick="gravarUsuario()">Gravar</button>
+                <a href="${pageContext.request.contextPath}/UsuarioListar" class="btn btn-secondary">Voltar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#cpf').mask('000.000.000-00', {reverse: true});
+        $('#salario').maskMoney({prefix:'R$ ', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
+
+        $('#cpf').blur(function() {
+            var cpfInformado = $(this).val();
+            if (cpfInformado.length === 14) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/UsuarioVerificarCPF',
+                    type: 'GET',
+                    data: {cpf: cpfInformado},
+                    success: function(resposta) {
+                        if (resposta.trim() === 'existe') {
+                            Swal.fire('Atencao!', 'Este CPF ja se encontra cadastrado no sistema!', 'warning');
+                            $('#cpf').val('').focus();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function gravarUsuario() {
+        if ($('#nome').val() === '' || $('#cpf').val() === '') {
+            Swal.fire('Campos Obrigatorios', 'Preencha todos os campos antes de salvar!', 'error');
+            return;
+        }
+
+        var dados = $('#formUsuario').serialize();
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/UsuarioCadastrar',
+            type: 'POST',
+            data: dados,
+            success: function(retorno) {
+                var cod = retorno.trim();
+                if (cod === '1') {
+                    Swal.fire('Sucesso!', 'Usuario salvo com sucesso!', 'success').then(function() {
+                        window.location.href = '${pageContext.request.contextPath}/UsuarioListar';
+                    });
+                } else if (cod === '2') {
+                    Swal.fire('Invalido!', 'O CPF informado nao e matematicamente valido!', 'error');
+                } else {
+                    Swal.fire('Erro!', 'Nao foi possivel persistir as informacoes no banco!', 'error');
+                }
+            },
+            error: function() {
+                Swal.fire('Erro Critico', 'Falha na comunicacao com o servidor!', 'error');
+            }
+        });
+    }
+</script>
+
+<jsp:include page="/footer.jsp" />
+```
+
+---
+
+### 5.10 Metodo carregar() na DAO e Fluxo de Atualizacao Cadastral
+
+O método `carregar` realiza a busca pontual por chave primária, permitindo que a controladora `UsuarioCarregar` obtenha a entidade no banco de dados e injete-a na requisição para exibir o formulário preenchido para edição:
+
+```java
+@Override
+public Object carregar(int numero) {
+    Usuario oUsuario = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    String sql = "SELECT * FROM usuario WHERE id = ?";
+    try {
+        stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, numero);
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            oUsuario = new Usuario();
+            oUsuario.setId(rs.getInt("id"));
+            oUsuario.setNome(rs.getString("nome"));
+            oUsuario.setDataNascimento(rs.getDate("datanascimento"));
+            oUsuario.setCpf(rs.getString("cpf"));
+            oUsuario.setEmail(rs.getString("email"));
+            oUsuario.setSenha(rs.getString("senha"));
+            oUsuario.setSalario(rs.getDouble("salario"));
+        }
+    } catch (SQLException ex) {
+        System.out.println("Problemas ao carregar Usuario! Erro: " + ex.getMessage());
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    return oUsuario;
+}
+```
+
+---
+
+## Codigo-Fonte Consolidado da Aplicacao
+
+### Script de Banco de Dados: `br/com/aplcurso/utils/banco.sql`
+
+```sql
+-- Criacao da infraestrutura relacional
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    datanascimento DATE NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(20) NOT NULL,
+    salario DECIMAL(15,2) NOT NULL
+);
+
+-- Carga de dados inicial para testes operacionais
+INSERT INTO usuario (nome, datanascimento, cpf, email, senha, salario)
+VALUES ('Administrador Inicial', '1995-05-20', '111.444.777-35', 'admin@aplcurso.com.br', 'admin123', 6500.00);
+```
+
+---
+
+### Filtro de Autenticação e Ciclo de Vida: `FilterAutenticacao.java`
+
 ```java
 package br.com.aplcurso.filter;
 
@@ -969,7 +1516,6 @@ public class FilterAutenticacao implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // Inicializa a conexao global no carregamento do container
         connection = SingleConnection.getConnection();
     }
 
@@ -977,22 +1523,10 @@ public class FilterAutenticacao implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         try {
-            // Repassa a execucao para a cadeia de filtros e servlets
             chain.doFilter(request, response);
-            
-            // Comita alteracoes transacionais pendentes da requisicao
-            if (connection != null && !connection.getAutoCommit()) {
-                connection.commit();
-            }
         } catch (Exception e) {
-            try {
-                if (connection != null && !connection.getAutoCommit()) {
-                    connection.rollback();
-                }
-            } catch (SQLException ex) {
-                System.err.println("Falha critica ao executar rollback no Filter: " + ex.getMessage());
-            }
-            throw new ServletException("Erro interceptado no pipeline de execucao: " + e.getMessage(), e);
+            System.out.println("Erro interceptado pelo FilterAutenticacao: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -1003,7 +1537,7 @@ public class FilterAutenticacao implements Filter {
                 connection.close();
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao fechar conexao no encerramento do Filter: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
@@ -1011,781 +1545,13 @@ public class FilterAutenticacao implements Filter {
 
 ---
 
-## Implementação da Consulta e Listagem no Padrão MVC
-
-### O Modelo de Dados JavaBean e o Contrato de Identidade
-
-A entidade `Usuario` atua como o modelo estrutural do domínio, respeitando a convenção de JavaBeans:
-- Campos estritamente privados.
-- Construtor padrão sem argumentos e construtor parametrizado completo.
-- Métodos acessores (`get`) e modificadores (`set`) públicos.
-- Implementação da interface marcadora `java.io.Serializable`.
-- Sobrescrita estrita dos métodos `hashCode()` e `equals()` avaliando a chave primária (`id`) e a chave natural de negócio (`cpf`).
-
-```java
-package br.com.aplcurso.model;
-
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
-
-public class Usuario implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private int id;
-    private String nome;
-    private Date dataNascimento;
-    private String cpf;
-    private String email;
-    private String senha;
-    private double salario;
-
-    public Usuario() {
-        this.id = 0;
-        this.nome = "";
-        this.dataNascimento = null;
-        this.cpf = "";
-        this.email = "";
-        this.senha = "";
-        this.salario = 0.0;
-    }
-
-    public Usuario(int id, String nome, Date dataNascimento, String cpf, String email, String senha, double salario) {
-        this.id = id;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.cpf = cpf;
-        this.email = email;
-        this.senha = senha;
-        this.salario = salario;
-    }
-
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public Date getDataNascimento() { return dataNascimento; }
-    public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento; }
-
-    public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
-
-    public double getSalario() { return salario; }
-    public void setSalario(double salario) { this.salario = salario; }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.id;
-        hash = 89 * hash + Objects.hashCode(this.cpf);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        final Usuario other = (Usuario) obj;
-        if (this.id != other.id) return false;
-        return Objects.equals(this.cpf, other.cpf);
-    }
-}
-```
-
----
-
-### Contratos de Acesso a Dados com a Interface GenericDAO
-
-O padrão **Data Access Object (DAO)** abstrai e centraliza todas as interações com o SGBD. A interface `GenericDAO` estabelece a padronização das assinaturas do CRUD em todo o sistema:
+### Implementação do DAO: `UsuarioDAO.java`
 
 ```java
 package br.com.aplcurso.dao;
 
-import java.util.List;
-
-public interface GenericDAO {
-    Boolean cadastrar(Object objeto);
-    Boolean inserir(Object objeto);
-    Boolean alterar(Object objeto);
-    Boolean excluir(int numero);
-    Object carregar(int numero);
-    List<Object> listar();
-}
-```
-
----
-
-### Ciclo de Vida de Servlets e o Controlador de Listagem
-
-#### Fundamentos da API Servlet
-A classe `HttpServlet` atua como o ponto de entrada das requisições web. O container Tomcat gerencia o ciclo de vida do Servlet através de:
-- `init()`: Invocado na primeira carga do servlet.
-- `service()`: Intercepta a requisição, analisa o método HTTP e delega para `doGet` ou `doPost`.
-- `destroy()`: Executado ao descarregar a aplicação.
-
-#### O Mecanismo do Despacho com `RequestDispatcher.forward`
-O método `forward(request, response)` transfere internamente o controle da execução da Servlet para a página JSP sem alterar a URL exibida no navegador do cliente, preservando todos os objetos acoplados ao escopo da requisição (`request.setAttribute`).
-
-```java
-package br.com.aplcurso.controller.usuario;
-
-import br.com.aplcurso.dao.UsuarioDAO;
-import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-@WebServlet(name = "UsuarioListar", urlPatterns = {"/UsuarioListar"})
-public class UsuarioListar extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=iso-8859-1");
-        try {
-            UsuarioDAO dao = new UsuarioDAO();
-            // Injeta a colecao recuperada no escopo da requisicao
-            request.setAttribute("usuarios", dao.listar());
-            
-            // Encaminha a requisicao para a pagina JSP
-            RequestDispatcher rd = request.getRequestDispatcher("/cadastros/usuario/usuario.jsp");
-            rd.forward(request, response);
-        } catch (Exception ex) {
-            System.err.println("Erro ao listar usuarios: " + ex.getMessage());
-            request.setAttribute("mensagem", "Falha ao carregar lista de usuarios.");
-            request.getRequestDispatcher("/home.jsp").forward(request, response);
-        }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-}
-```
-
----
-
-### Renderização Dinâmica com JSTL e DataTables
-
-No arquivo JSP de listagem (`usuario.jsp`), as tags da JSTL iteram sobre os dados e aplicam formatação, enquanto o script jQuery aciona o plugin **DataTables** para adicionar busca instantânea, ordenação e paginação no cliente:
-
-```jsp
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
-
-<jsp:include page="/header.jsp" />
-<jsp:include page="/menu.jsp" />
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Listagem de Usuarios Cadastrados</h2>
-        <a href="${pageContext.request.contextPath}/UsuarioNovo" class="btn btn-primary">
-            Novo Usuario
-        </a>
-    </div>
-
-    <table id="tabelaUsuarios" class="table table-striped table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Nome Completo</th>
-                <th>CPF</th>
-                <th>Data de Nascimento</th>
-                <th>E-mail</th>
-                <th>Salario</th>
-                <th class="text-center">Acoes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${usuarios}" var="u">
-                <tr>
-                    <td>${u.id}</td>
-                    <td><c:out value="${u.nome}" /></td>
-                    <td>${u.cpf}</td>
-                    <td><fmt:formatDate value="${u.dataNascimento}" pattern="dd/MM/yyyy" /></td>
-                    <td><c:out value="${u.email}" /></td>
-                    <td><fmt:formatNumber value="${u.salario}" type="currency" currencySymbol="R$" /></td>
-                    <td class="text-center">
-                        <a href="${pageContext.request.contextPath}/UsuarioCarregar?id=${u.id}" 
-                           class="btn btn-sm btn-info">Editar</a>
-                        <a href="${pageContext.request.contextPath}/UsuarioExcluir?id=${u.id}" 
-                           class="btn btn-sm btn-danger"
-                           onclick="return confirm('Deseja realmente excluir este registro?');">Excluir</a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-</div>
-
-<script>
-    $(document).ready(function() {
-        $('#tabelaUsuarios').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Portuguese-Brasil.json"
-            }
-        });
-    });
-</script>
-
-<jsp:include page="/footer.jsp" />
-```
-
----
-
-## Operações de Manutenção Completa do Cadastro
-
-### Bifurcação de Persistência na DAO
-
-Na implementação de `GenericDAO`, a camada de controle despacha a entidade para um único método unificado: `cadastrar(Object objeto)`. A classe `UsuarioDAO` decide internamente qual instrução SQL acionar examinando o valor da chave primária (`id`):
-
-```mermaid
-flowchart TD
-    Inicio["cadastrar(Object objeto)"] --> Cast["Casting para Usuario"]
-    Cast --> Teste{"oUsuario.getId() == 0?"}
-    Teste -- "Sim (Novo Registro)" --> Inserir["Chama inserir(oUsuario) -> INSERT"]
-    Teste -- "Nao (Registro Existente)" --> Alterar["Chama alterar(oUsuario) -> UPDATE"]
-    Inserir --> Retorno["Retorna Boolean"]
-    Alterar --> Retorno
-```
-
-```java
-@Override
-public Boolean cadastrar(Object objeto) {
-    Usuario oUsuario = (Usuario) objeto;
-    Boolean retorno = false;
-    if (oUsuario.getId() == 0) {
-        retorno = this.inserir(oUsuario);
-    } else {
-        retorno = this.alterar(oUsuario);
-    }
-    return retorno;
-}
-```
-
----
-
-### Prevenção de SQL Injection e Mapeamento de Datas
-
-#### O Risco da Concatenação Crua e a Defesa com `PreparedStatement`
-A montagem de comandos SQL por concatenação direta de literais e variáveis de formulário permite a execução de comandos arbitrários no banco de dados. O uso de `PreparedStatement` envia a estrutura do comando pré-compilada, tratando qualquer dado inserido estritamente como valor literal parametrizado (`?`).
-
-#### Tratamento de Datas: `java.util.Date` versus `java.sql.Date`
-Um erro frequente de iniciantes consiste em passar diretamente a instância de `java.util.Date` para o driver JDBC. A interface JDBC exige o tipo `java.sql.Date` (que retém apenas dia, mês e ano, sem fração horária). A conversão é feita a partir dos milissegundos:
-
-```java
-stmt.setDate(2, new java.sql.Date(oUsuario.getDataNascimento().getTime()));
-```
-
-#### Código do Método `inserir` na DAO
-```java
-@Override
-public Boolean inserir(Object objeto) {
-    Usuario oUsuario = (Usuario) objeto;
-    PreparedStatement stmt = null;
-    String sql = "INSERT INTO usuario (nome, datanascimento, cpf, email, senha, salario) "
-               + "VALUES (?, ?, ?, ?, ?, ?)";
-    try {
-        stmt = conexao.prepareStatement(sql);
-        stmt.setString(1, oUsuario.getNome());
-        stmt.setDate(2, new java.sql.Date(oUsuario.getDataNascimento().getTime()));
-        stmt.setString(3, oUsuario.getCpf());
-        stmt.setString(4, oUsuario.getEmail());
-        stmt.setString(5, oUsuario.getSenha());
-        stmt.setDouble(6, oUsuario.getSalario());
-
-        stmt.execute();
-        conexao.commit();
-        return true;
-    } catch (Exception ex) {
-        try {
-            System.err.println("Falha ao inserir usuario! Executando rollback. Causa: " + ex.getMessage());
-            conexao.rollback();
-        } catch (SQLException e) {
-            System.err.println("Erro ao tentar efetuar rollback: " + e.getMessage());
-        }
-        return false;
-    } finally {
-        try {
-            if (stmt != null) stmt.close();
-        } catch (SQLException e) {
-            System.err.println("Erro ao fechar PreparedStatement: " + e.getMessage());
-        }
-    }
-}
-```
-
----
-
-### Verificação Assíncrona de Unicidade e AJAX
-
-Para impedir o disparo de exceções catastróficas de violação de constraint `UNIQUE` no PostgreSQL e prover feedback imediato ao usuário, a aplicação executa checagens prévias de existência via AJAX no evento `blur` (ao retirar o foco do campo):
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Usuario (Formulario)
-    participant JS as app.js (jQuery)
-    participant Servlet as UsuarioVerificarCPF
-    participant DAO as UsuarioDAO
-    participant BD as PostgreSQL
-
-    User->>JS: Digita CPF e clica fora (evento blur)
-    JS->>Servlet: HTTP POST /UsuarioVerificarCPF (cpf=08243060073)
-    Servlet->>DAO: cpfExiste("08243060073")
-    DAO->>BD: SELECT COUNT(*) FROM usuario WHERE cpf = ?
-    BD-->>DAO: Retorna total (ex: 1)
-    DAO-->>Servlet: Retorna true
-    Servlet-->>JS: Resposta em texto: "existe"
-    JS->>User: Exibe alerta SweetAlert2 ("CPF ja cadastrado no sistema!")
-    JS->>User: Limpa o campo e devolve o foco
-```
-
-#### Código da Consulta Eficiente com `COUNT(*)` na DAO
-```java
-public boolean cpfExiste(String cpf) {
-    String sql = "SELECT COUNT(*) AS total FROM usuario WHERE cpf = ?";
-    try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-        stmt.setString(1, cpf);
-        try (ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("total") > 0;
-            }
-        }
-    } catch (SQLException e) {
-        System.err.println("Erro ao verificar duplicidade de CPF: " + e.getMessage());
-    }
-    return false;
-}
-```
-
-#### Código do Servlet Assíncrono `UsuarioVerificarCPF.java`
-```java
-package br.com.aplcurso.controller.usuario;
-
-import br.com.aplcurso.dao.UsuarioDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-@WebServlet(name = "UsuarioVerificarCPF", urlPatterns = {"/UsuarioVerificarCPF"})
-public class UsuarioVerificarCPF extends HttpServlet {
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/plain;charset=iso-8859-1");
-        String cpf = request.getParameter("cpf");
-        
-        if (cpf != null) {
-            cpf = cpf.replaceAll("[^\\d]", "");
-        }
-
-        try (PrintWriter out = response.getWriter()) {
-            UsuarioDAO dao = new UsuarioDAO();
-            if (dao.cpfExiste(cpf)) {
-                out.print("existe");
-            } else {
-                out.print("ok");
-            }
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
-    }
-}
-```
-
----
-
-### Validação Algorítmica Centralizada no Backend
-
-A validação de frontend protege contra digitação acidental, mas pode ser facilmente burlada desativando o JavaScript do navegador ou disparando requisições diretas via cURL/Postman. A validação no backend é **obrigatória**. A classe utilitária `DocumentoValidador` fornece métodos estáticos reutilizáveis:
-
-```java
-package br.com.aplcurso.utils;
-
-public class DocumentoValidador {
-
-    public static boolean isCPF(String cpf) {
-        if (cpf == null) return false;
-        cpf = cpf.replaceAll("[^\\d]", "");
-        if (cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) return false;
-
-        try {
-            int d1 = 0, d2 = 0;
-            for (int i = 0; i < 9; i++) {
-                int digito = cpf.charAt(i) - '0';
-                d1 += digito * (10 - i);
-                d2 += digito * (11 - i);
-            }
-
-            d1 = 11 - (d1 % 11);
-            d1 = (d1 > 9) ? 0 : d1;
-
-            d2 += d1 * 2;
-            d2 = 11 - (d2 % 11);
-            d2 = (d2 > 9) ? 0 : d2;
-
-            return (d1 == (cpf.charAt(9) - '0')) && (d2 == (cpf.charAt(10) - '0'));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static boolean isCNPJ(String cnpj) {
-        if (cnpj == null) return false;
-        cnpj = cnpj.replaceAll("[^\\d]", "");
-        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) return false;
-
-        try {
-            int[] pesos1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-            int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-
-            int d1 = 0, d2 = 0;
-            for (int i = 0; i < 12; i++) {
-                int digito = cnpj.charAt(i) - '0';
-                d1 += digito * pesos1[i];
-                d2 += digito * pesos2[i];
-            }
-
-            d1 = 11 - (d1 % 11);
-            d1 = (d1 >= 10) ? 0 : d1;
-
-            d2 += d1 * pesos2[12];
-            d2 = 11 - (d2 % 11);
-            d2 = (d2 >= 10) ? 0 : d2;
-
-            return (d1 == (cnpj.charAt(12) - '0')) && (d2 == (cnpj.charAt(13) - '0'));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-}
-```
-
----
-
-### Fluxo de Alteração e o Método Carregar
-
-Para editar um usuário, a aplicação segue um fluxo em duas etapas:
-1. Uma requisição `GET /UsuarioCarregar?id=X` localiza a tupla no banco, instancia a entidade `Usuario` com todos os atributos preenchidos, acopla-a ao escopo da requisição (`request.setAttribute("usuario", objeto)`) e despacha para `usuarioCadastrar.jsp`.
-2. A página detecta a presença da entidade e preenche os campos do formulário através de Expression Language (`${usuario.nome}`, `${usuario.cpf}`). O campo oculto `<input type="hidden" name="id" value="${usuario.id}" />` retém o identificador numérico.
-3. Ao submeter o formulário (`POST /UsuarioCadastrar`), como `id > 0`, a DAO direciona a execução para o método `alterar(oUsuario)`.
-
-```java
-@Override
-public Object carregar(int numero) {
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-    Usuario oUsuario = null;
-    String sql = "SELECT * FROM usuario WHERE id = ?";
-    try {
-        stmt = conexao.prepareStatement(sql);
-        stmt.setInt(1, numero);
-        rs = stmt.executeQuery();
-        if (rs.next()) {
-            oUsuario = new Usuario();
-            oUsuario.setId(rs.getInt("id"));
-            oUsuario.setNome(rs.getString("nome"));
-            oUsuario.setDataNascimento(rs.getDate("datanascimento"));
-            oUsuario.setCpf(rs.getString("cpf"));
-            oUsuario.setEmail(rs.getString("email"));
-            oUsuario.setSenha(rs.getString("senha"));
-            oUsuario.setSalario(rs.getDouble("salario"));
-        }
-        return oUsuario;
-    } catch (Exception ex) {
-        System.err.println("Erro ao carregar usuario por ID: " + ex.getMessage());
-        return null;
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-        } catch (SQLException e) {
-            System.err.println("Erro ao fechar cursores em carregar: " + e.getMessage());
-        }
-    }
-}
-```
-
----
-
-## Projetos Práticos e Trabalhos da Disciplina
-
-### Trabalho de Programação: Módulo de Livros
-
-**Data de Divulgação:** 27/04/2026 | **Prazo de Entrega:** 07/05/2026 às 23:59  
-**Pontuação Máxima:** 100 pontos (2,0 pontos na média bimestral)  
-**Modalidade:** Grupo de 3 alunos | **Repositório:** GitHub Obrigatório  
-
-#### Requisitos do Enunciado
-Construir uma aplicação Java Web utilizando Servlets para a manutenção de um cadastro de Livros:
-- Entidade `Livro`: `id`, `nomeLivro`, `isbn`, `autor`, `dataPublicacao`, `valorLivro`.
-- Requisito Obrigatório: Listagem de livros cadastrados.
-- Requisito Extra (Pontuação Integral): Manutenção completa (incluir, alterar e excluir livros).
-
-#### Modelagem de Classes e Persistência
-```mermaid
-classDiagram
-    class Livro {
-        -Long id
-        -String nomeLivro
-        -String isbn
-        -String autor
-        -LocalDate dataPublicacao
-        -Double valorLivro
-        +Livro()
-        +Livro(id, nomeLivro, isbn, autor, dataPublicacao, valorLivro)
-        +getId() Long
-        +setId(Long) void
-        +getNomeLivro() String
-        +setNomeLivro(String) void
-        +getIsbn() String
-        +setIsbn(String) void
-        +getAutor() String
-        +setAutor(String) void
-        +getDataPublicacao() LocalDate
-        +setDataPublicacao(LocalDate) void
-        +getValorLivro() Double
-        +setValorLivro(Double) void
-    }
-
-    class LivroDAO {
-        -Map~Long, Livro~ repositorioConcorrente$
-        -AtomicLong geradorId$
-        -LivroDAO instance$
-        +getInstance()$ LivroDAO
-        +listarTodos() List~Livro~
-        +buscarPorId(Long) Livro
-        +salvar(Livro) Livro
-        +atualizar(Livro) boolean
-        +excluir(Long) boolean
-    }
-
-    class LivroServlet {
-        -LivroDAO livroDAO
-        +doGet(HttpServletRequest, HttpServletResponse) void
-        +doPost(HttpServletRequest, HttpServletResponse) void
-        -listarLivros(request, response) void
-        -exibirFormulario(request, response) void
-        -salvarLivro(request, response) void
-        -excluirLivro(request, response) void
-    }
-
-    LivroServlet o-- LivroDAO : consome
-    LivroDAO *-- Livro : armazena
-```
-
-#### Script de Banco de Dados (`banco_livros.sql`)
-```sql
-CREATE TABLE IF NOT EXISTS livros (
-    id SERIAL PRIMARY KEY,
-    nome_livro VARCHAR(150) NOT NULL,
-    isbn VARCHAR(20) UNIQUE NOT NULL,
-    autor VARCHAR(100) NOT NULL,
-    data_publicacao DATE NOT NULL,
-    valor_livro DECIMAL(10,2) NOT NULL CHECK (valor_livro >= 0)
-);
-
-INSERT INTO livros (nome_livro, isbn, autor, data_publicacao, valor_livro) VALUES
-('Java: Como Programar', '978-8543004792', 'Paul Deitel, Harvey Deitel', '2016-06-24', 285.50),
-('Padroes de Projetos (GoF)', '978-8573076103', 'Erich Gamma et al.', '2000-01-01', 142.00),
-('Engenharia de Software', '978-8580550443', 'Ian Sommerville', '2019-03-15', 198.90);
-```
-
-#### Padrão Post-Redirect-Get (PRG) no `LivroServlet`
-Para impedir que o usuário duplique registros ao pressionar F5 após o envio do formulário, o Servlet nunca renderiza a visão diretamente no método `doPost`. Ele responde com um redirecionamento HTTP `302 Found`:
-
-```java
-// Dentro do doPost do LivroServlet apos salvar com sucesso:
-livroDAO.salvar(livro);
-// Redireciona o navegador para uma nova requisicao limpa via GET
-response.sendRedirect(request.getContextPath() + "/livros?acao=listar");
-```
-
----
-
-### Trabalho de Programação: Módulo de Estados Federativos
-
-**Data de Divulgação:** 11/05/2026 | **Prazo de Entrega:** 25/05/2026 às 23:59  
-**Pontuação Máxima:** 100 pontos (1,0 ponto na média bimestral)  
-**Tema:** Implementação do cadastro de Estado no projeto-base (`AplCurso`)  
-
-#### Requisitos do Enunciado
-Estender o projeto corporativo com a entidade de Unidade Federativa:
-- Entidade `Estado`: `id`, `nome` (String, obrigatório), `sigla` (String, 2 caracteres, único e obrigatório).
-- CRUD Completo com Servlet (`EstadoServlet`), DAO (`EstadoDAO`), JSP (`estados.jsp`) com Bootstrap, JSTL e JDBC parametrizado.
-
-#### Script DDL (`schema_estado.sql`)
-```sql
-CREATE TABLE estado (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    sigla VARCHAR(2) NOT NULL,
-    CONSTRAINT uk_estado_sigla UNIQUE (sigla)
-);
-
-INSERT INTO estado (nome, sigla) VALUES 
-('Sao Paulo', 'SP'),
-('Minas Gerais', 'MG'),
-('Rio de Janeiro', 'RJ'),
-('Parana', 'PR'),
-('Santa Catarina', 'SC'),
-('Rio Grande do Sul', 'RS');
-```
-
-#### A Entidade de Domínio `Estado.java`
-```java
-package br.com.aplcurso.model;
-
-import java.io.Serializable;
-import java.util.Objects;
-
-public class Estado implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private Integer id;
-    private String nome;
-    private String sigla;
-
-    public Estado() {
-    }
-
-    public Estado(Integer id, String nome, String sigla) {
-        this.id = id;
-        this.nome = nome;
-        this.sigla = (sigla != null) ? sigla.toUpperCase().trim() : null;
-    }
-
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getSigla() { return sigla; }
-    public void setSigla(String sigla) { 
-        this.sigla = (sigla != null) ? sigla.toUpperCase().trim() : null; 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Estado estado = (Estado) o;
-        return Objects.equals(id, estado.id) || Objects.equals(sigla, estado.sigla);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, sigla);
-    }
-}
-```
-
----
-
-## Exames e Avaliações do Semestre
-
-### Avaliação 1: POO Avançada e Folha de Pagamento
-
-**Data da Aplicação:** 23/03/2026 | **Prazo de Encerramento:** 24/03/2026 às 20:30  
-**Tópicos Cobrados:** Encapsulamento, validação defensiva de invariantes, herança semântica, polimorfismo dinâmico e tratamento de exceções.
-
-#### Arquitetura da Solução da Avaliação 1
-```mermaid
-classDiagram
-    class Funcionario {
-        -String nome
-        -int matricula
-        -double salarioBase
-        +Funcionario(nome, matricula, salarioBase)
-        +getNome() String
-        +setNome(String) void
-        +getMatricula() int
-        +setMatricula(int) void
-        +getSalarioBase() double
-        +setSalarioBase(double) void
-        +calcularSalario() double
-    }
-
-    class Gerente {
-        -double bonusAnual
-        +Gerente(nome, matricula, salarioBase, bonusAnual)
-        +getBonusAnual() double
-        +setBonusAnual(double) void
-        +calcularSalario() double
-    }
-
-    class Desenvolvedor {
-        -double adicionalNoturno
-        +Desenvolvedor(nome, matricula, salarioBase, adicionalNoturno)
-        +getAdicionalNoturno() double
-        +setAdicionalNoturno(double) void
-        +calcularSalario() double
-    }
-
-    class FolhaPagamento {
-        +processarTotal(List~Funcionario~) double
-    }
-
-    Funcionario <|-- Gerente
-    Funcionario <|-- Desenvolvedor
-    FolhaPagamento ..> Funcionario : itera
-```
-
----
-
-### Avaliação II: CRUD de Produtos com JDBC e Exceções
-
-**Data da Aplicação:** 08/06/2026 | **Prazo de Encerramento:** 09/06/2026 às 20:30  
-**Tópicos Cobrados:** Arquitetura em camadas completa, modelo com validação defensiva, `PreparedStatement`, `ResultSet`, transações locais, exceções de negócio customizadas e prevenção de vazamento de cursores (*try-with-resources*).
-
-#### Script DDL (`schema_produtos.sql`)
-```sql
-CREATE TABLE IF NOT EXISTS produtos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
-    preco NUMERIC(10,2) NOT NULL CHECK (preco >= 0),
-    quantidade_estoque INTEGER NOT NULL CHECK (quantidade_estoque >= 0),
-    data_cadastro VARCHAR(20) NOT NULL
-);
-
-INSERT INTO produtos (nome, preco, quantidade_estoque, data_cadastro) VALUES
-('Notebook Gamer Dell', 5800.00, 10, '2026-06-01'),
-('Mouse Optico USB', 65.00, 50, '2026-06-02'),
-('Teclado Mecanico Switch Blue', 280.00, 25, '2026-06-03');
-```
-
-#### Código da Classe de Persistência `ProdutoDAO.java` com `try-with-resources`
-```java
-package br.com.unifef.dao;
-
-import br.com.unifef.dominio.Produto;
-import br.com.unifef.infra.FabricaConexao;
+import br.com.aplcurso.model.Usuario;
+import br.com.aplcurso.utils.SingleConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1793,275 +1559,423 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProdutoDAO {
+public class UsuarioDAO implements GenericDAO {
 
-    public void inserir(Produto p) throws SQLException {
-        String sql = "INSERT INTO produtos (nome, preco, quantidade_estoque, data_cadastro) VALUES (?, ?, ?, ?)";
-        try (Connection conn = FabricaConexao.obterConexao();
-             PreparedStatement pstm = conn.prepareStatement(sql)) {
-            pstm.setString(1, p.getNome());
-            pstm.setDouble(2, p.getPreco());
-            pstm.setInt(3, p.getQuantidadeEstoque());
-            pstm.setString(4, p.getDataCadastro());
-            pstm.executeUpdate();
+    private Connection conexao;
+
+    public UsuarioDAO() throws Exception {
+        this.conexao = SingleConnection.getConnection();
+    }
+
+    @Override
+    public Boolean cadastrar(Object objeto) {
+        Usuario oUsuario = (Usuario) objeto;
+        if (oUsuario.getId() == 0) {
+            return this.inserir(oUsuario);
+        } else {
+            return this.alterar(oUsuario);
         }
     }
 
-    public List<Produto> listarTodos() throws SQLException {
-        List<Produto> lista = new ArrayList<>();
-        String sql = "SELECT id, nome, preco, quantidade_estoque, data_cadastro FROM produtos ORDER BY id ASC";
-        try (Connection conn = FabricaConexao.obterConexao();
-             PreparedStatement pstm = conn.prepareStatement(sql);
-             ResultSet rs = pstm.executeQuery()) {
+    @Override
+    public Boolean inserir(Object objeto) {
+        Usuario oUsuario = (Usuario) objeto;
+        PreparedStatement stmt = null;
+        String sql = "INSERT INTO usuario (nome, datanascimento, cpf, email, senha, salario) "
+                   + "VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, oUsuario.getNome());
+            stmt.setDate(2, new java.sql.Date(oUsuario.getDataNascimento().getTime()));
+            stmt.setString(3, oUsuario.getCpf());
+            stmt.setString(4, oUsuario.getEmail());
+            stmt.setString(5, oUsuario.getSenha());
+            stmt.setDouble(6, oUsuario.getSalario());
+            stmt.execute();
+            conexao.commit();
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Erro ao inserir: " + ex.getMessage());
+            try {
+                conexao.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } finally {
+            fecharRecursos(stmt, null);
+        }
+    }
+
+    @Override
+    public Boolean alterar(Object objeto) {
+        Usuario oUsuario = (Usuario) objeto;
+        PreparedStatement stmt = null;
+        String sql = "UPDATE usuario SET nome=?, datanascimento=?, cpf=?, email=?, senha=?, salario=? "
+                   + "WHERE id=?";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, oUsuario.getNome());
+            stmt.setDate(2, new java.sql.Date(oUsuario.getDataNascimento().getTime()));
+            stmt.setString(3, oUsuario.getCpf());
+            stmt.setString(4, oUsuario.getEmail());
+            stmt.setString(5, oUsuario.getSenha());
+            stmt.setDouble(6, oUsuario.getSalario());
+            stmt.setInt(7, oUsuario.getId());
+            stmt.execute();
+            conexao.commit();
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Erro ao alterar: " + ex.getMessage());
+            try {
+                conexao.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } finally {
+            fecharRecursos(stmt, null);
+        }
+    }
+
+    @Override
+    public Boolean excluir(int numero) {
+        PreparedStatement stmt = null;
+        String sql = "DELETE FROM usuario WHERE id=?";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, numero);
+            stmt.execute();
+            conexao.commit();
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Erro ao excluir: " + ex.getMessage());
+            try {
+                conexao.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } finally {
+            fecharRecursos(stmt, null);
+        }
+    }
+
+    @Override
+    public Object carregar(int numero) {
+        Usuario oUsuario = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM usuario WHERE id=?";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, numero);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                oUsuario = new Usuario();
+                oUsuario.setId(rs.getInt("id"));
+                oUsuario.setNome(rs.getString("nome"));
+                oUsuario.setDataNascimento(rs.getDate("datanascimento"));
+                oUsuario.setCpf(rs.getString("cpf"));
+                oUsuario.setEmail(rs.getString("email"));
+                oUsuario.setSenha(rs.getString("senha"));
+                oUsuario.setSalario(rs.getDouble("salario"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            fecharRecursos(stmt, rs);
+        }
+        return oUsuario;
+    }
+
+    @Override
+    public List<Object> listar() {
+        List<Object> resultado = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM usuario ORDER BY id";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            rs = stmt.executeQuery();
             while (rs.next()) {
-                Produto p = new Produto();
-                p.setId(rs.getInt("id"));
-                p.setNome(rs.getString("nome"));
-                p.setPreco(rs.getDouble("preco"));
-                p.setQuantidadeEstoque(rs.getInt("quantidade_estoque"));
-                p.setDataCadastro(rs.getString("data_cadastro"));
-                lista.add(p);
+                Usuario oUsuario = new Usuario();
+                oUsuario.setId(rs.getInt("id"));
+                oUsuario.setNome(rs.getString("nome"));
+                oUsuario.setDataNascimento(rs.getDate("datanascimento"));
+                oUsuario.setCpf(rs.getString("cpf"));
+                oUsuario.setEmail(rs.getString("email"));
+                oUsuario.setSenha(rs.getString("senha"));
+                oUsuario.setSalario(rs.getDouble("salario"));
+                resultado.add(oUsuario);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            fecharRecursos(stmt, rs);
         }
-        return lista;
+        return resultado;
+    }
+
+    public boolean cpfExiste(String cpf) {
+        String sql = "SELECT COUNT(*) AS quantidade FROM usuario WHERE cpf = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, cpf);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("quantidade") > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void fecharRecursos(PreparedStatement stmt, ResultSet rs) {
+        try {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 ```
 
 ---
 
-### Avaliação Substitutiva: Hierarquias, Interfaces e Tributação
+### Fragmentos Modulares de Layout
 
-**Data da Aplicação:** 25/06/2026 às 23:59  
-**Tópicos Cobrados:** Orientação a Objetos avançada, classes abstratas, interfaces de contrato, agregação com `Departamento`, manipulação de coleções tipadas e exceções verificadas customizadas.
+#### `header.jsp`
 
-#### Diagrama de Classes Estrutural da Prova Substitutiva
-```mermaid
-classDiagram
-    class Tributavel {
-        <<interface>>
-        +calcularTributos() double
-    }
-
-    class Funcionario {
-        <<abstract>>
-        -String nome
-        -String matricula
-        -double salarioBase
-        +Funcionario(nome, matricula, salarioBase)
-        +getNome() String
-        +getMatricula() String
-        +getSalarioBase() double
-        +calcularSalarioLiquido()* double
-    }
-
-    class FuncionarioComissionado {
-        -double totalDeVendas
-        -double percentualComissao
-        +FuncionarioComissionado(nome, matricula, salarioBase, totalDeVendas, percentualComissao)
-        +calcularSalarioLiquido() double
-        +calcularTributos() double
-    }
-
-    class FuncionarioAssalariado {
-        -double adicionalFixo
-        +FuncionarioAssalariado(nome, matricula, salarioBase, adicionalFixo)
-        +calcularSalarioLiquido() double
-    }
-
-    class Departamento {
-        -String nomeDepartamento
-        -List~Funcionario~ colaboradores
-        +Departamento(nomeDepartamento)
-        +adicionarFuncionario(Funcionario) void
-        +buscarPorMatricula(String) Funcionario
-        +calcularFolhaTotal() double
-        +obterMaiorSalario() Funcionario
-        +listarOrdenadoPorSalarioDecrescente() List~Funcionario~
-    }
-
-    Tributavel <|.. FuncionarioComissionado : implements
-    Funcionario <|-- FuncionarioComissionado : extends
-    Funcionario <|-- FuncionarioAssalariado : extends
-    Departamento o-- Funcionario : agrega
+```jsp
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Sistema de Gestao Integrada - UniFEF</title>
+        
+        <!-- jQuery Core -->
+        <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+        
+        <!-- Plugins de Mascara -->
+        <script src="${pageContext.request.contextPath}/js/jquery.mask.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery.maskMoney.min.js"></script>
+        
+        <!-- Bootstrap 4.3.1 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        
+        <!-- DataTables -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"/>
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.3.1/dist/sweetalert2.all.min.js" type="text/javascript"></script>
+    </head>
+    <body>
 ```
 
-#### Código da Classe Agregadora `Departamento.java`
+#### `menu.jsp`
+
+```jsp
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/home.jsp">UniFEF Lab III</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/home.jsp">Inicio</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                    Cadastros Basicos
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/UsuarioListar">Usuarios</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+```
+
+#### `footer.jsp`
+
+```jsp
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+        <footer class="footer mt-5 py-3 bg-light border-top text-center">
+            <div class="container">
+                <span class="text-muted">Laboratorio de Programacao III - Prof. Jefferson Passerini - UniFEF</span>
+            </div>
+        </footer>
+    </body>
+</html>
+```
+
+---
+
+## Bateria de Exercicios Praticos e Dissertativos
+
+### Exercício 1 (Dissertativo - Fundamentos de Arquitetura e Contêiner)
+**Enunciado:** Um estagiário de TI tentou atualizar a infraestrutura de uma aplicação web corporativa que utiliza a especificação Java EE 8, substituindo o Apache Tomcat 9 pelo Apache Tomcat 10. Durante a inicialização, todos os Servlets com a anotação `@WebServlet` falharam com `ClassNotFoundException` associada a `javax.servlet.http.HttpServlet`. Explique, do ponto de vista da governança e arquitetura Java, por que essa falha ocorre e qual é a resolução técnica adequada.
+
+**Critérios de Correção e Resposta Esperada:**
+O candidato deve explicar a cisão de direitos de propriedade intelectual da marca Java EE transferida da Oracle para a Eclipse Foundation. A partir do Jakarta EE 9 (implementado no Tomcat 10+), houve a compilação obrigatória sobre o namespace raiz `jakarta.*` em substituição ao tradicional `javax.*`. A aplicação compilada para Java EE 8 busca classes no pacote `javax.servlet`, inexistente no Tomcat 10. A solução exige reverter o contêiner para o Apache Tomcat 9 ou refatorar integralmente a aplicação e suas bibliotecas para Jakarta EE.
+
+---
+
+### Exercício 2 (Prático - Modificação de Camada de Persistência)
+**Enunciado:** Na classe `UsuarioDAO`, adicione um método denominado `public boolean inativarUsuario(int id)` que, em vez de deletar fisicamente o registro via `DELETE`, execute uma exclusão lógica alterando a coluna de status (considere que o banco possui a coluna `ativo BOOLEAN NOT NULL DEFAULT TRUE`). O método deve obedecer ao controle transacional manual com `commit` e `rollback`.
+
+**Resposta do Código:**
+
 ```java
-package br.com.unifef.avaliacao;
-
-import br.com.unifef.excecao.FuncionarioNaoEncontradoException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-public class Departamento {
-    private String nomeDepartamento;
-    private List<Funcionario> colaboradores;
-
-    public Departamento(String nomeDepartamento) {
-        if (nomeDepartamento == null || nomeDepartamento.trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome do departamento e obrigatorio.");
+public boolean inativarUsuario(int id) {
+    String sql = "UPDATE usuario SET ativo = false WHERE id = ?";
+    PreparedStatement stmt = null;
+    try {
+        stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, id);
+        int linhasAfetadas = stmt.executeUpdate();
+        conexao.commit();
+        return linhasAfetadas > 0;
+    } catch (SQLException ex) {
+        System.out.println("Erro ao inativar usuario: " + ex.getMessage());
+        try {
+            conexao.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        this.nomeDepartamento = nomeDepartamento.trim();
-        this.colaboradores = new ArrayList<>();
-    }
-
-    public void adicionarFuncionario(Funcionario f) {
-        if (f == null) {
-            throw new IllegalArgumentException("Nao e permitido adicionar colaborador nulo.");
+        return false;
+    } finally {
+        try {
+            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        // Impede duplicidade de matricula
-        for (Funcionario existente : colaboradores) {
-            if (existente.getMatricula().equals(f.getMatricula())) {
-                throw new IllegalArgumentException("Matricula duplicada no departamento: " + f.getMatricula());
-            }
-        }
-        this.colaboradores.add(f);
-    }
-
-    public Funcionario buscarPorMatricula(String matricula) throws FuncionarioNaoEncontradoException {
-        if (matricula == null || matricula.trim().isEmpty()) {
-            throw new IllegalArgumentException("Matricula informada e invalida.");
-        }
-        for (Funcionario f : colaboradores) {
-            if (f.getMatricula().equalsIgnoreCase(matricula.trim())) {
-                return f;
-            }
-        }
-        throw new FuncionarioNaoEncontradoException("Colaborador nao localizado para a matricula: " + matricula);
-    }
-
-    public double calcularFolhaTotal() {
-        double total = 0.0;
-        for (Funcionario f : colaboradores) {
-            total += f.calcularSalarioLiquido(); // Despacho dinamico
-        }
-        return total;
-    }
-
-    public Funcionario obterMaiorSalario() {
-        if (colaboradores.isEmpty()) {
-            return null;
-        }
-        Funcionario maior = colaboradores.get(0);
-        for (Funcionario f : colaboradores) {
-            if (f.calcularSalarioLiquido() > maior.calcularSalarioLiquido()) {
-                maior = f;
-            }
-        }
-        return maior;
-    }
-
-    public List<Funcionario> listarOrdenadoPorSalarioDecrescente() {
-        List<Funcionario> copia = new ArrayList<>(this.colaboradores);
-        copia.sort(new Comparator<Funcionario>() {
-            @Override
-            public int compare(Funcionario f1, Funcionario f2) {
-                return Double.compare(f2.calcularSalarioLiquido(), f1.calcularSalarioLiquido());
-            }
-        });
-        return copia;
     }
 }
 ```
 
 ---
 
-## Guia de Diagnóstico de Falhas e Boas Práticas
+### Exercício 3 (Prático - Regra de Validação de Domínio)
+**Enunciado:** Construa uma função na classe utilitária `DocumentoValidador` denominada `public static boolean isMaiorDeIdade(Date dataNascimento)` que valide se a data fornecida confere pelo menos 18 anos completos na data corrente, tratando eventuais datas futuras com o retorno imediato de `false`.
 
-### Resolução de Erros Clássicos de Compilação e Execução
+**Resposta do Código:**
 
-A rotina de laboratório de programação expõe o desenvolvedor a falhas padronizadas do ecossistema Java EE. A tabela a seguir documenta os diagnósticos e correções precisas:
-
-| Exceção ou Mensagem de Erro | Causa Raiz de Engenharia | Ação Corretiva Imediata |
-| :--- | :--- | :--- |
-| `ClassNotFoundException: org.postgresql.Driver` | O arquivo JAR do driver PostgreSQL (`postgresql-42.x.x.jar`) não foi inserido na pasta `Libraries` do projeto NetBeans. | Clicar com botão direito em `Libraries` -> `Add JAR/Folder` e selecionar o driver JDBC baixado. |
-| `PSQLException: Connection refused: connect` | O serviço do servidor PostgreSQL não está em execução ou a porta TCP `5432` está bloqueada por firewall local. | Abrir o gerenciador de serviços do Windows (`services.msc`), localizar o serviço `postgresql-x64-XX` e acionar `Iniciar`. |
-| `java.net.BindException: Address already in use: 8080` | Outro processo (ou uma instância travada do próprio Tomcat) está retendo a porta TCP `8080`. | Executar no PowerShell `netstat -ano \| findstr :8080`, identificar o PID do processo e finalizá-lo com `taskkill /PID <PID> /F`. |
-| `ClassNotFoundException: javax.servlet.Filter` | O projeto foi implantado em um servidor Apache Tomcat 10 ou superior, que adota a API `jakarta.*`. | Desinstalar/remover o Tomcat 10 e configurar o Apache Tomcat versão 9 no NetBeans. |
-| `NullPointerException` ao executar `dao.listar()` | A referência `conexao` dentro da DAO está nula devido a falha prévia de credenciais no `SingleConnection`. | Conferir a constante de URL, usuário e senha em `SingleConnection.java` contra as credenciais reais do pgAdmin. |
-| `NumberFormatException: For input string: ""` | A Servlet tentou converter um parâmetro numérico (`Integer.parseInt(request.getParameter("id"))`) recebido como string vazia. | Implementar checagem defensiva: `if (param != null && !param.trim().isEmpty()) { ... }`. |
-| `ConcurrentModificationException` | O sistema tentou remover ou adicionar elementos em uma `List` convencional enquanto iterava sobre ela em um laço `for-each`. | Utilizar `Iterator.remove()` explícito ou coleções concorrentes como `CopyOnWriteArrayList` ou `ConcurrentHashMap`. |
-
----
-
-### Boas Práticas de Engenharia e Segurança Web
-
-1. **Separação Rigorosa de Camadas**:
-   - A camada **View** (JSP) deve conter apenas formatação e apresentação. É terminantemente proibido abrir conexões SQL ou instanciar DAOs dentro de arquivos JSP.
-   - A camada **Controller** (Servlet) apenas extrai parâmetros, delega validações e direciona o fluxo. Não deve conter instruções SQL cruas.
-   - A camada **DAO** lida exclusivamente com persistência. Não deve capturar parâmetros HTTP diretamente nem renderizar HTML.
-2. **Prevenção Incondicional de Injeção de SQL**:
-   - Jamais montar strings de consulta utilizando o operador de concatenação `+`. Utilizar invariavelmente `PreparedStatement` com interrogações posicionais (`?`).
-3. **Gestão Segura de Recursos e Desalocação de Memória**:
-   - Sempre fechar objetos `ResultSet`, `PreparedStatement` e `Connection`. Utilizar a instrução idiomática `try-with-resources` (`AutoCloseable`) para garantir o fechamento mesmo em caso de lançamento de exceções em tempo de execução.
-4. **Padrão Post-Redirect-Get (PRG)**:
-   - Toda submissão destrutiva ou de escrita enviada via `POST` que altere o estado do banco deve encerrar com `response.sendRedirect()`, redirecionando o navegador para uma rota limpa `GET`.
-5. **Normalização de Tabela de Caracteres**:
-   - Para evitar desconfiguração de caracteres acentuados da língua portuguesa (ex.: "São Paulo" virar "So Paulo"), alinhar a codificação em todas as camadas:
-     - No Servlet: `request.setCharacterEncoding("UTF-8")` e `response.setContentType("text/html;charset=UTF-8")`.
-     - No JSP: `<%@page pageEncoding="UTF-8"%>` e `<meta charset="UTF-8">`.
+```java
+public static boolean isMaiorDeIdade(java.util.Date dataNascimento) {
+    if (dataNascimento == null) return false;
+    
+    java.util.Calendar nascimento = java.util.Calendar.getInstance();
+    nascimento.setTime(dataNascimento);
+    
+    java.util.Calendar hoje = java.util.Calendar.getInstance();
+    if (nascimento.after(hoje)) {
+        return false; // Data futura
+    }
+    
+    int idade = hoje.get(java.util.Calendar.YEAR) - nascimento.get(java.util.Calendar.YEAR);
+    if (hoje.get(java.util.Calendar.DAY_OF_YEAR) < nascimento.get(java.util.Calendar.DAY_OF_YEAR)) {
+        idade--;
+    }
+    return idade >= 18;
+}
+```
 
 ---
 
-## Apêndices Acadêmicos
+## Erros Comuns, Diagnosticos e Boas Praticas de Engenharia
 
-### Glossário Técnico
+### 1. `java.lang.NullPointerException` no Método `cadastrar`
+- **Sintoma:** Ao submeter um novo cadastro, a JVM dispara `NullPointerException` na linha `if (oUsuario.getId() == 0)`.
+- **Causa Raiz:** O atributo `id` na classe `Usuario` foi declarado com a classe empacotadora `Integer` e instanciado como `null`. Ao tentar efetuar a comparação com o primitivo `0`, a JVM executa o *unboxing* automático chamando `oUsuario.getId().intValue()`, gerando falha por referência nula.
+- **Solução:** Declarar o atributo como tipo primitivo `int id` ou garantir a verificação defensiva de nulidade: `if (oUsuario.getId() == null || oUsuario.getId() == 0)`.
 
-- **ACID**: Acrônimo de *Atomicidade, Consistência, Isolamento e Durabilidade*, conjunto de propriedades que garantem a confiabilidade de transações em bancos de dados relacionais.
-- **Apache Ant**: Ferramenta de automação de compilação de software baseada em scripts XML (`build.xml`), padrão histórico do Apache NetBeans.
-- **Bytecode**: Formato binário intermediário gerado pelo compilador Java (`javac`) contido em arquivos `.class`, projetado para ser executado pela JVM.
-- **Catalina**: Nome oficial do motor de Servlet (*Servlet Container*) interno do Apache Tomcat.
-- **DAO (Data Access Object)**: Padrão arquitetural que encapsula o acesso a fontes de dados, isolando o restante da aplicação dos detalhes técnicos da API JDBC e dialetos SQL.
-- **Expression Language (EL)**: Linguagem simplificada de avaliação de dados da plataforma Java Web que permite acessar atributos de escopo utilizando a sintaxe `${objeto.propriedade}`.
-- **Jasper**: Motor interno do Apache Tomcat encarregado de traduzir arquivos `.jsp` em classes Java Servlet e compilá-las em bytecode executável.
-- **JavaBean**: Convenção de classe Java que exige atributos privados, construtor público sem argumentos, getters/setters padronizados e serialização.
-- **JDBC (Java Database Connectivity)**: API padrão da linguagem Java para comunicação independente com bancos de dados relacionais por meio de drivers específicos.
-- **JSTL (JavaServer Pages Standard Tag Library)**: Biblioteca padronizada de tags customizadas que fornece estruturas de iteração, condicionais e formatação para páginas JSP.
-- **JVM (Java Virtual Machine)**: Máquina virtual que carrega, verifica e executa bytecode Java, gerenciando memória e realizando coleta de lixo (*Garbage Collection*).
-- **Módulo 11**: Algoritmo matemático baseado em somatórios ponderados com restos de divisão por 11, utilizado oficialmente pela Receita Federal para validar dígitos verificadores de CPF e CNPJ.
-- **MVC (Model-View-Controller)**: Padrão arquitetural que divide a aplicação em três subsistemas interconectados: Modelo (dados e regras), Visão (interface) e Controlador (fluxo e roteamento).
-- **PreparedStatement**: Interface da API JDBC que representa uma instrução SQL pré-compilada, protegendo a aplicação contra ataques de injeção de SQL e otimizando a execução repetida.
-- **PRG (Post-Redirect-Get)**: Padrão de projeto web que previne submissões acidentais duplicadas de formulários, redirecionando o navegador via status HTTP 302 após requisições `POST`.
-- **RequestDispatcher**: Interface da API Servlet utilizada para repassar internamente uma requisição para outro recurso no servidor através dos métodos `forward()` ou `include()`.
-- **Servlet**: Classe Java gerenciada por um container web que atende e processa requisições HTTP dentro do modelo cliente-servidor.
-- **Singleton**: Padrão de projeto criacional que restringe a instanciação de uma classe a um único objeto na memória, fornecendo um ponto global de acesso.
+### 2. `PSQLException: FATAL: remaining connection slots are reserved for non-replication superuser connections`
+- **Sintoma:** O PostgreSQL para de responder e recusa conexões da aplicação.
+- **Causa Raiz:** Instanciação repetida de `DriverManager.getConnection()` sem reutilização do Singleton ou abandono de objetos `PreparedStatement` e `ResultSet` abertos sem cláusula `finally` de fechamento.
+- **Solução:** Centralizar as conexões via `SingleConnection` e fechar formalmente todos os cursores e instruções nas DAOs.
+
+### 3. Exibição de Data Deslocada em 1 Dia na Interface JSP
+- **Sintoma:** O usuário cadastra a data de nascimento `10/08/1990`, mas a listagem com `<fmt:formatDate>` exibe `09/08/1990`.
+- **Causa Raiz:** Divergência de fuso horário entre o servidor Tomcat (rodando em UTC) e a timezone local da máquina do desenvolvedor (GMT-3 / America/Sao_Paulo).
+- **Solução:** Configurar a tag de formatação explicitando a timezone local:
+  ```jsp
+  <fmt:formatDate value="${item.dataNascimento}" pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+  ```
 
 ---
 
-### Banco de Questões e Respostas para Revisão
+## Glossario Tecnico e Termos Essenciais
+
+- **ACID:** Acrônimo para *Atomicidade, Consistência, Isolamento e Durabilidade*, conjunto de propriedades que balizam a confiabilidade das transações em SGBDs relacionais.
+- **Apache Ant:** Ferramenta de automação de compilação orientada a tarefas XML imperativas.
+- **Apache Tomcat:** Servidor web e contêiner de servlets que implementa as tecnologias Java Servlet e JavaServer Pages.
+- **DAO (Data Access Object):** Padrão de projeto estrutural que encapsula a lógica de acesso e persistência de dados.
+- **Expression Language (EL):** Mecanismo de expressões concisas (`${...}`) utilizado em JSPs para acessar propriedades de objetos e escopos sem scripts Java.
+- **Forward:** Mecanismo do lado servidor que despacha internamente uma requisição para outro recurso sem alterar a URL no navegador cliente.
+- **JIT (Just-In-Time Compiler):** Compilador em tempo de execução da JVM que traduz trechos críticos de bytecode em código de máquina nativo.
+- **JSP (JavaServer Pages):** Tecnologia que permite criar páginas web dinâmicas inserindo marcações e tags customizadas em meio ao HTML.
+- **JSTL:** Biblioteca de tags padronizadas que oferece comandos essenciais de iteração, condicionais e formatação para páginas JSP.
+- **PreparedStatement:** Interface JDBC que executa instruções SQL pré-compiladas, protegendo a base de dados contra *SQL Injection*.
+- **ResultSet:** Estrutura tabular de dados em memória mantida por um cursor do banco de dados relacional para leitura sequencial.
+- **Servlet:** Classe Java executada no servidor que intercepta requisições HTTP e gera respostas dinâmicas.
+- **Singleton:** Padrão criacional do GoF que assegura a existência de uma única instância de uma classe com ponto global de acesso.
+
+---
+
+## Pontos-Chave para Avaliacoes e Provas
+
+1. **Diferença conceitual entre `<jsp:include>` e `<%@include%>`:** O primeiro opera em tempo de requisição via `RequestDispatcher`, enquanto o segundo realiza cópia física textual em tempo de tradução.
+2. **Ciclo de vida de um Servlet:** Inicialização única com `init()`, processamento concorrente multi-thread via `service()` (despachando para `doGet()` ou `doPost()`), e encerramento com `destroy()`.
+3. **Padrão Singleton aplicado à persistência:** Construtor estritamente `private`, atributo estático da instância, método acessor global `public static Connection getConnection()`.
+4. **Comportamento do `autoCommit(false)`:** Obriga a chamada manual de `conexao.commit()` para gravação e `conexao.rollback()` em bloco `catch` de tratamento de exceções.
+5. **Decisão na DAO (`id == 0`):** Se a chave primária for zero, a DAO executa o comando `INSERT`; se for superior a zero, invoca o comando `UPDATE`.
+6. **Módulo 11:** O primeiro dígito verificador de um CPF é obtido multiplicando os 9 primeiros algarismos por pesos regressivos de 10 a 2, calculando o resto da soma por 11 e subtraindo de 11.
+7. **Namespace `javax` vs `jakarta`:** O Tomcat 9 utiliza a especificação Java EE 8 sob `javax.*`. O Tomcat 10 utiliza Jakarta EE sob `jakarta.*`.
+
+---
+
+## Banco de Questoes para Fixacao (JSONL)
 
 ```json
-{"id": 1, "pergunta": "Qual a diferenca fundamental entre a acao <jsp:include> e a diretiva <%@include %> no ciclo de vida do JSP?", "resposta": "A acao <jsp:include> realiza inclusao dinamica em tempo de requisicao (request-time) via RequestDispatcher.include(), permitindo atualizacoes em tempo real do fragmento e passagem de parametros dinamicos. A diretiva <%@include %> realiza inclusao estatica em tempo de traducao (translation-time), fundindo o codigo-fonte do fragmento antes da compilacao do servlet correspondente."}
-{"id": 2, "pergunta": "Por que o Apache Tomcat 10 nao e compativel com projetos desenvolvidos sobre a especificacao Java EE 8 Web?", "resposta": "O Apache Tomcat 10 adota a especificacao Jakarta EE 9+, que alterou o namespace de todas as bibliotecas da plataforma de 'javax.*' para 'jakarta.*'. Como o Java EE 8 utiliza o pacote 'javax.servlet.*', a execucao no Tomcat 10 resulta em falhas imediatas de ClassNotFoundException."}
-{"id": 3, "pergunta": "Qual a funcao do metodo setAutoCommit(false) na gestao transacional via JDBC?", "resposta": "Desativa a gravacao automatica imediata de cada instrucao SQL individual, permitindo que a aplicacao agrupe multiplas operacoes DML em uma unica transacao atomica gerenciada manualmente atraves dos comandos conexao.commit() e conexao.rollback()."}
-{"id": 4, "pergunta": "Como a utilizacao de PreparedStatement impede ataques de SQL Injection?", "resposta": "O PreparedStatement pre-compila a arvore sintatica da instrucao SQL no motor do banco de dados antes da transmissao dos parametros. Os valores das variaveis sao enviados isoladamente e tratados estritamente como literais de dados, impedindo que caracteres especiais alterem a logica do comando SQL original."}
-{"id": 5, "pergunta": "Explique o objetivo arquitetural da interface GenericDAO na aplicacao AplCurso.", "resposta": "Padronizar o contrato e a nomenclatura das operacoes basicas de persistencia (cadastrar, inserir, alterar, excluir, carregar e listar) para todas as classes DAO do sistema, assegurando coesao, uniformidade de desenvolvimento e baixo acoplamento."}
-{"id": 6, "pergunta": "Por que o tipo DECIMAL(15,2) e obrigatorio para valores monetarios no banco relacional em vez de FLOAT?", "resposta": "Tipos de ponto flutuante binario como FLOAT e DOUBLE seguem a norma IEEE 754 e sofrem de imprecisao na representacao de fracoes decimais finitas, gerando residuos infinitesimais de arredondamento. O tipo DECIMAL opera com representacao numerica exata de ponto fixo."}
-{"id": 7, "pergunta": "Qual a finalidade do padrao Post-Redirect-Get (PRG) em aplicacoes web?", "resposta": "Prevenir o reenvio acidental de dados de formulario quando o usuario clica em Atualizar (F5) no navegador. Ao responder a um POST com um redirecionamento HTTP 302/303 para uma rota GET, a ultima acao no historico do navegador passa a ser uma consulta limpa e segura."}
-{"id": 8, "pergunta": "O que caracteriza uma invariante de estado em uma classe do modelo de dominio?", "resposta": "Uma condicao de consistencia logica ou regra de negocio que deve obrigatoriamente manter-se verdadeira durante todo o ciclo de vida do objeto na memoria, protegida por encapsulamento estrito e validacoes defensivas em construtores e mutadores."}
-{"id": 9, "pergunta": "Qual a diferenca entre Excecoes Checadas (Checked) e Nao Checadas (Unchecked) em Java?", "resposta": "Checked Exceptions herdam diretamente de java.lang.Exception e exigem tratamento obrigatorio via bloco try-catch ou clausula throws pelo compilador, sendo ideais para falhas recuperaveis de negocio. Unchecked Exceptions herdam de RuntimeException e indicam erros de programacao sem exigencia sintatica de captura."}
-{"id": 10, "pergunta": "Como o mecanismo de ligacao tardia (dynamic binding) viabiliza o polimorfismo na JVM?", "resposta": "A JVM utiliza a instrucao de bytecode invokevirtual associada a tabela de metodos virtuais (vtable) para identificar o tipo concreto real do objeto em tempo de execucao, despachando a chamada para a implementacao sobrescrita correta independentemente do tipo da variavel de referencia."}
+{"id": 1, "tema": "Tomcat e Compatibilidade", "pergunta": "Por que o Apache Tomcat 10 nao e compativel diretamente com projetos compilados para Java EE 8?", "resposta": "Porque o Tomcat 10 implementa a especificacao Jakarta EE 9+, que substituiu o namespace de pacotes de javax.* para jakarta.*, ocasionando ClassNotFoundException em bibliotecas do Java EE 8."}
+{"id": 2, "tema": "Transacoes JDBC", "pergunta": "Qual e o efeito de executar conexao.setAutoCommit(false) em uma rotina JDBC?", "resposta": "Desativa a gravacao automatica imediata de cada instrucao SQL, exigindo que a aplicacao invoque conexao.commit() para confirmar as alteracoes ou conexao.rollback() para revertê-las."}
+{"id": 3, "tema": "Padrao Singleton", "pergunta": "Quais sao os dois elementos estruturais obrigatorios na implementacao classica do padrao Singleton em Java?", "resposta": "Um construtor com modificador de acesso estritamente private e um metodo publico estatico de recuperacao da instancia (ex: public static Connection getConnection())."}
+{"id": 4, "tema": "JSP e Inclusao", "pergunta": "Qual a diferenca fundamental entre a acao <jsp:include> e a diretiva <%@include%>?", "resposta": "A acao <jsp:include> realiza a inclusao dinamica em tempo de requisicao via RequestDispatcher, enquanto <%@include%> realiza a fusao estatica do codigo-fonte em tempo de traducao."}
+{"id": 5, "tema": "Bifurcacao na DAO", "pergunta": "Qual criterio e utilizado na UsuarioDAO para decidir se o metodo cadastrar() invocara o inserir() ou alterar()?", "resposta": "A avaliacao da chave primaria: se oUsuario.getId() == 0, trata-se de um novo registro e invoca inserir(); se for maior que zero, invoca alterar()."}
+{"id": 6, "tema": "Tipagem SQL", "pergunta": "Por que colunas de salario devem ser tipadas como DECIMAL/NUMERIC em vez de FLOAT no PostgreSQL?", "resposta": "Porque o tipo FLOAT opera com representacao binaria aproximada sob a norma IEEE 754, gerando residuos de arredondamento inaceitaveis para aplicacoes financeiras."}
+{"id": 7, "tema": "Expressao EL", "pergunta": "Qual a finalidade de utilizar ${pageContext.request.contextPath} na definicao de rotas?", "resposta": "Garantir a resolucao absoluta do caminho raiz da aplicacao no servidor, prevenindo quebras de caminhos relativos ao navegar entre servlets e subpastas."}
+{"id": 8, "tema": "Ciclo de Vida de Filtros", "pergunta": "Em qual metodo da interface javax.servlet.Filter deve-se invocar chain.doFilter()?", "resposta": "No metodo doFilter(), permitindo que a requisicao prossiga para o proximo filtro da cadeia ou para o recurso alvo final (Servlet ou JSP)."}
 ```
 
 ---
 
-### Checklist de Homologação de Projetos
+## Checklist Geral de Revisao e Implantacao
 
-Antes de submeter trabalhos práticos ou provas no ambiente acadêmico do Prof. Jefferson Passerini, execute a auditoria técnica estruturada nos itens abaixo:
-
-- [ ] **Auditoria de Compilador**: O projeto compila sem alertas críticos sob o JDK 17 LTS (Eclipse Temurin) configurado na plataforma do NetBeans.
-- [ ] **Alinhamento do Servidor**: O servidor configurado em `Properties` -> `Run` é exclusivamente o Apache Tomcat versão 9 (Java EE 8), rejeitando qualquer instância do Tomcat 10+.
-- [ ] **Driver JDBC**: O arquivo compactado `.jar` oficial do driver PostgreSQL (`postgresql-42.x.x.jar`) está presente em `Libraries` e no diretório `WEB-INF/lib`.
-- [ ] **Integridade DDL/DML**: O script `banco.sql` executa integralmente na *Query Tool* do pgAdmin sem erros de sintaxe, recriando sequências, tabelas e restrições `UNIQUE`.
-- [ ] **Gerenciamento de Transações**: Todas as rotinas de mutação na DAO possuem bloco `try-catch` com invocação explícita de `conexao.commit()` no caminho de sucesso e `conexao.rollback()` no tratamento de exceção.
-- [ ] **Prevenção de Vazamento de Recursos**: Todas as instruções JDBC utilizam `try-with-resources` ou blocos `finally` executando `.close()` em `ResultSet` e `PreparedStatement`.
-- [ ] **Modularização Visual**: Nenhuma página JSP do sistema contém duplicação de cabeçalhos HTML ou código scriptlet Java (`<% ... %>`). A inclusão dos fragmentos opera estritamente via `<jsp:include>`.
-- [ ] **Encapsulamento do Modelo**: Todas as entidades de modelo possuem campos estritamente privados, construtor sem argumentos, construtor parametrizado completo e sobrescrita consistente de `equals()` e `hashCode()`.
-- [ ] **Validação de Documentos**: O cadastro de entidades contendo CPF ou CNPJ valida a regra matemática oficial do Módulo 11 tanto no cliente (`app.js`) quanto no servidor (`DocumentoValidador.java`).
-- [ ] **Padrão PRG**: Servlets que tratam comandos destrutivos (`POST` de inclusão, alteração ou exclusão) finalizam seu processamento invocando `response.sendRedirect()`, impedindo duplicações de registros via recarregamento de tela (`F5`).
+- [ ] JDK 17 LTS (Eclipse Temurin) instalado com variáveis de ambiente `JAVA_HOME` e `PATH` validadas via terminal.
+- [ ] Apache Tomcat 9 instalado em diretório sem espaços ou acentuações (ex.: `C:\apache-tomcat-9.0.x`).
+- [ ] Servidor PostgreSQL ativo na porta `5432` com banco `bdaplcurso` criado pelo pgAdmin 4.
+- [ ] Script estrutural `banco.sql` executado com criação da tabela `usuario` e constraints `PRIMARY KEY` e `UNIQUE`.
+- [ ] Driver JDBC do PostgreSQL (`postgresql-42.x.x.jar`) e biblioteca JSTL 1.2 adicionados ao diretório de bibliotecas do NetBeans.
+- [ ] Classe `SingleConnection` implementada com construtor privado e controle manual `setAutoCommit(false)`.
+- [ ] `FilterAutenticacao` mapeado para `/*` para inicializar a conexão no contêiner.
+- [ ] Entidade `Usuario` implementando construtor padrão, construtor completo, métodos acessores e o contrato `equals`/`hashCode`.
+- [ ] `UsuarioDAO` implementando a interface `GenericDAO` com métodos `cadastrar`, `inserir`, `alterar`, `excluir`, `carregar` e `listar`.
+- [ ] Servlets mapeadas com `@WebServlet`: `UsuarioListar`, `UsuarioNovo`, `UsuarioCadastrar` e `UsuarioVerificarCPF`.
+- [ ] Fragmentos de interface estruturados: `header.jsp`, `menu.jsp`, `footer.jsp`.
+- [ ] Páginas dinâmicas `usuarioListar.jsp` e `usuarioCadastrar.jsp` integradas com JSTL, DataTables, SweetAlert2 e máscaras jQuery.
+- [ ] Rotinas assíncronas AJAX validadas no console do navegador contra erros de referência de script (`$ is not defined`).
 
 ---
 
@@ -2069,4 +1983,4 @@ Antes de submeter trabalhos práticos ou provas no ambiente acadêmico do Prof. 
 
 - Turma no Classroom: 2026 1S Laboratório de Programação III
 - Itens processados: 0 materiais, 6 tarefas, 6 avisos
-- Gerado em: 24/09/2026, 13:36:24 (BRT) via classroom-sync
+- Gerado em: 20/10/2026, 21:53:50 (BRT) via classroom-sync
