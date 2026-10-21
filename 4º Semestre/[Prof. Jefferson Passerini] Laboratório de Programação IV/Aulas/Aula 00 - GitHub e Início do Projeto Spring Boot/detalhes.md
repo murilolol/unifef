@@ -1069,3 +1069,11 @@ mindmap
 - [ ] Sei criar e alternar para uma nova branch de atividade utilizando `git switch -c`.
 - [ ] Sei criar uma tag anotada com `git tag -a -m` para estabelecer os pontos de quebra didáticos e publicá-la com `git push origin <tag>`.
 - [ ] Conheço o protocolo de emergência a ser seguido em caso de vazamento acidental de chaves ou senhas em repositórios públicos.
+
+## Código prático de apoio
+
+Implementações em Java que tornam executáveis os conceitos desta unidade:
+
+- [`SimuladorGrafoGit.java`](codigo/SimuladorGrafoGit.java)
+- [`SimuladorCicloDeVidaGit.java`](codigo/SimuladorCicloDeVidaGit.java)
+- [`AuditorGovernancaRepositorio.java`](codigo/AuditorGovernancaRepositorio.java)

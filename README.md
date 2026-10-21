@@ -2,7 +2,7 @@
 
 > Material de estudo vivo do Bacharelado em Sistemas de Informação do Centro Universitário UniFEF: cada aula, trabalho e prova postados pelos professores no Google Classroom, documentados em profundidade, com diagramas, código resolvido e material de revisão.
 
-**Última sincronização:** 20 de outubro de 2026 às 22:32 (horário de Brasília)
+**Última sincronização:** 21 de outubro de 2026 às 01:01 (horário de Brasília)
 
 ## Sumário
 
@@ -50,8 +50,8 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 | Disciplinas | 8 |
 | Aulas documentadas | 49 |
 | Trabalhos e provas | 30 |
-| Arquivos de código resolvido | 219 |
-| Linhas de documentação (Markdown) | 119.880 |
+| Arquivos de código resolvido | 222 |
+| Linhas de documentação (Markdown) | 119.888 |
 | Linguagens nos códigos | C, Java, SQL |
 
 ## Disciplinas
