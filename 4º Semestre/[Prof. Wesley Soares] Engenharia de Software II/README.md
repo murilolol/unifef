@@ -30,6 +30,7 @@
 | :--- | :--- | :--- |
 | [Atividade Aula 3](Trabalhos/Atividade%20Aula%203/detalhes.md) | 18/08/2026 às 23:59 | 100 pontos |
 | [Atividade classe](Trabalhos/Atividade%20classe/detalhes.md) | 25/08/2026 às 23:59 | 100 pontos |
+| [Diagrama de comunicação e sequencia](Trabalhos/Diagrama%20de%20comunica%C3%A7%C3%A3o%20e%20sequencia/detalhes.md) | 30/10/2026 às 22:00 | 100 pontos |
 | [Trabalho semestral](Trabalhos/Trabalho%20semestral/detalhes.md) | 08/09/2026 às 23:59 | 100 pontos |
 
 ## Revisão

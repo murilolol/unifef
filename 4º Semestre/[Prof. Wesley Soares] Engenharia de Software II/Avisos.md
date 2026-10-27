@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 11 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 12 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -17,6 +17,7 @@
 | 08/09/2026 | Aviso | Aula de revisão hoje! |
 | 22/09/2026 | Aviso | Aviso sem título |
 | 29/09/2026 | Aviso | Aula de hoje |
+| 19/10/2026 | Tarefa | Diagrama de comunicação e sequencia |
 
 ## 05/08/2026 - Aviso: Aula 001
 
@@ -86,3 +87,11 @@ Aviso sem título
 Aula de hoje
 
 - [Aula 008.pdf](https://drive.google.com/file/d/1O3q-SSIS_TOPVX0F0CP5fyYuLB7zQqPz/view?usp=drive_web)
+
+## 19/10/2026 - Tarefa: Diagrama de comunicação e sequencia
+
+**Entrega:** 2026-10-31 | **Pontos:** 100
+
+_Sem texto._
+
+- [Trabalho Av2 - 1(WD).docx](https://drive.google.com/file/d/1Oy6ljaA5tQWOnQA4oIb6NG-lc0c-FEaj/view?usp=drive_web)
