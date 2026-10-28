@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 12 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 14 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -18,6 +18,8 @@
 | 06/10/2026 | Aviso | https://outgoing-salt-444.notion.site/ED-I-Aula-09-Pilhas-Aplica-es-Manipula-o-e |
 | 17/10/2026 | Tarefa | Estruturas de ordenação 1 |
 | 20/10/2026 | Aviso | Aula de hoje! |
+| 26/10/2026 | Tarefa | Estrutura de ordenação 2 |
+| 27/10/2026 | Aviso | Aviso sem título |
 
 ## 05/08/2026 - Aviso: Conteúdo aula 01
 
@@ -109,3 +111,17 @@ Implemente o método bubbleSort(int[] notas).Implemente o método selectionSort(
 Aula de hoje!
 
 - [https://outgoing-salt-444.notion.site/ED-I-Aula-11-Algoritmos-de-Ordena-o-Bubble-Sort-e-Selection-Sort-3fc8a4f8f8a780b58656ff76df6ba3a1?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-11-Algoritmos-de-Ordena-o-Bubble-Sort-e-Selection-Sort-3fc8a4f8f8a780b58656ff76df6ba3a1?source=copy_link)
+
+## 26/10/2026 - Tarefa: Estrutura de ordenação 2
+
+**Entrega:** 2026-10-31 | **Pontos:** 100
+
+Baseado com o conteúdo da aula responda ao questionário
+
+- [Insertion sort](https://docs.google.com/forms/d/e/1FAIpQLSdsr8O0lh4xGGzqCYmBNheJllAEVYLMzwacA_1v8jOr7wJGmg/viewform?hr_submission=ChkIqfSd8tgWEhAIrOeI7IkaEgcI2Yqc368ZEAE)
+
+## 27/10/2026 - Aviso: Aviso sem título
+
+Aviso sem título
+
+- [https://outgoing-salt-444.notion.site/ED-I-Aula-12-Insertion-Sort-Ordena-o-por-Inser-o-4068a4f8f8a780099b67d48ae0177980?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-12-Insertion-Sort-Ordena-o-por-Inser-o-4068a4f8f8a780099b67d48ae0177980?source=copy_link)

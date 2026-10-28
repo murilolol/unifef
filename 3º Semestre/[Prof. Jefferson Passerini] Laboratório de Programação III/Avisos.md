@@ -23,7 +23,7 @@
 
 Aula 01 - Preparando o ambiente de Desenvolvimento
 
-- [https://spiffy-number-b06.notion.site/Java-JSP-Cap-1-JavaWeb-Configura-o-de-Ambiente-197393aeab2a8098900cecfb49b9faac?source=copy_link](https://spiffy-number-b06.notion.site/Java-JSP-Cap-1-JavaWeb-Configura-o-de-Ambiente-197393aeab2a8098900cecfb49b9faac?source=copy_link)
+- [Java JSP - Cap 1 - JavaWeb - Configuração de Ambiente | Notion](https://spiffy-number-b06.notion.site/Java-JSP-Cap-1-JavaWeb-Configura-o-de-Ambiente-197393aeab2a8098900cecfb49b9faac?source=copy_link)
 
 ## 23/02/2026 - Aviso: Aula 02 - Criando um projeto web
 
@@ -46,7 +46,7 @@ Responda o questionário e SALVE.
 
 Depois volte na atividade e marque como entregue.
 
-- [https://forms.gle/VW5HkyeoN4fMueKX8](https://forms.gle/VW5HkyeoN4fMueKX8)
+- [2026 1S - AV1 - Lab3](https://forms.gle/VW5HkyeoN4fMueKX8)
 
 ## 30/03/2026 - Aviso: Aula 04 - Conexão com o Banco de Dados
 

@@ -2,7 +2,7 @@
 
 > **Professor:** Welington Garcia
 > **Semestre:** 4º Semestre
-> **Postagens:** 9 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 10 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -15,6 +15,7 @@
 | 09/09/2026 | Tarefa | Avaliação de TABD |
 | 16/09/2026 | Material | Procedures |
 | 30/09/2026 | Tarefa | LIsta de Procedures |
+| 28/10/2026 | Material | Triggers |
 
 ## 05/08/2026 - Material: Aulas Joins e Sub selects
 
@@ -79,3 +80,9 @@ _Sem texto._
 _Sem texto._
 
 - [Exercícios Procedures.docx](https://drive.google.com/file/d/1qRgh0VJFKwrCSjsZsYAmCxiGAmZMM8aT/view?usp=drive_web)
+
+## 28/10/2026 - Material: Triggers
+
+_Sem texto._
+
+- [aula_triggers_postgresql.html](https://drive.google.com/file/d/10ONQWZEgAKfqAUwWbsAGAnozDaIbQzha/view?usp=drive_web)

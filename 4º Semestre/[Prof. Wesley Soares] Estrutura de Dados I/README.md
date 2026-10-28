@@ -24,12 +24,14 @@
 | [Aula 07 - Operações em Lista Ligada e Desempenho](Aulas/Aula%2007%20-%20Opera%C3%A7%C3%B5es%20em%20Lista%20Ligada%20e%20Desempenho/detalhes.md) | Implementação de operações fundamentais em listas simplesmente ligadas, análise assintótica de complexidade Big-O e matriz comparativa com listas sequenciais. | [codigo](Aulas/Aula%2007%20-%20Opera%C3%A7%C3%B5es%20em%20Lista%20Ligada%20e%20Desempenho/codigo) |
 | [Aula 08 - Pilhas Aplicações Manipulação e Análise de Complexidade](Aulas/Aula%2008%20-%20Pilhas%20Aplica%C3%A7%C3%B5es%20Manipula%C3%A7%C3%A3o%20e%20An%C3%A1lise%20de%20Complexidade/detalhes.md) | Aprofundamento no Tipo Abstrato de Dados (TAD) Pilha, manipulação de elementos intermediários com pilhas auxiliares, implementação encadeada dinâmica, análise de complexidade assintótica e trade-offs entre abordagens sequenciais e encadeadas. | [codigo](Aulas/Aula%2008%20-%20Pilhas%20Aplica%C3%A7%C3%B5es%20Manipula%C3%A7%C3%A3o%20e%20An%C3%A1lise%20de%20Complexidade/codigo) |
 | [Aula 09 - Ordenação com Bubble Sort e Selection Sort](Aulas/Aula%2009%20-%20Ordena%C3%A7%C3%A3o%20com%20Bubble%20Sort%20e%20Selection%20Sort/detalhes.md) | Fundamentos de algoritmos de ordenação por trocas adjacentes (Bubble Sort) e seleção de extremos (Selection Sort), análise de complexidade quadrática e otimizações. | [codigo](Aulas/Aula%2009%20-%20Ordena%C3%A7%C3%A3o%20com%20Bubble%20Sort%20e%20Selection%20Sort/codigo) |
+| [Aula 10 - Insertion Sort Ordenação por Inserção](Aulas/Aula%2010%20-%20Insertion%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Inser%C3%A7%C3%A3o/detalhes.md) | Algoritmo de ordenação por inserção direta, mecânica de deslocamento, análise de complexidade e estabilidade | [codigo](Aulas/Aula%2010%20-%20Insertion%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Inser%C3%A7%C3%A3o/codigo) |
 
 ## Trabalhos
 
 | Atividade | Prazo | Pontuação |
 | :--- | :--- | :--- |
 | [Complexidade de algoritmos](Trabalhos/Complexidade%20de%20algoritmos/detalhes.md) | 18/08/2026 às 23:59 | 100 pontos |
+| [Estrutura de ordenação 2](Trabalhos/Estrutura%20de%20ordena%C3%A7%C3%A3o%202/detalhes.md) | 30/10/2026 às 22:00 | 100 pontos |
 | [Estruturas de ordenação 1](Trabalhos/Estruturas%20de%20ordena%C3%A7%C3%A3o%201/detalhes.md) | 20/10/2026 às 22:00 | 100 pontos |
 
 ## Provas

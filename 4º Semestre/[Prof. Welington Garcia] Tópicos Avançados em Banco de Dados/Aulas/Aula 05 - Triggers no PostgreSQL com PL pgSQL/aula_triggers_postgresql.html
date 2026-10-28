@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula - Triggers no PostgreSQL</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#5f6b7a;--primary:#6b2bd9;--primary-dark:#43159a;--border:#dfe4ee;--code:#111827;--code-text:#eef2ff;--good:#0f7a43;--warn:#a35f00;--danger:#b42318}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}.topbar{position:fixed;inset:0 0 auto 0;height:58px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:20}.topbar strong{color:var(--primary-dark);font-size:18px}.counter{color:var(--muted);font-size:14px}.deck{height:100vh;padding-top:58px}.slide{display:none;height:calc(100vh - 58px);padding:34px 54px 92px;overflow:auto}.slide.active{display:block}.inner{max-width:1220px;margin:0 auto}h1{font-size:44px;margin:0 0 16px;color:var(--primary-dark);line-height:1.1}h2{font-size:34px;margin:0 0 18px;color:var(--primary-dark)}h3{font-size:24px;margin:20px 0 10px;color:#35236b}p,li{font-size:20px;line-height:1.55}.subtitle{font-size:24px;color:var(--muted);max-width:900px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:22px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 4px 16px rgba(30,40,70,.06)}.card h3{margin-top:0}.callout{background:#f0eaff;border-left:6px solid var(--primary);border-radius:10px;padding:18px 20px;margin:20px 0;font-size:20px;line-height:1.5}.warnbox{background:#fff4e5;border-left:6px solid #e18a00;border-radius:10px;padding:18px 20px;margin:20px 0;font-size:20px;line-height:1.5}pre{background:var(--code);color:var(--code-text);padding:20px;border-radius:14px;overflow:auto;font-size:17px;line-height:1.45;border:1px solid #2b3547}code{font-family:Consolas,Monaco,monospace}.diagram{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;font-family:Consolas,monospace;font-size:20px;line-height:1.5;white-space:pre-wrap}.badge{display:inline-block;background:#eee7ff;color:var(--primary-dark);padding:7px 12px;border-radius:999px;font-weight:bold;margin:4px 5px 4px 0}.good{color:var(--good);font-weight:bold}.warn{color:var(--warn);font-weight:bold}.danger{color:var(--danger);font-weight:bold}.footer{position:fixed;inset:auto 0 0 0;background:#fff;border-top:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;z-index:20}.footer button{border:none;border-radius:10px;padding:11px 18px;background:var(--primary);color:#fff;font-size:16px;font-weight:bold;cursor:pointer}.footer button:hover{background:var(--primary-dark)}.footer button:disabled{opacity:.4;cursor:not-allowed}.kbd{font-family:Consolas,monospace;background:#eef1f5;border:1px solid #cfd6df;border-radius:6px;padding:3px 7px;font-size:14px}@media(max-width:900px){body{overflow:auto}.slide{padding:24px 18px 100px}.grid,.grid3{grid-template-columns:1fr}h1{font-size:32px}h2{font-size:28px}p,li{font-size:18px}pre{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="topbar"><strong>Banco de Dados — Triggers no PostgreSQL</strong><div class="counter"><span id="current">1</span> / <span id="total"></span></div></div>
+<div class="deck">
+
+<section class="slide active"><div class="inner"><h1>Triggers no PostgreSQL</h1><p class="subtitle">Gatilhos, automação, validação e auditoria com PL/pgSQL</p><div class="grid"><div class="card"><h3>Objetivo</h3><p>Entender como o banco pode reagir automaticamente a eventos como INSERT, UPDATE e DELETE.</p></div><div class="card"><h3>Pré-requisitos</h3><p>INSERT, UPDATE, DELETE, funções básicas em PL/pgSQL e noções iniciais de Procedures.</p></div></div><div class="callout">Trigger é um dos recursos que mais evidencia que o banco de dados também pode executar <strong>lógica automaticamente</strong>.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>1. O que é uma Trigger?</h2><p>Uma <strong>Trigger</strong> é um gatilho executado automaticamente quando determinado evento ocorre no banco.</p><div class="diagram">Usuário executa uma operação
+          ↓
+INSERT / UPDATE / DELETE
+          ↓
+Trigger é acionada
+          ↓
+Uma função é executada automaticamente</div><div class="callout">Diferente de uma Procedure, a Trigger não precisa ser chamada manualmente com CALL.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>2. Exemplo do cotidiano</h2><p>Imagine um sistema em que toda alteração de preço deve ser registrada.</p><div class="diagram">UPDATE no preço
+      ↓
+Produto é alterado
+      ↓
+Trigger é executada
+      ↓
+Preço antigo e novo são gravados
+      ↓
+Histórico disponível para auditoria</div></div></section>
+
+<section class="slide"><div class="inner"><h2>3. Procedure x Trigger</h2><div class="grid"><div class="card"><h3>Procedure</h3><p>É chamada explicitamente.</p><pre><code>CALL atualizar_estoque(1, 10);</code></pre></div><div class="card"><h3>Trigger</h3><p>É executada automaticamente.</p><pre><code>UPDATE produtos
+SET preco = 150
+WHERE id_produto = 1;</code></pre><p>O UPDATE pode disparar uma Trigger sem que o usuário a chame.</p></div></div></div></section>
+
+<section class="slide"><div class="inner"><h2>4. Eventos que podem disparar Triggers</h2><div class="grid3"><div class="card"><h3>INSERT</h3><p>Novo registro inserido.</p></div><div class="card"><h3>UPDATE</h3><p>Registro existente alterado.</p></div><div class="card"><h3>DELETE</h3><p>Registro removido.</p></div></div><div class="callout">Uma mesma Trigger pode responder a um ou mais desses eventos.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>5. Momento de execução</h2><div class="grid3"><div class="card"><h3>BEFORE</h3><p>Executa antes da operação.</p></div><div class="card"><h3>AFTER</h3><p>Executa depois da operação.</p></div><div class="card"><h3>INSTEAD OF</h3><p>Executa no lugar da operação, principalmente em Views.</p></div></div></div></section>
+
+<section class="slide"><div class="inner"><h2>6. BEFORE</h2><div class="diagram">Comando SQL
+    ↓
+BEFORE Trigger
+    ↓
+Validação / alteração de NEW
+    ↓
+Operação é executada</div><p>Casos comuns:</p><ul><li>validar dados;</li><li>padronizar valores;</li><li>impedir operações;</li><li>ajustar campos automaticamente.</li></ul></div></section>
+
+<section class="slide"><div class="inner"><h2>7. AFTER</h2><div class="diagram">Comando SQL
+    ↓
+Operação concluída
+    ↓
+AFTER Trigger
+    ↓
+Histórico / auditoria / log</div><p>Casos comuns:</p><ul><li>auditoria;</li><li>histórico;</li><li>registro de movimentações;</li><li>logs de operações.</li></ul></div></section>
+
+<section class="slide"><div class="inner"><h2>8. Banco utilizado na aula</h2><pre><code>CREATE TABLE produtos (
+    id_produto SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco NUMERIC(10,2) NOT NULL,
+    estoque INTEGER NOT NULL
+);
+
+INSERT INTO produtos(nome, preco, estoque)
+VALUES
+('Teclado', 120.00, 20),
+('Mouse', 80.00, 30),
+('Monitor', 950.00, 10),
+('Notebook', 4500.00, 5);</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>9. Como uma Trigger funciona no PostgreSQL?</h2><p>No PostgreSQL, normalmente criamos dois objetos:</p><div class="diagram">1. Função da Trigger
+        ↓
+2. Trigger associada à tabela
+        ↓
+Evento ocorre
+        ↓
+Trigger chama a função</div></div></section>
+
+<section class="slide"><div class="inner"><h2>10. Estrutura da função da Trigger</h2><pre><code>CREATE OR REPLACE FUNCTION nome_funcao()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+
+    -- comandos
+
+    RETURN NEW;
+
+END;
+$$;</code></pre><div class="callout">O trecho <strong>RETURNS TRIGGER</strong> indica que essa função foi criada para ser executada por uma Trigger.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>11. Estrutura da Trigger</h2><pre><code>CREATE TRIGGER nome_trigger
+BEFORE INSERT
+ON nome_tabela
+FOR EACH ROW
+EXECUTE FUNCTION nome_funcao();</code></pre><p>Observe que a Trigger define:</p><div><span class="badge">momento</span><span class="badge">evento</span><span class="badge">tabela</span><span class="badge">nível</span><span class="badge">função</span></div></div></section>
+
+<section class="slide"><div class="inner"><h2>12. FOR EACH ROW</h2><p>Executa a Trigger uma vez para cada linha afetada.</p><pre><code>UPDATE produtos
+SET preco = preco * 1.10;</code></pre><div class="diagram">Se 100 produtos forem alterados:
+
+FOR EACH ROW
+        ↓
+Trigger executada 100 vezes</div></div></section>
+
+<section class="slide"><div class="inner"><h2>13. FOR EACH STATEMENT</h2><p>Executa a Trigger uma vez para o comando inteiro.</p><pre><code>UPDATE produtos
+SET preco = preco * 1.10;</code></pre><div class="diagram">Mesmo que 100 produtos sejam alterados:
+
+FOR EACH STATEMENT
+        ↓
+Trigger executada 1 vez</div></div></section>
+
+<section class="slide"><div class="inner"><h2>14. OLD e NEW</h2><p>Triggers de linha possuem duas referências muito importantes:</p><div class="grid"><div class="card"><h3>NEW</h3><p>Representa os dados novos.</p><pre><code>NEW.nome
+NEW.preco
+NEW.estoque</code></pre></div><div class="card"><h3>OLD</h3><p>Representa os dados anteriores.</p><pre><code>OLD.nome
+OLD.preco
+OLD.estoque</code></pre></div></div></div></section>
+
+<section class="slide"><div class="inner"><h2>15. OLD e NEW no INSERT</h2><div class="diagram">INSERT
+
+NEW → existe
+OLD → não existe</div><pre><code>INSERT INTO produtos(nome, preco, estoque)
+VALUES ('Webcam', 300, 10);</code></pre><p>Dentro da Trigger:</p><pre><code>NEW.nome    -- Webcam
+NEW.preco   -- 300
+NEW.estoque -- 10</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>16. OLD e NEW no UPDATE</h2><div class="diagram">UPDATE
+
+OLD → valor anterior
+NEW → valor novo</div><pre><code>UPDATE produtos
+SET preco = 150
+WHERE id_produto = 1;</code></pre><p>Supondo que o preço anterior fosse 120:</p><pre><code>OLD.preco = 120
+NEW.preco = 150</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>17. OLD e NEW no DELETE</h2><div class="diagram">DELETE
+
+OLD → existe
+NEW → não existe</div><pre><code>DELETE FROM produtos
+WHERE id_produto = 2;</code></pre><p>Dentro da Trigger podemos acessar os dados excluídos por meio de <strong>OLD</strong>.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>18. Primeira Trigger</h2><p>Vamos exibir uma mensagem sempre que um produto for cadastrado.</p><pre><code>CREATE OR REPLACE FUNCTION avisar_novo_produto()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RAISE NOTICE
+    'Novo produto cadastrado: %',
+    NEW.nome;
+
+    RETURN NEW;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>19. Criando o gatilho</h2><pre><code>CREATE TRIGGER trg_novo_produto
+AFTER INSERT
+ON produtos
+FOR EACH ROW
+EXECUTE FUNCTION avisar_novo_produto();</code></pre><p>Agora a função será executada automaticamente após cada INSERT em produtos.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>20. Testando</h2><pre><code>INSERT INTO produtos(nome, preco, estoque)
+VALUES ('Webcam', 350, 10);</code></pre><p>Resultado esperado:</p><pre><code>NOTICE:
+Novo produto cadastrado: Webcam</code></pre><p class="good">Nenhum CALL foi necessário.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>21. Trigger para validação</h2><p>Vamos impedir preço negativo.</p><pre><code>CREATE OR REPLACE FUNCTION validar_preco()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF NEW.preco &lt; 0 THEN
+        RAISE EXCEPTION
+        'O preço não pode ser negativo.';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>22. Trigger BEFORE INSERT OR UPDATE</h2><pre><code>CREATE TRIGGER trg_validar_preco
+BEFORE INSERT OR UPDATE
+ON produtos
+FOR EACH ROW
+EXECUTE FUNCTION validar_preco();</code></pre><div class="callout">A mesma Trigger será executada antes de INSERT ou UPDATE.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>23. Testando a validação</h2><pre><code>INSERT INTO produtos(nome, preco, estoque)
+VALUES ('Produto Teste', -100, 5);</code></pre><p>Resultado:</p><pre><code>ERROR:
+O preço não pode ser negativo.</code></pre><p class="danger">O registro não será gravado.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>24. Validando preço e estoque</h2><pre><code>CREATE OR REPLACE FUNCTION validar_produto()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF NEW.preco &lt; 0 THEN
+        RAISE EXCEPTION 'Preço inválido.';
+    END IF;
+
+    IF NEW.estoque &lt; 0 THEN
+        RAISE EXCEPTION
+        'Estoque não pode ser negativo.';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>25. Alterando valores automaticamente</h2><p>Podemos padronizar o nome dos produtos para letras maiúsculas.</p><pre><code>CREATE OR REPLACE FUNCTION padronizar_nome()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    NEW.nome := UPPER(NEW.nome);
+    RETURN NEW;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>26. Trigger de padronização</h2><pre><code>CREATE TRIGGER trg_padronizar_nome
+BEFORE INSERT OR UPDATE
+ON produtos
+FOR EACH ROW
+EXECUTE FUNCTION padronizar_nome();</code></pre><pre><code>INSERT INTO produtos(nome, preco, estoque)
+VALUES ('mouse gamer', 250, 10);</code></pre><p>Valor armazenado:</p><pre><code>MOUSE GAMER</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>27. Por que BEFORE nesse caso?</h2><div class="diagram">INSERT
+  ↓
+BEFORE Trigger
+  ↓
+NEW.nome := UPPER(NEW.nome)
+  ↓
+Registro é salvo já modificado</div><div class="callout">BEFORE é especialmente útil quando queremos modificar NEW antes da gravação.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>28. Auditoria</h2><p>Um dos usos mais importantes de Trigger é a auditoria.</p><p>Podemos registrar:</p><ul><li>qual registro foi alterado;</li><li>valor antigo;</li><li>valor novo;</li><li>data da alteração;</li><li>tipo de operação.</li></ul></div></section>
+
+<section class="slide"><div class="inner"><h2>29. Tabela de auditoria</h2><pre><code>CREATE TABLE auditoria_produtos (
+    id_auditoria SERIAL PRIMARY KEY,
+    id_produto INTEGER,
+    nome_produto VARCHAR(100),
+    preco_antigo NUMERIC(10,2),
+    preco_novo NUMERIC(10,2),
+    data_alteracao TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP
+);</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>30. Função de auditoria</h2><pre><code>CREATE OR REPLACE FUNCTION auditar_preco_produto()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO auditoria_produtos(
+        id_produto,
+        nome_produto,
+        preco_antigo,
+        preco_novo
+    )
+    VALUES(
+        OLD.id_produto,
+        OLD.nome,
+        OLD.preco,
+        NEW.preco
+    );
+
+    RETURN NEW;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>31. Trigger de auditoria</h2><pre><code>CREATE TRIGGER trg_auditar_preco
+AFTER UPDATE OF preco
+ON produtos
+FOR EACH ROW
+EXECUTE FUNCTION auditar_preco_produto();</code></pre><div class="callout"><strong>UPDATE OF preco</strong> relaciona a Trigger a comandos UPDATE que mencionam a coluna preço.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>32. Testando a auditoria</h2><pre><code>UPDATE produtos
+SET preco = 160
+WHERE id_produto = 1;</code></pre><p>Depois:</p><pre><code>SELECT *
+FROM auditoria_produtos;</code></pre><p>O histórico mostrará o preço anterior e o novo preço.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>33. Fluxo da auditoria</h2><div class="diagram">UPDATE produtos
+      ↓
+Registro alterado
+      ↓
+AFTER UPDATE
+      ↓
+trg_auditar_preco
+      ↓
+auditar_preco_produto()
+      ↓
+INSERT auditoria_produtos</div></div></section>
+
+<section class="slide"><div class="inner"><h2>34. Histórico de exclusões</h2><pre><code>CREATE TABLE produtos_excluidos (
+    id_historico SERIAL PRIMARY KEY,
+    id_produto INTEGER,
+    nome VARCHAR(100),
+    preco NUMERIC(10,2),
+    estoque INTEGER,
+    data_exclusao TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP
+);</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>35. Função para registrar DELETE</h2><pre><code>CREATE OR REPLACE FUNCTION registrar_produto_excluido()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO produtos_excluidos(
+        id_produto,
+        nome,
+        preco,
+        estoque
+    )
+    VALUES(
+        OLD.id_produto,
+        OLD.nome,
+        OLD.preco,
+        OLD.estoque
+    );
+
+    RETURN OLD;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>36. Trigger BEFORE DELETE</h2><pre><code>CREATE TRIGGER trg_produto_excluido
+BEFORE DELETE
+ON produtos
+FOR EACH ROW
+EXECUTE FUNCTION registrar_produto_excluido();</code></pre><pre><code>DELETE FROM produtos
+WHERE id_produto = 2;</code></pre><p>Os dados do produto são registrados antes da exclusão.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>37. OLD e NEW — resumo</h2><div class="grid3"><div class="card"><h3>INSERT</h3><p><strong>NEW:</strong> sim</p><p><strong>OLD:</strong> não</p></div><div class="card"><h3>UPDATE</h3><p><strong>NEW:</strong> sim</p><p><strong>OLD:</strong> sim</p></div><div class="card"><h3>DELETE</h3><p><strong>NEW:</strong> não</p><p><strong>OLD:</strong> sim</p></div></div><div class="callout">Essa tabela é uma das informações mais importantes de toda a aula.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>38. TG_OP</h2><p>O PostgreSQL disponibiliza uma variável especial:</p><pre><code>TG_OP</code></pre><p>Ela informa qual operação disparou a Trigger:</p><div><span class="badge">INSERT</span><span class="badge">UPDATE</span><span class="badge">DELETE</span></div></div></section>
+
+<section class="slide"><div class="inner"><h2>39. Exemplo com TG_OP</h2><pre><code>CREATE OR REPLACE FUNCTION verificar_operacao()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RAISE NOTICE
+    'Operação executada: %',
+    TG_OP;
+
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>40. Uma Trigger para vários eventos</h2><pre><code>CREATE TRIGGER trg_produtos_operacoes
+AFTER INSERT OR UPDATE OR DELETE
+ON produtos
+FOR EACH ROW
+EXECUTE FUNCTION verificar_operacao();</code></pre><p>Agora uma única função pode identificar qual evento ocorreu usando <strong>TG_OP</strong>.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>41. Quando utilizar Trigger?</h2><ul><li>auditoria;</li><li>histórico automático;</li><li>registro de movimentações;</li><li>padronização de valores;</li><li>sincronização de dados;</li><li>ações que devem ocorrer independentemente da aplicação.</li></ul></div></section>
+
+<section class="slide"><div class="inner"><h2>42. Quando evitar Trigger?</h2><div class="diagram">UPDATE tabela A
+      ↓
+Trigger A
+      ↓
+UPDATE tabela B
+      ↓
+Trigger B
+      ↓
+UPDATE tabela C</div><div class="warnbox">Triggers em excesso podem deixar a lógica do sistema difícil de entender, testar e manter.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>43. Trigger x Constraint</h2><p>Nem toda validação precisa de Trigger.</p><pre><code>CREATE TABLE exemplo (
+    preco NUMERIC(10,2)
+        CHECK (preco &gt;= 0)
+);</code></pre><p>Para uma regra simples como preço não negativo, uma constraint pode ser mais adequada.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>44. Quando usar CHECK?</h2><p>Use uma constraint quando a regra for simples e declarativa.</p><pre><code>CHECK (idade &gt;= 18)
+
+CHECK (preco &gt; 0)
+
+CHECK (estoque &gt;= 0)</code></pre><div class="callout">Quanto mais simples for a solução, melhor. Trigger não deve ser a primeira escolha para toda validação.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>45. Trigger x Procedure x Constraint</h2><div class="grid3"><div class="card"><h3>Constraint</h3><p>Regra simples sobre dados.</p></div><div class="card"><h3>Procedure</h3><p>Operação chamada explicitamente.</p></div><div class="card"><h3>Trigger</h3><p>Ação automática em resposta a evento.</p></div></div></div></section>
+
+<section class="slide"><div class="inner"><h2>46. Removendo uma Trigger</h2><pre><code>DROP TRIGGER trg_validar_preco
+ON produtos;</code></pre><p>Depois, se necessário, removemos a função:</p><pre><code>DROP FUNCTION validar_preco();</code></pre><p class="warn">Trigger e função são objetos diferentes.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>47. Visualizando no pgAdmin</h2><div class="diagram">Databases
+   ↓
+Banco
+   ↓
+Schemas
+   ↓
+public
+   ↓
+Tables
+   ↓
+produtos
+   ↓
+Triggers</div><p>É interessante mostrar essa estrutura visualmente durante a aula.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>48. Exercício 1</h2><p>Crie uma Trigger que não permita inserir ou alterar um produto com:</p><pre><code>estoque &lt; 0</code></pre><p>Utilize:</p><pre><code>RAISE EXCEPTION</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>49. Exercício 2</h2><p>Crie uma Trigger que transforme automaticamente o nome de um cliente em letras maiúsculas antes da inserção.</p><div class="diagram">Entrada:
+João da Silva
+
+Valor armazenado:
+JOÃO DA SILVA</div></div></section>
+
+<section class="slide"><div class="inner"><h2>50. Exercício 3</h2><p>Crie uma tabela:</p><pre><code>historico_estoque</code></pre><p>Com os campos:</p><ul><li>id;</li><li>id_produto;</li><li>estoque_antigo;</li><li>estoque_novo;</li><li>data_alteracao.</li></ul><p>Depois, crie uma Trigger que registre mudanças de estoque.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>51. Exercício 4</h2><p>Crie uma Trigger que registre toda exclusão de clientes.</p><p>A tabela de histórico deverá armazenar:</p><ul><li>ID do cliente;</li><li>nome;</li><li>e-mail;</li><li>data da exclusão.</li></ul></div></section>
+
+<section class="slide"><div class="inner"><h2>52. Exercício 5</h2><p>Impeça a exclusão de um produto enquanto ele possuir estoque.</p><pre><code>DELETE FROM produtos
+WHERE id_produto = 1;</code></pre><p>Se estoque for maior que zero:</p><pre><code>ERROR:
+Não é possível excluir produto com estoque.</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>53. Exercício 6</h2><p>Registre alterações de preço somente quando o preço realmente mudar.</p><p>Dica:</p><pre><code>IF OLD.preco IS DISTINCT FROM NEW.preco THEN
+    -- registrar alteração
+END IF;</code></pre><div class="callout"><strong>IS DISTINCT FROM</strong> é uma comparação segura mesmo quando podem existir valores NULL.</div></div></section>
+
+<section class="slide"><div class="inner"><h2>54. Exercício 7</h2><p>Crie uma tabela de logs:</p><pre><code>logs_sistema</code></pre><p>Armazene:</p><ul><li>ID do log;</li><li>operação;</li><li>tabela;</li><li>data.</li></ul><p>Utilize <strong>TG_OP</strong> para identificar INSERT, UPDATE e DELETE.</p></div></section>
+
+<section class="slide"><div class="inner"><h2>55. Desafio</h2><h3>Sistema de auditoria de produtos</h3><p>Toda operação deverá registrar:</p><ul><li>ID do produto;</li><li>nome;</li><li>operação realizada;</li><li>preço antigo e novo;</li><li>estoque antigo e novo;</li><li>data da operação.</li></ul><p>A Trigger deverá responder a:</p><div><span class="badge">INSERT</span><span class="badge">UPDATE</span><span class="badge">DELETE</span></div></div></section>
+
+<section class="slide"><div class="inner"><h2>56. Estrutura completa</h2><h3>Função</h3><pre><code>CREATE OR REPLACE FUNCTION nome_funcao()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- lógica
+    RETURN NEW;
+END;
+$$;</code></pre><h3>Trigger</h3><pre><code>CREATE TRIGGER nome_trigger
+BEFORE OR AFTER INSERT OR UPDATE OR DELETE
+ON tabela
+FOR EACH ROW
+EXECUTE FUNCTION nome_funcao();</code></pre></div></section>
+
+<section class="slide"><div class="inner"><h2>57. Conceitos estudados</h2><div><span class="badge">TRIGGER</span><span class="badge">BEFORE</span><span class="badge">AFTER</span><span class="badge">INSERT</span><span class="badge">UPDATE</span><span class="badge">DELETE</span><span class="badge">FOR EACH ROW</span><span class="badge">OLD</span><span class="badge">NEW</span><span class="badge">TG_OP</span><span class="badge">RETURNS TRIGGER</span><span class="badge">Auditoria</span></div></div></section>
+
+<section class="slide"><div class="inner"><h2>58. O que o aluno precisa lembrar?</h2><ul><li><strong>Trigger não é chamada manualmente.</strong></li><li><strong>NEW</strong> representa o novo registro.</li><li><strong>OLD</strong> representa o registro anterior.</li><li><strong>BEFORE</strong> ocorre antes da operação.</li><li><strong>AFTER</strong> ocorre depois da operação.</li><li>No PostgreSQL, a Trigger normalmente executa uma função PL/pgSQL.</li></ul></div></section>
+
+<section class="slide"><div class="inner"><h2>59. Próxima aula sugerida</h2><h3>Triggers avançadas no PostgreSQL</h3><ul><li>WHEN em Triggers;</li><li>TG_TABLE_NAME;</li><li>TG_TABLE_SCHEMA;</li><li>TG_NAME;</li><li>auditoria genérica;</li><li>INSTEAD OF em Views;</li><li>múltiplas Triggers;</li><li>ordem de execução;</li><li>recursividade e pg_trigger_depth();</li><li>performance e boas práticas.</li></ul></div></section>
+
+</div>
+<div class="footer"><button id="prev" onclick="changeSlide(-1)">← Anterior</button><div>Navegação: <span class="kbd">←</span> <span class="kbd">→</span> <span class="kbd">Espaço</span></div><button id="next" onclick="changeSlide(1)">Próximo →</button></div>
+<script>
+const slides=Array.from(document.querySelectorAll('.slide'));let index=0;document.getElementById('total').textContent=slides.length;function showSlide(i){if(i<0)i=0;if(i>=slides.length)i=slides.length-1;slides.forEach(s=>s.classList.remove('active'));slides[i].classList.add('active');index=i;document.getElementById('current').textContent=index+1;document.getElementById('prev').disabled=index===0;document.getElementById('next').disabled=index===slides.length-1;window.scrollTo(0,0)}function changeSlide(delta){showSlide(index+delta)}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();changeSlide(1)}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();changeSlide(-1)}if(e.key==='Home'){e.preventDefault();showSlide(0)}if(e.key==='End'){e.preventDefault();showSlide(slides.length-1)}});showSlide(0);
+</script>
+</body>
+</html>
