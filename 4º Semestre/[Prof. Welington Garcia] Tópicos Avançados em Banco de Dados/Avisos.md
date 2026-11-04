@@ -2,7 +2,7 @@
 
 > **Professor:** Welington Garcia
 > **Semestre:** 4º Semestre
-> **Postagens:** 10 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 11 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -16,6 +16,7 @@
 | 16/09/2026 | Material | Procedures |
 | 30/09/2026 | Tarefa | LIsta de Procedures |
 | 28/10/2026 | Material | Triggers |
+| 28/10/2026 | Material | Exercicios Trigger |
 
 ## 05/08/2026 - Material: Aulas Joins e Sub selects
 
@@ -86,3 +87,9 @@ _Sem texto._
 _Sem texto._
 
 - [aula_triggers_postgresql.html](https://drive.google.com/file/d/10ONQWZEgAKfqAUwWbsAGAnozDaIbQzha/view?usp=drive_web)
+
+## 28/10/2026 - Material: Exercicios Trigger
+
+_Sem texto._
+
+- [base_exercicios_triggers_postgresql.sql](https://drive.google.com/file/d/1Nc1U47zFQ_KMKzd_f2wWJNUkfNPdqROU/view?usp=drive_web)

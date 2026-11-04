@@ -1,648 +1,531 @@
-# Manual Integrado de Tópicos Avançados em Banco de Dados: PostgreSQL, Álgebra Relacional e Engenharia Procedural
+# Guia de Estudos Definitivo: Tópicos Avançados em Banco de Dados (PostgreSQL)
 
-> **Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
-> **Curso:** Bacharelado em Sistemas de Informação  
-> **Disciplina:** Tópicos Avançados em Banco de Dados (4º Semestre)  
+> **Instituição:** Centro Universitário de Educação de Jales (UniFEF)  
+> **Curso:** Bacharelado em Sistemas de Informação (4º Semestre)  
+> **Disciplina:** Tópicos Avançados em Banco de Dados (TABD)  
 > **Docente:** Prof. Welington Garcia  
-> **Propósito:** Material didático exaustivo, guia prático de laboratório e caderno de soluções comentadas para engenharia de software e administração de dados corporativos.
+> **Material:** Compilação e aprofundamento das Aulas 02, 03, 04 e 05, listas práticas de exercícios e avaliações oficiais.
 
 ---
 
 ## Sumário
 
-- [Visão Geral e Arquitetura Pedagógica](#visão-geral-e-arquitetura-pedagógica)
-- [Fundamentos Relacionais e Modelagem de Dados](#fundamentos-relacionais-e-modelagem-de-dados)
-  - [Teoria Relacional e Formas Normais](#teoria-relacional-e-formas-normais)
-  - [Integridade Referencial e Constraints Declarativas](#integridade-referencial-e-constraints-declarativas)
-  - [Esquemas Canônicos da Disciplina](#esquemas-canônicos-da-disciplina)
-- [Álgebra Relacional e Técnicas de Junção](#álgebra-relacional-e-técnicas-de-junção)
-  - [Fundamentos Matemáticos: Produto Cartesiano e Teta-Junção](#fundamentos-matemáticos-produto-cartesiano-e-teta-junção)
-  - [INNER JOIN e Mecanismos Físicos do PostgreSQL](#inner-join-e-mecanismos-físicos-do-postgresql)
-  - [LEFT OUTER JOIN e Preservação de Tuplas](#left-outer-join-e-preservação-de-tuplas)
-  - [Padrão Anti-Join e Tratamento de Nulos](#padrão-anti-join-e-tratamento-de-nulos)
-  - [RIGHT OUTER JOIN e Equivalência Operacional](#right-outer-join-e-equivalência-operacional)
-  - [FULL OUTER JOIN e Casos de Auditoria](#full-outer-join-e-casos-de-auditoria)
-  - [CROSS JOIN e Aplicações Analíticas](#cross-join-e-aplicações-analíticas)
-  - [SELF JOIN e Modelagem de Hierarquias](#self-join-e-modelagem-de-hierarquias)
-  - [Semântica Crítica: Filtragem no ON versus Filtragem no WHERE](#semântica-crítica-filtragem-no-on-versus-filtragem-no-where)
-  - [Agregações com OUTER JOIN: A Armadilha de COUNT](#agregações-com-outer-join-a-armadilha-de-count)
-- [Taxonomia e Otimização de Subconsultas](#taxonomia-e-otimização-de-subconsultas)
-  - [Classificação por Cardinalidade e Dependência](#classificação-por-cardinalidade-e-dependência)
-  - [Subconsultas Escalares](#subconsultas-escalares)
-  - [Operadores de Conjunto: IN e a Armadilha da Lógica Trivalente com NOT IN](#operadores-de-conjunto-in-e-a-armadilha-da-lógica-trivalente-com-not-in)
-  - [Operadores de Existência: Semântica de Curto-Circuito com EXISTS e NOT EXISTS](#operadores-de-existência-semântica-de-curto-circuito-com-exists-e-not-exists)
-  - [Operadores Quantificados: ANY e ALL](#operadores-quantificados-any-e-all)
-  - [Subconsultas Correlacionadas e Planos de Execução](#subconsultas-correlacionadas-e-planos-de-execução)
-  - [Tabelas Derivadas na Cláusula FROM](#tabelas-derivadas-na-cláusula-from)
-  - [Subconsultas em Instruções DML](#subconsultas-em-instruções-dml)
-  - [Expressões de Tabela Comuns (CTEs)](#expressões-de-tabela-comuns-ctes)
 - [Visões Relacionais e Visões Materializadas](#visões-relacionais-e-visões-materializadas)
-  - [Conceito e Mecanismo de Reescrita de Consultas](#conceito-e-mecanismo-de-reescrita-de-consultas)
-  - [Comparativo Estrutural: Tabela, View e Materialized View](#comparativo-estrutural-tabela-view-e-materialized-view)
-  - [Manutenção e Dependências: CREATE OR REPLACE VIEW e DROP VIEW](#manutenção-e-dependências-create-or-replace-view-e-drop-view)
-  - [Visões Atualizáveis e Consistência com WITH CHECK OPTION](#visões-atualizáveis-e-consistência-com-with-check-option)
-  - [Segurança de Acesso e Abstração de Esquema](#segurança-de-acesso-e-abstração-de-esquema)
-  - [Materialized Views: Estratégias de Atualização e Indexação Física](#materialized-views-estratégias-de-atualização-e-indexação-física)
-- [Programação Procedural em PL/pgSQL e Stored Procedures](#programação-procedural-em-plpgsql-e-stored-procedures)
-  - [Paradigma Declarativo versus Procedural](#paradigma-declarativo-versus-procedural)
-  - [Diferenças Críticas entre Functions e Procedures](#diferenças-críticas-entre-functions-e-procedures)
-  - [Anatomia de um Bloco PL/pgSQL](#anatomia-de-um-bloco-plpgsql)
-  - [Tipagem Ancorada e Atribuição de Dados](#tipagem-ancorada-e-atribuição-de-dados)
-  - [Controle de Fluxo e Sinalização de Exceções](#controle-de-fluxo-e-sinalização-de-exceções)
-  - [Execução DML, Variável FOUND e Diagnósticos](#execução-dml-variável-found-e-diagnósticos)
-  - [Gerenciamento Transacional Autônomo com COMMIT e ROLLBACK](#gerenciamento-transacional-autônomo-com-commit-e-rollback)
+  - [Conceito e Arquitetura do Mecanismo de Reescrita](#conceito-e-arquitetura-do-mecanismo-de-reescrita)
+  - [Tabelas Base versus Visões Padrão versus Visões Materializadas](#tabelas-base-versus-visões-padrão-versus-visões-materializadas)
+  - [Sintaxe DDL e Operações Fundamentais](#sintaxe-ddl-e-operações-fundamentais)
+  - [Regras de Evolução Estrutural com CREATE OR REPLACE VIEW](#regras-de-evolução-estrutural-com-create-or-replace-view)
+  - [Gestão de Dependências com DROP VIEW: CASCADE versus RESTRICT](#gestão-de-dependências-com-drop-view-cascade-versus-restrict)
+  - [Visões Atualizáveis e Restrições de Modificação](#visões-atualizáveis-e-restrições-de-modificação)
+  - [Garantia de Integridade Transacional com WITH CHECK OPTION](#garantia-de-integridade-transacional-com-with-check-option)
+  - [Camada de Segurança e Mascaramento com GRANT](#camada-de-segurança-e-mascaramento-com-grant)
+  - [Visões Materializadas, Ciclo de Atualização e Indexação Própria](#visões-materializadas-ciclo-de-atualização-e-indexação-própria)
+- [Álgebra Relacional e Técnicas Avançadas de Junção](#álgebra-relacional-e-técnicas-avançadas-de-junção)
+  - [Fundamentos Relacionais e Mecânica dos Algoritmos de Junção](#fundamentos-relacionais-e-mecânica-dos-algoritmos-de-junção)
+  - [Junção Interna: INNER JOIN](#junção-interna-inner-join)
+  - [Junções Externas: LEFT JOIN e RIGHT JOIN](#junções-externas-left-join-e-right-join)
+  - [Técnica de Anti-Join para Detecção de Lacunas Relacionais](#técnica-de-anti-join-para-detecção-de-lacunas-relacionais)
+  - [Junção Externa Total: FULL OUTER JOIN](#junção-externa-total-full-outer-join)
+  - [Produto Cartesiano: CROSS JOIN](#produto-cartesiano-cross-join)
+  - [Autorrelacionamento: SELF JOIN e Estruturas Hierárquicas](#autorrelacionamento-self-join-e-estruturas-hierárquicas)
+  - [Semântica Crítica: Filtragem no ON versus Filtragem no WHERE](#semântica-crítica-filtragem-no-on-versus-filtragem-no-where)
+  - [Armadilhas de Agregação sob Junções Externas: COUNT(*) versus COUNT(coluna)](#armadilhas-de-agregação-sob-junções-externas-count-versus-countcoluna)
+- [Subconsultas, Expressões de Tabela Comuns e Otimização](#subconsultas-expressões-de-tabela-comuns-e-otimização)
+  - [Taxonomia Formal de Subconsultas](#taxonomia-formal-de-subconsultas)
+  - [Subconsultas Escalares](#subconsultas-escalares)
+  - [Operadores de Pertencimento a Conjuntos: IN e NOT IN](#operadores-de-pertencimento-a-conjuntos-in-e-not-in)
+  - [A Armadilha do Valor NULL e a Lógica Tri-valorada](#a-armadilha-do-valor-null-e-a-lógica-tri-valorada)
+  - [Operadores de Existência: EXISTS e NOT EXISTS](#operadores-de-existência-exists-e-not-exists)
+  - [Operadores Quantificados: ANY e ALL](#operadores-quantificados-any-e-all)
+  - [Subconsultas Correlacionadas](#subconsultas-correlacionadas)
+  - [Tabelas Derivadas na Cláusula FROM (Inline Views)](#tabelas-derivadas-na-cláusula-from-inline-views)
+  - [DML Guiado por Subconsultas](#dml-guiado-por-subconsultas)
+  - [Expressões de Tabela Comuns (CTEs)](#expressões-de-tabela-comuns-ctes)
+  - [Diagnóstico de Planos Físicos com EXPLAIN ANALYZE](#diagnóstico-de-planos-físicos-com-explain-analyze)
+- [Programação Procedural com PL/pgSQL e Stored Procedures](#programação-procedural-com-plpgsql-e-stored-procedures)
+  - [Arquitetura de Execução Procedural no PostgreSQL](#arquitetura-de-execução-procedural-no-postgresql)
+  - [Diferenças Essenciais entre Stored Functions e Stored Procedures](#diferenças-essenciais-entre-stored-functions-e-stored-procedures)
+  - [Anatomia Estrutural de um Bloco PL/pgSQL](#anatomia-estrutural-de-um-bloco-plpgsql)
+  - [Declaração de Variáveis, Tipagem Escalar e Tipagem Ancorada](#declaração-de-variáveis-tipagem-escalar-e-tipagem-ancorada)
+  - [Modos de Parâmetros: IN, OUT e INOUT](#modos-de-parâmetros-in-out-e-inout)
+  - [Controle de Fluxo Condicional e Emissão de Diagnósticos](#controle-de-fluxo-condicional-e-emissão-de-diagnósticos)
+  - [Manipulação DML, Variável FOUND e GET DIAGNOSTICS](#manipulação-dml-variável-found-e-get-diagnostics)
+  - [Controle Transacional Autônomo com COMMIT e ROLLBACK](#controle-transacional-autônomo-com-commit-e-rollback)
 - [Gatilhos e Automação Reativa de Banco de Dados](#gatilhos-e-automação-reativa-de-banco-de-dados)
-  - [O Paradigma Event-Condition-Action (ECA)](#o-paradigma-event-condition-action-eca)
-  - [Desacoplamento entre Trigger Function e Trigger](#desacoplamento-entre-trigger-function-e-trigger)
+  - [Conceito Fundamental e o Paradigma Evento-Condição-Ação](#conceito-fundamental-e-o-paradigma-evento-condição-ação)
+  - [Desacoplamento entre Trigger Function e Objeto Trigger](#desacoplamento-entre-trigger-function-e-objeto-trigger)
+  - [Eventos Disparadores DML: INSERT, UPDATE e DELETE](#eventos-disparadores-dml-insert-update-e-delete)
   - [Momentos de Disparo: BEFORE, AFTER e INSTEAD OF](#momentos-de-disparo-before-after-e-instead-of)
-  - [Níveis de Disparo: Linha versus Instrução](#níveis-de-disparo-linha-versus-instrução)
-  - [Variáveis Especiais de Contexto](#variáveis-especiais-de-contexto)
-  - [Pipeline Completo de Processamento DML](#pipeline-completo-de-processamento-dml)
-  - [Trilhas de Auditoria e Validações de Integridade](#trilhas-de-auditoria-e-validações-de-integridade)
-- [Resolução Analítica dos Cadernos de Exercícios](#resolução-analítica-dos-cadernos-de-exercícios)
-  - [Caderno 1: Exercícios de JOINs no PostgreSQL](#caderno-1-exercícios-de-joins-no-postgresql)
-  - [Caderno 2: Subconsultas - Parte 1](#caderno-2-subconsultas---parte-1)
-  - [Caderno 3: Subconsultas Avançadas - Parte 2](#caderno-3-subconsultas-avançadas---parte-2)
-  - [Caderno 4: Lista de Exercícios Integrada de Pontos](#caderno-4-lista-de-exercícios-integrada-de-pontos)
-  - [Caderno 5: Stored Procedures em PL/pgSQL](#caderno-5-stored-procedures-em-plpgsql)
-  - [Caderno 6: Avaliação Oficial de TABD](#caderno-6-avaliação-oficial-de-tabd)
-- [Diagnóstico de Desempenho e Engenharia com EXPLAIN ANALYZE](#diagnóstico-de-desempenho-e-engenharia-com-explain-analyze)
-- [Armadilhas de Prova e Boas Práticas](#armadilhas-de-prova-e-boas-práticas)
-- [Glossário Técnico](#glossário-técnico)
+  - [Níveis de Granularidade: FOR EACH ROW versus FOR EACH STATEMENT](#níveis-de-granularidade-for-each-row-versus-for-each-statement)
+  - [Variáveis Especiais de Execução](#variáveis-especiais-de-execução)
+  - [Ciclo de Execução Transacional e Armadilhas de Cascata](#ciclo-de-execução-transacional-e-armadilhas-de-cascata)
+- [Caderno de Resoluções e Laboratórios Práticos](#caderno-de-resoluções-e-laboratórios-práticos)
+  - [Laboratório 1: Exercícios de Junções Relacionais](#laboratório-1-exercícios-de-junções-relacionais)
+  - [Laboratório 2: Subconsultas - Parte 01](#laboratório-2-subconsultas---parte-01)
+  - [Laboratório 3: Subconsultas Avançadas e DML - Parte 02](#laboratório-3-subconsultas-avançadas-e-dml---parte-02)
+  - [Laboratório 4: Lista Consolidada com Hierarquia e Views](#laboratório-4-lista-consolidada-com-hierarquia-e-views)
+  - [Laboratório 5: Stored Procedures Transacionais](#laboratório-5-stored-procedures-transacionais)
+  - [Laboratório 6: Simulado da Avaliação de TABD](#laboratório-6-simulado-da-avaliação-de-tabd)
+- [Mapa Conceitual Integrado da Disciplina](#mapa-conceitual-integrado-da-disciplina)
+- [Glossário Terminológico e Técnico de Engenharia de Dados](#glossário-terminológico-e-técnico-de-engenharia-de-dados)
+- [Pontos Críticos e Guia de Revisão para a Prova](#pontos-críticos-e-guia-de-revisão-para-a-prova)
 
 ---
 
-## Visão Geral e Arquitetura Pedagógica
+## Visões Relacionais e Visões Materializadas
 
-A disciplina de Tópicos Avançados em Banco de Dados (TABD), ministrada pelo Prof. Welington Garcia no curso de Sistemas de Informação da UniFEF, consolida a transição entre o consumo básico de bancos relacionais e a engenharia de dados corporativa de alto desempenho. O foco central reside em transformar o Sistema Gerenciador de Banco de Dados Relacional (SGBDR) — especificamente o PostgreSQL — de um mero depósito passivo de tabelas em uma plataforma computacional ativa, atômica e segura.
+### Conceito e Arquitetura do Mecanismo de Reescrita
 
-```mermaid
-mindmap
-  root("Tópicos Avançados em Banco de Dados")
-    "Camada de Abstração"
-      "Views Lógicas"
-      "Materialized Views Físicas"
-      "Controle de Acesso GRANT"
-    "Camada Declarativa Avançada"
-      "Junções Complexas INNER e OUTER"
-      "Subconsultas Escalares e Tabulares"
-      "Subconsultas Correlacionadas"
-      "Anti-Joins Defensivos"
-    "Camada Procedural Ativa"
-      "Linguagem PL pgSQL"
-      "Stored Procedures com CALL"
-      "Controle Transacional COMMIT e ROLLBACK"
-    "Camada Reativa"
-      "Paradigma ECA"
-      "Triggers BEFORE e AFTER"
-      "Triggers INSTEAD OF em Views"
-      "Trilhas de Auditoria Imutáveis"
+No modelo relacional e na especificação formal SQL (ANSI/ISO SQL), uma visão (*view*) é definida como uma relação virtual derivada cujo conteúdo resulta da avaliação de uma consulta declarativa armazenada. 
+
+Diferentemente de uma tabela base, a visão padrão não aloca estruturas persistentes de armazenamento (*heap pages*) para armazenar tuplas. O Sistema Gerenciador de Banco de Dados Relacional (SGBDR) mantém apenas os metadados e a representação textual do comando `SELECT` registrado nos catálogos de sistema (`pg_views` e `pg_rewrite`).
+
+```sql
+CREATE VIEW vw_produtos_ativos AS
+SELECT id_produto, nome_produto, preco
+FROM produtos
+WHERE status = 'ATIVO';
 ```
 
-O conteúdo programático fundamenta-se em quatro pilares interligados:
-1. **Recomposição e Isolamento Lógico:** Uso de junções complexas, subconsultas aninhadas e visões relacionais para recuperar dados normalizados sem gerar anomalias ou expor estruturas físicas sensíveis.
-2. **Otimização de Leituras Analíticas:** Aplicação de visões materializadas, indexação dedicada e avaliação de custos algorítmicos via planos de execução (`EXPLAIN ANALYZE`).
-3. **Orquestração Transacional Próxima aos Dados:** Programação procedural em PL/pgSQL encapsulando regras de negócio críticas dentro de procedimentos armazenados, reduzindo drasticamente a latência de rede decorrente de múltiplas idas e vindas (*network round-trips*).
-4. **Governança e Integridade Reativa:** Implementação de regras de negócio intransponíveis por meio de gatilhos (*triggers*), assegurando conformidade de dados mesmo diante de acessos manuais de administradores ou falhas em microsserviços externos.
-
----
-
-## Fundamentos Relacionais e Modelagem de Dados
-
-### Teoria Relacional e Formas Normais
-
-O modelo relacional de Edgar F. Codd estrutura os dados sob o conceito de relações (tabelas), tuplas (linhas) e atributos (colunas). A normalização formal busca eliminar redundâncias de armazenamento e anomalias de atualização, inserção e exclusão:
-- **Primeira Forma Normal (1FN):** Exige atomicidade dos valores dos atributos. Colunas multivaloradas ou vetores aninhados são proibidos; cada célula deve conter apenas um dado atômico.
-- **Segunda Forma Normal (2FN):** Exige a 1FN e estabelece que todos os atributos não-chave devem depender funcionalmente da totalidade da chave primária, e não de parte dela (aplicável em chaves compostas).
-- **Terceira Forma Normal (3FN):** Exige a 2FN e impõe que nenhum atributo não-chave dependa transitivamente de outro atributo não-chave. Todo campo não-chave deve derivar exclusivamente da chave primária.
-
-Embora a decomposição em 3FN garanta consistência estrita, ela fragmenta os dados em múltiplos esquemas especializados. Em cenários reais de engenharia de software, a recomposição desses fragmentos para responder às necessidades de relatórios e interfaces demanda operações de junção e subconsultas sofisticadas.
-
-### Integridade Referencial e Constraints Declarativas
-
-O PostgreSQL garante a consistência atômica e referencial dos esquemas através de restrições nativas declaradas na linguagem de definição de dados (DDL):
-- `PRIMARY KEY (PK)`: Define o identificador único universal da tupla. Impõe automaticamente as propriedades `UNIQUE` e `NOT NULL`, materializando um índice B-Tree exclusivo subjacente.
-- `FOREIGN KEY (FK)`: Estabelece o vínculo referencial direcionado à chave primária (ou única) de outra relação. Impede a inserção de registros filhos órfãos e restringe a remoção de registros pais que possuam dependências ativas, a menos que ações em cascata (`ON DELETE CASCADE`) sejam explicitamente programadas.
-- `CHECK`: Valida predicados booleanos locais em nível de coluna ou tupla antes da persistência física (ex.: `CHECK (salario > 0)`).
-- `UNIQUE`: Garante a não repetição de valores em colunas secundárias (ex.: `email`), aceitando múltiplos valores nulos no padrão ANSI SQL a menos que configurado como `UNIQUE NULLS NOT DISTINCT`.
-
-### Esquemas Canônicos da Disciplina
-
-Para a sedimentação dos conceitos e reprodução fiel dos exercícios das aulas, listas e exames do Prof. Welington Garcia, quatro esquemas relacionais são adotados nesta obra:
-
-#### Esquema 1: Comércio e Vendas (loja_joins)
-
-Utilizado nos exercícios fundamentais de junção e no desafio de relatórios.
-
-```mermaid
-erDiagram
-    CLIENTES ||--o{ PEDIDOS : "realiza (1:N)"
-    VENDEDORES ||--o{ PEDIDOS : "atende (1:N)"
-    CATEGORIAS ||--o{ PRODUTOS : "classifica (1:N)"
-    PRODUTOS ||--o{ ITENS_PEDIDO : "e_vendido (1:N)"
-    PEDIDOS ||--|{ ITENS_PEDIDO : "compoe (1:N)"
-
-    CLIENTES {
-        int id_cliente PK
-        varchar nome
-        varchar cidade
-        char estado
-    }
-    VENDEDORES {
-        int id_vendedor PK
-        varchar nome
-        numeric salario
-    }
-    CATEGORIAS {
-        int id_categoria PK
-        varchar nome
-    }
-    PRODUTOS {
-        int id_produto PK
-        varchar nome
-        numeric preco
-        int id_categoria FK
-    }
-    PEDIDOS {
-        int id_pedido PK
-        date data_pedido
-        int id_cliente FK
-        int id_vendedor FK
-    }
-    ITENS_PEDIDO {
-        int id_item PK
-        int id_pedido FK
-        int id_produto FK
-        int quantidade
-        numeric preco_unitario
-    }
-```
-
-#### Esquema 2: Varejo com Descontos e Supervisão (loja_exercicios)
-
-Utilizado na lista de exercícios integrados, incluindo autorrelacionamento hierárquico e colunas de controle financeiro.
-
-```mermaid
-erDiagram
-    CLIENTES ||--o{ PEDIDOS : "realiza (1:N)"
-    VENDEDORES ||--o{ PEDIDOS : "atende (1:N)"
-    VENDEDORES ||--o{ VENDEDORES : "supervisiona (1:N)"
-    CATEGORIAS ||--o{ PRODUTOS : "classifica (1:N)"
-    PRODUTOS ||--o{ ITENS_PEDIDO : "e_vendido (1:N)"
-    PEDIDOS ||--|{ ITENS_PEDIDO : "compoe (1:N)"
-
-    CLIENTES {
-        int id_cliente PK
-        varchar nome
-        varchar cidade
-        char estado
-        numeric limite_credito
-        date data_cadastro
-    }
-    VENDEDORES {
-        int id_vendedor PK
-        varchar nome
-        numeric salario
-        numeric comissao
-        int id_supervisor FK
-    }
-    CATEGORIAS {
-        int id_categoria PK
-        varchar nome_categoria
-        varchar descricao
-    }
-    PRODUTOS {
-        int id_produto PK
-        varchar nome_produto
-        numeric preco
-        int estoque
-        int id_categoria FK
-    }
-    PEDIDOS {
-        int id_pedido PK
-        date data_pedido
-        varchar status
-        int id_cliente FK
-        int id_vendedor FK
-    }
-    ITENS_PEDIDO {
-        int id_item PK
-        int id_pedido FK
-        int id_produto FK
-        int quantidade
-        numeric preco_unitario
-        numeric desconto
-    }
-```
-
-#### Esquema 3: Gestão Transacional e Estoque (banco_procedures)
-
-Utilizado no desenvolvimento de procedimentos armazenados complexos em PL/pgSQL.
-
-```mermaid
-erDiagram
-    CLIENTES ||--o{ PEDIDOS : "realiza (1:N)"
-    PEDIDOS ||--|{ ITENS_PEDIDO : "contem (1:N)"
-    PRODUTOS ||--o{ ITENS_PEDIDO : "compoe (1:N)"
-
-    CLIENTES {
-        int id_cliente PK
-        varchar nome
-        varchar email
-        varchar cidade
-        numeric saldo
-    }
-    FUNCIONARIOS {
-        int id_funcionario PK
-        varchar nome
-        varchar cargo
-        numeric salario
-    }
-    PRODUTOS {
-        int id_produto PK
-        varchar nome
-        varchar categoria
-        numeric preco
-        int estoque
-    }
-    PEDIDOS {
-        int id_pedido PK
-        int id_cliente FK
-        date data_pedido
-        varchar status
-        numeric valor_total
-    }
-    ITENS_PEDIDO {
-        int id_item PK
-        int id_pedido FK
-        int id_produto FK
-        int quantidade
-        numeric preco_unitario
-        numeric subtotal
-    }
-```
-
-#### Esquema 4: Domínio Clínico-Hospitalar (avaliacao_tabd)
-
-Utilizado na avaliação prática oficial da disciplina.
-
-```mermaid
-erDiagram
-    PACIENTES ||--o{ CONSULTAS : "agenda (1:N)"
-    MEDICOS ||--o{ CONSULTAS : "atende (1:N)"
-    ESPECIALIDADES ||--o{ MEDICOS : "qualifica (1:N)"
-    CONSULTAS ||--o{ EXAMES : "solicita (0:N)"
-    CONSULTAS ||--o| PAGAMENTOS : "liquida (0:1)"
-
-    PACIENTES {
-        int id_paciente PK
-        varchar nome
-        date data_nascimento
-        varchar telefone
-        varchar cidade
-    }
-    ESPECIALIDADES {
-        int id_especialidade PK
-        varchar nome_especialidade
-    }
-    MEDICOS {
-        int id_medico PK
-        varchar nome
-        varchar crm
-        numeric salario
-        int id_especialidade FK
-    }
-    CONSULTAS {
-        int id_consulta PK
-        date data_consulta
-        numeric valor
-        varchar status
-        int id_paciente FK
-        int id_medico FK
-    }
-    EXAMES {
-        int id_exame PK
-        varchar nome_exame
-        numeric valor_exame
-        int id_consulta FK
-    }
-    PAGAMENTOS {
-        int id_pagamento PK
-        varchar forma_pagamento
-        numeric valor_pago
-        date data_pagamento
-        int id_consulta FK
-    }
-```
-
----
-
-## Álgebra Relacional e Técnicas de Junção
-
-### Fundamentos Matemáticos: Produto Cartesiano e Teta-Junção
-
-Na teoria matemática formulada por Codd, a junção relacional não é uma operação primitiva, mas sim uma operação composta. O ponto de partida é o **Produto Cartesiano** ($`R \times S`$), que associa cada tupla da relação $`R`$ a todas as tuplas da relação $`S`$. Se $`R`$ possui $`m`$ tuplas e $`S`$ possui $`n`$ tuplas, a cardinalidade de $`R \times S`$ é expressa exatamente por:
-
-```math
-|R \times S| = m \cdot n
-```
-
-A partir do produto cartesiano, a **Teta-Junção** ($`R \bowtie_\theta S`$) aplica um operador de restrição ou seleção algébrica ($`\sigma_\theta`$) sob uma condição booleana arbitrária $`\theta`$:
-
-```math
-R \bowtie_\theta S = \sigma_\theta(R \times S)
-```
-
-Quando o operador contido no predicado $`\theta`$ é estritamente o operador de igualdade ($`=`$), a operação é formalmente denominada **Equijunção**.
-
-### INNER JOIN e Mecanismos Físicos do PostgreSQL
-
-#### Definição e Motivação
-O `INNER JOIN` (junção interna) é a implementação SQL direta da equijunção. Sua finalidade é recuperar a interseção exata de informações entre dois conjuntos relacionados. Se uma linha da tabela à esquerda não encontrar correspondência idêntica com ao menos uma linha da tabela à direita segundo o predicado da cláusula `ON`, essa linha é sumariamente descartada do conjunto de resultados.
-
-#### Mecânica de Execução no Otimizador
-[Complemento Técnico: Motores de Execução de Banco de Dados]  
-O PostgreSQL não computa o produto cartesiano físico para depois filtrar tuplas em memória. Seu otimizador baseado em custos (*Cost-Based Optimizer* - CBO) inspeciona as estatísticas das tabelas armazenadas no catálogo `pg_statistic` e escolhe entre três algoritmos físicos de junção:
+*[Complemento com conhecimento geral de engenharia de software / arquitetura interna de banco de dados]*  
+Quando uma consulta é disparada contra uma visão comum, o PostgreSQL não processa a visão como uma etapa isolada em memória para depois filtrar seus dados. O subsistema interno denominado *Query Rewrite Rule System* intercepta a árvore de análise sintática (*parse tree*) e funde a definição da visão com a instrução SQL invocada pela aplicação client.
 
 ```mermaid
 flowchart TD
-    Q["Consulta SQL com INNER JOIN"] --> CBO["Otimizador CBO (pg_statistic)"]
-    CBO --> A{"Avaliação de Volume e Índices"}
-    A -->|"Tabela externa pequena + índice na interna"| NL["Nested Loop Join (O(M * log N))"]
-    A -->|"Tabelas médias/grandes sem ordenação"| HJ["Hash Join (O(M + N))"]
-    A -->|"Ambas tabelas grandes e pré-ordenadas"| MJ["Merge Join (O(M log M + N log N))"]
+  Cli["Aplicação Cliente"] -->|"SELECT nome_produto FROM vw_produtos_ativos WHERE preco > 500"| Parser["PostgreSQL Parser"]
+  Parser -->|"Gera Parse Tree"| Rewrite["Query Rewrite System (Consulta pg_rewrite)"]
+  Rewrite -->|"Expande o nó da View para a subárvore subjacente"| Planner["Optimizer / Planner"]
+  Planner -->|"Gera Plano de Execução Físico Integrado"| Executor["Executor Engine"]
+  Executor -->|"Varredura Indexada / Sequencial nas páginas"| Heap["Tabela Base: produtos"]
+  Heap -->|"Retorna tuplas filtradas"| Executor
+  Executor -->|"Conjunto consolidado"| Cli
 ```
 
-1. **Nested Loop Join:** Varre a relação externa tupla a tupla e, para cada registro, executa uma busca (idealmente via índice B-Tree) na relação interna. Possui complexidade $`O(m \cdot \log n)`$ com índice e $`O(m \cdot n)`$ sem índice.
-2. **Hash Join:** Lê a relação de menor cardinalidade e constrói uma tabela hash dinâmica alocada na memória de trabalho (`work_mem`). Em seguida, percorre sequencialmente a relação maior consultando o hash da chave em tempo constante $`O(1)`$. A complexidade global converge para $`O(m + n)`$.
-3. **Merge Join:** Exige que ambos os conjuntos estejam ordenados pela chave de junção. O motor percorre ambas as tabelas de maneira sincronizada e paralela. Ideal para operações que já contam com índices B-Tree cobrindo as chaves.
+### Tabelas Base versus Visões Padrão versus Visões Materializadas
 
-#### Exemplo Prático
+A análise comparativa entre as três estruturas de armazenamento relacional define a modelagem lógica e física em arquiteturas de dados:
+
+| Dimensão Estrutural | Tabela Base | Visão Padrão (*Standard View*) | Visão Materializada (*Materialized View*) |
+| :--- | :--- | :--- | :--- |
+| **Armazenamento Físico de Tuplas** | Sim (arquivos de dados em blocos de disco). | Não (persistência exclusiva da árvore no catálogo). | Sim (estrutura de dados física alocada em disco). |
+| **Persistência de Metadados** | Estrutural (definição DDL de colunas e constraints). | Textual (definição DDL da query `SELECT`). | Estrutural e Textual (snapshot dos dados e query). |
+| **Latência na Recuperação** | Custo de varredura ou acesso indexado direto. | Soma do custo de processamento da query subjacente. | Custo de leitura dos blocos pré-computados gravados. |
+| **Frescor dos Dados (*Data Freshness*)** | Transacional em tempo real (consistência ACID imediata). | Transacional em tempo real (avalia o estado corrente). | Estático/Assíncrono (defasagem até o próximo refresh). |
+| **Suporte a Índices Próprios** | Sim (B-Tree, Hash, GIN, GiST, BRIN). | Não (utiliza índices das tabelas de origem). | Sim (permite criação independente de índices). |
+| **Impacto em Escritas (DML)** | Atualização direta de tuplas e índices associados. | Sem impacto (operação afeta apenas as tabelas base). | Sem impacto em escrita nas tabelas base (refresh assíncrono). |
+
+### Sintaxe DDL e Operações Fundamentais
+
+A sintaxe canônica no PostgreSQL para materialização lógica de visões é formalizada conforme o padrão:
+
+```sql
+CREATE [ OR REPLACE ] [ TEMP | TEMPORARY ] [ RECURSIVE ] VIEW nome_da_visao [ ( alias_coluna [, ...] ) ]
+AS consulta_select
+[ WITH [ CASCADED | LOCAL ] CHECK OPTION ];
+```
+
+#### Exemplo Prático Funcional
+Criação de uma visão para segregar os clientes com limite financeiro expressivo residentes no estado de São Paulo:
+
+```sql
+CREATE VIEW vw_clientes_prime_sp AS
+SELECT 
+    id_cliente,
+    nome,
+    cidade,
+    limite_credito
+FROM clientes
+WHERE estado = 'SP' AND limite_credito >= 5000.00;
+
+-- Invocação parametrizada pela aplicação
+SELECT nome, limite_credito
+FROM vw_clientes_prime_sp
+WHERE cidade = 'Campinas'
+ORDER BY limite_credito DESC;
+```
+
+#### Contraexemplo e Armadilhas
+- **Contraexemplo:** Criar uma visão padrão para tentar acelerar relatórios analíticos volumosos que realizam múltiplos `JOINs` e agregações complexas. Como a visão comum recalcula a consulta subjacente a cada execução, não há ganho de velocidade por armazenamento em cache de dados.
+- **Armadilha (*Pitfall*):** Utilizar funções voláteis ou não-determinísticas (como `random()`, `clock_timestamp()` ou chamadas a sequências) dentro de visões e esperar que seus valores permaneçam constantes em leituras sucessivas ou subconsultas aninhadas.
+
+### Regras de Evolução Estrutural com CREATE OR REPLACE VIEW
+
+O comando `CREATE OR REPLACE VIEW` permite atualizar a lógica declarativa de uma visão sem exigir sua destruição prévia via `DROP VIEW`. No entanto, o motor do PostgreSQL impõe restrições estritas para garantir que dependências do catálogo não se rompam:
+
+1. **Invariância de Colunas Anteriores:** Os atributos projetados originalmente devem ser mantidos com os mesmos identificadores, tipos de dados estritos e ordem sequencial original.
+2. **Adição Exclusiva ao Final:** Quaisquer novas colunas devem ser adicionadas obrigatoriamente após a última coluna da especificação original.
+3. **Proibição de Exclusão e Renomeação:** Não é permitido remover atributos preexistentes, alterar nomes de colunas ou modificar a tipagem de dados sem recriar o objeto via `DROP VIEW`.
+
+```mermaid
+flowchart TD
+  Req["Execução: CREATE OR REPLACE VIEW"] --> Chk1{"Mesmas colunas originais preservadas?"}
+  Chk1 -- Não --> Err["Erro: cannot change name or type of view column"]
+  Chk1 -- Sim --> Chk2{"Mesma ordem sequencial de atributos?"}
+  Chk2 -- Não --> Err
+  Chk2 -- Sim --> Chk3{"Novos atributos foram incluídos ao final?"}
+  Chk3 -- Sim --> Ok["Sucesso: Catálogo pg_views atualizado"]
+  Chk3 -- Não --> Err
+```
+
+### Gestão de Dependências com DROP VIEW: CASCADE versus RESTRICT
+
+Quando a exclusão física da definição de uma visão é necessária, o PostgreSQL avalia os vínculos registrados no catálogo `pg_depend`.
+
+```sql
+DROP VIEW [ IF EXISTS ] nome_da_visao [ CASCADE | RESTRICT ];
+```
+
+- **RESTRICT (Comportamento Padrão):** O comando é abortado se qualquer objeto de banco de dados (outras visões, triggers, funções ou regras) depender da visão alvo:
+```sql
+DROP VIEW vw_clientes_base RESTRICT;
+-- Retorna: ERROR: cannot drop view vw_clientes_base because other objects depend on it
+```
+- **CASCADE:** Remove a visão indicada e destrói recursivamente todos os objetos dependentes diretos e indiretos:
+```sql
+DROP VIEW vw_clientes_base CASCADE;
+-- Remove vw_clientes_base, visões derivadas e triggers dependentes
+```
+
+> **Alerta de Engenharia de Dados:** O uso de `CASCADE` em ambientes corporativos introduz risco crítico de indisponibilidade. Uma exclusão em cascata pode eliminar silenciosamente visões analíticas de produção e triggers de auditoria. Recomenda-se auditar previamente as dependências em `pg_depend` e `pg_rewrite` antes de empregar a cláusula.
+
+### Visões Atualizáveis e Restrições de Modificação
+
+O PostgreSQL permite a execução direta de comandos DML (`INSERT`, `UPDATE`, `DELETE`) sobre visões sem necessidade de gatilhos intermediários, desde que a visão seja classificada como automaticamente atualizável (*Automatically Updatable View*).
+
+#### Condições Mandatórias de Atualizabilidade Automática
+1. A cláusula `FROM` da definição da visão deve conter exatamente **uma única** tabela base (ou outra visão atualizável). Não pode conter `JOIN`.
+2. A consulta não pode conter cláusulas de agrupamento ou resumo: `GROUP BY` ou `HAVING`.
+3. A consulta não pode empregar funções agregadoras (`SUM`, `AVG`, `COUNT`, `MAX`, `MIN`).
+4. A instrução não pode conter operadores de conjunto (`UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`).
+5. A instrução não pode conter deduplicação explícita (`DISTINCT`).
+6. A projeção não pode conter funções de janela (*Window Functions* via cláusula `OVER`).
+7. Todas as colunas manipuladas no DML devem referenciar diretamente colunas físicas da tabela base, vedando colunas computadas ou literais.
+
+### Garantia de Integridade Transacional com WITH CHECK OPTION
+
+Ao executar DML em uma visão atualizável dotada de filtro `WHERE`, existe o risco de inserir ou modificar registros de modo que eles deixem de atender aos critérios da própria visão (anomalia de registro fantasma). A cláusula `WITH CHECK OPTION` impede essa inconsistência.
+
+```sql
+CREATE OR REPLACE VIEW vw_funcionarios_ti AS
+SELECT id_funcionario, nome, departamento, salario
+FROM funcionarios
+WHERE departamento = 'TI'
+WITH CHECK OPTION;
+```
+
+#### Modos de Restrição: LOCAL versus CASCADED
+- **CASCADED (Padrão):** Valida as restrições da visão atual e propaga a verificação para todas as visões subjacentes que serviram de base para a construção da visão.
+- **LOCAL:** Valida estritamente as restrições declaradas na visão local imediata, ignorando predicados das visões base sobre as quais ela foi construída, a menos que estas também possuam `WITH CHECK OPTION`.
+
+```sql
+-- Tentativa de inserção violando o predicado
+INSERT INTO vw_funcionarios_ti (nome, departamento, salario)
+VALUES ('Lucas Mendes', 'RH', 4500.00);
+
+-- Comportamento do motor:
+-- ERROR: new row violates check option for view "vw_funcionarios_ti"
+-- DETAIL: Failing row contains (Lucas Mendes, RH, 4500.00).
+```
+
+### Camada de Segurança e Mascaramento com GRANT
+
+Visões funcionam como uma barreira arquitetural de isolamento lógico (*Row-Level and Column-Level Security Abstraction*), viabilizando o princípio do menor privilégio (*Principle of Least Privilege*).
+
+```mermaid
+flowchart LR
+  Usuario["Usuário Analista (analista_bi)"]
+  
+  subgraph Permissoes ["Controle de Acesso SGBD"]
+    Vw["VIEW: vw_vendas_publicas"]
+    Tb["TABELA: vendas_financeiro"]
+  end
+  
+  Usuario -->|"Permissão: GRANT SELECT"| Vw
+  Usuario -.->|"Bloqueado: REVOKE ALL"| Tb
+  Vw -->|"Acesso do Sistema Interno"| Tb
+```
+
+#### Mecanismo de Implementação
+```sql
+-- 1. Criação da visão mascarando atributos confidenciais
+CREATE VIEW vw_vendedores_publico AS
+SELECT id_vendedor, nome, email
+FROM vendedores;
+
+-- 2. Concessão e revogação de acessos no PostgreSQL
+REVOKE ALL ON TABLE vendedores FROM grupo_operacional;
+GRANT SELECT ON TABLE vw_vendedores_publico TO grupo_operacional;
+```
+
+O usuário pertencente a `grupo_operacional` tem acesso garantido à projeção de `vw_vendedores_publico`, enquanto tentativas de consultar diretamente dados salariais em `vendedores` são negadas com `ERROR: permission denied for table vendedores`.
+
+### Visões Materializadas, Ciclo de Atualização e Indexação Própria
+
+Uma Visão Materializada (*Materialized View*) armazena fisicamente o resultado de uma consulta em disco, desacoplando o tempo de resposta da leitura em relação ao custo computacional da consulta que gera os dados.
+
+#### Sintaxe de Criação e Indexação
+```sql
+CREATE MATERIALIZED VIEW mv_faturamento_categoria AS
+SELECT 
+    c.nome_categoria,
+    COUNT(ip.id_item) AS total_itens_vendidos,
+    SUM(ip.quantidade * ip.preco_unitario) AS receita_total
+FROM categorias c
+JOIN produtos pr ON c.id_categoria = pr.id_categoria
+JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
+GROUP BY c.nome_categoria
+WITH DATA;
+
+-- Criação de índice próprio sobre a estrutura materializada
+CREATE UNIQUE INDEX idx_mv_fat_categoria ON mv_faturamento_categoria(nome_categoria);
+```
+
+#### Atualização de Dados: REFRESH MATERIALIZED VIEW
+O conteúdo físico gravado em disco não se atualiza automaticamente quando as tabelas base sofrem DML. Torna-se obrigatória a invocação do comando de recarga:
+
+1. **Atualização Padrão (Exclusiva):**
+```sql
+REFRESH MATERIALIZED VIEW mv_faturamento_categoria;
+```
+*Mecânica:* Aplica trava exclusiva de leitura (`AccessExclusiveLock`). Durante o processamento do refresh, nenhuma aplicação consegue realizar `SELECT` na visão materializada.
+
+2. **Atualização Não-Bloqueante (Concorrente):**
+```sql
+REFRESH MATERIALIZED VIEW CONCURRENTLY mv_faturamento_categoria;
+```
+*Mecânica:* Atualiza os dados permitindo leituras simultâneas sem bloqueio de concorrência.  
+*Exigência Mandatória:* Para utilizar `CONCURRENTLY`, a visão materializada deve possuir **obrigatoriamente um índice exclusivo (`UNIQUE INDEX`)** cobrindo uma ou mais colunas que identifiquem univocamente cada tupla.
+
+---
+
+## Álgebra Relacional e Técnicas Avançadas de Junção
+
+### Fundamentos Relacionais e Mecânica dos Algoritmos de Junção
+
+Na álgebra relacional proposta por Edgar F. Codd, relações são conjuntos de tuplas. A junção teta ($`R \bowtie_\theta S`$) é definida formalmente pela projeção e seleção aplicadas sobre o produto cartesiano das relações:
+
+```math
+R \bowtie_\theta S = \sigma_\theta (R \times S)
+```
+
+No núcleo do processador de consultas do PostgreSQL, o Otimizador Baseado em Custos (*Cost-Based Optimizer* - CBO) traduz a abstração declarativa da instrução SQL em um de três algoritmos fundamentais:
+
+```mermaid
+flowchart TD
+  JoinReq["Operação de Junção (JOIN)"] --> CBO{"Avaliação de Custos pelo CBO"}
+  
+  CBO -->|"Conjuntos pequenos e/ou índice na relação interna"| NL["Nested Loop Join: Varredura externa com probes internas O(M * log N)"]
+  CBO -->|"Conjuntos médios/grandes com operadores de igualdade"| HJ["Hash Join: Constrói Hash Table em WorkMem e faz probe O(M + N)"]
+  CBO -->|"Relações grandes já ordenadas por B-Tree ou SORT"| MJ["Merge Join: Varredura paralela sincronizada de ponteiros O(M + N)"]
+```
+
+### Junção Interna: INNER JOIN
+
+O `INNER JOIN` retorna a interseção estrita entre dois conjuntos. Apenas as tuplas que atendem ao predicado da cláusula `ON` compõem o conjunto final de saída.
+
 ```sql
 SELECT 
     p.id_pedido,
     p.data_pedido,
-    c.nome AS cliente,
-    v.nome AS vendedor
+    c.nome AS nome_cliente
 FROM pedidos p
-INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-INNER JOIN vendedores v ON p.id_vendedor = v.id_vendedor;
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente;
 ```
 
-#### Contraexemplo e Armadilha
-- **Contraexemplo:** Utilizar a sintaxe legada do padrão ANSI SQL-89 separando tabelas por vírgula no `FROM` e inserindo condições de junção no `WHERE` (`FROM pedidos p, clientes c WHERE p.id_cliente = c.id_cliente`). O esquecimento acidental de uma condição no `WHERE` dispara um produto cartesiano inadvertido em produção.
-- **Armadilha:** Chaves com tipos incompatíveis que impedem o uso de índices (ex.: junção entre `VARCHAR` e `INTEGER`), forçando conversões de tipo implícitas e gerando varreduras sequenciais completas (*Sequential Scans*).
+Se um registro em `pedidos` apontar para um `id_cliente` inexistente (caso não houvesse integridade referencial ativa), ou se um registro em `clientes` não possuir compras, essas tuplas são descartadas do resultado.
 
-### LEFT OUTER JOIN e Preservação de Tuplas
+### Junções Externas: LEFT JOIN e RIGHT JOIN
 
-#### Definição e Motivação
-O `LEFT OUTER JOIN` (ou simplesmente `LEFT JOIN`) assegura a preservação integral de todas as tuplas da relação posicionada à esquerda da sintaxe, independentemente da existência de pares correspondentes na tabela à direita. Sempre que uma linha da esquerda não encontra par na direita, os atributos derivados da tabela direita são preenchidos com o marcador relacional `NULL`.
+As junções externas preservam tuplas de uma das relações mesmo quando não há correspondência com a relação oposta, preenchendo os atributos faltantes com `NULL`.
 
-A operação algébrica de junção externa esquerda ($`R \ \sqsubset\!\bowtie_\theta \ S`$) é formalizada por:
+- **LEFT OUTER JOIN ($`R \ \sqsubset\!\bowtie S`$):** Preserva todas as tuplas da relação posicionada à esquerda da sintaxe.
+- **RIGHT OUTER JOIN ($`R \bowtie\!\sqsupset S`$):** Preserva todas as tuplas da relação posicionada à direita da sintaxe.
 
-```math
-R \ \sqsubset\!\bowtie_\theta \ S = (R \bowtie_\theta S) \cup \left( (R - \pi_{R}(R \bowtie_\theta S)) \times \{ (\text{null}, \dots, \text{null}) \} \right)
-```
-
-Essa operação é fundamental em relatórios gerenciais onde entidades sem movimentação (clientes sem pedidos, vendedores sem metas atingidas, produtos sem vendas) precisam constar obrigatoriamente no resultado.
-
-```mermaid
-flowchart LR
-    subgraph Tabela_Esquerda ["Tabela Esquerda: Clientes"]
-        C1["Cliente 1 (Com Pedido)"]
-        C2["Cliente 2 (Sem Pedido)"]
-    end
-    subgraph Tabela_Direita ["Tabela Direita: Pedidos"]
-        P1["Pedido 101 (Cliente 1)"]
-    end
-    C1 -->|"INNER MATCH"| P1
-    C2 -->|"SEM PAR"| N["Preenche colunas com NULL"]
-```
-
-#### Exemplo Prático
 ```sql
 SELECT 
     c.id_cliente,
-    c.nome,
+    c.nome AS cliente,
     p.id_pedido,
     p.status
 FROM clientes c
 LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente;
 ```
 
-### Padrão Anti-Join e Tratamento de Nulos
+*[Complemento com diretriz de qualidade de código corporativo]*  
+A instrução $`A \text{ RIGHT JOIN } B`$ é logicamente idêntica a $`B \text{ LEFT JOIN } A`$. Todavia, o uso de `RIGHT JOIN` é desaconselhado nos manuais de engenharia de software SQL, pois o encadeamento textual da esquerda para a direita com `LEFT JOIN` reflete o fluxo de leitura natural, reduzindo erros de interpretação em consultas com muitas tabelas.
 
-#### Definição e Motivação
-Um **Anti-Join** é a operação relacional destinada a isolar elementos que residem exclusivamente em um conjunto $`A`$ e não possuem qualquer relação com o conjunto $`B`$, correspondendo à diferença clássica de conjuntos ($`A \setminus B`$). No PostgreSQL, a modelagem canônica do anti-join utiliza o `LEFT JOIN` associado a uma verificação de nulidade (`IS NULL`) na cláusula `WHERE`.
+### Técnica de Anti-Join para Detecção de Lacunas Relacionais
+
+O padrão *Anti-Join* tem por finalidade isolar tuplas da relação $`A`$ que não possuem correspondência na relação $`B`$ ($`A \setminus B`$). No PostgreSQL, a implementação clássica combina `LEFT JOIN` com um predicado de teste de nulidade (`IS NULL`) na cláusula `WHERE`.
 
 ```mermaid
 flowchart TD
-    A["LEFT JOIN entre Clientes e Pedidos"] --> B["Gera tuplas combinadas ou preenchidas com NULL"]
-    B --> C{"Predicado WHERE: p.id_pedido IS NULL"}
-    C -->|"Verdadeiro"| D["Emite clientes órfãos de compra"]
-    C -->|"Falso"| E["Descarta clientes que possuem pedidos"]
+  L["Clientes (Relação Esquerda)"] --> J["LEFT JOIN em pedidos (ON c.id_cliente = p.id_cliente)"]
+  R["Pedidos (Relação Direita)"] --> J
+  J --> Filtro{"WHERE p.id_pedido IS NULL"}
+  Filtro -- Verdadeiro --> Out["Tuplas de Clientes sem Compras"]
+  Filtro -- Falso --> Disc["Tuplas descartadas (Possuem pedidos)"]
 ```
 
-#### Exemplo Prático
 ```sql
+-- Localização de clientes inativos (sem compras)
 SELECT 
     c.id_cliente,
-    c.nome,
-    c.cidade
+    c.nome
 FROM clientes c
 LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
 WHERE p.id_pedido IS NULL;
 ```
 
-#### Armadilha Crítica
-- **Armadilha:** Aplicar a verificação `IS NULL` sobre uma coluna da tabela à direita que seja opcional (permita nulos nativamente no esquema, como `observacao` ou `desconto`). Se o registro filho existir mas possuir a coluna opcional como nula, a linha será erroneamente classificada como inexistente.
-- **Regra de Engenharia:** A cláusula `WHERE ... IS NULL` em um anti-join deve recair categoricamente sobre a **chave primária** da tabela dependente ou sobre uma coluna com restrição estrita de `NOT NULL`.
+> **Regra de Ouro da Anti-Junção:** O predicado `IS NULL` deve ser aplicado obrigatoriamente sobre a **Chave Primária** ou sobre uma coluna com restrição `NOT NULL` da tabela à direita. Se for aplicado sobre uma coluna opcional que aceite valores nulos de forma legítima, registros que possuem correspondência válida, mas contêm `NULL` nessa coluna específica, serão retornados incorretamente (falso positivo).
 
-#### O Uso de COALESCE
-Para substituir visualmente a representação nula gerada por junções externas, a função escalar `COALESCE(v1, v2, ...)` avalia a lista sequencial de argumentos e retorna o primeiro valor não-nulo encontrado:
+### Junção Externa Total: FULL OUTER JOIN
+
+O `FULL OUTER JOIN` ($`R \ \sqsubset\!\bowtie\!\sqsupset S`$) retém todas as tuplas de ambas as relações. Quando há correspondência, as linhas são unificadas; quando não há, os lados deficientes são preenchidos com `NULL`. É utilizado em rotinas de conciliação e auditoria contábil.
 
 ```sql
 SELECT 
-    pr.nome_produto,
-    COALESCE(c.nome_categoria, 'Sem Categoria') AS categoria
-FROM produtos pr
-LEFT JOIN categorias c ON pr.id_categoria = c.id_categoria;
+    COALESCE(c.nome, 'Sem Cliente Associado') AS cliente,
+    p.id_pedido,
+    p.valor_total
+FROM clientes c
+FULL OUTER JOIN pedidos p ON c.id_cliente = p.id_cliente;
 ```
 
-### RIGHT OUTER JOIN e Equivalência Operacional
+### Produto Cartesiano: CROSS JOIN
 
-O `RIGHT OUTER JOIN` preserva integralmente as tuplas da relação à direita, preenchendo as colunas da esquerda com `NULL` diante da ausência de pares. Do ponto de vista algébrico, as operações são estritamente comutativas:
+O `CROSS JOIN` ($`R \times S`$) gera a combinação de cada tupla da primeira relação com todas as tuplas da segunda relação. Se $`R`$ contém $`M`$ linhas e $`S`$ contém $`N`$ linhas, a cardinalidade final é expressa por:
 
 ```math
-R \text{ RIGHT JOIN } S \equiv S \text{ LEFT JOIN } R
+|R \times S| = |R| \cdot |S|
 ```
 
-> **Diretriz de Engenharia de Software:** O uso de `RIGHT JOIN` é desaconselhado nos manuais formais de engenharia de software e nos padrões da comunidade PostgreSQL. A direção ocidental de leitura (da esquerda para a direita e de cima para baixo) faz com que cadeias de `LEFT JOIN` preservem a linearidade cognitiva do modelo mental do desenvolvedor.
-
-### FULL OUTER JOIN e Casos de Auditoria
-
-O `FULL OUTER JOIN` realiza a união bidirecional dos dados: preserva todas as linhas da tabela à esquerda e todas as linhas da tabela à direita. Registros que não encontram pares em ambos os lados são projetados com seus atributos correspondentes preenchidos com `NULL`.
-
-Sua aplicação típica ocorre em conciliações contábeis e auditorias fiscais, onde se deseja identificar discrepâncias entre dois registros que deveriam estar sincronizados:
-
 ```sql
--- Identificação de inconsistências entre lançamentos contábeis e extratos bancários
-SELECT 
-    l.id_lancamento,
-    l.valor AS valor_sistema,
-    e.id_extrato,
-    e.valor AS valor_bancario
-FROM lancamentos_contabeis l
-FULL OUTER JOIN extratos_bancarios e ON l.documento = e.documento
-WHERE l.id_lancamento IS NULL OR e.id_extrato IS NULL;
-```
-
-### CROSS JOIN e Aplicações Analíticas
-
-O `CROSS JOIN` materializa deliberadamente o produto cartesiano ($`R \times S`$), combinando cada linha da primeira relação com todas as linhas da segunda.
-
-- **Risco de Engenharia:** Executar um `CROSS JOIN` entre tabelas volumosas sem filtros adicionais causa explosão combinatória, sobrecarregando a memória e o disco.
-- **Aplicação Válida:** Construção de grades analíticas completas para matrizes de decisão ou relatórios de vendas onde é necessário projetar todos os vendedores combinados com todos os meses do ano, consolidando métricas via `LEFT JOIN` posterior.
-
-```sql
--- Geração de grade de acompanhamento anual por vendedor
-SELECT 
-    v.nome AS vendedor,
-    m.mes
+-- Matriz de alocação de vendedores por filial
+SELECT v.nome AS vendedor, f.cidade AS filial
 FROM vendedores v
-CROSS JOIN (
-    VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12)
-) AS m(mes);
+CROSS JOIN filiais f;
 ```
 
-### SELF JOIN e Modelagem de Hierarquias
+- **Risco de Volumetria:** O produto cartesiano acidental provocado pela omissão da cláusula `ON` ou junção com predicados incompletos pode gerar exaustão de memória no servidor (`Out of Memory`) e consumo descontrolado de I/O de disco.
 
-Um `SELF JOIN` (auto-junção) ocorre quando uma relação é unida a si mesma. Esse padrão é a solução relacional para modelar árvores e hierarquias usando a técnica de **Lista de Adjacências** (*Adjacency List*), onde um atributo chave estrangeira referencia a própria chave primária da tabela.
+### Autorrelacionamento: SELF JOIN e Estruturas Hierárquicas
 
-No banco `loja_exercicios`, a tabela `vendedores` possui o atributo `id_supervisor` apontando para `vendedores(id_vendedor)`.
+Um *Self-Join* ocorre quando uma relação é unificada a si mesma. É utilizado para resolver o padrão relacional de Lista de Adjacência (*Adjacency List*), no qual uma chave estrangeira referencia a própria chave primária da tabela.
 
 ```mermaid
-flowchart TD
-    V1["Marcos Silva (Diretor / id: 1)"]
-    V2["Fernanda Costa (Supervisora / id: 2)"]
-    V3["Ricardo Alves (Supervisor / id: 3)"]
-    V4["Juliana Martins (Vendedora / id: 4)"]
-    V5["Paulo Souza (Vendedor / id: 5)"]
-
-    V1 --> V2
-    V1 --> V3
-    V2 --> V4
-    V2 --> V5
+classDiagram
+  class Funcionario {
+    +int id_funcionario PK
+    +string nome
+    +int id_supervisor FK
+  }
+  Funcionario --> Funcionario : "supervisiona"
 ```
 
-Para recuperar o colaborador e seu respectivo superior na mesma linha, atribuem-se aliases distintos para instanciar a tabela duas vezes na memória lógica:
-
 ```sql
+-- Resolução da hierarquia corporativa de supervisão
 SELECT 
-    f.nome AS funcionario,
-    COALESCE(s.nome, 'Diretoria / Sem Superior') AS supervisor
-FROM vendedores f
-LEFT JOIN vendedores s ON f.id_supervisor = s.id_vendedor;
+    colaborador.nome AS funcionario,
+    COALESCE(gestor.nome, 'Diretoria / Sem Supervisor') AS supervisor
+FROM vendedores colaborador
+LEFT JOIN vendedores gestor ON colaborador.id_supervisor = gestor.id_vendedor;
 ```
 
 ### Semântica Crítica: Filtragem no ON versus Filtragem no WHERE
 
-Este é um dos tópicos de maior taxa de erro em exames e sistemas em produção: a distinção entre aplicar predicados na cláusula `ON` versus aplicá-los na cláusula `WHERE` durante operações de `OUTER JOIN`.
+Compreender o momento da avaliação dos predicados em junções externas é fundamental para evitar a alteração acidental da semântica da consulta.
 
 ```mermaid
 flowchart TD
-    subgraph Caso_ON ["Predicado na Cláusula ON"]
-        A1["LEFT JOIN clientes c ON c.id = p.id AND p.status = 'Pago'"]
-        A2["Filtra a junção da tabela dependente"]
-        A3["Todos os clientes continuam preservados"]
-        A1 --> A2 --> A3
-    end
-    subgraph Caso_WHERE ["Predicado na Cláusula WHERE"]
-        B1["LEFT JOIN clientes c ON c.id = p.id WHERE p.status = 'Pago'"]
-        B2["Filtra o conjunto final após a junção externa"]
-        B3["Descarta linhas onde p.status é NULL (vira INNER JOIN disfarçado)"]
-        B1 --> B2 --> B3
-    end
+  subgraph Processamento_ON ["Predicado no ON"]
+    A1["LEFT JOIN ... ON p.id_cliente = c.id_cliente AND p.status = 'Pago'"]
+    A2["Filtro ocorre DURANTE a formação do par"]
+    A3["Preserva TODOS os clientes; pedidos não-pagos viram NULL"]
+    A1 --> A2 --> A3
+  end
+
+  subgraph Processamento_WHERE ["Predicado no WHERE"]
+    B1["LEFT JOIN ... ON p.id_cliente = c.id_cliente WHERE p.status = 'Pago'"]
+    B2["Filtro ocorre APÓS a junção de todas as tuplas"]
+    B3["Elimina linhas onde p.status é NULL (Transforma em INNER JOIN)"]
+    B1 --> B2 --> B3
+  end
 ```
 
-1. **Predicado no `ON`:** O predicado atua como critério de qualificação para o acoplamento da tabela da direita. Caso a condição falhe, as tuplas da tabela à esquerda **não são descartadas**; os campos da direita são simplesmente preenchidos com `NULL`.
-2. **Predicado no `WHERE`:** O predicado atua após a montagem da relação unificada. Se uma linha não correspondente gerou valores `NULL` nas colunas da direita, qualquer predicado que exija um valor estrito (ex.: `WHERE p.status = 'Pago'`) avalia para `UNKNOWN` ou `FALSE`, descartando a linha inteira da esquerda e transformando silenciosamente o `LEFT JOIN` em um `INNER JOIN`.
+- **Predicado na Cláusula `ON`:** Define a condição para que o registro da tabela à direita seja acoplado à tabela à esquerda. Se a condição falhar, a linha da esquerda permanece na saída com valores nulos à direita.
+- **Predicado na Cláusula `WHERE`:** Avalia o conjunto consolidado após a junção. Condições como `WHERE p.status = 'Pago'` forçam o descarte de linhas nas quais `p.status` seja `NULL`, convertendo acidentalmente o `LEFT JOIN` em um `INNER JOIN`.
 
-### Agregações com OUTER JOIN: A Armadilha de COUNT
+### Armadilhas de Agregação sob Junções Externas: COUNT(*) versus COUNT(coluna)
 
-Ao consolidar métricas com funções de grupo (`GROUP BY`), a função `COUNT` apresenta comportamentos divergentes vitais:
-- `COUNT(*)`: Conta a cardinalidade física do bloco ou partição de linhas, sem verificar o conteúdo dos atributos.
-- `COUNT(expressao)`: Avalia a expressão para cada tupla e incrementa o contador apenas se o resultado da expressão for diferente de `NULL`.
-
-Considere a contagem de pedidos por cliente em um `LEFT JOIN`:
+Ao calcular o quantitativo de transações associadas a uma entidade usando `LEFT JOIN`, o uso de `COUNT(*)` induz a falhas métricas severas:
 
 ```sql
--- INCORRETO: Retorna 1 para clientes sem nenhum pedido!
-SELECT c.nome, COUNT(*) AS total_pedidos
+-- ABORDAGEM ERRÔNEA: Retorna 1 para clientes com ZERO pedidos
+SELECT c.id_cliente, c.nome, COUNT(*) AS total_pedidos
 FROM clientes c
 LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
-GROUP BY c.nome;
+GROUP BY c.id_cliente, c.nome;
 
--- CORRETO: Retorna 0 para clientes sem pedidos
-SELECT c.nome, COUNT(p.id_pedido) AS total_pedidos
+-- ABORDAGEM CORRETA: Retorna 0 para clientes com ZERO pedidos
+SELECT c.id_cliente, c.nome, COUNT(p.id_pedido) AS total_pedidos
 FROM clientes c
 LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
-GROUP BY c.nome;
+GROUP BY c.id_cliente, c.nome;
 ```
+
+- **Explicação:** `COUNT(*)` conta a cardinalidade das linhas produzidas no agrupamento. Como o `LEFT JOIN` sintetiza uma linha preenchida com `NULL` para clientes sem pedidos, `COUNT(*)` contabiliza essa linha fantasma como 1. Já `COUNT(p.id_pedido)` avalia a coluna informada: ao detectar o valor `NULL`, não incrementa o acumulador, retornando o valor 0.
 
 ---
 
-## Taxonomia e Otimização de Subconsultas
+## Subconsultas, Expressões de Tabela Comuns e Otimização
 
-### Classificação por Cardinalidade e Dependência
+### Taxonomia Formal de Subconsultas
 
-Uma subconsulta (*subquery* ou *subselect*) é uma instrução `SELECT` aninhada no corpo de outra instrução SQL externa. A taxonomia divide as subconsultas em duas dimensões independentes:
+Uma subconsulta é uma instrução `SELECT` aninhada no corpo de outra instrução SQL externa (`SELECT`, `INSERT`, `UPDATE` ou `DELETE`).
 
 ```mermaid
 flowchart TD
-    Sub["Subconsultas SQL"]
-    
-    Sub --> Card["Dimensionalidade / Cardinalidade"]
-    Sub --> Dep["Dependência de Escopo"]
-    
-    Card --> Escalar["Escalar (1x1: valor atômico)"]
-    Card --> Coluna["Multivalorada (Nx1: vetor coluna)"]
-    Card --> Tabela["Relacional / Derivada (NxM: matriz tabular)"]
-    
-    Dep --> Indep["Independente (Não-correlacionada)"]
-    Dep --> Correl["Correlacionada (Referência externa)"]
+  SQ["Subconsultas em SQL"]
+  
+  SQ --> Dim["Por Dimensionalidade do Retorno"]
+  Dim --> Esc["Escalar: 1 linha x 1 coluna"]
+  Dim --> Vet["Vetor Coluna: N linhas x 1 coluna"]
+  Dim --> Tab["Tabela / Matriz: N linhas x M colunas"]
+  
+  SQ --> Escopo["Por Dependência de Contexto"]
+  Escopo --> Ind["Independente: Executa de modo autônomo"]
+  Escopo --> Corr["Correlacionada: Depende da tupla da query externa"]
 ```
-
-1. **Dimensionalidade:**
-   - **Escalar:** Produz no máximo uma linha e uma coluna ($`1 \times 1`$). Utilizável em expressões aritméticas, projeções e comparações unitárias.
-   - **Multivalorada:** Produz uma lista unidimensional de valores ($`n \times 1`$). Manipulada com operadores de conjunto (`IN`, `NOT IN`, `ANY`, `ALL`).
-   - **Relacional:** Produz uma matriz bidimensional ($`n \times m`$). Opera na cláusula `FROM` (tabelas derivadas) ou alimenta operadores de existência (`EXISTS`).
-2. **Dependência de Escopo:**
-   - **Não-correlacionada:** É autocontida. Não possui referências às tabelas da consulta externa. É executada uma única vez pelo otimizador.
-   - **Correlacionada:** Faz referência a colunas da tupla corrente da consulta externa. É conceituada e avaliada linha a linha pelo motor.
 
 ### Subconsultas Escalares
 
-Uma subconsulta escalar deve produzir impreterivelmente um único elemento. Caso a consulta interna retorne zero linhas, o PostgreSQL a avalia como `NULL`. Caso retorne duas ou mais linhas, o sistema aborta a operação com o erro: `ERROR: more than one row returned by a subquery used as an expression`.
+Uma subconsulta escalar retorna rigorosamente um único valor ($`1 \times 1`$). Se a subconsulta retornar zero registros, o PostgreSQL avalia a expressão como `NULL`. Se retornar mais de uma tupla, o motor aborta a execução:
 
+```text
+ERROR: more than one row returned by a subquery used as an expression
+```
+
+#### Aplicação na Cláusula SELECT
 ```sql
--- Subconsulta escalar aplicada no predicado WHERE
-SELECT nome_produto, preco
-FROM produtos
-WHERE preco > (SELECT AVG(preco) FROM produtos);
-
--- Subconsulta escalar aplicada na projeção do SELECT
 SELECT 
     nome_produto,
     preco,
-    ROUND((SELECT AVG(preco) FROM produtos), 2) AS media_geral,
-    ROUND(preco - (SELECT AVG(preco) FROM produtos), 2) AS diferenca
+    ROUND((SELECT AVG(preco) FROM produtos), 2) AS media_global,
+    ROUND(preco - (SELECT AVG(preco) FROM produtos), 2) AS diferenca_media
 FROM produtos;
 ```
 
-### Operadores de Conjunto: IN e a Armadilha da Lógica Trivalente com NOT IN
+#### Aplicação na Cláusula WHERE
+```sql
+SELECT nome_produto, preco
+FROM produtos
+WHERE preco > (SELECT AVG(preco) FROM produtos);
+```
 
-O operador `IN` avalia a pertinência de um operando escalar em relação a um conjunto retornado por uma subconsulta unicolunar:
+### Operadores de Pertencimento a Conjuntos: IN e NOT IN
+
+O operador `IN` verifica se um valor atômico pertence ao conjunto retornado por uma subconsulta unicolunar ($`N \times 1`$):
 
 ```math
 v \in S \iff \exists s \in S \mid v = s
@@ -654,117 +537,83 @@ O operador `NOT IN` expressa o complemento booleano:
 v \notin S \iff \forall s \in S \mid v \neq s
 ```
 
-#### A Armadilha da Lógica Trivalente (Three-Valued Logic - 3VL)
-No padrão ANSI SQL e no PostgreSQL, comparações envolvendo o marcador `NULL` não resultam em `TRUE` nem `FALSE`, mas sim em `UNKNOWN`. 
+### A Armadilha do Valor NULL e a Lógica Tri-valorada
+
+*[Complemento com conhecimento geral de álgebra relacional e padrões SQL]*  
+No padrão SQL, a presença de valores `NULL` aciona a lógica tri-valorada (*Three-Valued Logic* - 3VL), com os estados lógicos `TRUE`, `FALSE` e `UNKNOWN`.
 
 Considere a expressão:
 ```sql
-v NOT IN (val_1, val_2, NULL)
+v NOT IN (SELECT coluna FROM tabela);
 ```
-Essa instrução é expandida internamente pelo compilador como:
+Que equivale semanticamente a:
 ```sql
-(v <> val_1) AND (v <> val_2) AND (v <> NULL)
+(v <> c1) AND (v <> c2) AND ... AND (v <> NULL)
 ```
-Pela álgebra da lógica trivalente:
-- Qualquer comparação direta com `NULL` (`v <> NULL`) avalia estritamente como `UNKNOWN`.
-- A conjunção booleana `TRUE AND UNKNOWN` resulta em `UNKNOWN`.
-- A conjunção booleana `FALSE AND UNKNOWN` resulta em `FALSE`.
+Se a subconsulta contiver ao menos uma tupla cujo valor seja `NULL`:
+1. A comparação escalar `v <> NULL` avalia como `UNKNOWN`.
+2. Pelas tabelas-verdade da 3VL, `TRUE AND UNKNOWN` resulta em `UNKNOWN`.
+3. A cláusula `WHERE` apenas aprova tuplas cuja condição final seja estritamente `TRUE`.
+4. Consequentemente, **a consulta inteira retorna zero tuplas**, mascarando dados reais e gerando comportamentos inesperados em relatórios de produção.
 
-Portanto, se a subconsulta contiver um único valor `NULL`, a expressão **jamais** poderá ser avaliada como `TRUE` para qualquer registro. Como a cláusula `WHERE` só preserva tuplas com avaliação estritamente verdadeira (`TRUE`), o resultado final será **sempre um conjunto vazio** (zero linhas).
+> **Padrão Defensivo de Engenharia:** Sempre que houver possibilidade de valores nulos na relação secundária, substitua `NOT IN` por `NOT EXISTS` ou adicione explicitamente o filtro `WHERE coluna IS NOT NULL` na subconsulta.
 
-```mermaid
-flowchart TD
-    A["NOT IN contendo lista com NULL"] --> B["Expansão: (v <> 1) AND (v <> NULL)"]
-    B --> C["(v <> NULL) resulta em UNKNOWN"]
-    C --> D["AND booleano propaga UNKNOWN ou FALSE"]
-    D --> E["WHERE exige TRUE: Zero linhas retornadas!"]
-```
+### Operadores de Existência: EXISTS e NOT EXISTS
 
-> **Diretriz de Segurança de Dados:** Para mitigar essa armadilha, garanta que a coluna pesquisada na subconsulta possua a restrição `NOT NULL`, filtre explicitamente com `WHERE coluna IS NOT NULL` na subquery ou prefira o operador robusto `NOT EXISTS`.
-
-### Operadores de Existência: Semântica de Curto-Circuito com EXISTS e NOT EXISTS
-
-O operador `EXISTS` avalia se a subconsulta subordinada retorna ao menos uma tupla. Diferente de `IN`, o `EXISTS` não extrai nem compara valores de dados em memória; ele avalia unicamente a cardinalidade da subconsulta ($`|S| > 0`$).
-
-- **Semântica de Curto-Circuito:** O motor do PostgreSQL interrompe a busca na subconsulta no momento exato em que a primeira linha satisfatória é encontrada no disco ou buffer, não computando o restante do conjunto.
-- **Convenção `SELECT 1`:** Por convenção de engenharia, declara-se `SELECT 1` no interior do `EXISTS`, deixando claro que as colunas projetadas pela subconsulta são completamente ignoradas pelo motor.
-- **Imunidade a Nulos:** O operador `EXISTS` é totalmente imune à armadilha de valores nulos, pois a presença de tuplas compostas exclusivamente por `NULL` ainda constitui a existência física de uma linha.
+O operador `EXISTS` avalia se a subconsulta subordinada retorna **ao menos uma linha**. Opera sob o mecanismo de curto-circuito (*short-circuit evaluation*): tão logo a primeira tupla satisfatória é detectada, a execução da subconsulta para aquela linha é encerrada.
 
 ```sql
--- Vendedores que possuem ao menos uma venda registrada
-SELECT v.id_vendedor, v.nome
-FROM vendedores v
-WHERE EXISTS (
-    SELECT 1 
-    FROM pedidos p 
-    WHERE p.id_vendedor = v.id_vendedor
-);
-
--- Produtos que nunca foram vendidos (Anti-Join seguro)
-SELECT pr.id_produto, pr.nome_produto
-FROM produtos pr
+SELECT c.id_cliente, c.nome
+FROM clientes c
 WHERE NOT EXISTS (
     SELECT 1 
-    FROM itens_pedido ip 
-    WHERE ip.id_produto = pr.id_produto
+    FROM pedidos p 
+    WHERE p.id_cliente = c.id_cliente
 );
 ```
+
+- **Imunidade a Nulos:** O operador `EXISTS` é imune à armadilha da 3VL. Ele avalia se existem tuplas resultantes ($`\text{cardinalidade} > 0`$), sendo irrelevante se o valor retornado na projeção interna é `NULL` ou literal `1`.
 
 ### Operadores Quantificados: ANY e ALL
 
-Os operadores `ANY` (sinônimo de `SOME`) e `ALL` realizam comparações relacionais escalares contra coleções de valores:
-
-1. **`expressao operador ANY (subconsulta)`:** Retorna verdadeiro se a comparação for verdadeira para ao menos um dos valores retornados pela subconsulta.
-   - `> ANY (sub)` equivale a ser maior que o **menor valor** do conjunto.
-   - `= ANY (sub)` é a equivalência sintática e operacional exata do operador `IN`.
-2. **`expressao operador ALL (subconsulta)`:** Retorna verdadeiro se a comparação for verdadeira para a totalidade dos elementos retornados.
-   - `> ALL (sub)` equivale a ser maior que o **maior valor** do conjunto.
-   - `<> ALL (sub)` é a equivalência sintática do operador `NOT IN`.
+- **`expressão operador ANY (subquery)`:** Avalia como verdadeira se a relação de comparação for satisfeita para **pelo menos um** elemento do conjunto retornado.
+  - `> ANY (10, 20, 30)` equivale a `> 10` (maior que o mínimo).
+  - `= ANY (conjunto)` equivale ao operador `IN`.
+- **`expressão operador ALL (subquery)`:** Avalia como verdadeira se a relação de comparação for satisfeita para **todos** os elementos do conjunto.
+  - `> ALL (10, 20, 30)` equivale a `> 30` (maior que o máximo).
 
 ```sql
--- Produtos com preço maior que pelo menos um produto de Telefonia
-SELECT nome_produto, preco
-FROM produtos
-WHERE preco > ANY (
-    SELECT p.preco 
-    FROM produtos p 
-    INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
-    WHERE c.nome_categoria = 'Telefonia'
-);
-
--- Produtos com preço maior que todos os produtos de Acessórios
+-- Produtos com preço estritamente superior a todos os itens de Telefonia
 SELECT nome_produto, preco
 FROM produtos
 WHERE preco > ALL (
-    SELECT p.preco 
-    FROM produtos p 
-    INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
-    WHERE c.nome_categoria = 'Acessórios'
+    SELECT pr.preco 
+    FROM produtos pr
+    JOIN categorias cat ON pr.id_categoria = cat.id_categoria
+    WHERE cat.nome_categoria = 'Telefonia'
 );
 ```
 
-### Subconsultas Correlacionadas e Planos de Execução
+### Subconsultas Correlacionadas
 
-Uma subconsulta é correlacionada quando suas instruções internas dependem de valores transmitidos pela tupla atualmente inspecionada pela consulta externa.
+Uma subconsulta é dita correlacionada quando depende de um ou mais atributos fornecidos pela linha corrente da consulta externa. Em termos teóricos, ela é parametrizada e reavaliada linha a linha.
 
 ```mermaid
 sequenceDiagram
-    autonumber
-    participant Ext as Consulta Externa (Produtos)
-    participant Sub as Subconsulta Correlacionada
-    
-    loop Para cada produto avaliado
-        Ext->>Sub: Envia id_categoria do produto atual
-        Sub-->>Sub: Calcula a média daquela categoria específica
-        Sub-->>Ext: Retorna valor escalar da média
-        Ext-->>Ext: Compara se preco > media_categoria
-    end
+  autonumber
+  participant Ext as Consulta Externa (Produtos p)
+  participant Sub as Subconsulta Correlacionada (Média da Categoria)
+  
+  loop Para cada tupla avaliada em produtos
+    Ext->>Sub: Envia p.id_categoria corrente
+    Sub-->>Sub: Calcula AVG(preco) WHERE id_categoria = p.id_categoria
+    Sub->>Ext: Retorna média escalar da categoria
+    Ext-->>Ext: Avalia se p.preco > média calculada
+  end
 ```
 
-Embora conceitualmente o processador avalie a subconsulta linha a linha com complexidade algorítmica $`O(m \cdot n)`$, o otimizador avançado do PostgreSQL com frequência descorrelaciona a subconsulta (*subquery unnesting*), transformando-a internamente em um `Hash Semi-Join` ou `Merge Join` para alcançar tempo linear $`O(m + n)`$.
-
 ```sql
--- Produtos com preço superior à média da sua própria categoria
+-- Produtos com preço acima da média da sua própria categoria
 SELECT p.id_produto, p.nome_produto, p.preco, p.id_categoria
 FROM produtos p
 WHERE p.preco > (
@@ -774,44 +623,40 @@ WHERE p.preco > (
 );
 ```
 
-### Tabelas Derivadas na Cláusula FROM
+### Tabelas Derivadas na Cláusula FROM (Inline Views)
 
-Uma tabela derivada (conhecida como *inline view*) é uma subconsulta inserida na cláusula `FROM`, gerando uma relação temporária em memória durante o plano de execução.
-
-- **Obrigatoriedade de Alias:** O padrão ANSI SQL e o PostgreSQL exigem categoricamente a definição de um alias para toda tabela derivada. A omissão causa: `ERROR: subquery in FROM must have an alias`.
-- **Motivação:** Executar agregações intermediárias antes da realização de junções, prevenindo distorções provocadas pela multiplicação de tuplas em relacionamentos $`1:N`$.
+Uma subconsulta posicionada na cláusula `FROM` atua como uma visão transitória em memória. 
 
 ```sql
--- Total por pedido associado aos dados cadastrais
 SELECT 
-    p.id_pedido,
-    c.nome AS cliente,
-    totais.valor_total
-FROM pedidos p
-INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-INNER JOIN (
-    SELECT id_pedido, SUM(quantidade * preco_unitario) AS valor_total
-    FROM itens_pedido
-    GROUP BY id_pedido
-) AS totais ON p.id_pedido = totais.id_pedido;
+    resumo.id_categoria,
+    ROUND(resumo.preco_medio, 2) AS media_categoria
+FROM (
+    SELECT id_categoria, AVG(preco) AS preco_medio
+    FROM produtos
+    GROUP BY id_categoria
+) AS resumo
+WHERE resumo.preco_medio > 1000.00;
 ```
 
-### Subconsultas em Instruções DML
+> **Exigência Mandatória de Gramática:** O PostgreSQL impõe que toda tabela derivada contenha um identificador de alias explícito (`AS identificador`). A omissão do alias dispara a falha: `ERROR: subquery in FROM must have an alias`.
 
-O poder das subconsultas estende-se aos comandos de manipulação de dados:
+### DML Guiado por Subconsultas
+
+As subconsultas fornecem dinamismo e controle de integridade a operações de manipulação massiva:
 
 ```sql
--- 1. INSERT em lote via subconsulta
+-- 1. Carga seletiva baseada em limiar estatístico (INSERT INTO ... SELECT)
 INSERT INTO produtos_promocao (id_produto, nome_produto, preco, preco_promocional)
 SELECT 
-    id_produto,
-    nome_produto,
-    preco,
+    id_produto, 
+    nome_produto, 
+    preco, 
     ROUND(preco * 0.90, 2)
 FROM produtos
 WHERE preco > (SELECT AVG(preco) FROM produtos);
 
--- 2. UPDATE correlacionado com base na média da categoria
+-- 2. Atualização condicionada por subconsulta correlacionada (UPDATE)
 UPDATE produtos p
 SET estoque = estoque + 5
 WHERE p.preco > (
@@ -820,7 +665,7 @@ WHERE p.preco > (
     WHERE sub.id_categoria = p.id_categoria
 );
 
--- 3. DELETE seguro com Anti-Join
+-- 3. Exclusão segura de registros órfãos com anti-junção (DELETE)
 DELETE FROM clientes c
 WHERE NOT EXISTS (
     SELECT 1 
@@ -831,349 +676,219 @@ WHERE NOT EXISTS (
 
 ### Expressões de Tabela Comuns (CTEs)
 
-As Expressões de Tabela Comuns (*Common Table Expressions* - CTEs), declaradas através da cláusula `WITH`, proporcionam modularidade ao código SQL, decompondo instruções complexas em blocos encadeados legíveis:
+As Expressões de Tabela Comuns (*Common Table Expressions* - CTEs) decompõem instruções relacionais complexas em blocos modulares legíveis declarados por meio da cláusula `WITH`.
 
 ```sql
-WITH media_categorias AS (
+WITH media_por_categoria AS (
     SELECT id_categoria, AVG(preco) AS media_preco
     FROM produtos
     GROUP BY id_categoria
 ),
 produtos_destaque AS (
-    SELECT p.id_produto, p.nome_produto, p.preco, p.id_categoria
+    SELECT 
+        p.id_produto,
+        p.nome_produto,
+        p.preco,
+        p.id_categoria,
+        m.media_preco
     FROM produtos p
-    INNER JOIN media_categorias mc ON p.id_categoria = mc.id_categoria
-    WHERE p.preco > mc.media_preco
+    JOIN media_por_categoria m ON p.id_categoria = m.id_categoria
+    WHERE p.preco > m.media_preco
 )
-SELECT pd.nome_produto, pd.preco, c.nome_categoria
-FROM produtos_destaque pd
-INNER JOIN categorias c ON pd.id_categoria = c.id_categoria;
+SELECT * FROM produtos_destaque ORDER BY preco DESC;
 ```
+
+### Diagnóstico de Planos Físicos com EXPLAIN ANALYZE
+
+O comando `EXPLAIN ANALYZE` instrui o PostgreSQL a planejar, executar a consulta em tempo real e exibir os nós de execução física juntamente com as métricas reais de tempo e I/O consumidas.
+
+```sql
+EXPLAIN ANALYZE
+SELECT c.nome 
+FROM clientes c 
+WHERE c.id_cliente IN (SELECT p.id_cliente FROM pedidos p);
+```
+
+#### Métricas Primárias de Análise
+1. **Startup Cost:** Custo computacional estimado pelo otimizador antes de retornar a primeira tupla do nó.
+2. **Total Cost:** Custo computacional estimado para processar e retornar todas as tuplas do nó.
+3. **Actual Time:** Tempo medido em milissegundos para a primeira e para a última tupla retornada.
+4. **Nós de Junção Otimizados:** O otimizador reescreve frequentemente consultas construídas com `IN` ou `EXISTS` em operações de `Hash Semi Join` ou `Merge Semi Join`.
 
 ---
 
-## Visões Relacionais e Visões Materializadas
+## Programação Procedural com PL/pgSQL e Stored Procedures
 
-### Conceito e Mecanismo de Reescrita de Consultas
+### Arquitetura de Execução Procedural no PostgreSQL
 
-Uma visão relacional padrão (*view*) é uma tabela virtual cujo resultado é gerado dinamicamente a partir de uma consulta SQL armazenada. Ela não aloca blocos de armazenamento físico (*heap files*) para tuplas; o PostgreSQL persiste apenas seus metadados e DDL no catálogo do sistema (tabelas `pg_views` e `pg_rewrite`).
+O PL/pgSQL (*Procedural Language / PostgreSQL Structured Query Language*) estende o paradigma relacional declarativo, viabilizando o controle algorítmico estruturado próximo aos dados.
 
-#### O Query Rewrite Rule System
-[Complemento Técnico: Otimizador de Consultas do PostgreSQL]  
-Quando uma aplicação consulta uma view, o PostgreSQL não executa a view isoladamente para materializá-la em memória intermediária. O subsistema *Query Rewrite Rule System* intercepta a árvore sintática gerada pelo *parser*, localiza a regra `_RETURN` no catálogo `pg_rewrite` e substitui o nó que referencia a view pela subárvore da consulta que a define. Em seguida, a consulta externa e a view são fundidas em um plano de execução único e otimizado.
-
-```mermaid
-flowchart TD
-    Cli["Aplicação Cliente"] -->|"SELECT * FROM vw_pedidos WHERE cliente = 'Ana'"| Parser["Parser Léxico/Sintático"]
-    Parser --> QTree["Árvore de Consulta"]
-    QTree --> Rewriter["Query Rewrite System (pg_rewrite)"]
-    Rewriter -->|"Fusão da View com o Filtro Externo"| Opt["Otimizador CBO"]
-    Opt --> Plan["Plano de Execução Unificado"]
-    Plan --> Exec["Executor Engine"]
-    Exec --> Disk["Leitura das Tabelas Base no Disco"]
-    Disk --> Res["Conjunto de Resultados"]
-    Res --> Cli
-```
-
-### Comparativo Estrutural: Tabela, View e Materialized View
-
-| Característica de Engenharia | Tabela Base | Visão Padrão (View) | Visão Materializada (Materialized View) |
-| :--- | :--- | :--- | :--- |
-| **Armazenamento de Tuplas no Disco** | Sim (páginas de dados em heap) | Não (apenas metadados de consulta) | Sim (snapshot estático em disco) |
-| **Custo de Recomputação na Leitura** | Zero (apenas custo de I/O) | Total (reexecuta a consulta subjacente) | Zero (lê o snapshot gravado) |
-| **Frescor dos Dados (*Freshness*)** | Tempo Real (ACID imediato) | Tempo Real (lê o estado atual das tabelas) | Estático (defasado até o próximo REFRESH) |
-| **Suporte a Índices Próprios** | Sim (B-Tree, Hash, GIN, GiST) | Não (utiliza índices das tabelas de origem) | Sim (B-Tree, Hash, GIN, GiST, BRIN) |
-| **Comportamento em DML Direto** | Atualizável por padrão | Atualizável sob restrições estritas | Somente Leitura via SQL (DML proibido) |
-| **Impacto de Escrita na Origem** | Imediato | Inexistente | Inexistente até o recálculo explícito |
-
-### Manutenção e Dependências: CREATE OR REPLACE VIEW e DROP VIEW
-
-O comando `CREATE OR REPLACE VIEW` permite redefinir a lógica de uma visão sem eliminá-la do catálogo. Todavia, o PostgreSQL impõe regras de invariância para proteger objetos dependentes:
-1. **Preservação de Colunas Existentes:** As colunas originais devem manter rigorosamente os mesmos nomes, mesmos tipos de dados e a mesma ordem sequencial.
-2. **Inclusão Exclusiva no Final:** Novas colunas só podem ser adicionadas após a última coluna da definição original.
-3. **Impossibilidade de Remoção:** Não é permitido excluir colunas anteriores nem alterar seus tipos via `CREATE OR REPLACE VIEW`.
-
-Se for imperativo remover colunas ou reorganizar a estrutura, a view deve ser destruída com `DROP VIEW`.
-
-#### CASCADE versus RESTRICT
-O catálogo do PostgreSQL rastreia rigorosamente a árvore de dependência entre objetos na tabela `pg_depend`:
-- `DROP VIEW nome RESTRICT`: (Comportamento padrão) O comando é bloqueado se outros objetos (outras views, triggers ou funções) dependerem da visão.
-- `DROP VIEW nome CASCADE`: Remove recursivamente a visão informada e **todos** os objetos subordinados que dependem dela.
-
-> **Alerta de Engenharia:** A execução desatenta de `DROP VIEW ... CASCADE` em ambientes produtivos pode destruir dezenas de relatórios, visões dependentes e gatilhos corporativos sem aviso prévio.
-
-### Visões Atualizáveis e Consistência com WITH CHECK OPTION
-
-Uma visão é nativamente atualizável (*automatically updatable*) pelo PostgreSQL se obedecer a todas as seguintes condições:
-1. Possuir exatamente uma relação base (tabela ou outra view atualizável) na cláusula `FROM`.
-2. Não conter cláusulas `DISTINCT`, `GROUP BY`, `HAVING` ou funções agregadoras.
-3. Não conter operações de conjunto (`UNION`, `INTERSECT`, `EXCEPT`).
-4. Não utilizar funções de janela (`OVER (...)`).
-5. As colunas modificadas devem ser referências diretas a colunas da tabela base, e não expressões calculadas.
-
-#### Garantia de Integridade com WITH CHECK OPTION
-Quando uma view atualizável filtra registros (ex.: `WHERE estado = 'SP'`), uma operação de `INSERT` ou `UPDATE` através da view poderia inserir um registro com `estado = 'RJ'`. O registro seria gravado na tabela base, mas desapareceria imediatamente da visualização da própria view.
-
-A cláusula `WITH CHECK OPTION` impede essa anomalia:
-
-```sql
-CREATE VIEW vw_clientes_sp AS
-SELECT id_cliente, nome, estado
-FROM clientes
-WHERE estado = 'SP'
-WITH CHECK OPTION;
-
--- Esta instrução falhará com erro de integridade:
--- ERROR: new row violates check option for view "vw_clientes_sp"
-INSERT INTO vw_clientes_sp (nome, estado) VALUES ('Carlos', 'RJ');
-```
-
-- **`WITH LOCAL CHECK OPTION`:** Fiscaliza apenas as restrições definidas no corpo da view atual.
-- **`WITH CASCADED CHECK OPTION`:** (Padrão) Fiscaliza as restrições da view atual e propaga a validação para todas as visões subordinadas subjacentes.
-
-### Segurança de Acesso e Abstração de Esquema
-
-Visões constituem uma barreira arquitetural de isolamento conforme o Princípio do Menor Privilégio (*Principle of Least Privilege*). Um perfil de usuário pode receber privilégios de acesso restrito a uma view enquanto tem seus privilégios totalmente revogados sobre a tabela base física:
-
-```sql
--- 1. Criação de visão com ocultação de dados sensíveis
-CREATE VIEW vw_dados_publicos_clientes AS
-SELECT id_cliente, nome, cidade, estado
-FROM clientes;
-
--- 2. Revogação de acesso à tabela física e permissão concedida na visão
-REVOKE ALL ON clientes FROM usuario_atendimento;
-GRANT SELECT ON vw_dados_publicos_clientes TO usuario_atendimento;
-```
-
-### Materialized Views: Estratégias de Atualização e Indexação Física
-
-Consultas analíticas pesadas que processam milhões de registros com junções múltiplas e agregações tornam-se inviáveis quando executadas dinamicamente via views comuns. A **Materialized View** computa o resultado e grava as tuplas fisicamente em disco, permitindo acesso instantâneo.
-
-```sql
--- Criação da visão materializada
-CREATE MATERIALIZED VIEW mv_vendas_consolidada AS
-SELECT 
-    pr.id_categoria,
-    c.nome_categoria,
-    COUNT(DISTINCT p.id_pedido) AS total_pedidos,
-    SUM(ip.quantidade * ip.preco_unitario) AS faturamento_total
-FROM categorias c
-INNER JOIN produtos pr ON c.id_categoria = pr.id_categoria
-INNER JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
-INNER JOIN pedidos p ON ip.id_pedido = p.id_pedido
-GROUP BY pr.id_categoria, c.nome_categoria;
-```
-
-#### Atualização de Dados: Bloqueante vs Concorrente
-Como a visão materializada não reflete atualizações da tabela base em tempo real, ela precisa ser recalculada periodicamente:
-1. **`REFRESH MATERIALIZED VIEW nome`:** Tranca a visão materializada com um bloqueio exclusivo de leitura (`AccessExclusiveLock`). Durante o processamento, nenhuma aplicação consegue realizar consultas sobre a view.
-2. **`REFRESH MATERIALIZED VIEW CONCURRENTLY nome`:** Atualiza os dados sem bloquear as leituras concorrentes da aplicação. Para viabilizar a execução concorrente, o PostgreSQL exige a existência de pelo menos um índice exclusivo (`UNIQUE`) cobrindo uma ou mais colunas da visão materializada.
-
-```sql
--- Criação obrigatória de índice exclusivo para permitir atualização concorrente
-CREATE UNIQUE INDEX idx_mv_vendas_cat ON mv_vendas_consolidada(id_categoria);
-
--- Atualização sem travamento de consultas concorrentes
-REFRESH MATERIALIZED VIEW CONCURRENTLY mv_vendas_consolidada;
-```
-
----
-
-## Programação Procedural em PL/pgSQL e Stored Procedures
-
-### Paradigma Declarativo versus Procedural
-
-O SQL tradicional é declarativo: o desenvolvedor especifica *o que* deseja obter, delegando ao otimizador do SGBD a responsabilidade de traçar o plano de execução (*como* fazer). Contudo, regras corporativas complexas demandam algoritmos sequenciais, estruturas de decisão condicional (`IF/ELSE`), laços de repetição e manipulação explícita de exceções.
-
-O PostgreSQL atende a esse requisito através de sua linguagem procedural proprietária **PL/pgSQL** (*Procedural Language / PostgreSQL Structured Query Language*).
-
-#### Redução Drástica de Tráfego de Rede (Round-Trips)
-Ao executar regras de negócio dentro da camada de aplicação backend, múltiplas consultas trafegam pela rede, gerando latência cumulativa e retenção de bloqueios (*locks*) no banco. Encapsular o processo em uma rotina PL/pgSQL executa todo o fluxo na memória do servidor de banco em uma única transação atômica.
+Em arquiteturas convencionais, regras de negócio multi-etapas geram elevado tráfego de ida e volta na rede (*round-trips*). A execução de lógicas proceduralmente no servidor centraliza o processamento em memória compartilhada com latência de rede nula entre os passos.
 
 ```mermaid
 sequenceDiagram
-    autonumber
-    participant App as Backend da Aplicação
-    participant DB as PostgreSQL
-    
-    Note over App,DB: Cenário SQL Tradicional Ad-hoc (Múltiplos Round-Trips)
-    App->>DB: 1. SELECT saldo FROM clientes WHERE id = 1
-    DB-->>App: Retorna payload do saldo
-    App->>DB: 2. UPDATE clientes SET saldo = saldo - 100 WHERE id = 1
-    DB-->>App: Confirmação do UPDATE
-    App->>DB: 3. INSERT INTO auditoria (...)
-    DB-->>App: Confirmação do INSERT
-    
-    Note over App,DB: Cenário com Stored Procedure (1 Round-Trip)
-    App->>DB: CALL debito_com_auditoria(1, 100.00)
-    Note over DB: Processa validações, UPDATE e INSERT internamente na CPU do banco
-    DB-->>App: Retorna status consolidado de sucesso
+  autonumber
+  participant App as Backend da Aplicação
+  participant DB as Motor PostgreSQL
+  
+  Note over App,DB: Padrão Ad-hoc (Múltiplas requisições de rede)
+  App->>DB: 1. SELECT saldo FROM clientes WHERE id = 10
+  DB-->>App: Retorna saldo (Tráfego de dados na rede)
+  App->>DB: 2. UPDATE clientes SET saldo = saldo - 500 WHERE id = 10
+  DB-->>App: Confirma UPDATE
+  
+  Note over App,DB: Padrão Procedural (1 Único Round-Trip)
+  App->>DB: CALL debitar_saldo(10, 500.00)
+  Note over DB: Processa validações, bloqueios de linha e DML internamente
+  DB-->>App: Confirmação de Sucesso / Parâmetros OUT
 ```
 
-### Diferenças Críticas entre Functions e Procedures
+### Diferenças Essenciais entre Stored Functions e Stored Procedures
 
-Até a versão 10, o PostgreSQL suportava apenas funções (`CREATE FUNCTION`). A introdução de `CREATE PROCEDURE` no PostgreSQL 11 (em conformidade com o padrão internacional SQL:2011) resolveu restrições funcionais determinantes:
+A inclusão formal do comando `CREATE PROCEDURE` no PostgreSQL 11 alinhou o SGBD ao padrão SQL:2011, estabelecendo fronteiras operacionais com as funções tradicionais:
 
-| Critério Arquitetural | Stored Function (`CREATE FUNCTION`) | Stored Procedure (`CREATE PROCEDURE`) |
+| Propriedade Funcional | Stored Function (`CREATE FUNCTION`) | Stored Procedure (`CREATE PROCEDURE`) |
 | :--- | :--- | :--- |
-| **Comando de Invocação** | Invocada em consultas: `SELECT func()` | Chamada isolada: `CALL proc()` |
-| **Cláusula de Retorno** | Obrigatória (`RETURNS tipo` ou `RETURNS void`) | Inexistente (não possui cláusula `RETURNS`) |
-| **Retorno de Múltiplos Dados** | `RETURNS TABLE(...)` ou tipos compostos | Parâmetros com modificadores `INOUT` ou `OUT` |
-| **Gerenciamento Transacional** | **Proibido.** Não pode executar `COMMIT` ou `ROLLBACK`. | **Permitido.** Controle total de transações intermediárias. |
-| **Propósito Predominante** | Cálculos, filtros e projeções integráveis a queries | Processamento em lote, manutenções e orquestrações |
+| **Comando de Chamada** | Invocada em consultas: `SELECT func();` | Invocada isoladamente: `CALL proc();` |
+| **Integração Relacional** | Pode ser incorporada em `WHERE`, `SELECT`, `JOIN`. | Não pode ser acoplada em instruções `SELECT` ou `WHERE`. |
+| **Declaração de Retorno** | Obrigatória: cláusula `RETURNS <tipo>` (ou `VOID`). | Não possui cláusula `RETURNS`. |
+| **Retorno de Múltiplos Valores** | Tipos compostos, tabelas (`RETURNS TABLE`). | Parâmetros de saída: `OUT` ou `INOUT`. |
+| **Gerenciamento de Transações** | **Proibido.** Não suporta `COMMIT` ou `ROLLBACK`. | **Permitido.** Controle transacional autônomo. |
+| **Caso de Uso Primário** | Computação de valores, regras determinísticas de cálculo. | Processamento em lote (*batch*), orquestração de rotinas DML. |
 
-```mermaid
-classDiagram
-    class RotinaArmazenada {
-        <<Abstract>>
-        +String nome
-        +Language linguagem
-    }
-    class StoredFunction {
-        +TipoRetorno returns
-        +executarEmSelect()
-    }
-    class StoredProcedure {
-        +ParametrosOut out
-        +chamarComCall()
-        +executarCommit()
-        +executarRollback()
-    }
-    RotinaArmazenada <|-- StoredFunction
-    RotinaArmazenada <|-- StoredProcedure
-```
+### Anatomia Estrutural de um Bloco PL/pgSQL
 
-### Anatomia de um Bloco PL/pgSQL
-
-O código PL/pgSQL é delimitado por marcadores de string (*Dollar Quoting* — convencionalmente `$$`) e estruturado em blocos bem definidos:
+O PL/pgSQL é estruturado em blocos delimitados. O encapsulamento textual utiliza o delimitador *Dollar-Quoting* (`$$`), dispensando o escape de aspas simples:
 
 ```sql
-CREATE OR REPLACE PROCEDURE sp_exemplo_estrutura(
-    p_parametro1 INTEGER,
-    p_parametro2 NUMERIC
-)
+CREATE OR REPLACE PROCEDURE nome_procedimento(parametros)
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    -- 1. Seção de Declaração de Variáveis e Tipos
-    v_variavel_local NUMERIC(10,2) := 0.00;
+    -- Seção de Declaração de Variáveis e Tipos
 BEGIN
-    -- 2. Seção Executável: Lógica Procedural e DML
-    IF p_parametro1 IS NULL THEN
-        RAISE EXCEPTION 'Parâmetro obrigatório nulo.';
-    END IF;
-
-    -- Instrução DML integrada
-    UPDATE contas SET saldo = saldo + p_parametro2 WHERE id = p_parametro1;
-
+    -- Seção Executável (Instruções SQL e Lógica Imperativa)
 EXCEPTION
-    -- 3. Seção de Tratamento de Exceções
-    WHEN OTHERS THEN
-        RAISE NOTICE 'Falha capturada no bloco: %', SQLERRM;
-        RAISE; -- Relança a exceção para provocar o rollback externo
+    -- Seção de Tratamento e Captura de Falhas
 END;
 $$;
 ```
 
-- **Dollar Quoting (`$$`):** Elimina a necessidade de duplicar aspas simples no código procedural, garantindo que literais de texto e comandos SQL sejam escritos de forma limpa.
-- **Blocos Anônimos (`DO $$ ... $$`):** Permitem a execução pontual e imediata de código PL/pgSQL para rotinas de manutenção ou migração, sem cadastrar um objeto permanente no catálogo.
+### Declaração de Variáveis, Tipagem Escalar e Tipagem Ancorada
 
-### Tipagem Ancorada e Atribuição de Dados
-
-Para evitar discrepâncias entre as definições de tipos das tabelas e as variáveis locais do código PL/pgSQL, utilizam-se os operadores de tipagem ancorada:
-- `%TYPE`: Ancola o tipo da variável ao tipo exato de uma coluna de tabela ou de outra variável previamente declarada.
-- `%ROWTYPE`: Aloca uma variável composta (registro) cuja estrutura reflete integralmente uma linha completa da tabela informada.
+Variáveis declaradas em PL/pgSQL assumem `NULL` caso não sejam explicitamente inicializadas:
 
 ```sql
 DECLARE
-    -- Tipagem ancorada escalar
+    v_contador   INTEGER := 0;
+    v_taxa       NUMERIC(5,2) DEFAULT 10.50;
+    v_nome       VARCHAR(100);
+```
+
+#### Tipagem Ancorada com %TYPE e %ROWTYPE
+Garante a estabilidade do código diante de manutenções evolutivas no esquema físico do banco:
+
+```sql
+DECLARE
+    -- Ancoragem a uma coluna específica
     v_saldo clientes.saldo%TYPE;
     
-    -- Tipagem ancorada em linha completa
-    v_cliente_reg clientes%ROWTYPE;
+    -- Ancoragem à estrutura completa de uma linha da tabela
+    v_registro_cliente clientes%ROWTYPE;
 BEGIN
-    -- Captura atômica de tupla via SELECT INTO
-    SELECT * INTO v_cliente_reg
-    FROM clientes
-    WHERE id_cliente = 1;
-    
-    v_saldo := v_cliente_reg.saldo;
+    SELECT * INTO v_registro_cliente FROM clientes WHERE id_cliente = 1;
+    v_saldo := v_registro_cliente.saldo;
 END;
 ```
 
-- **Atribuição:** Realiza-se pelo operador `:=` (ou `=` por compatibilidade).
-- **`SELECT ... INTO`:** Transfere dados retornados por uma consulta SQL diretamente para variáveis do bloco. Se a consulta retornar múltiplas linhas, apenas a primeira é capturada a menos que um cursor seja empregado.
+### Modos de Parâmetros: IN, OUT e INOUT
 
-### Controle de Fluxo e Sinalização de Exceções
-
-O controle de bifurcação condicional opera pela estrutura `IF ... THEN ... ELSIF ... ELSE ... END IF`:
-
-```sql
-IF v_saldo >= p_valor THEN
-    UPDATE clientes SET saldo = saldo - p_valor WHERE id_cliente = p_id;
-ELSIF v_limite_especial >= p_valor THEN
-    RAISE NOTICE 'Utilizando limite de cheque especial.';
-    UPDATE clientes SET saldo = saldo - p_valor WHERE id_cliente = p_id;
-ELSE
-    RAISE EXCEPTION 'Transação recusada: Saldo insuficiente. Saldo atual: %', v_saldo;
-END IF;
-```
-
-#### Mensagens e Níveis de Gravidade
-- `RAISE NOTICE`: Imprime mensagens no console de depuração sem interferir no fluxo transacional.
-- `RAISE EXCEPTION`: Aborta imediatamente o bloco executável, cancela as operações pendentes e dispara o rollback da transação corrente.
-
-### Execução DML, Variável FOUND e Diagnósticos
-
-Após a emissão de instruções DML (`INSERT`, `UPDATE`, `DELETE`) ou consultas com `SELECT INTO`, o PL/pgSQL disponibiliza mecanismos internos para auditoria do resultado:
-
-1. **Variável Especial `FOUND`:** Variável booleana de sistema. Assume `TRUE` se ao menos uma linha foi afetada ou retornada pelo comando imediatamente anterior; caso contrário, assume `FALSE`.
-2. **Instrução `GET DIAGNOSTICS`:** Extrai com precisão a contagem exata de registros afetados na última operação DML.
+- **`IN` (Padrão):** O valor é fornecido pelo chamador como parâmetro de entrada; a variável é tratada como somente leitura pelo procedimento.
+- **`OUT`:** O procedimento popula essa variável para devolver informações à aplicação chamadora.
+- **`INOUT`:** O parâmetro ingressa com um valor inicial fornecido pelo chamador, pode sofrer mutação dentro da procedure e tem seu valor final exposto de volta ao chamador.
 
 ```sql
-UPDATE produtos 
-SET preco = preco * 1.10 
-WHERE id_categoria = p_categoria;
-
-GET DIAGNOSTICS v_linhas_afetadas = ROW_COUNT;
-
-IF NOT FOUND THEN
-    RAISE NOTICE 'Nenhum produto foi atualizado para a categoria informada.';
-ELSE
-    RAISE NOTICE 'Sucesso: % produtos sofreram reajuste.', v_linhas_afetadas;
-END IF;
-```
-
-### Gerenciamento Transacional Autônomo com COMMIT e ROLLBACK
-
-A prerrogativa técnica mais relevante das *Stored Procedures* no PostgreSQL é a capacidade de invocar `COMMIT` e `ROLLBACK` diretamente no interior do código. Essa funcionalidade é crucial em processamento em lote (*batch processing*), onde transações astronômicas esgotariam a memória do subsistema de log de escrita adiantada (*Write-Ahead Logging* - WAL).
-
-```sql
-CREATE OR REPLACE PROCEDURE sp_expurgo_em_lotes(p_limite_lote INT)
+CREATE OR REPLACE PROCEDURE pr_calcular_reajuste(
+    IN p_id_produto INT,
+    INOUT p_preco NUMERIC(10,2),
+    OUT p_diferenca NUMERIC(10,2)
+)
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    v_total_deletado INT := 0;
+    v_preco_antigo NUMERIC(10,2);
 BEGIN
-    LOOP
-        DELETE FROM logs_antigos
-        WHERE id IN (
-            SELECT id FROM logs_antigos 
-            WHERE data_log < CURRENT_DATE - INTERVAL '1 year' 
-            LIMIT p_limite_lote
-        );
+    SELECT preco INTO v_preco_antigo FROM produtos WHERE id_produto = p_id_produto;
+    p_diferenca := p_preco - v_preco_antigo;
+    UPDATE produtos SET preco = p_preco WHERE id_produto = p_id_produto;
+END;
+$$;
+```
+
+### Controle de Fluxo Condicional e Emissão de Diagnósticos
+
+O controle de fluxo segue a estrutura condicional:
+
+```sql
+IF condicao_1 THEN
+    -- Ações bloco 1
+ELSIF condicao_2 THEN
+    -- Ações bloco 2
+ELSE
+    -- Bloco alternativo
+END IF;
+```
+
+#### Sinalização com RAISE NOTICE e RAISE EXCEPTION
+- **`RAISE NOTICE`:** Emite mensagens informativas para a aplicação cliente sem interromper a execução do bloco transacional.
+- **`RAISE EXCEPTION`:** Aborta a execução do bloco corrente, revertendo as alterações pendentes da transação (*rollback* imediato).
+
+```sql
+IF p_valor <= 0 THEN
+    RAISE EXCEPTION 'Operação inválida: O montante informado (%) deve ser positivo.', p_valor;
+END IF;
+```
+
+### Manipulação DML, Variável FOUND e GET DIAGNOSTICS
+
+Imediatamente após a execução de comandos DML ou instruções `SELECT INTO`, o motor PL/pgSQL alimenta variáveis de diagnóstico interno:
+
+1. **Variável Especial `FOUND`:** Assume `TRUE` caso a instrução precedente tenha encontrado ou alterado pelo menos uma tupla; caso contrário, assume `FALSE`.
+2. **Instrução `GET DIAGNOSTICS`:** Extrai com precisão a quantidade exata de linhas manipuladas pelo último comando SQL.
+
+```sql
+UPDATE produtos SET preco = preco * 1.05 WHERE id_categoria = 3;
+
+IF NOT FOUND THEN
+    RAISE NOTICE 'Nenhum produto associado à categoria foi localizado.';
+END IF;
+
+GET DIAGNOSTICS v_linhas_afetadas = ROW_COUNT;
+RAISE NOTICE 'Total de registros alterados: %', v_linhas_afetadas;
+```
+
+### Controle Transacional Autônomo com COMMIT e ROLLBACK
+
+Ao contrário de funções e gatilhos, as *Stored Procedures* suportam comandos de demarcação transacional explícita:
+
+```sql
+CREATE OR REPLACE PROCEDURE pr_processar_lote_pedidos()
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    r RECORD;
+    v_contador INT := 0;
+BEGIN
+    FOR r IN SELECT id_pedido FROM pedidos WHERE status = 'PENDENTE' LOOP
+        UPDATE pedidos SET status = 'PROCESSANDO' WHERE id_pedido = r.id_pedido;
+        v_contador := v_contador + 1;
         
-        GET DIAGNOSTICS v_total_deletado = ROW_COUNT;
-        
-        -- Confirma o lote atual e libera os locks de disco
-        COMMIT;
-        
-        -- Condição de saída: quando não houver mais registros antigos
-        EXIT WHEN v_total_deletado = 0;
+        -- Efetiva o commit intermediário a cada 500 registros para evitar o esgotamento do WAL
+        IF v_contador % 500 = 0 THEN
+            COMMIT;
+        END IF;
     END LOOP;
-    
-    RAISE NOTICE 'Expurgo em lote finalizado com sucesso.';
+    COMMIT; -- Efetivação das tuplas finais
 END;
 $$;
 ```
@@ -1182,874 +897,791 @@ $$;
 
 ## Gatilhos e Automação Reativa de Banco de Dados
 
-### O Paradigma Event-Condition-Action (ECA)
+### Conceito Fundamental e o Paradigma Evento-Condição-Ação
 
-Um gatilho (*trigger*) é um objeto do esquema de banco associado a uma tabela ou visão, cuja ativação ocorre de maneira automática pelo núcleo do PostgreSQL em resposta a eventos de modificação de dados (`INSERT`, `UPDATE`, `DELETE`, `TRUNCATE`).
+Um gatilho (*trigger*) é um objeto do esquema de banco de dados vinculado a uma tabela ou visão, cuja ativação ocorre de maneira automática quando comandos DML específicos são emitidos contra o alvo.
 
-Ao contrário de procedures ou functions, os gatilhos obedecem rigorosamente ao paradigma **ECA**:
+O funcionamento dos gatilhos segue o paradigma **ECA (Evento-Condição-Ação)**:
 
 ```mermaid
 flowchart TD
-    E["Evento: Comando DML (INSERT, UPDATE, DELETE)"] --> C{"Condição: Cláusula WHEN satisfeita?"}
-    C -->|"Sim"| A["Ação: Execução da Trigger Function"]
-    C -->|"Não"| D["Ignora disparo: Fluxo normal"]
-    A --> Res["Confirma ou Aborta Transação"]
+  E["Evento: Invocação de INSERT, UPDATE ou DELETE"] --> C{"Condição: Cláusula WHEN avaliada?"}
+  C -- Verdadeiro --> A["Ação: Disparo da Trigger Function vinculada"]
+  C -- Falso --> Discard["Ignora execução procedural"]
+  A --> Fim["Persistência no Heap ou Interrupção por Exceção"]
 ```
 
-1. **Evento (*Event*):** A instrução DML submetida contra a tabela.
-2. **Condição (*Condition*):** Um predicado booleano opcional expresso na cláusula `WHEN` do `CREATE TRIGGER`. Se avaliado como falso, o PostgreSQL nem sequer instancia o interpretador PL/pgSQL, economizando CPU.
-3. **Ação (*Action*):** A execução do corpo da função de gatilho compilada.
+### Desacoplamento entre Trigger Function e Objeto Trigger
 
-### Desacoplamento entre Trigger Function e Trigger
+No PostgreSQL, a implementação de gatilhos é dividida em duas estruturas independentes:
 
-Diferente de sistemas como MySQL ou Oracle, o PostgreSQL implementa um desacoplamento formal de duas fases:
-1. **Trigger Function:** Uma função declarada sem parâmetros de entrada, cujo tipo de retorno deve ser categoricamente o pseudotipo `trigger`.
-2. **Declaração do Gatilho (`CREATE TRIGGER`):** A instrução DDL que amarra a tabela, o evento, o momento de disparo e o nível de granularidade à respectiva *Trigger Function*.
+1. **A Função do Gatilho (*Trigger Function*):** Função sem parâmetros formais que declara obrigatoriamente retorno do tipo especial `trigger`.
+2. **A Declaração do Gatilho (*Trigger Binding*):** O comando `CREATE TRIGGER` que conecta a função à tabela, definindo evento, momento e nível de execução.
 
 ```sql
--- Fase 1: Criação da função de gatilho
-CREATE OR REPLACE FUNCTION fn_trg_validar_horario()
+-- 1. Definição da Função de Gatilho
+CREATE OR REPLACE FUNCTION fn_trg_auditoria_clientes()
 RETURNS trigger
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    IF EXTRACT(DOW FROM CURRENT_TIMESTAMP) IN (0, 6) THEN
-        RAISE EXCEPTION 'Operações cadastrais são proibidas aos fins de semana.';
-    END IF;
+    INSERT INTO logs_auditoria (tabela_afetada, operacao, usuario, momento)
+    VALUES ('clientes', TG_OP, session_user, clock_timestamp());
     RETURN NEW;
 END;
 $$;
 
--- Fase 2: Associação da função à tabela via trigger
-CREATE TRIGGER trg_bloqueio_fim_de_semana
-BEFORE INSERT OR UPDATE OR DELETE ON clientes
-FOR EACH STATEMENT
-EXECUTE FUNCTION fn_trg_validar_horario();
+-- 2. Vinculação do Gatilho à Tabela Base
+CREATE TRIGGER trg_auditar_clientes
+AFTER INSERT OR UPDATE OR DELETE ON clientes
+FOR EACH ROW
+EXECUTE FUNCTION fn_trg_auditoria_clientes();
 ```
+
+### Eventos Disparadores DML: INSERT, UPDATE e DELETE
+
+A tabela a seguir sistematiza a disponibilidade das tuplas contextuais em relação ao tipo de operação DML executada:
+
+| Evento Disparador | Conteúdo da Variável `OLD` | Conteúdo da Variável `NEW` | Finalidade Típica |
+| :--- | :--- | :--- | :--- |
+| **`INSERT`** | `NULL` (não há registro anterior). | Tupla projetada com os novos valores. | Validação de formato, enriquecimento e saneamento. |
+| **`UPDATE`** | Tupla com o estado anterior em disco. | Tupla contendo os valores pretendidos. | Rastreamento de alteração de estado e auditoria de deltas. |
+| **`DELETE`** | Tupla com os dados antes do descarte. | `NULL` (não há registro posterior). | Bloqueio de exclusão e arquivamento em tabelas históricas. |
 
 ### Momentos de Disparo: BEFORE, AFTER e INSTEAD OF
 
-| Momento | Alvo | Capacidade de Mutação | Efeito do Retorno `NULL` | Casos de Uso Típicos |
-| :--- | :--- | :--- | :--- | :--- |
-| **BEFORE** | Tabelas | Modifica o registro através de `NEW` | **Cancela silenciosamente** a gravação daquela tupla | Sanitização de dados, validação de regras de negócio, criptografia de senhas |
-| **AFTER** | Tabelas | Registro já persistido (imutável) | Nenhum (retorno da função é ignorado) | Trilhas de auditoria, replicação para tabelas satélites, cálculo de totais |
-| **INSTEAD OF** | Apenas Visões | Substitui integralmente a instrução DML | Interrompe o processamento na visão | Tornar visões relacionais complexas (com JOINs) totalmente editáveis |
-
-### Níveis de Disparo: Linha versus Instrução
-
-1. **Nível de Linha (`FOR EACH ROW`):** O gatilho dispara para **cada tupla individual** impactada pelo comando DML. Se um `UPDATE` alterar 5.000 registros, o gatilho executa 5.000 vezes. É o único nível que tem acesso às variáveis de tupla `NEW` e `OLD`.
-2. **Nível de Instrução (`FOR EACH STATEMENT`):** O gatilho dispara **uma única vez por comando DML**, independentemente da quantidade de linhas afetadas (mesmo que zero linhas satisfaçam o critério). As variáveis `NEW` e `OLD` não estão disponíveis neste modo.
-
-### Variáveis Especiais de Contexto
-
-Dentro do corpo de uma *Trigger Function*, o compilador PL/pgSQL disponibiliza variáveis implícitas essenciais:
-- `NEW`: Variável do tipo `RECORD` contendo os dados da tupla que está sendo inserida ou atualizada (disponível em `INSERT` e `UPDATE` em nível de linha; é `NULL` em `DELETE`).
-- `OLD`: Variável do tipo `RECORD` contendo os dados da tupla pré-existente antes da mutação (disponível em `UPDATE` e `DELETE` em nível de linha; é `NULL` em `INSERT`).
-- `TG_OP`: Variável de texto que indica a operação em execução: `'INSERT'`, `'UPDATE'`, `'DELETE'` ou `'TRUNCATE'`.
-- `TG_WHEN`: Texto indicando o momento de disparo: `'BEFORE'`, `'AFTER'` ou `'INSTEAD OF'`.
-- `TG_TABLE_NAME`: Nome da tabela sobre a qual o gatilho disparou.
-
-### Pipeline Completo de Processamento DML
-
-O diagrama a seguir sintetiza a sequência exata de etapas executadas pelo motor relacional do PostgreSQL ao receber uma instrução DML:
-
 ```mermaid
 flowchart TD
-    DML["Comando DML recebido pelo PostgreSQL"] --> BS["1. Triggers BEFORE STATEMENT"]
-    BS --> Loop{"2. Para cada linha afetada pelo comando"}
-    Loop --> BR["2a. Triggers BEFORE ROW (Pode alterar NEW ou abortar com NULL)"]
-    BR --> Checks["2b. Verificação de Constraints nativas (PK, FK, CHECK)"]
-    Checks --> Physical["2c. Persistência física da tupla na página de heap"]
-    Physical --> AR["2d. Triggers AFTER ROW (Auditoria e sincronizações)"]
-    AR --> Loop
-    Loop --> DefConstraints["3. Verificação de Restrições Adiada (Deferred Constraints)"]
-    DefConstraints --> AS["4. Triggers AFTER STATEMENT"]
-    AS --> Fim["5. Transação confirmada com sucesso"]
+  Cmd["Comando DML Enviado"] --> B_Row["Gatilhos BEFORE (Nível de Linha)"]
+  B_Row -->|"Pode alterar NEW ou retornar NULL para cancelar"| Storage["Gravação Física no Heap e Checagem de Constraints"]
+  Storage --> A_Row["Gatilhos AFTER (Nível de Linha)"]
+  A_Row -->|"Disparado após confirmação física; ideal para auditoria"| EndCmd["Fim da Transação"]
 ```
 
-### Trilhas de Auditoria e Validações de Integridade
+1. **`BEFORE`:** Dispara antes que as alterações sejam efetivadas fisicamente nas páginas de dados e antes da avaliação de constraints imediatas da tabela.
+   - Permite que a função altere valores de `NEW` antes da gravação.
+   - Caso a função retorne `NULL`, o PostgreSQL cancela a operação silenciosamente para a tupla corrente.
+   - Um `RAISE EXCEPTION` aborta a transação integralmente.
+2. **`AFTER`:** Dispara após a linha ter sido escrita no heap e após as restrições relacionais terem sido validadas.
+   - A operação na linha é um fato consumado.
+   - O retorno da função (`RETURN NEW` ou `RETURN NULL`) é ignorado pelo motor.
+   - Ideal para emissão de logs e sincronização de dados agregados.
+3. **`INSTEAD OF`:** Exclusivo para visões (*Views*). Substitui a instrução DML direcionada à visão, delegando à *trigger function* a tarefa de redirecionar os comandos para as tabelas subjacentes.
 
+### Níveis de Granularidade: FOR EACH ROW versus FOR EACH STATEMENT
+
+- **`FOR EACH ROW`:** A função dispara individualmente para cada tupla processada pelo comando DML. Se um `UPDATE` alterar 5.000 tuplas, o gatilho é executado 5.000 vezes sequenciais. Variáveis `NEW` e `OLD` ficam acessíveis.
+- **`FOR EACH STATEMENT` (Padrão caso omitido):** A função dispara apenas uma única vez para o comando DML como um todo, independentemente da quantidade de tuplas afetadas (0, 1 ou 10.000). As variáveis `NEW` e `OLD` são nulas.
+
+### Variáveis Especiais de Execução
+
+Dentro do corpo de uma *Trigger Function*, o interpretador disponibiliza variáveis contextuais:
+- **`NEW`:** Tupla com o novo registro (`INSERT`/`UPDATE` em nível de linha).
+- **`OLD`:** Tupla com o registro anterior (`UPDATE`/`DELETE` em nível de linha).
+- **`TG_OP`:** String indicando o tipo de operação: `'INSERT'`, `'UPDATE'`, `'DELETE'` ou `'TRUNCATE'`.
+- **`TG_WHEN`:** String com o momento de ativação: `'BEFORE'`, `'AFTER'` ou `'INSTEAD OF'`.
+- **`TG_LEVEL`:** String com o nível: `'ROW'` ou `'STATEMENT'`.
+- **`TG_TABLE_NAME`:** Identificador da tabela que acionou o gatilho.
+
+### Ciclo de Execução Transacional e Armadilhas de Cascata
+
+- **Recursão Infinita e Cascata Descontrolada:** Uma trigger na tabela $`A`$ que altera a tabela $`B`$, que por sua vez dispara uma trigger alterando $`A`$, consome a pilha de execução do PostgreSQL, abortando com o erro:
+```text
+ERROR: stack depth limit exceeded
+```
+- **Chamadas de Serviços Externos:** O uso de triggers para consumir Webhooks HTTP ou filas de mensageria externas quebra as propriedades ACID do banco. Caso a transação sofra *rollback* subsequente, o evento externo já terá sido despachado, tornando os sistemas inconsistentes.
+
+---
+
+## Caderno de Resoluções e Laboratórios Práticos
+
+Nesta seção, consolidam-se os esquemas de dados, requisitos de modelagem e as resoluções técnicas exaustivas de todas as listas e avaliações oficiais da disciplina.
+
+---
+
+### Laboratório 1: Exercícios de Junções Relacionais
+
+O banco de dados de apoio para esta atividade é o `loja_joins`.
+
+```mermaid
+erDiagram
+  CLIENTES ||--o{ PEDIDOS : realiza
+  VENDEDORES ||--o{ PEDIDOS : atende
+  CATEGORIAS ||--o{ PRODUTOS : classifica
+  PRODUTOS ||--o{ ITENS_PEDIDO : integra
+  PEDIDOS ||--|{ ITENS_PEDIDO : compoe
+
+  CLIENTES {
+    int id_cliente PK
+    string nome
+    string cidade
+    string estado
+  }
+  VENDEDORES {
+    int id_vendedor PK
+    string nome
+    decimal salario
+  }
+  CATEGORIAS {
+    int id_categoria PK
+    string nome
+  }
+  PRODUTOS {
+    int id_produto PK
+    string nome
+    decimal preco
+    int id_categoria FK
+  }
+  PEDIDOS {
+    int id_pedido PK
+    date data_pedido
+    int id_cliente FK
+    int id_vendedor FK
+  }
+  ITENS_PEDIDO {
+    int id_item PK
+    int id_pedido FK
+    int id_produto FK
+    int quantidade
+    decimal preco_unitario
+  }
+```
+
+#### Resoluções das Questões do Laboratório 1
+
+**Exercício 1 — Cliente e seus pedidos:**
 ```sql
--- Implementação profissional de trilha de auditoria completa
-CREATE TABLE auditoria_geral (
-    id_log SERIAL PRIMARY KEY,
-    tabela VARCHAR(50) NOT NULL,
-    operacao VARCHAR(10) NOT NULL,
-    usuario VARCHAR(50) NOT NULL,
-    momento TIMESTAMP NOT NULL DEFAULT clock_timestamp(),
-    dados_antigos JSONB,
-    dados_novos JSONB
+SELECT 
+    p.id_pedido,
+    p.data_pedido,
+    c.nome AS nome_cliente
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+ORDER BY p.id_pedido ASC;
+```
+
+**Exercício 2 — Relatório completo dos itens vendidos:**
+```sql
+SELECT 
+    p.id_pedido,
+    c.nome AS nome_cliente,
+    pr.nome AS nome_produto,
+    ip.quantidade,
+    ip.preco_unitario
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+INNER JOIN produtos pr ON ip.id_produto = pr.id_produto
+ORDER BY p.id_pedido ASC, pr.nome ASC;
+```
+
+**Exercício 3 — Clientes sem pedidos (Anti-Join):**
+```sql
+SELECT 
+    c.id_cliente,
+    c.nome
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
+WHERE p.id_pedido IS NULL
+ORDER BY c.id_cliente ASC;
+```
+
+**Exercício 4 — Produtos nunca vendidos:**
+```sql
+SELECT 
+    pr.id_produto,
+    pr.nome,
+    pr.preco
+FROM produtos pr
+LEFT JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
+WHERE ip.id_pedido IS NULL
+ORDER BY pr.id_produto ASC;
+```
+
+**Exercício 5 — Quantidade de pedidos por cliente:**
+```sql
+SELECT 
+    c.nome,
+    COUNT(p.id_pedido) AS quantidade_pedidos
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
+GROUP BY c.id_cliente, c.nome
+ORDER BY c.nome ASC;
+```
+
+**Exercício 6 — Faturamento por produto:**
+```sql
+SELECT 
+    pr.nome AS produto,
+    SUM(ip.quantidade * ip.preco_unitario) AS faturamento_total
+FROM produtos pr
+INNER JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
+GROUP BY pr.id_produto, pr.nome
+ORDER BY faturamento_total DESC;
+```
+
+**Exercício 7 — Total de cada pedido:**
+```sql
+SELECT 
+    p.id_pedido,
+    p.data_pedido,
+    c.nome AS nome_cliente,
+    SUM(ip.quantidade * ip.preco_unitario) AS valor_total
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+GROUP BY p.id_pedido, p.data_pedido, c.nome
+ORDER BY p.id_pedido ASC;
+```
+
+**Exercício 8 — Produtos vendidos para clientes de São Paulo:**
+```sql
+SELECT 
+    c.nome AS cliente,
+    c.cidade,
+    pr.nome AS produto,
+    ip.quantidade
+FROM clientes c
+INNER JOIN pedidos p ON c.id_cliente = p.id_cliente
+INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+INNER JOIN produtos pr ON ip.id_produto = pr.id_produto
+WHERE c.cidade = 'São Paulo'
+ORDER BY c.nome ASC, pr.nome ASC;
+```
+
+**Exercício 9 — Faturamento por vendedor:**
+```sql
+SELECT 
+    v.nome AS vendedor,
+    COALESCE(SUM(ip.quantidade * ip.preco_unitario), 0.00) AS faturamento_total
+FROM vendedores v
+LEFT JOIN pedidos p ON v.id_vendedor = p.id_vendedor
+LEFT JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+GROUP BY v.id_vendedor, v.nome
+ORDER BY faturamento_total DESC;
+```
+
+**Exercício 10 — Desafio: Relatório geral de vendas:**
+```sql
+SELECT 
+    p.id_pedido,
+    p.data_pedido,
+    c.nome AS cliente,
+    c.cidade,
+    c.estado,
+    v.nome AS vendedor,
+    pr.nome AS produto,
+    cat.nome AS categoria,
+    ip.quantidade,
+    ip.preco_unitario,
+    (ip.quantidade * ip.preco_unitario) AS subtotal
+FROM pedidos p
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+INNER JOIN vendedores v ON p.id_vendedor = v.id_vendedor
+INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+INNER JOIN produtos pr ON ip.id_produto = pr.id_produto
+INNER JOIN categorias cat ON pr.id_categoria = cat.id_categoria
+ORDER BY p.id_pedido ASC, pr.nome ASC;
+```
+
+---
+
+### Laboratório 2: Subconsultas - Parte 01
+
+Trabalho prático focado na aplicação estrita dos operadores de subconsultas conforme o escopo delimitado pelo Prof. Welington Garcia.
+
+**Exercício 1 — Subconsulta escalar no WHERE:**
+```sql
+SELECT nome_produto, preco
+FROM produtos
+WHERE preco > (SELECT AVG(preco) FROM produtos);
+```
+
+**Exercício 2 — Subconsulta escalar com MAX():**
+```sql
+SELECT nome_produto, preco
+FROM produtos
+WHERE preco = (SELECT MAX(preco) FROM produtos);
+```
+
+**Exercício 3 — Subconsulta escalar com MIN():**
+```sql
+SELECT nome_produto, preco
+FROM produtos
+WHERE preco = (SELECT MIN(preco) FROM produtos);
+```
+
+**Exercício 4 — Subconsulta na lista de projeção do SELECT:**
+```sql
+SELECT 
+    nome_produto, 
+    preco, 
+    (SELECT AVG(preco) FROM produtos) AS media_geral
+FROM produtos;
+```
+
+**Exercício 5 — Cálculo derivado com subconsulta no SELECT:**
+```sql
+SELECT 
+    nome_produto, 
+    preco, 
+    (SELECT AVG(preco) FROM produtos) AS media_geral,
+    (preco - (SELECT AVG(preco) FROM produtos)) AS diferenca_media
+FROM produtos;
+```
+
+**Exercício 6 — Operador IN com tabela de pedidos:**
+```sql
+SELECT id_cliente, nome
+FROM clientes
+WHERE id_cliente IN (SELECT id_cliente FROM pedidos);
+```
+
+**Exercício 7 — Operador IN com itens do pedido:**
+```sql
+SELECT id_produto, nome_produto
+FROM produtos
+WHERE id_produto IN (SELECT id_produto FROM itens_pedido);
+```
+
+**Exercício 8 — Operador NOT IN seguro:**
+```sql
+SELECT id_cliente, nome
+FROM clientes
+WHERE id_cliente NOT IN (SELECT id_cliente FROM pedidos);
+```
+
+**Exercício 9 — Reescrita do NOT IN com NOT EXISTS:**
+```sql
+SELECT c.id_cliente, c.nome
+FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM pedidos p 
+    WHERE p.id_cliente = c.id_cliente
+);
+```
+
+**Exercício 10 — Operador EXISTS correlacionado:**
+```sql
+SELECT v.id_vendedor, v.nome
+FROM vendedores v
+WHERE EXISTS (
+    SELECT 1 
+    FROM pedidos p 
+    WHERE p.id_vendedor = v.id_vendedor
+);
+```
+
+**Exercício 11 — NOT EXISTS aplicado a produtos:**
+```sql
+SELECT pr.id_produto, pr.nome_produto
+FROM produtos pr
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM itens_pedido ip 
+    WHERE ip.id_produto = pr.id_produto
+);
+```
+
+**Exercício 12 — IN aninhado em múltiplas tabelas:**
+```sql
+SELECT id_cliente, nome
+FROM clientes
+WHERE id_cliente IN (
+    SELECT id_cliente 
+    FROM pedidos 
+    WHERE id_pedido IN (
+        SELECT id_pedido 
+        FROM itens_pedido 
+        WHERE id_produto = (
+            SELECT id_produto 
+            FROM produtos 
+            WHERE nome_produto = 'Notebook Dell'
+        )
+    )
+);
+```
+
+**Exercício 13 — Operador quantificado ANY:**
+```sql
+SELECT nome_produto, preco
+FROM produtos
+WHERE preco > ANY (
+    SELECT pr.preco 
+    FROM produtos pr
+    JOIN categorias cat ON pr.id_categoria = cat.id_categoria
+    WHERE cat.nome_categoria = 'Telefonia'
+);
+```
+
+**Exercício 14 — Operador quantificado ALL:**
+```sql
+SELECT nome_produto, preco
+FROM produtos
+WHERE preco > ALL (
+    SELECT pr.preco 
+    FROM produtos pr
+    JOIN categorias cat ON pr.id_categoria = cat.id_categoria
+    WHERE cat.nome_categoria = 'Acessorios'
+);
+```
+
+**Exercício 15 — Operador ANY aplicado a remunerações:**
+```sql
+SELECT nome, salario
+FROM vendedores
+WHERE salario > ANY (SELECT salario FROM vendedores);
+```
+
+**Exercício 16 — Operador ALL para identificação do topo:**
+```sql
+SELECT nome, salario
+FROM vendedores
+WHERE salario >= ALL (SELECT salario FROM vendedores);
+```
+
+**Exercício 17 — Subconsulta correlacionada comparando à média da própria categoria:**
+```sql
+SELECT p.nome_produto, p.preco, p.id_categoria
+FROM produtos p
+WHERE p.preco > (
+    SELECT AVG(sub.preco)
+    FROM produtos sub
+    WHERE sub.id_categoria = p.id_categoria
+);
+```
+
+**Exercício 18 — Estoque superior à média setorial correlacionada:**
+```sql
+SELECT p.nome_produto, p.estoque, p.id_categoria
+FROM produtos p
+WHERE p.estoque > (
+    SELECT AVG(sub.estoque)
+    FROM produtos sub
+    WHERE sub.id_categoria = p.id_categoria
+);
+```
+
+**Exercício 19 — Limite de crédito correlacionado por unidade federativa:**
+```sql
+SELECT c.nome, c.limite_credito, c.estado
+FROM clientes c
+WHERE c.limite_credito > (
+    SELECT AVG(sub.limite_credito)
+    FROM clientes sub
+    WHERE sub.estado = c.estado
+);
+```
+
+**Exercício 20 — Preço máximo correlacionado por categoria:**
+```sql
+SELECT p.id_categoria, p.nome_produto, p.preco
+FROM produtos p
+WHERE p.preco = (
+    SELECT MAX(sub.preco)
+    FROM produtos sub
+    WHERE sub.id_categoria = p.id_categoria
+)
+ORDER BY p.id_categoria ASC;
+```
+
+---
+
+### Laboratório 3: Subconsultas Avançadas e DML - Parte 02
+
+**Exercício 1 — Subconsulta no FROM: Média por categoria:**
+```sql
+SELECT 
+    sub.id_categoria,
+    sub.media_preco
+FROM (
+    SELECT id_categoria, AVG(preco) AS media_preco
+    FROM produtos
+    GROUP BY id_categoria
+) AS sub
+WHERE sub.media_preco > 1000.00;
+```
+
+**Exercício 2 — Tabela derivada: Total de cada pedido:**
+```sql
+SELECT 
+    totais.id_pedido,
+    totais.valor_total
+FROM (
+    SELECT id_pedido, SUM(quantidade * preco_unitario) AS valor_total
+    FROM itens_pedido
+    GROUP BY id_pedido
+) AS totais
+WHERE totais.valor_total > 3000.00;
+```
+
+**Exercício 3 — Subconsulta no FROM combinada com JOIN:**
+```sql
+SELECT 
+    p.id_pedido,
+    c.nome AS nome_cliente,
+    p.data_pedido,
+    totais.valor_total
+FROM (
+    SELECT id_pedido, SUM(quantidade * preco_unitario) AS valor_total
+    FROM itens_pedido
+    GROUP BY id_pedido
+) AS totais
+INNER JOIN pedidos p ON totais.id_pedido = p.id_pedido
+INNER JOIN clientes c ON p.id_cliente = c.id_cliente;
+```
+
+**Exercício 4 — Clientes que gastaram acima da média:**
+```sql
+SELECT 
+    gastos.id_cliente,
+    c.nome,
+    gastos.total_gasto
+FROM (
+    SELECT p.id_cliente, SUM(ip.quantidade * ip.preco_unitario) AS total_gasto
+    FROM pedidos p
+    INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+    GROUP BY p.id_cliente
+) AS gastos
+INNER JOIN clientes c ON gastos.id_cliente = c.id_cliente
+WHERE gastos.total_gasto > (
+    SELECT AVG(sub_gastos.total_gasto)
+    FROM (
+        SELECT SUM(ip2.quantidade * ip2.preco_unitario) AS total_gasto
+        FROM pedidos p2
+        INNER JOIN itens_pedido ip2 ON p2.id_pedido = ip2.id_pedido
+        GROUP BY p2.id_cliente
+    ) AS sub_gastos
+);
+```
+
+**Exercício 5 — Categoria com maior preço médio:**
+```sql
+SELECT 
+    medias.id_categoria,
+    medias.preco_medio
+FROM (
+    SELECT id_categoria, AVG(preco) AS preco_medio
+    FROM produtos
+    GROUP BY id_categoria
+) AS medias
+WHERE medias.preco_medio = (
+    SELECT MAX(sub_medias.preco_medio)
+    FROM (
+        SELECT AVG(preco) AS preco_medio
+        FROM produtos
+        GROUP BY id_categoria
+    ) AS sub_medias
+);
+```
+
+**Exercício 6 — INSERT em lote utilizando subconsulta:**
+```sql
+-- DDL preparatória da tabela receptora
+CREATE TABLE produtos_promocao (
+    id_produto INT PRIMARY KEY,
+    nome_produto VARCHAR(100) NOT NULL,
+    preco NUMERIC(10,2) NOT NULL,
+    preco_promocional NUMERIC(10,2) NOT NULL
 );
 
-CREATE OR REPLACE FUNCTION fn_auditar_mutacao()
-RETURNS trigger
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    IF TG_OP = 'INSERT' THEN
-        INSERT INTO auditoria_geral (tabela, operacao, usuario, dados_novos)
-        VALUES (TG_TABLE_NAME, TG_OP, session_user, to_jsonb(NEW));
-        RETURN NEW;
-    ELSIF TG_OP = 'UPDATE' THEN
-        INSERT INTO auditoria_geral (tabela, operacao, usuario, dados_antigos, dados_novos)
-        VALUES (TG_TABLE_NAME, TG_OP, session_user, to_jsonb(OLD), to_jsonb(NEW));
-        RETURN NEW;
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO auditoria_geral (tabela, operacao, usuario, dados_antigos)
-        VALUES (TG_TABLE_NAME, TG_OP, session_user, to_jsonb(OLD));
-        RETURN OLD;
-    END IF;
-    RETURN NULL;
-END;
-$$;
+-- Carga guiada por filtro estatístico
+INSERT INTO produtos_promocao (id_produto, nome_produto, preco, preco_promocional)
+SELECT 
+    id_produto,
+    nome_produto,
+    preco,
+    ROUND(preco * 0.90, 2)
+FROM produtos
+WHERE preco > (SELECT AVG(preco) FROM produtos);
+```
+
+**Exercício 7 — UPDATE utilizando subconsulta de agregação:**
+```sql
+UPDATE clientes
+SET limite_credito = limite_credito * 1.10
+WHERE id_cliente IN (
+    SELECT id_cliente
+    FROM pedidos
+    GROUP BY id_cliente
+    HAVING COUNT(id_pedido) >= 2
+);
+```
+
+**Exercício 8 — UPDATE baseado na média da própria categoria:**
+```sql
+UPDATE produtos p
+SET estoque = estoque + 5
+WHERE p.preco > (
+    SELECT AVG(sub.preco)
+    FROM produtos sub
+    WHERE sub.id_categoria = p.id_categoria
+);
+```
+
+**Exercício 9 — DELETE seguro utilizando NOT EXISTS:**
+```sql
+-- Verificação prévia mandatória
+SELECT id_cliente, nome 
+FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM pedidos p 
+    WHERE p.id_cliente = c.id_cliente
+);
+
+-- Execução da exclusão das tuplas órfãs
+DELETE FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM pedidos p 
+    WHERE p.id_cliente = c.id_cliente
+);
+```
+
+**Exercício 10 — Análise de desempenho com EXPLAIN ANALYZE:**
+```sql
+-- Consulta A: Avaliação via Operador IN
+EXPLAIN ANALYZE
+SELECT id_cliente, nome
+FROM clientes
+WHERE id_cliente IN (SELECT id_cliente FROM pedidos);
+
+-- Consulta B: Avaliação via Operador EXISTS
+EXPLAIN ANALYZE
+SELECT c.id_cliente, c.nome
+FROM clientes c
+WHERE EXISTS (
+    SELECT 1 
+    FROM pedidos p 
+    WHERE p.id_cliente = c.id_cliente
+);
 ```
 
 ---
 
-## Resolução Analítica dos Cadernos de Exercícios
+### Laboratório 4: Lista Consolidada com Hierarquia e Views
 
-Esta seção consolida a totalidade das atividades práticas da disciplina de TABD, apresentando para cada exercício: o enunciado formal, a motivação técnica e arquitetural, a consulta SQL canônica homologada, a análise conceitual detalhada e as armadilhas clássicas associadas.
+Base de dados de referência: `loja_exercicios`.
 
----
+**Exercício 1 — Relatório de vendas e hierarquia de supervisão (Self-Join):**
+```sql
+SELECT 
+    v.id_vendedor,
+    v.nome AS vendedor,
+    COALESCE(s.nome, 'Sem Supervisor') AS supervisor,
+    COUNT(DISTINCT p.id_pedido) AS total_pedidos,
+    COALESCE(SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0.0) / 100.0))), 0.00) AS faturamento_liquido
+FROM vendedores v
+LEFT JOIN vendedores s ON v.id_supervisor = s.id_vendedor
+LEFT JOIN pedidos p ON v.id_vendedor = p.id_vendedor
+LEFT JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+GROUP BY v.id_vendedor, v.nome, s.nome
+ORDER BY faturamento_liquido DESC;
+```
 
-### Caderno 1: Exercícios de JOINs no PostgreSQL
+**Exercício 2 — Produtos com preço acima da média de sua categoria:**
+```sql
+SELECT 
+    p.id_produto,
+    p.nome_produto,
+    c.nome_categoria,
+    p.preco,
+    ROUND(cat_avg.media_preco, 2) AS media_categoria,
+    ROUND(p.preco - cat_avg.media_preco, 2) AS diferenca
+FROM produtos p
+INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+INNER JOIN (
+    SELECT id_categoria, AVG(preco) AS media_preco
+    FROM produtos
+    GROUP BY id_categoria
+) AS cat_avg ON p.id_categoria = cat_avg.id_categoria
+WHERE p.preco > cat_avg.media_preco
+ORDER BY c.nome_categoria ASC, diferenca DESC;
+```
 
-Base de Dados: `loja_joins` (`clientes`, `vendedores`, `categorias`, `produtos`, `pedidos`, `itens_pedido`).
+**Exercício 3 — Identificação de clientes sem compras efetivas:**
+```sql
+-- Abordagem A: LEFT JOIN com checagem de NULL
+SELECT 
+    c.id_cliente,
+    c.nome,
+    c.cidade,
+    c.estado
+FROM clientes c
+LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente AND p.status IN ('Pago', 'Enviado')
+WHERE p.id_pedido IS NULL
+ORDER BY c.id_cliente ASC;
 
-#### Exercício 1.1: Cliente e seus Pedidos
-- **Enunciado:** Utilizando `INNER JOIN`, apresente o código do pedido, a data do pedido e o nome do cliente. Ordene o resultado pelo código do pedido.
-- **Motivação:** Integrar uma relação $`1:N`$ exibindo apenas pedidos com clientes íntegros, excluindo clientes sem histórico de compras.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_pedido,
-      p.data_pedido,
-      c.nome AS cliente
-  FROM pedidos p
-  INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-  ORDER BY p.id_pedido ASC;
-  ```
-- **Detalhamento:** O otimizador utiliza o índice de chave primária em `clientes.id_cliente` para cruzar os dados via *Nested Loop* ou *Hash Join*.
-- **Armadilha:** Omitir a cláusula de ordenação explícita (`ORDER BY`), gerando resultados com ordenação física instável dependente do plano de varredura.
+-- Abordagem B: NOT EXISTS correlacionado
+SELECT 
+    c.id_cliente,
+    c.nome,
+    c.cidade,
+    c.estado
+FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM pedidos p 
+    WHERE p.id_cliente = c.id_cliente 
+      AND p.status IN ('Pago', 'Enviado')
+)
+ORDER BY c.id_cliente ASC;
+```
 
-#### Exercício 1.2: Relatório Completo dos Itens Vendidos
-- **Enunciado:** Apresente o código do pedido, o nome do cliente, o nome do produto, a quantidade e o preço unitário. Envolva as tabelas `clientes`, `pedidos`, `itens_pedido` e `produtos`.
-- **Motivação:** Desnormalizar o modelo para a granularidade do item faturado, permitindo auditoria comercial minuciosa.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_pedido,
-      c.nome AS cliente,
-      pr.nome AS produto,
-      ip.quantidade,
-      ip.preco_unitario
-  FROM pedidos p
-  INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-  INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  INNER JOIN produtos pr ON ip.id_produto = pr.id_produto;
-  ```
-- **Detalhamento:** O PostgreSQL estabelece um plano em árvore unindo as quatro tabelas através de suas respectivas chaves primárias e estrangeiras.
+**Exercício 4 — Performance financeira por categoria com filtro de grupo (HAVING):**
+```sql
+SELECT 
+    cat.nome_categoria,
+    SUM(ip.quantidade) AS total_pecas_vendidas,
+    SUM(ip.quantidade * ip.preco_unitario) AS faturamento_bruto,
+    SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0.0) / 100.0))) AS faturamento_liquido,
+    ROUND(AVG(COALESCE(ip.desconto, 0.0)), 2) AS media_desconto_concedido
+FROM categorias cat
+INNER JOIN produtos pr ON cat.id_categoria = pr.id_categoria
+INNER JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
+INNER JOIN pedidos p ON ip.id_pedido = p.id_pedido
+WHERE p.status IN ('Pago', 'Enviado')
+GROUP BY cat.id_categoria, cat.nome_categoria
+HAVING SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0.0) / 100.0))) > 5000.00
+ORDER BY faturamento_liquido DESC;
+```
 
-#### Exercício 1.3: Clientes sem Pedidos
-- **Enunciado:** Utilizando `LEFT JOIN`, liste somente os clientes que nunca realizaram pedidos. Exiba o código e o nome do cliente.
-- **Motivação:** Executar a operação de diferença de conjuntos ($`\text{Clientes} \setminus \text{Pedidos}`$) via padrão anti-join.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      c.id_cliente,
-      c.nome
-  FROM clientes c
-  LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
-  WHERE p.id_pedido IS NULL;
-  ```
-- **Armadilha:** Filtrar `WHERE p.id_cliente IS NULL` em vez de avaliar a chave primária `p.id_pedido`. Embora funcione caso `id_cliente` seja não-nulo, a boa prática exige filtrar a chave primária da relação dependente.
+**Exercício 5 — Criação e consulta da visão gerencial de faturamento:**
+```sql
+-- DDL de materialização lógica da View
+CREATE OR REPLACE VIEW vw_faturamento_vendedores AS
+SELECT 
+    v.id_vendedor,
+    v.nome AS vendedor,
+    TO_CHAR(p.data_pedido, 'YYYY-MM') AS competencia,
+    SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0.0) / 100.0))) AS faturamento_liquido_mensal,
+    ROUND(SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0.0) / 100.0))) * (v.comissao / 100.0), 2) AS comissao_devida
+FROM vendedores v
+INNER JOIN pedidos p ON v.id_vendedor = p.id_vendedor
+INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+WHERE p.status IN ('Pago', 'Enviado')
+GROUP BY v.id_vendedor, v.nome, TO_CHAR(p.data_pedido, 'YYYY-MM'), v.comissao;
 
-#### Exercício 1.4: Produtos Nunca Vendidos
-- **Enunciado:** Utilizando `LEFT JOIN`, liste os produtos que ainda não aparecem em nenhum item de pedido. Exiba o código do produto, nome e preço.
-- **Motivação:** Identificar produtos sem saída comercial (*slow moving* ou estoque inativo).
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      pr.id_produto,
-      pr.nome,
-      pr.preco
-  FROM produtos pr
-  LEFT JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
-  WHERE ip.id_item IS NULL;
-  ```
-
-#### Exercício 1.5: Quantidade de Pedidos por Cliente
-- **Enunciado:** Mostre o nome de cada cliente e a quantidade de pedidos realizados. Todos os clientes devem aparecer, inclusive os que possuem zero pedidos. Utilize `LEFT JOIN`, `COUNT()` e `GROUP BY`.
-- **Motivação:** Agrupamento analítico preservando a dimensão base.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      c.nome AS cliente,
-      COUNT(p.id_pedido) AS quantidade_pedidos
-  FROM clientes c
-  LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
-  GROUP BY c.id_cliente, c.nome;
-  ```
-- **Armadilha Fatal:** Utilizar `COUNT(*)`. Para clientes sem pedidos, uma linha com campos nulos de pedidos é gerada pela junção externa, fazendo com que `COUNT(*)` retorne erroneamente `1` em vez de `0`.
-
-#### Exercício 1.6: Faturamento por Produto
-- **Enunciado:** Calcule quanto cada produto gerou em vendas (`quantidade * preco_unitario`). Exiba produto e faturamento total, ordenando do maior para o menor.
-- **Motivação:** Agregação financeira com produto de atributos da linha.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      pr.nome AS produto,
-      SUM(ip.quantidade * ip.preco_unitario) AS faturamento_total
-  FROM produtos pr
-  INNER JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
-  GROUP BY pr.id_produto, pr.nome
-  ORDER BY faturamento_total DESC;
-  ```
-
-#### Exercício 1.7: Total de Cada Pedido
-- **Enunciado:** Calcule o valor total de cada pedido somando os subtotais de seus itens. Exiba código do pedido, data, nome do cliente e valor total.
-- **Motivação:** Consolidação na granularidade do cabeçalho de venda.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_pedido,
-      p.data_pedido,
-      c.nome AS cliente,
-      SUM(ip.quantidade * ip.preco_unitario) AS valor_total
-  FROM pedidos p
-  INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-  INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  GROUP BY p.id_pedido, p.data_pedido, c.nome
-  ORDER BY p.id_pedido ASC;
-  ```
-
-#### Exercício 1.8: Produtos Vendidos para Clientes de São Paulo
-- **Enunciado:** Liste os produtos vendidos para clientes cuja cidade seja São Paulo. Exiba cliente, cidade, produto e quantidade comprada.
-- **Motivação:** Junção encadeada combinada com filtragem de predicado escalar em dimensão periférica.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      c.nome AS cliente,
-      c.cidade,
-      pr.nome AS produto,
-      ip.quantidade
-  FROM clientes c
-  INNER JOIN pedidos p ON c.id_cliente = p.id_cliente
-  INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  INNER JOIN produtos pr ON ip.id_produto = pr.id_produto
-  WHERE c.cidade = 'São Paulo';
-  ```
-
-#### Exercício 1.9: Faturamento por Vendedor
-- **Enunciado:** Mostre o nome do vendedor e seu faturamento total. Todos os vendedores devem aparecer; quando não houver venda, o faturamento deve ser 0. Utilize `COALESCE()`.
-- **Motivação:** Junção externa multitabelas preservando a entidade inicial com sanitização de somas nulas.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      v.nome AS vendedor,
-      COALESCE(SUM(ip.quantidade * ip.preco_unitario), 0.00) AS faturamento_total
-  FROM vendedores v
-  LEFT JOIN pedidos p ON v.id_vendedor = p.id_vendedor
-  LEFT JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  GROUP BY v.id_vendedor, v.nome
-  ORDER BY faturamento_total DESC;
-  ```
-- **Armadilha:** Inserir um `INNER JOIN` entre `pedidos` e `itens_pedido`. Se um `INNER JOIN` for encadeado após um `LEFT JOIN`, os vendedores sem pedidos serão totalmente descartados. Toda a cadeia dependente deve ser externa (`LEFT JOIN`).
-
-#### Exercício 1.10: Desafio – Relatório Geral de Vendas
-- **Enunciado:** Monte uma consulta que apresente: pedido, data, cliente, cidade, estado, vendedor, produto, categoria, quantidade, preço unitário e subtotal (`quantidade * preco_unitario`). Ordene por pedido e produto.
-- **Motivação:** Reconstrução integral da estrela relacional envolvendo todas as 6 tabelas do esquema.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_pedido AS pedido,
-      p.data_pedido AS data,
-      c.nome AS cliente,
-      c.cidade,
-      c.estado,
-      v.nome AS vendedor,
-      pr.nome AS produto,
-      cat.nome AS categoria,
-      ip.quantidade,
-      ip.preco_unitario,
-      (ip.quantidade * ip.preco_unitario) AS subtotal
-  FROM pedidos p
-  INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-  INNER JOIN vendedores v ON p.id_vendedor = v.id_vendedor
-  INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  INNER JOIN produtos pr ON ip.id_produto = pr.id_produto
-  INNER JOIN categorias cat ON pr.id_categoria = cat.id_categoria
-  ORDER BY p.id_pedido ASC, pr.nome ASC;
-  ```
+-- Consulta subordinada à visão para o primeiro trimestre de 2026
+SELECT 
+    vendedor,
+    competencia,
+    faturamento_liquido_mensal,
+    comissao_devida
+FROM vw_faturamento_vendedores
+WHERE competencia BETWEEN '2026-01' AND '2026-03'
+ORDER BY competencia ASC, comissao_devida DESC;
+```
 
 ---
 
-### Caderno 2: Subconsultas - Parte 1
+### Laboratório 5: Stored Procedures Transacionais
 
-Base de Dados: Esquema comercial de subconsultas (`clientes`, `vendedores`, `categorias`, `produtos`, `pedidos`, `itens_pedido`).
+Implementação de procedimentos com validações rigorosas de consistência e diagnóstico em PL/pgSQL.
 
-#### Exercício 2.1: Subconsulta Escalar com Média Geral
-- **Enunciado:** Liste todos os produtos cujo preço seja maior que a média de preços de todos os produtos.
-- **Solução SQL:**
-  ```sql
-  SELECT id_produto, nome_produto, preco
-  FROM produtos
-  WHERE preco > (SELECT AVG(preco) FROM produtos);
-  ```
-
-#### Exercício 2.2: Subconsulta Escalar com Preço Máximo
-- **Enunciado:** Liste o produto ou os produtos que possuem o maior preço cadastrado via `MAX()`.
-- **Solução SQL:**
-  ```sql
-  SELECT id_produto, nome_produto, preco
-  FROM produtos
-  WHERE preco = (SELECT MAX(preco) FROM produtos);
-  ```
-- **Detalhamento:** Retorna empates caso múltiplos produtos compartilhem o valor teto.
-
-#### Exercício 2.3: Subconsulta Escalar com Preço Mínimo
-- **Enunciado:** Liste o produto ou os produtos que possuem o menor preço cadastrado via `MIN()`.
-- **Solução SQL:**
-  ```sql
-  SELECT id_produto, nome_produto, preco
-  FROM produtos
-  WHERE preco = (SELECT MIN(preco) FROM produtos);
-  ```
-
-#### Exercício 2.4: Subconsulta no SELECT (Média Geral)
-- **Enunciado:** Exiba nome e preço de cada produto e, em uma terceira coluna, apresente a média geral de preços.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      nome_produto,
-      preco,
-      ROUND((SELECT AVG(preco) FROM produtos), 2) AS media_geral
-  FROM produtos;
-  ```
-
-#### Exercício 2.5: Subconsulta no SELECT com Cálculo de Diferencial
-- **Enunciado:** Exiba nome, preço, média geral e a diferença entre o preço do produto e a média geral.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      nome_produto,
-      preco,
-      ROUND((SELECT AVG(preco) FROM produtos), 2) AS media_geral,
-      ROUND(preco - (SELECT AVG(preco) FROM produtos), 2) AS diferenca
-  FROM produtos;
-  ```
-
-#### Exercício 2.6: Operador IN com Clientes Ativos
-- **Enunciado:** Liste os clientes que realizaram pelo menos um pedido utilizando `IN`.
-- **Solução SQL:**
-  ```sql
-  SELECT id_cliente, nome
-  FROM clientes
-  WHERE id_cliente IN (SELECT id_cliente FROM pedidos);
-  ```
-
-#### Exercício 2.7: Operador IN com Produtos Vendidos
-- **Enunciado:** Liste os produtos que já apareceram em algum item de pedido utilizando `IN`.
-- **Solução SQL:**
-  ```sql
-  SELECT id_produto, nome_produto
-  FROM produtos
-  WHERE id_produto IN (SELECT id_produto FROM itens_pedido);
-  ```
-
-#### Exercício 2.8: Operador NOT IN com Clientes sem Pedidos
-- **Enunciado:** Liste os clientes que não aparecem em nenhum pedido utilizando `NOT IN`.
-- **Solução SQL:**
-  ```sql
-  SELECT id_cliente, nome
-  FROM clientes
-  WHERE id_cliente NOT IN (SELECT id_cliente FROM pedidos);
-  ```
-- **Nota Teórica:** Seguro neste banco pois `pedidos.id_cliente` possui constraint `NOT NULL`.
-
-#### Exercício 2.9: Operador NOT EXISTS (Equivalente Defensivo)
-- **Enunciado:** Reescreva o exercício anterior utilizando `NOT EXISTS`.
-- **Solução SQL:**
-  ```sql
-  SELECT c.id_cliente, c.nome
-  FROM clientes c
-  WHERE NOT EXISTS (
-      SELECT 1 
-      FROM pedidos p 
-      WHERE p.id_cliente = c.id_cliente
-  );
-  ```
-
-#### Exercício 2.10: Operador EXISTS com Vendedores Ativos
-- **Enunciado:** Liste os vendedores que possuem pelo menos um pedido registrado utilizando `EXISTS`.
-- **Solução SQL:**
-  ```sql
-  SELECT v.id_vendedor, v.nome
-  FROM vendedores v
-  WHERE EXISTS (
-      SELECT 1 
-      FROM pedidos p 
-      WHERE p.id_vendedor = v.id_vendedor
-  );
-  ```
-
-#### Exercício 2.11: Operador NOT EXISTS com Produtos Nunca Vendidos
-- **Enunciado:** Liste os produtos que nunca foram vendidos utilizando `NOT EXISTS`.
-- **Solução SQL:**
-  ```sql
-  SELECT pr.id_produto, pr.nome_produto
-  FROM produtos pr
-  WHERE NOT EXISTS (
-      SELECT 1 
-      FROM itens_pedido ip 
-      WHERE ip.id_produto = pr.id_produto
-  );
-  ```
-
-#### Exercício 2.12: Operador IN com Múltiplas Tabelas
-- **Enunciado:** Liste os clientes que compraram o produto "Notebook Dell".
-- **Solução SQL:**
-  ```sql
-  SELECT id_cliente, nome
-  FROM clientes
-  WHERE id_cliente IN (
-      SELECT p.id_cliente
-      FROM pedidos p
-      WHERE p.id_pedido IN (
-          SELECT ip.id_pedido
-          FROM itens_pedido ip
-          WHERE ip.id_produto = (
-              SELECT pr.id_produto 
-              FROM produtos pr 
-              WHERE pr.nome_produto = 'Notebook Dell'
-          )
-      )
-  );
-  ```
-
-#### Exercício 2.13: Operador ANY com Categoria Telefonia
-- **Enunciado:** Liste os produtos cujo preço seja maior que o preço de pelo menos um produto da categoria Telefonia (`> ANY`).
-- **Solução SQL:**
-  ```sql
-  SELECT nome_produto, preco
-  FROM produtos
-  WHERE preco > ANY (
-      SELECT p.preco
-      FROM produtos p
-      INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-      WHERE c.nome_categoria = 'Telefonia'
-  );
-  ```
-
-#### Exercício 2.14: Operador ALL com Categoria Acessórios
-- **Enunciado:** Liste os produtos cujo preço seja maior que o preço de todos os produtos da categoria Acessórios (`> ALL`).
-- **Solução SQL:**
-  ```sql
-  SELECT nome_produto, preco
-  FROM produtos
-  WHERE preco > ALL (
-      SELECT p.preco
-      FROM produtos p
-      INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-      WHERE c.nome_categoria = 'Acessórios'
-  );
-  ```
-
-#### Exercício 2.15: Operador ANY com Disparidade Salarial
-- **Enunciado:** Liste os vendedores cujo salário seja maior que pelo menos um salário existente entre os demais vendedores.
-- **Solução SQL:**
-  ```sql
-  SELECT nome, salario
-  FROM vendedores
-  WHERE salario > ANY (SELECT salario FROM vendedores);
-  ```
-- **Detalhamento:** Exclui unicamente o vendedor que detém o menor salário de toda a equipe.
-
-#### Exercício 2.16: Operador ALL com Teto Salarial
-- **Enunciado:** Liste o vendedor ou os vendedores cujo salário seja maior ou igual a todos os salários cadastrados (`>= ALL`).
-- **Solução SQL:**
-  ```sql
-  SELECT nome, salario
-  FROM vendedores
-  WHERE salario >= ALL (SELECT salario FROM vendedores);
-  ```
-
-#### Exercício 2.17: Subconsulta Correlacionada de Preço por Categoria
-- **Enunciado:** Liste os produtos cujo preço seja maior que a média de preços de sua própria categoria.
-- **Solução SQL:**
-  ```sql
-  SELECT p.id_produto, p.nome_produto, p.preco, p.id_categoria
-  FROM produtos p
-  WHERE p.preco > (
-      SELECT AVG(sub.preco)
-      FROM produtos sub
-      WHERE sub.id_categoria = p.id_categoria
-  );
-  ```
-
-#### Exercício 2.18: Subconsulta Correlacionada de Estoque por Categoria
-- **Enunciado:** Liste os produtos cujo estoque seja maior que a média de estoque de sua própria categoria.
-- **Solução SQL:**
-  ```sql
-  SELECT p.id_produto, p.nome_produto, p.estoque, p.id_categoria
-  FROM produtos p
-  WHERE p.estoque > (
-      SELECT AVG(sub.estoque)
-      FROM produtos sub
-      WHERE sub.id_categoria = p.id_categoria
-  );
-  ```
-
-#### Exercício 2.19: Subconsulta Correlacionada de Limite de Crédito Regional
-- **Enunciado:** Liste os clientes cujo limite de crédito seja maior que a média de limite de crédito dos clientes do mesmo estado.
-- **Solução SQL:**
-  ```sql
-  SELECT c.id_cliente, c.nome, c.estado, c.limite_credito
-  FROM clientes c
-  WHERE c.limite_credito > (
-      SELECT AVG(sub.limite_credito)
-      FROM clientes sub
-      WHERE sub.estado = c.estado
-  );
-  ```
-
-#### Exercício 2.20: Subconsulta Correlacionada de Preço Máximo por Categoria
-- **Enunciado:** Liste, para cada categoria, o produto ou os produtos de maior preço daquela categoria.
-- **Solução SQL:**
-  ```sql
-  SELECT p.id_produto, p.nome_produto, p.preco, p.id_categoria
-  FROM produtos p
-  WHERE p.preco = (
-      SELECT MAX(sub.preco)
-      FROM produtos sub
-      WHERE sub.id_categoria = p.id_categoria
-  );
-  ```
-
----
-
-### Caderno 3: Subconsultas Avançadas - Parte 2
-
-#### Exercício 3.1: Subconsulta no FROM — Média por Categoria
-- **Enunciado:** Calcule, em uma subconsulta no `FROM`, o preço médio dos produtos de cada categoria. Na consulta externa, exiba apenas as categorias com média superior a R$ 1.000,00.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      cat.nome_categoria,
-      ROUND(resumo.media_preco, 2) AS media_preco
-  FROM (
-      SELECT id_categoria, AVG(preco) AS media_preco
-      FROM produtos
-      GROUP BY id_categoria
-  ) AS resumo
-  INNER JOIN categorias cat ON resumo.id_categoria = cat.id_categoria
-  WHERE resumo.media_preco > 1000.00;
-  ```
-
-#### Exercício 3.2: Tabela Derivada — Total de Cada Pedido
-- **Enunciado:** Crie uma subconsulta no `FROM` que calcule o valor total de cada pedido via `SUM(quantidade * preco_unitario)`. Na externa, exiba os pedidos cujo total supere R$ 3.000,00.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      totais.id_pedido,
-      totais.total_pedido
-  FROM (
-      SELECT id_pedido, SUM(quantidade * preco_unitario) AS total_pedido
-      FROM itens_pedido
-      GROUP BY id_pedido
-  ) AS totais
-  WHERE totais.total_pedido > 3000.00
-  ORDER BY totais.total_pedido DESC;
-  ```
-
-#### Exercício 3.3: Tabela Derivada Combinada com Múltiplos JOINs
-- **Enunciado:** Utilizando uma tabela derivada, calcule o total de cada pedido. Relacione o resultado com `pedidos` e `clientes` para exibir: código do pedido, nome do cliente, data do pedido e valor total.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_pedido,
-      c.nome AS cliente,
-      p.data_pedido,
-      totais.valor_total
-  FROM (
-      SELECT id_pedido, SUM(quantidade * preco_unitario) AS valor_total
-      FROM itens_pedido
-      GROUP BY id_pedido
-  ) AS totais
-  INNER JOIN pedidos p ON totais.id_pedido = p.id_pedido
-  INNER JOIN clientes c ON p.id_cliente = c.id_cliente
-  ORDER BY p.id_pedido ASC;
-  ```
-
-#### Exercício 3.4: Clientes que Gastaram Acima da Média Geral
-- **Enunciado:** Calcule o total gasto por cada cliente via subconsulta. Exiba os clientes cujo total gasto seja superior à média de gastos de todos os clientes que compraram.
-- **Solução SQL:**
-  ```sql
-  WITH gastos_cliente AS (
-      SELECT p.id_cliente, SUM(ip.quantidade * ip.preco_unitario) AS total_gasto
-      FROM pedidos p
-      INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-      GROUP BY p.id_cliente
-  )
-  SELECT 
-      c.id_cliente,
-      c.nome AS cliente,
-      gc.total_gasto
-  FROM gastos_cliente gc
-  INNER JOIN clientes c ON gc.id_cliente = c.id_cliente
-  WHERE gc.total_gasto > (SELECT AVG(total_gasto) FROM gastos_cliente);
-  ```
-
-#### Exercício 3.5: Categoria com Maior Preço Médio
-- **Enunciado:** Determine qual categoria possui o maior preço médio. Utilize uma subconsulta no `FROM` para calcular as médias e outra para identificar o maior valor.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      c.nome_categoria,
-      ROUND(medias.media_preco, 2) AS maior_media
-  FROM (
-      SELECT id_categoria, AVG(preco) AS media_preco
-      FROM produtos
-      GROUP BY id_categoria
-  ) AS medias
-  INNER JOIN categorias c ON medias.id_categoria = c.id_categoria
-  WHERE medias.media_preco = (
-      SELECT MAX(sub_medias.media_preco)
-      FROM (
-          SELECT AVG(preco) AS media_preco
-          FROM produtos
-          GROUP BY id_categoria
-      ) AS sub_medias
-  );
-  ```
-
-#### Exercício 3.6: INSERT com Subconsulta
-- **Enunciado:** Crie a tabela `produtos_promocao` (`id_produto`, `nome_produto`, `preco`, `preco_promocional`). Insira todos os produtos com preço acima da média geral, aplicando 10% de desconto no campo promocional.
-- **Solução SQL:**
-  ```sql
-  CREATE TABLE produtos_promocao (
-      id_produto INTEGER PRIMARY KEY,
-      nome_produto VARCHAR(100) NOT NULL,
-      preco NUMERIC(10,2) NOT NULL,
-      preco_promocional NUMERIC(10,2) NOT NULL
-  );
-
-  INSERT INTO produtos_promocao (id_produto, nome_produto, preco, preco_promocional)
-  SELECT 
-      id_produto,
-      nome_produto,
-      preco,
-      ROUND(preco * 0.90, 2)
-  FROM produtos
-  WHERE preco > (SELECT AVG(preco) FROM produtos);
-  ```
-
-#### Exercício 3.7: UPDATE com Subconsulta em Múltiplos Pedidos
-- **Enunciado:** Aumente em 10% o limite de crédito dos clientes que já realizaram pelo menos dois pedidos.
-- **Solução SQL:**
-  ```sql
-  -- Consulta de conferência prévia
-  SELECT id_cliente, nome, limite_credito
-  FROM clientes
-  WHERE id_cliente IN (
-      SELECT id_cliente
-      FROM pedidos
-      GROUP BY id_cliente
-      HAVING COUNT(*) >= 2
-  );
-
-  -- Atualização atômica
-  UPDATE clientes
-  SET limite_credito = limite_credito * 1.10
-  WHERE id_cliente IN (
-      SELECT id_cliente
-      FROM pedidos
-      GROUP BY id_cliente
-      HAVING COUNT(*) >= 2
-  );
-  ```
-
-#### Exercício 3.8: UPDATE Correlacionado por Média de Categoria
-- **Enunciado:** Atualize o estoque dos produtos cujo preço seja superior à média de preço de sua própria categoria, acrescentando 5 unidades.
-- **Solução SQL:**
-  ```sql
-  UPDATE produtos p
-  SET estoque = estoque + 5
-  WHERE p.preco > (
-      SELECT AVG(sub.preco)
-      FROM produtos sub
-      WHERE sub.id_categoria = p.id_categoria
-  );
-  ```
-
-#### Exercício 3.9: DELETE com NOT EXISTS e Validação Prévia
-- **Enunciado:** Remova todos os clientes que nunca realizaram pedidos via `NOT EXISTS`. Escreva um `SELECT` equivalente de validação prévia.
-- **Solução SQL:**
-  ```sql
-  -- Validação prévia
-  SELECT c.id_cliente, c.nome
-  FROM clientes c
-  WHERE NOT EXISTS (
-      SELECT 1 
-      FROM pedidos p 
-      WHERE p.id_cliente = c.id_cliente
-  );
-
-  -- Exclusão segura
-  DELETE FROM clientes c
-  WHERE NOT EXISTS (
-      SELECT 1 
-      FROM pedidos p 
-      WHERE p.id_cliente = c.id_cliente
-  );
-  ```
-
-#### Exercício 3.10: Análise de Desempenho com EXPLAIN ANALYZE
-- **Enunciado:** Compare duas consultas que retornam clientes com pedidos: uma com `IN` e outra com `EXISTS`. Avalie planos de execução via `EXPLAIN ANALYZE`.
-- **Solução SQL:**
-  ```sql
-  -- Consulta A: Operador IN
-  EXPLAIN ANALYZE
-  SELECT id_cliente, nome
-  FROM clientes
-  WHERE id_cliente IN (SELECT id_cliente FROM pedidos);
-
-  -- Consulta B: Operador EXISTS
-  EXPLAIN ANALYZE
-  SELECT c.id_cliente, c.nome
-  FROM clientes c
-  WHERE EXISTS (SELECT 1 FROM pedidos p WHERE p.id_cliente = c.id_cliente);
-  ```
-- **Conclusão de Engenharia:** Em versões modernas do PostgreSQL, o planejador CBO reescreve ambas as formulações para o mesmo nó de execução físico: um `Hash Semi Join` (ou `Merge Semi Join`), equiparando o custo computacional e o tempo de resposta.
-
----
-
-### Caderno 4: Lista de Exercícios Integrada de Pontos
-
-Base de Dados: `loja_exercicios`.
-
-#### Exercício 4.1: Hierarquia de Vendedores e Faturamento Líquido
-- **Enunciado:** Relacione vendedores e seus respectivos supervisores via self-join (tratando nulos como `'Sem Supervisor'`). Calcule a quantidade de pedidos e o faturamento total líquido (aplicando a coluna percentual `desconto` de `itens_pedido`). Vendedores sem vendas devem constar com valores zerados. Ordene por faturamento decrescente.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      v.id_vendedor,
-      v.nome AS vendedor,
-      COALESCE(sup.nome, 'Sem Supervisor') AS supervisor,
-      COUNT(DISTINCT p.id_pedido) AS total_pedidos,
-      COALESCE(SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0) / 100.0))), 0.00) AS faturamento_liquido
-  FROM vendedores v
-  LEFT JOIN vendedores sup ON v.id_supervisor = sup.id_vendedor
-  LEFT JOIN pedidos p ON v.id_vendedor = p.id_vendedor
-  LEFT JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  GROUP BY v.id_vendedor, v.nome, sup.nome
-  ORDER BY faturamento_liquido DESC;
-  ```
-
-#### Exercício 4.2: Produtos Acima da Média de Categoria com Diferencial
-- **Enunciado:** Compare o preço de cada produto com a média de sua respectiva categoria usando subconsulta correlacionada no `WHERE`. Exiba: código do produto, nome do produto, nome da categoria, preço unitário, média da categoria e o diferencial acima da média. Desconsidere produtos sem categoria.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_produto,
-      p.nome_produto,
-      c.nome_categoria,
-      p.preco,
-      ROUND((
-          SELECT AVG(sub.preco)
-          FROM produtos sub
-          WHERE sub.id_categoria = p.id_categoria
-      ), 2) AS media_categoria,
-      ROUND(p.preco - (
-          SELECT AVG(sub.preco)
-          FROM produtos sub
-          WHERE sub.id_categoria = p.id_categoria
-      ), 2) AS diferenca
-  FROM produtos p
-  INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-  WHERE p.id_categoria IS NOT NULL
-    AND p.preco > (
-        SELECT AVG(sub.preco)
-        FROM produtos sub
-        WHERE sub.id_categoria = p.id_categoria
-    )
-  ORDER BY diferenca DESC;
-  ```
-
-#### Exercício 4.3: Clientes sem Compras Efetivas (Dupla Abordagem)
-- **Enunciado:** Identifique clientes que não possuem pedidos válidos (status `'Pago'` ou `'Enviado'`). Resolva por duas técnicas: `LEFT JOIN` com `IS NULL` e `NOT EXISTS`.
-- **Solução SQL (Abordagem A - LEFT JOIN):**
-  ```sql
-  SELECT c.id_cliente, c.nome, c.cidade
-  FROM clientes c
-  LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente 
-                     AND p.status IN ('Pago', 'Enviado')
-  WHERE p.id_pedido IS NULL;
-  ```
-- **Solução SQL (Abordagem B - NOT EXISTS):**
-  ```sql
-  SELECT c.id_cliente, c.nome, c.cidade
-  FROM clientes c
-  WHERE NOT EXISTS (
-      SELECT 1 
-      FROM pedidos p 
-      WHERE p.id_cliente = c.id_cliente 
-        AND p.status IN ('Pago', 'Enviado')
-  );
-  ```
-
-#### Exercício 4.4: Desempenho por Categoria com Filtro de Grupo (HAVING)
-- **Enunciado:** Integre `categorias`, `produtos`, `itens_pedido` e `pedidos`. Considere apenas pedidos `'Pago'` ou `'Enviado'`. Calcule: quantidade total de peças, faturamento bruto e faturamento líquido após desconto. Exiba apenas categorias com faturamento líquido superior a R$ 5.000,00, ordenando decrescentemente.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      cat.id_categoria,
-      cat.nome_categoria,
-      SUM(ip.quantidade) AS total_pecas,
-      SUM(ip.quantidade * ip.preco_unitario) AS faturamento_bruto,
-      ROUND(SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0) / 100.0))), 2) AS faturamento_liquido
-  FROM categorias cat
-  INNER JOIN produtos pr ON cat.id_categoria = pr.id_categoria
-  INNER JOIN itens_pedido ip ON pr.id_produto = ip.id_produto
-  INNER JOIN pedidos p ON ip.id_pedido = p.id_pedido
-  WHERE p.status IN ('Pago', 'Enviado')
-  GROUP BY cat.id_categoria, cat.nome_categoria
-  HAVING SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0) / 100.0))) > 5000.00
-  ORDER BY faturamento_liquido DESC;
-  ```
-
-#### Exercício 4.5: Visão de Comissões e Validação Trimestral
-- **Enunciado:** Crie a visão `vw_faturamento_vendedores` consolidando faturamento mensal líquido e comissões devidas (`faturamento_liquido * (comissao / 100.0)`) para pedidos efetivados (`'Pago'` e `'Enviado'`), com formato de competência `YYYY-MM`. Em seguida, consulte o primeiro trimestre de 2026.
-- **Solução SQL:**
-  ```sql
-  CREATE OR REPLACE VIEW vw_faturamento_vendedores AS
-  SELECT 
-      v.id_vendedor,
-      v.nome AS vendedor,
-      TO_CHAR(p.data_pedido, 'YYYY-MM') AS competencia,
-      ROUND(SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0) / 100.0))), 2) AS faturamento_liquido,
-      v.comissao AS taxa_comissao,
-      ROUND(SUM(ip.quantidade * ip.preco_unitario * (1.0 - (COALESCE(ip.desconto, 0) / 100.0))) * (v.comissao / 100.0), 2) AS comissao_devida
-  FROM vendedores v
-  INNER JOIN pedidos p ON v.id_vendedor = p.id_vendedor
-  INNER JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
-  WHERE p.status IN ('Pago', 'Enviado')
-  GROUP BY v.id_vendedor, v.nome, TO_CHAR(p.data_pedido, 'YYYY-MM'), v.comissao;
-
-  -- Consulta de validação para o 1º Trimestre de 2026
-  SELECT *
-  FROM vw_faturamento_vendedores
-  WHERE competencia BETWEEN '2026-01' AND '2026-03'
-  ORDER BY competencia ASC, comissao_devida DESC;
-  ```
-
----
-
-### Caderno 5: Stored Procedures em PL/pgSQL
-
-Base de Dados: `banco_procedures` (`clientes`, `funcionarios`, `produtos`, `pedidos`, `itens_pedido`).
-
-#### Exercício 5.1: aumentar_salario_funcionario
+**Exercício 1 — aumentar_salario_funcionario:**
 ```sql
 CREATE OR REPLACE PROCEDURE aumentar_salario_funcionario(
     p_id_funcionario INT,
@@ -2067,15 +1699,15 @@ BEGIN
     WHERE id_funcionario = p_id_funcionario;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Funcionário com ID % inexistente.', p_id_funcionario;
+        RAISE EXCEPTION 'Funcionário com ID % não localizado.', p_id_funcionario;
     END IF;
 
-    RAISE NOTICE 'Reajuste de % por cento aplicado ao funcionário %.', p_percentual, p_id_funcionario;
+    RAISE NOTICE 'Salário do funcionário % atualizado com sucesso.', p_id_funcionario;
 END;
 $$;
 ```
 
-#### Exercício 5.2: atualizar_estoque_produto
+**Exercício 2 — atualizar_estoque_produto:**
 ```sql
 CREATE OR REPLACE PROCEDURE atualizar_estoque_produto(
     p_id_produto INT,
@@ -2085,7 +1717,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     IF p_novo_estoque IS NULL OR p_novo_estoque < 0 THEN
-        RAISE EXCEPTION 'A quantidade em estoque não pode ser negativa: %', p_novo_estoque;
+        RAISE EXCEPTION 'Quantidade de estoque não pode ser negativa: %', p_novo_estoque;
     END IF;
 
     UPDATE produtos
@@ -2096,12 +1728,12 @@ BEGIN
         RAISE EXCEPTION 'Produto com ID % inexistente.', p_id_produto;
     END IF;
 
-    RAISE NOTICE 'Estoque do produto % redefinido para % unidades.', p_id_produto, p_novo_estoque;
+    RAISE NOTICE 'Estoque do produto % atualizado para % unidades.', p_id_produto, p_novo_estoque;
 END;
 $$;
 ```
 
-#### Exercício 5.3: adicionar_saldo_cliente
+**Exercício 3 — adicionar_saldo_cliente:**
 ```sql
 CREATE OR REPLACE PROCEDURE adicionar_saldo_cliente(
     p_id_cliente INT,
@@ -2111,7 +1743,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     IF p_valor IS NULL OR p_valor <= 0 THEN
-        RAISE EXCEPTION 'Valor a adicionar deve ser estritamente positivo: %', p_valor;
+        RAISE EXCEPTION 'Montante a ser creditado deve ser estritamente positivo: %', p_valor;
     END IF;
 
     UPDATE clientes
@@ -2119,15 +1751,15 @@ BEGIN
     WHERE id_cliente = p_id_cliente;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Cliente com ID % inexistente.', p_id_cliente;
+        RAISE EXCEPTION 'Cliente % não encontrado para crédito.', p_id_cliente;
     END IF;
 
-    RAISE NOTICE 'Crédito de % adicionado ao saldo do cliente %.', p_valor, p_id_cliente;
+    RAISE NOTICE 'Crédito de R$ % consolidado para o cliente %.', p_valor, p_id_cliente;
 END;
 $$;
 ```
 
-#### Exercício 5.4: descontar_saldo_cliente
+**Exercício 4 — descontar_saldo_cliente:**
 ```sql
 CREATE OR REPLACE PROCEDURE descontar_saldo_cliente(
     p_id_cliente INT,
@@ -2136,35 +1768,35 @@ CREATE OR REPLACE PROCEDURE descontar_saldo_cliente(
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    v_saldo_atual DECIMAL(10,2);
+    v_saldo_atual clientes.saldo%TYPE;
 BEGIN
     IF p_valor IS NULL OR p_valor <= 0 THEN
-        RAISE EXCEPTION 'Valor de débito deve ser estritamente positivo: %', p_valor;
+        RAISE EXCEPTION 'Montante a debitar deve ser estritamente positivo: %', p_valor;
     END IF;
 
     SELECT saldo INTO v_saldo_atual
     FROM clientes
     WHERE id_cliente = p_id_cliente
-    FOR UPDATE; -- Bloqueio pessimista de concorrência
+    FOR UPDATE;
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'Cliente com ID % inexistente.', p_id_cliente;
     END IF;
 
     IF v_saldo_atual < p_valor THEN
-        RAISE EXCEPTION 'Operação cancelada: Saldo insuficiente (Atual: %, Débito: %).', v_saldo_atual, p_valor;
+        RAISE EXCEPTION 'Operação abortada: Saldo insuficiente (Atual: %, Débito: %)', v_saldo_atual, p_valor;
     END IF;
 
     UPDATE clientes
     SET saldo = saldo - p_valor
     WHERE id_cliente = p_id_cliente;
 
-    RAISE NOTICE 'Débito de % realizado com sucesso para o cliente %.', p_valor, p_id_cliente;
+    RAISE NOTICE 'Débito processado com sucesso para o cliente %.', p_id_cliente;
 END;
 $$;
 ```
 
-#### Exercício 5.5: cadastrar_produto
+**Exercício 5 — cadastrar_produto:**
 ```sql
 CREATE OR REPLACE PROCEDURE cadastrar_produto(
     p_nome VARCHAR(100),
@@ -2175,25 +1807,23 @@ CREATE OR REPLACE PROCEDURE cadastrar_produto(
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    IF p_nome IS NULL OR TRIM(p_nome) = '' THEN
-        RAISE EXCEPTION 'Nome do produto não pode ser vazio.';
-    END IF;
     IF p_preco IS NULL OR p_preco <= 0 THEN
-        RAISE EXCEPTION 'Preço do produto deve ser positivo: %', p_preco;
+        RAISE EXCEPTION 'Preço unitário deve ser estritamente positivo: %', p_preco;
     END IF;
+
     IF p_estoque IS NULL OR p_estoque < 0 THEN
-        RAISE EXCEPTION 'Estoque inicial não pode ser negativo: %', p_estoque;
+        RAISE EXCEPTION 'Estoque não pode assumir valores negativos: %', p_estoque;
     END IF;
 
     INSERT INTO produtos (nome, categoria, preco, estoque)
-    VALUES (p_nome, p_categoria, p_preco, p_estoque);
+    VALUES (TRIM(p_nome), TRIM(p_categoria), p_preco, p_estoque);
 
-    RAISE NOTICE 'Produto "%" cadastrado com sucesso.', p_nome;
+    RAISE NOTICE 'Produto "%" incluído com sucesso.', p_nome;
 END;
 $$;
 ```
 
-#### Exercício 5.6: cancelar_pedido
+**Exercício 6 — cancelar_pedido:**
 ```sql
 CREATE OR REPLACE PROCEDURE cancelar_pedido(
     p_id_pedido INT
@@ -2206,15 +1836,15 @@ BEGIN
     WHERE id_pedido = p_id_pedido;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Pedido com ID % inexistente.', p_id_pedido;
+        RAISE EXCEPTION 'Pedido com ID % não localizado.', p_id_pedido;
     END IF;
 
-    RAISE NOTICE 'Pedido % alterado para o status CANCELADO.', p_id_pedido;
+    RAISE NOTICE 'Pedido % cancelado com sucesso.', p_id_pedido;
 END;
 $$;
 ```
 
-#### Exercício 5.7: fechar_pedido
+**Exercício 7 — fechar_pedido:**
 ```sql
 CREATE OR REPLACE PROCEDURE fechar_pedido(
     p_id_pedido INT
@@ -2222,30 +1852,31 @@ CREATE OR REPLACE PROCEDURE fechar_pedido(
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    v_status_atual VARCHAR(30);
+    v_status_atual pedidos.status%TYPE;
 BEGIN
     SELECT status INTO v_status_atual
     FROM pedidos
-    WHERE id_pedido = p_id_pedido;
+    WHERE id_pedido = p_id_pedido
+    FOR UPDATE;
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'Pedido com ID % inexistente.', p_id_pedido;
     END IF;
 
     IF v_status_atual <> 'ABERTO' THEN
-        RAISE EXCEPTION 'Transição ilegal: Apenas pedidos no status ABERTO podem ser fechados. Status atual: %', v_status_atual;
+        RAISE EXCEPTION 'O pedido % não pode ser fechado pois seu status atual é %.', p_id_pedido, v_status_atual;
     END IF;
 
     UPDATE pedidos
     SET status = 'FECHADO'
     WHERE id_pedido = p_id_pedido;
 
-    RAISE NOTICE 'Pedido % fechado com sucesso.', p_id_pedido;
+    RAISE NOTICE 'Pedido % encerrado e faturado.', p_id_pedido;
 END;
 $$;
 ```
 
-#### Exercício 5.8: recalcular_valor_pedido
+**Exercício 8 — recalcular_valor_pedido:**
 ```sql
 CREATE OR REPLACE PROCEDURE recalcular_valor_pedido(
     p_id_pedido INT
@@ -2255,12 +1886,6 @@ AS $$
 DECLARE
     v_novo_total DECIMAL(10,2);
 BEGIN
-    -- Validação de existência do cabeçalho
-    IF NOT EXISTS (SELECT 1 FROM pedidos WHERE id_pedido = p_id_pedido) THEN
-        RAISE EXCEPTION 'Pedido com ID % inexistente.', p_id_pedido;
-    END IF;
-
-    -- Cálculo agregado de subtotais
     SELECT COALESCE(SUM(subtotal), 0.00) INTO v_novo_total
     FROM itens_pedido
     WHERE id_pedido = p_id_pedido;
@@ -2269,12 +1894,16 @@ BEGIN
     SET valor_total = v_novo_total
     WHERE id_pedido = p_id_pedido;
 
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Pedido com ID % inexistente.', p_id_pedido;
+    END IF;
+
     RAISE NOTICE 'Valor total do pedido % recalculado para R$ %.', p_id_pedido, v_novo_total;
 END;
 $$;
 ```
 
-#### Exercício 5.9: inserir_item_pedido (Orquestração Atômica)
+**Exercício 9 — inserir_item_pedido:**
 ```sql
 CREATE OR REPLACE PROCEDURE inserir_item_pedido(
     p_id_pedido INT,
@@ -2284,82 +1913,83 @@ CREATE OR REPLACE PROCEDURE inserir_item_pedido(
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    v_status_pedido VARCHAR(30);
-    v_preco_unitario DECIMAL(10,2);
-    v_estoque_atual INT;
+    v_status_pedido pedidos.status%TYPE;
+    v_preco produtos.preco%TYPE;
+    v_estoque produtos.estoque%TYPE;
     v_subtotal DECIMAL(10,2);
 BEGIN
-    -- 1. Validações preliminares de parâmetros
     IF p_quantidade IS NULL OR p_quantidade <= 0 THEN
-        RAISE EXCEPTION 'Quantidade de itens deve ser positiva: %', p_quantidade;
+        RAISE EXCEPTION 'A quantidade comprada deve ser positiva: %', p_quantidade;
     END IF;
 
-    -- 2. Inspeção do pedido
     SELECT status INTO v_status_pedido
     FROM pedidos
     WHERE id_pedido = p_id_pedido;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Pedido % inexistente.', p_id_pedido;
+        RAISE EXCEPTION 'Pedido com ID % inexistente.', p_id_pedido;
     END IF;
 
     IF v_status_pedido <> 'ABERTO' THEN
-        RAISE EXCEPTION 'Itens só podem ser inseridos em pedidos ABERTOS. Status: %', v_status_pedido;
+        RAISE EXCEPTION 'Itens só podem ser incorporados a pedidos com status ABERTO. Atual: %', v_status_pedido;
     END IF;
 
-    -- 3. Inspeção e bloqueio de concorrência do produto
-    SELECT preco, estoque INTO v_preco_unitario, v_estoque_atual
+    SELECT preco, estoque INTO v_preco, v_estoque
     FROM produtos
     WHERE id_produto = p_id_produto
     FOR UPDATE;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Produto % inexistente.', p_id_produto;
+        RAISE EXCEPTION 'Produto com ID % não localizado.', p_id_produto;
     END IF;
 
-    IF v_estoque_atual < p_quantidade THEN
-        RAISE EXCEPTION 'Estoque insuficiente para o produto %. Atual: %, Solicitado: %', 
-            p_id_produto, v_estoque_atual, p_quantidade;
+    IF v_estoque < p_quantidade THEN
+        RAISE EXCEPTION 'Estoque insuficiente para o produto %. Disponível: %, Requisitado: %', 
+            p_id_produto, v_estoque, p_quantidade;
     END IF;
 
-    -- 4. Cálculo aritmético do subtotal
-    v_subtotal := v_preco_unitario * p_quantidade;
+    v_subtotal := p_quantidade * v_preco;
 
-    -- 5. Inserção na tabela associativa
     INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario, subtotal)
-    VALUES (p_id_pedido, p_id_produto, p_quantidade, v_preco_unitario, v_subtotal);
+    VALUES (p_id_pedido, p_id_produto, p_quantidade, v_preco, v_subtotal);
 
-    -- 6. Baixa física de estoque
     UPDATE produtos
     SET estoque = estoque - p_quantidade
     WHERE id_produto = p_id_produto;
 
-    -- 7. Atualização do totalizador do cabeçalho
     CALL recalcular_valor_pedido(p_id_pedido);
 
-    RAISE NOTICE 'Item inserido com sucesso no pedido %.', p_id_pedido;
+    RAISE NOTICE 'Item incluído e pedido % consolidado.', p_id_pedido;
 END;
 $$;
 ```
 
-#### Exercício 5.10: remover_cliente_sem_pedidos
+**Exercício 10 — remover_cliente_sem_pedidos:**
 ```sql
 CREATE OR REPLACE PROCEDURE remover_cliente_sem_pedidos(
     p_id_cliente INT
 )
 LANGUAGE plpgsql
 AS $$
+DECLARE
+    v_possui_pedidos BOOLEAN;
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM clientes WHERE id_cliente = p_id_cliente) THEN
-        RAISE EXCEPTION 'Cliente com ID % inexistente.', p_id_cliente;
-    END IF;
+    SELECT EXISTS (
+        SELECT 1 
+        FROM pedidos 
+        WHERE id_cliente = p_id_cliente
+    ) INTO v_possui_pedidos;
 
-    IF EXISTS (SELECT 1 FROM pedidos WHERE id_cliente = p_id_cliente) THEN
-        RAISE EXCEPTION 'Operação recusada: O cliente % possui pedidos vinculados.', p_id_cliente;
+    IF v_possui_pedidos THEN
+        RAISE EXCEPTION 'Exclusão negada: Cliente com ID % possui histórico de pedidos.', p_id_cliente;
     END IF;
 
     DELETE FROM clientes
     WHERE id_cliente = p_id_cliente;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Cliente com ID % não encontrado.', p_id_cliente;
+    END IF;
 
     RAISE NOTICE 'Cliente % removido com sucesso.', p_id_cliente;
 END;
@@ -2368,196 +1998,227 @@ $$;
 
 ---
 
-### Caderno 6: Avaliação Oficial de TABD
+### Laboratório 6: Simulado da Avaliação de TABD
 
-Base de Dados: Domínio Clínico-Hospitalar (`pacientes`, `especialidades`, `medicos`, `consultas`, `exames`, `pagamentos`).
+O banco de dados de referência da avaliação modela uma instituição clínica.
 
-#### Questão 1: Consultas com Paciente, Médico e Especialidade (2,0 pts)
-- **Enunciado:** Crie uma consulta que exiba: código da consulta, data da consulta, nome do paciente, nome do médico, nome da especialidade e status da consulta. Utilize `INNER JOIN`.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      c.id_consulta,
-      c.data_consulta,
-      p.nome AS paciente,
-      m.nome AS medico,
-      e.nome_especialidade AS especialidade,
-      c.status
-  FROM consultas c
-  INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
-  INNER JOIN medicos m ON c.id_medico = m.id_medico
-  INNER JOIN especialidades e ON m.id_especialidade = e.id_especialidade;
-  ```
+```mermaid
+erDiagram
+  PACIENTES ||--o{ CONSULTAS : realiza
+  MEDICOS ||--o{ CONSULTAS : atende
+  ESPECIALIDADES ||--o{ MEDICOS : vincula
+  CONSULTAS ||--o{ EXAMES : requisita
+  CONSULTAS ||--o{ PAGAMENTOS : liquida
 
-#### Questão 2: Pacientes sem Consultas (1,0 pt)
-- **Enunciado:** Exiba todos os pacientes e suas respectivas consultas via `LEFT JOIN`, filtrando o resultado para mostrar somente os pacientes que nunca realizaram nenhuma consulta.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      p.id_paciente,
-      p.nome AS paciente,
-      p.telefone,
-      p.cidade
-  FROM pacientes p
-  LEFT JOIN consultas c ON p.id_paciente = c.id_paciente
-  WHERE c.id_consulta IS NULL;
-  ```
+  PACIENTES {
+    int id_paciente PK
+    string nome
+  }
+  ESPECIALIDADES {
+    int id_especialidade PK
+    string nome_especialidade
+  }
+  MEDICOS {
+    int id_medico PK
+    string nome
+    string crm
+    decimal salario
+    int id_especialidade FK
+  }
+  CONSULTAS {
+    int id_consulta PK
+    date data_consulta
+    decimal valor
+    string status
+    int id_paciente FK
+    int id_medico FK
+  }
+  EXAMES {
+    int id_exame PK
+    int id_consulta FK
+    string nome_exame
+    decimal valor_exame
+  }
+  PAGAMENTOS {
+    int id_pagamento PK
+    int id_consulta FK
+    string forma_pagamento
+    decimal valor_pago
+  }
+```
 
-#### Questão 3: Consultas, Exames e Pagamentos (2,0 pts)
-- **Enunciado:** Crie um relatório apresentando: código da consulta, nome do paciente, nome do médico, nome do exame, valor do exame, forma de pagamento e valor pago. Todas as consultas devem aparecer, mesmo que ainda não possuam exame ou pagamento. Combine `INNER JOIN` e `LEFT JOIN`.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      c.id_consulta,
-      p.nome AS paciente,
-      m.nome AS medico,
-      e.nome_exame,
-      e.valor_exame,
-      pg.forma_pagamento,
-      pg.valor_pago
-  FROM consultas c
-  INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
-  INNER JOIN medicos m ON c.id_medico = m.id_medico
-  LEFT JOIN exames e ON c.id_consulta = e.id_consulta
-  LEFT JOIN pagamentos pg ON c.id_consulta = pg.id_consulta;
-  ```
+#### Resolução Formal das Questões da Avaliação
 
-#### Questão 4: Consultas Acima da Média de Valor (1,5 pts)
-- **Enunciado:** Exiba todas as consultas cujo valor seja maior que a média de valor de todas as consultas. Apresente: código, data, valor e status. Calcule a média por subconsulta.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      id_consulta,
-      data_consulta,
-      valor,
-      status
-  FROM consultas
-  WHERE valor > (SELECT AVG(valor) FROM consultas);
-  ```
-
-#### Questão 5: Médicos com Salário Acima da Média (1,5 pts)
-- **Enunciado:** Exiba os médicos cujo salário seja superior à média salarial de todos os médicos cadastrados. Apresente: código, nome, CRM e salário. Utilize subconsulta no `WHERE`.
-- **Solução SQL:**
-  ```sql
-  SELECT 
-      id_medico,
-      nome,
-      crm,
-      salario
-  FROM medicos
-  WHERE salario > (SELECT AVG(salario) FROM medicos);
-  ```
-
-#### Questão 6: View Operacional de Consultas e Consulta Derivada (2,0 pts)
-- **Enunciado:** Crie a view `vw_consultas_realizadas` exibindo somente consultas com status igual a `'Realizada'` contendo: código, data, nome do paciente, nome do médico, especialidade e valor. Depois, consulte a view exibindo consultas com valor superior a R$ 350,00, ordenadas do maior para o menor valor.
-- **Solução SQL:**
-  ```sql
-  -- 1. Criação da Visão Operacional
-  CREATE OR REPLACE VIEW vw_consultas_realizadas AS
-  SELECT 
-      c.id_consulta,
-      c.data_consulta,
-      p.nome AS paciente,
-      m.nome AS medico,
-      e.nome_especialidade AS especialidade,
-      c.valor AS valor_consulta
-  FROM consultas c
-  INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
-  INNER JOIN medicos m ON c.id_medico = m.id_medico
-  INNER JOIN especialidades e ON m.id_especialidade = e.id_especialidade
-  WHERE c.status = 'Realizada';
-
-  -- 2. Consulta Filtrada e Ordenada sobre a View
-  SELECT *
-  FROM vw_consultas_realizadas
-  WHERE valor_consulta > 350.00
-  ORDER BY valor_consulta DESC;
-  ```
-
----
-
-## Diagnóstico de Desempenho e Engenharia com EXPLAIN ANALYZE
-
-O comando `EXPLAIN ANALYZE` instrui o PostgreSQL a planejar, **executar fisicamente** a instrução SQL e recolher métricas exatas de telemetria de runtime.
-
+**Questão 1 — Consultas com paciente, médico e especialidade (2,0 pontos):**
 ```sql
-EXPLAIN (ANALYZE, BUFFERS, VERBOSE)
-SELECT c.nome, COUNT(p.id_pedido)
-FROM clientes c
-LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente
-GROUP BY c.id_cliente, c.nome;
+SELECT 
+    c.id_consulta AS codigo_consulta,
+    c.data_consulta,
+    p.nome AS nome_paciente,
+    m.nome AS nome_medico,
+    e.nome_especialidade AS especialidade,
+    c.status AS status_consulta
+FROM consultas c
+INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
+INNER JOIN medicos m ON c.id_medico = m.id_medico
+INNER JOIN especialidades e ON m.id_especialidade = e.id_especialidade;
 ```
 
-### Anatomia da Saída do Plano de Execução
-
-```text
-HashAggregate  (cost=35.50..37.50 rows=200 width=108) (actual time=0.150..0.180 rows=10 loops=1)
-  Group Key: c.id_cliente, c.nome
-  Batches: 1  Memory Usage: 40kB
-  Buffers: shared hit=4
-  ->  Hash Right Join  (cost=12.25..32.50 rows=400 width=108) (actual time=0.045..0.085 rows=20 loops=1)
-        Hash Cond: (p.id_cliente = c.id_cliente)
-        Buffers: shared hit=3
-        ->  Seq Scan on pedidos p  (cost=0.00..15.00 rows=500 width=8) (actual time=0.005..0.015 rows=20 loops=1)
-              Buffers: shared hit=1
-        ->  Hash  (cost=10.00..10.00 rows=180 width=104) (actual time=0.025..0.025 rows=12 loops=1)
-              Buckets: 1024  Batches: 1  Memory Usage: 9kB
-              Buffers: shared hit=2
-              ->  Seq Scan on clientes c  (cost=0.00..10.00 rows=180 width=104) (actual time=0.004..0.012 rows=12 loops=1)
-                    Buffers: shared hit=2
-Planning Time: 0.210 ms
-Execution Time: 0.245 ms
+**Questão 2 — Pacientes sem consultas via Anti-Join (1,0 ponto):**
+```sql
+SELECT 
+    p.id_paciente,
+    p.nome AS nome_paciente
+FROM pacientes p
+LEFT JOIN consultas c ON p.id_paciente = c.id_paciente
+WHERE c.id_consulta IS NULL;
 ```
 
-### Decodificação das Métricas de Engenharia
-1. **`cost=A..B`:** 
-   - `A` (*Startup Cost*): Unidades arbitrárias de custo de I/O e CPU antes de emitir a primeira tupla.
-   - `B` (*Total Cost*): Custo total acumulado para retornar todas as tuplas do nó.
-2. **`rows=X width=Y`:** Estimativa estatística de tuplas emitidas (`X`) e a largura média em bytes por linha (`Y`).
-3. **`actual time=C..D`:** Tempo real de relógio (em milissegundos) para emitir a primeira tupla (`C`) e concluir o nó (`D`).
-4. **`loops=N`:** Quantidade de iterações executadas pelo nó. O tempo real total é dado por $`D \times N`$.
-5. **`Buffers: shared hit=K`:** Páginas de 8 KB encontradas diretamente na memória RAM (*Buffer Pool* do PostgreSQL), sem demandar leituras físicas em disco.
+**Questão 3 — Relatório integrado de consultas, exames e pagamentos (2,0 pontos):**
+```sql
+SELECT 
+    c.id_consulta AS codigo_consulta,
+    p.nome AS nome_paciente,
+    m.nome AS nome_medico,
+    ex.nome_exame,
+    ex.valor_exame,
+    pg.forma_pagamento,
+    pg.valor_pago
+FROM consultas c
+INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
+INNER JOIN medicos m ON c.id_medico = m.id_medico
+LEFT JOIN exames ex ON c.id_consulta = ex.id_consulta
+LEFT JOIN pagamentos pg ON c.id_consulta = pg.id_consulta;
+```
+
+**Questão 4 — Consultas acima da média de valor (1,5 pontos):**
+```sql
+SELECT 
+    id_consulta AS codigo_consulta,
+    data_consulta,
+    valor,
+    status
+FROM consultas
+WHERE valor > (SELECT AVG(valor) FROM consultas);
+```
+
+**Questão 5 — Médicos com salário acima da média corporativa (1,5 pontos):**
+```sql
+SELECT 
+    id_medico AS codigo_medico,
+    nome,
+    crm,
+    salario
+FROM medicos
+WHERE salario > (SELECT AVG(salario) FROM medicos);
+```
+
+**Questão 6 — Criação e exploração da View vw_consultas_realizadas (2,0 pontos):**
+```sql
+-- Etapa A: Definição da Visão no Catálogo
+CREATE OR REPLACE VIEW vw_consultas_realizadas AS
+SELECT 
+    c.id_consulta AS codigo_consulta,
+    c.data_consulta,
+    p.nome AS nome_paciente,
+    m.nome AS nome_medico,
+    e.nome_especialidade AS especialidade_medico,
+    c.valor AS valor_consulta
+FROM consultas c
+INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
+INNER JOIN medicos m ON c.id_medico = m.id_medico
+INNER JOIN especialidades e ON m.id_especialidade = e.id_especialidade
+WHERE c.status = 'Realizada';
+
+-- Etapa B: Consulta parametrizada sobre a Visão
+SELECT *
+FROM vw_consultas_realizadas
+WHERE valor_consulta > 350.00
+ORDER BY valor_consulta DESC;
+```
 
 ---
 
-## Armadilhas de Prova e Boas Práticas
+## Mapa Conceitual Integrado da Disciplina
 
-| Conceito Crítico | Erro Comum / Armadilha | Consequência | Solução de Engenharia |
-| :--- | :--- | :--- | :--- |
-| **`NOT IN` com `NULL`** | Executar `NOT IN` contra subconsulta contendo `NULL` | Retorna zero linhas devido à lógica trivalente ($`\text{UNKNOWN}`$) | Usar `NOT EXISTS` ou filtrar `IS NOT NULL` na subquery |
-| **`COUNT` sob `LEFT JOIN`** | Usar `COUNT(*)` para contar itens associados | Clientes/produtos sem dados pontuam `1` em vez de `0` | Usar `COUNT(tabela_dependente.id_pk)` |
-| **Filtro em `LEFT JOIN`** | Colocar predicado da tabela direita no `WHERE` | Converte o `LEFT JOIN` em `INNER JOIN` disfarçado | Mover o predicado da tabela direita para a cláusula `ON` |
-| **`CREATE OR REPLACE VIEW`** | Remover colunas ou alterar a ordem sequencial | Erro: `cannot change name or type of view column` | Adicionar novas colunas apenas ao final ou usar `DROP VIEW` |
-| **`DROP VIEW CASCADE`** | Usar `CASCADE` sem checar dependências no catálogo | Exclusão em cadeia de views, triggers e rotinas | Inspecionar `pg_depend` e priorizar `RESTRICT` |
-| **`REFRESH MATERIALIZED`** | Rodar `CONCURRENTLY` sem índice exclusivo | Erro: exige índice `UNIQUE` nas colunas da view | Criar `CREATE UNIQUE INDEX` antes do refresh concorrente |
-| **Procedures vs Functions** | Tentar executar `COMMIT` dentro de `FUNCTION` | Erro: `invalid transaction termination` | Migrar para `PROCEDURE` invocada via comando `CALL` |
-| **Variáveis em PL/pgSQL** | Variável local com o mesmo nome de coluna da tabela | Ambiguidade e comportamento errático (*shadowing*) | Adotar prefixos formais: `p_` (parâmetro) e `v_` (variável) |
-| **Gatilhos BEFORE** | Esquecer a instrução `RETURN NEW` na função | Operação na linha é descartada silenciosamente (`NULL`) | Finalizar a função `BEFORE ROW` com `RETURN NEW` |
-| **Recursão em Triggers** | Trigger que faz `UPDATE` na própria tabela sem trava | Loop infinito e erro `stack depth limit exceeded` | Tratar via momento `BEFORE` alterando `NEW`, ou usar `WHEN` |
+```mermaid
+mindmap
+  root("Tópicos Avançados em Banco de Dados")
+    "Visões Relacionais"
+      "Visão Padrão: Query Rewrite e Isolamento"
+      "WITH CHECK OPTION: LOCAL e CASCADED"
+      "Visão Materializada: Snapshot Físico"
+      "Indexação e REFRESH CONCURRENTLY"
+    "Técnicas de Junção"
+      "Algoritmos Físicos: Nested Loop, Hash Join, Merge Join"
+      "Anti-Join: LEFT JOIN com IS NULL"
+      "Self-Join: Hierarquia e Lista de Adjacência"
+      "Semântica Crítica: Filtragem no ON versus WHERE"
+    "Subconsultas e CTEs"
+      "Taxonomia: Escalar, Coluna e Tabela"
+      "Armadilha do NULL: NOT IN e a Lógica Tri-valorada"
+      "Curto-circuito: EXISTS e NOT EXISTS"
+      "Tabelas Derivadas: Alias Obrigatório no FROM"
+      "Otimização: EXPLAIN ANALYZE"
+    "Procedural PL/pgSQL"
+      "Procedures CALL versus Functions SELECT"
+      "Controle Transacional Autônomo: COMMIT e ROLLBACK"
+      "Tipagem Ancorada: TYPE e ROWTYPE"
+      "Diagnósticos: FOUND e GET DIAGNOSTICS"
+    "Gatilhos Reativos"
+      "Paradigma ECA: Event-Condition-Action"
+      "Desacoplamento: Trigger Function e Trigger Binding"
+      "Momentos: BEFORE para higienização, AFTER para auditoria"
+      "Níveis: FOR EACH ROW versus STATEMENT"
+      "Variáveis Contextuais: NEW, OLD, TG_OP"
+```
 
 ---
 
-## Glossário Técnico
+## Glossário Terminológico e Técnico de Engenharia de Dados
 
-- **Anti-Join:** Operação relacional que retorna as tuplas do conjunto à esquerda que não possuem nenhuma correspondência no conjunto à direita ($`A \setminus B`$).
-- **Buffer Pool (Shared Buffers):** Região de memória RAM alocada pelo PostgreSQL para armazenar em cache páginas de dados e índices lidos do disco rígido.
-- **Cost-Based Optimizer (CBO):** Subsistema inteligente do SGBD que estima o custo de planos de execução alternativos com base em estatísticas e escolhe o mais eficiente.
-- **Dollar Quoting (`$$`):** Notação de delimitação de strings do PostgreSQL que dispensa o escape de aspas simples no corpo de funções e procedimentos.
-- **Equijunção:** Caso particular da junção relacional em que o predicado de comparação é unicamente o operador de igualdade ($`=`$).
-- **Heap File:** Arquivo físico de armazenamento em disco no qual as tuplas de uma tabela ou visão materializada são gravadas em blocos padronizados de 8 KB.
-- **Mecanismo de Reescrita (pg_rewrite):** Componente do PostgreSQL que expande definições de views lógicas fundindo-as diretamente na árvore da consulta principal.
-- **Nested Loop Join:** Algoritmo físico de junção que itera linearmente sobre uma relação externa e realiza buscas pontuais na relação interna.
-- **PL/pgSQL:** Linguagem procedural estruturada em blocos, integrada nativamente ao núcleo computacional do PostgreSQL.
-- **Procedimento Armazenado (Stored Procedure):** Objeto de esquema que encapsula lógica procedural, invocado via `CALL` e dotado de autonomia transacional (`COMMIT`/`ROLLBACK`).
-- **Three-Valued Logic (3VL):** Modelo lógico relacional que opera com três estados de verdade: `TRUE`, `FALSE` e `UNKNOWN` (indeterminado, fruto de manipulações com `NULL`).
-- **Trigger Function:** Função especializada que retorna o tipo abstrato `trigger`, acionada reativamente pelo despachante de eventos DML do banco.
-- **Visão Materializada (Materialized View):** Objeto de esquema que persiste fisicamente o resultado de uma consulta em disco, exigindo comandos de sincronização (`REFRESH`).
-- **WITH CHECK OPTION:** Restrição de integridade declarada em visões atualizáveis que impede a inserção ou alteração de dados que violem as condições de filtragem da própria visão.
+- **Anti-Join:** Operação relacional que retorna registros da relação principal para os quais não existem registros associados na relação secundária.
+- **Cost-Based Optimizer (CBO):** Subsistema do PostgreSQL que analisa estatísticas de colunas para estimar o custo de I/O e CPU, escolhendo o melhor plano de execução.
+- **Dollar Quoting (`$$`):** Notação de delimitação de strings que evita o escape manual de aspas simples no corpo de funções e procedimentos.
+- **EXPLAIN ANALYZE:** Comando DDL/DML que executa a instrução fornecida e exibe o plano de execução com tempos reais e nós operacionais.
+- **Gatilho (*Trigger*):** Objeto de esquema que dispara a execução de uma *Trigger Function* em resposta a eventos DML.
+- **Hash Join:** Algoritmo de junção que monta uma tabela hash em memória com as chaves da tabela menor e varre a tabela maior buscando correspondências diretas.
+- **Merge Join:** Algoritmo de junção que percorre simultaneamente duas relações ordenadas pelas chaves de ligação.
+- **Nested Loop Join:** Algoritmo que itera sobre a relação externa e realiza buscas individuais na relação interna para cada registro.
+- **Query Rewrite Rule System:** Subsistema do PostgreSQL que reescreve a árvore de sintaxe abstrata, expandindo referências a visões diretamente nas tabelas base.
+- **REFRESH MATERIALIZED VIEW CONCURRENTLY:** Operação que recarrega os dados de uma visão materializada sem bloquear consultas concorrentes de leitura, exigindo a existência prévia de um índice exclusivo.
+- **Stored Procedure:** Objeto procedural introduzido no PostgreSQL 11 invocado via `CALL` com suporte nativo a controle transacional explícito (`COMMIT`/`ROLLBACK`).
+- **Three-Valued Logic (3VL):** Lógica booleana adotada pelo SQL contendo os estados `TRUE`, `FALSE` e `UNKNOWN`, este último resultante de comparações com `NULL`.
+- **Tipagem Ancorada (`%TYPE` e `%ROWTYPE`):** Técnica de declaração que amarra o tipo de uma variável ao tipo de uma coluna ou à estrutura de uma linha inteira de uma tabela física.
+- **Visão (*View*):** Relação virtual armazenada apenas como uma query nos catálogos de metadados, reconstruída dinamicamente a cada leitura.
+- **Visão Materializada (*Materialized View*):** Tabela virtual cujos dados são computados e gravados fisicamente em disco, demandando sincronizações periódicas.
+- **WITH CHECK OPTION:** Cláusula em visões atualizáveis que impede que instruções `INSERT` ou `UPDATE` alterem tuplas para valores que violem as condições do `WHERE` da visão.
+
+---
+
+## Pontos Críticos e Guia de Revisão para a Prova
+
+1. **Diferença Primária entre Functions e Procedures:** Funções são invocadas via `SELECT`, exigem `RETURNS` e **não podem** executar `COMMIT` ou `ROLLBACK`. Procedures são invocadas via `CALL`, não possuem `RETURNS` (usam `OUT`/`INOUT`) e **podem gerenciar transações autônomas** com `COMMIT` e `ROLLBACK`.
+2. **A Armadilha do `NOT IN` com `NULL`:** Se a subconsulta contiver uma única tupla nula, a avaliação da condição cai em `UNKNOWN`, fazendo com que a cláusula `WHERE` descarte todas as linhas e a consulta retorne vazio. Solução segura: usar `NOT EXISTS`.
+3. **Comportamento do `COUNT(*)` sob `LEFT JOIN`:** Clientes sem pedidos geram uma linha sintetizada com atributos nulos à direita. O comando `COUNT(*)` contabiliza essa linha como 1, gerando falso positivo. Para contar transações de modo correto sob junções externas, conte a chave primária da tabela filha: `COUNT(p.id_pedido)`.
+4. **Filtragem no `ON` versus Filtragem no `WHERE` em `LEFT JOIN`:** Filtrar no `ON` restringe o acoplamento da tabela secundária preservando todas as linhas da tabela primária. Filtrar colunas da tabela secundária no `WHERE` descarta os registros onde essas colunas são nulas, convertendo a junção em um `INNER JOIN` disfarçado.
+5. **Regras do `CREATE OR REPLACE VIEW`:** Permite alterar uma visão existente apenas se os atributos originais mantiverem nomes, tipos e ordenação idênticos. Novas colunas devem ser inseridas obrigatoriamente ao final da projeção.
+6. **Requisito para `REFRESH MATERIALIZED VIEW CONCURRENTLY`:** A visão materializada deve possuir **obrigatoriamente um índice exclusivo (`UNIQUE INDEX`)** criado sobre colunas com valores não-nulos.
+7. **Momentos de Disparo de Triggers:**
+   - `BEFORE`: Executa antes da gravação no disco; pode alterar os campos da variável `NEW` ou vetar a operação retornando `NULL`.
+   - `AFTER`: Executa após a gravação; ideal para logs de auditoria; o retorno da função é irrelevante.
+   - `INSTEAD OF`: Exclusivo para visões (*Views*), interceptando o DML para redistribuí-lo às tabelas de origem.
+8. **Variáveis `NEW` e `OLD` em Triggers:**
+   - `INSERT`: `NEW` populada, `OLD` é `NULL`.
+   - `UPDATE`: `NEW` e `OLD` populadas.
+   - `DELETE`: `NEW` é `NULL`, `OLD` populada.
+   - Em nível de instrução (`FOR EACH STATEMENT`), ambas são estritamente `NULL`.
+9. **Tabelas Derivadas na Cláusula `FROM`:** Toda subconsulta declarada dentro do `FROM` deve receber obrigatoriamente um alias textual explícito no PostgreSQL (`AS meu_alias`), sob pena de erro de compilação.
 
 ---
 
 ## Fontes e Metadados
 
 - Turma no Classroom: Tópicos Avançados em BD - FEF
-- Itens processados: 4 materiais, 6 tarefas, 0 avisos
-- Gerado em: 28/10/2026, 20:00:50 (BRT) via classroom-sync
+- Itens processados: 5 materiais, 6 tarefas, 0 avisos
+- Gerado em: 03/11/2026, 21:10:58 (BRT) via classroom-sync

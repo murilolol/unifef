@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 14 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 16 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -20,6 +20,8 @@
 | 20/10/2026 | Aviso | Aula de hoje! |
 | 26/10/2026 | Tarefa | Estrutura de ordenação 2 |
 | 27/10/2026 | Aviso | Aviso sem título |
+| 02/11/2026 | Tarefa | Estrutura de ordenação 3 |
+| 03/11/2026 | Aviso | Aviso sem título |
 
 ## 05/08/2026 - Aviso: Conteúdo aula 01
 
@@ -125,3 +127,17 @@ Baseado com o conteúdo da aula responda ao questionário
 Aviso sem título
 
 - [https://outgoing-salt-444.notion.site/ED-I-Aula-12-Insertion-Sort-Ordena-o-por-Inser-o-4068a4f8f8a780099b67d48ae0177980?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-12-Insertion-Sort-Ordena-o-por-Inser-o-4068a4f8f8a780099b67d48ae0177980?source=copy_link)
+
+## 02/11/2026 - Tarefa: Estrutura de ordenação 3
+
+**Entrega:** 2026-11-04 | **Pontos:** 100
+
+Merge sort
+
+- [merge sort](https://docs.google.com/forms/d/e/1FAIpQLSc6TIM_kOFBLIHUnqN_ACz7d_KDl4n0a7pv5S7H6wTF25f9hw/viewform?hr_submission=ChkIqfSd8tgWEhAIwvHFptoZEgcI2Yqc368ZEAE)
+
+## 03/11/2026 - Aviso: Aviso sem título
+
+Aviso sem título
+
+- [https://outgoing-salt-444.notion.site/ED-I-Aula-13-Merge-sort-40c8a4f8f8a780eda933c75b49da313d?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-13-Merge-sort-40c8a4f8f8a780eda933c75b49da313d?source=copy_link)
