@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 12 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 17 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -18,6 +18,11 @@
 | 22/09/2026 | Aviso | Aviso sem título |
 | 29/09/2026 | Aviso | Aula de hoje |
 | 19/10/2026 | Tarefa | Diagrama de comunicação e sequencia |
+| 03/11/2026 | Aviso | Aviso sem título |
+| 03/11/2026 | Aviso | Aviso sem título |
+| 09/11/2026 | Aviso | Aviso sem título |
+| 09/11/2026 | Tarefa | Diagrama de estado e de atividade |
+| 09/11/2026 | Tarefa | Atividade semestral parte 2 |
 
 ## 05/08/2026 - Aviso: Aula 001
 
@@ -95,3 +100,37 @@ Aula de hoje
 _Sem texto._
 
 - [Trabalho Av2 - 1(WD).docx](https://drive.google.com/file/d/1Oy6ljaA5tQWOnQA4oIb6NG-lc0c-FEaj/view?usp=drive_web)
+
+## 03/11/2026 - Aviso: Aviso sem título
+
+Aviso sem título
+
+- [Aula 11.pdf](https://drive.google.com/file/d/12WfjVGCi_gbTf22QaXoACtsa0woJLeor/view?usp=drive_web)
+
+## 03/11/2026 - Aviso: Aviso sem título
+
+Aviso sem título
+
+- [Aula 09.pdf](https://drive.google.com/file/d/16vf_5kJwIUMnPDfs_pcWYO5oHwMu45Wg/view?usp=drive_web)
+- [Aula 10.pdf](https://drive.google.com/file/d/1KWeeMCjnkKGVuYOgVUCFeCBQX92DvvRM/view?usp=drive_web)
+
+## 09/11/2026 - Aviso: Aviso sem título
+
+Aviso sem título
+
+- [Aula 12.pdf](https://drive.google.com/file/d/1_Od29Nv8HVmJKM9IpeIP5hZ8vDA0IOYj/view?usp=drive_web)
+
+## 09/11/2026 - Tarefa: Diagrama de estado e de atividade
+
+**Entrega:** 2026-11-11 | **Pontos:** 100
+
+Realize a atividade anexando uma imagem do diagrama de estado e do diagrama de atividade
+
+- [Trabalho Estado e Atividade](https://docs.google.com/document/d/1QMGl8BgHtp5otEmnFAlQ7Su2Btf5W4P_HFOQZTp-bWc/edit?usp=drive_web)
+
+## 09/11/2026 - Tarefa: Atividade semestral parte 2
+
+**Entrega:** 2026-12-02 | **Pontos:** 100
+
+Correção da documentação até o momento, Criação de pelo menos 4 diagramas de sequência, 4 de comunicação, 2 de estado e 2 de atividade.
+

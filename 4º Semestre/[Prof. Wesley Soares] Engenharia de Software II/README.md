@@ -23,6 +23,8 @@
 | [Aula 07 - Fundamentos da UML e Diagrama de Classes](Aulas/Aula%2007%20-%20Fundamentos%20da%20UML%20e%20Diagrama%20de%20Classes/detalhes.md) | Princípios da UML, modelagem ágil com Scrum e MoSCoW, e anatomia estrutural do Diagrama de Classes | [codigo](Aulas/Aula%2007%20-%20Fundamentos%20da%20UML%20e%20Diagrama%20de%20Classes/codigo) |
 | [Aula 08 - Arquitetura Model-View-Controller no Smalltalk-80](Aulas/Aula%2008%20-%20Arquitetura%20Model-View-Controller%20no%20Smalltalk-80/detalhes.md) | O padrão arquitetural MVC clássico no Smalltalk-80: fundamentos teóricos, desacoplamento reativo, composição hierárquica e controle cooperativo de interfaces gráficas. | [codigo](Aulas/Aula%2008%20-%20Arquitetura%20Model-View-Controller%20no%20Smalltalk-80/codigo) |
 | [Aula 09 - Arquitetura de Software e Padrões Arquiteturais](Aulas/Aula%2009%20-%20Arquitetura%20de%20Software%20e%20Padr%C3%B5es%20Arquiteturais/detalhes.md) | Fundamentos conceituais de arquitetura segundo a ISO/IEC/IEEE 42010:2022, modelos de distribuição (SaaS e On-Premises) e estilos arquiteturais (Cliente-Servidor, SOA, Hexagonal e Microserviços). | - |
+| [Aula 10 - Modelagem de Interação Estados e Atividades](Aulas/Aula%2010%20-%20Modelagem%20de%20Intera%C3%A7%C3%A3o%20Estados%20e%20Atividades/detalhes.md) | Modelagem comportamental na UML: ciclo de vida com Diagramas de Estados, orquestração de processos com Diagramas de Atividades e dinâmicas de colaboração via Diagramas de Comunicação e Sequência | - |
+| [Aula 11 - Diagramas de Estado e de Atividade](Aulas/Aula%2011%20-%20Diagramas%20de%20Estado%20e%20de%20Atividade/detalhes.md) | Modelagem comportamental prática com Diagramas de Estado e de Atividade na UML, focando no ciclo de vida de entidades e na orquestração de processos de negócio em sistemas orientados a objetos. | - |
 
 ## Trabalhos
 
@@ -30,7 +32,9 @@
 | :--- | :--- | :--- |
 | [Atividade Aula 3](Trabalhos/Atividade%20Aula%203/detalhes.md) | 18/08/2026 às 23:59 | 100 pontos |
 | [Atividade classe](Trabalhos/Atividade%20classe/detalhes.md) | 25/08/2026 às 23:59 | 100 pontos |
+| [Atividade semestral parte 2](Trabalhos/Atividade%20semestral%20parte%202/detalhes.md) | 01/12/2026 às 23:59 | 100 pontos |
 | [Diagrama de comunicação e sequencia](Trabalhos/Diagrama%20de%20comunica%C3%A7%C3%A3o%20e%20sequencia/detalhes.md) | 30/10/2026 às 22:00 | 100 pontos |
+| [Diagrama de estado e de atividade](Trabalhos/Diagrama%20de%20estado%20e%20de%20atividade/detalhes.md) | 10/11/2026 às 22:00 | 100 pontos |
 | [Trabalho semestral](Trabalhos/Trabalho%20semestral/detalhes.md) | 08/09/2026 às 23:59 | 100 pontos |
 
 ## Revisão

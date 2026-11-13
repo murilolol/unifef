@@ -1,905 +1,1075 @@
-# Caderno Consolidado - Laboratório de Programação IV
+# Guia Completo de Estudos e Referência Técnica: Laboratório de Programação IV
 
 > **Instituição:** Centro Universitário de Santa Fé do Sul (UniFEF)  
 > **Curso:** Bacharelado em Sistemas de Informação (4º Semestre)  
+> **Disciplina:** Laboratório de Programação IV  
 > **Docente:** Prof. Jefferson Passerini  
-> **Projeto Canônico de Referência:** Suporte OS 2026 (`suporteos2026`)  
-> **Ecossistema Tecnológico:** Java 21 LTS, Spring Boot, PostgreSQL 16+, Apache Maven, Liquibase, Jakarta Persistence (JPA), Hibernate, JUnit 5, MockMvc e Postman  
+> **Ambiente e Tecnologias:** Java 21 LTS, Spring Boot 3/4, Apache Maven, PostgreSQL 16+, Hibernate/JPA, Liquibase, Docker, Postman e JUnit 5  
+> **Projetos de Estudo:** `suporteos2026` (Projeto Canônico de Referência) e `catalogocursos` (Atividade Prática Avaliatória)
 
 ---
 
 ## Sumário
 
-- [Resumo Executivo](#resumo-executivo)
-- [Mapa de Conteúdo](#mapa-de-conteúdo)
-- [Fundamentos e Arquitetura](#fundamentos-e-arquitetura)
-  - [Controle de Versão Distribuído e Grafo Acíclico Dirigido no Git](#controle-de-versão-distribuído-e-grafo-acíclico-dirigido-no-git)
-  - [Ecossistema da Plataforma Java: JVM, JRE, JDK e Bytecode](#ecossistema-da-plataforma-java-jvm-jre-jdk-e-bytecode)
-  - [Automação de Build e Reprodutibilidade com Apache Maven e Maven Wrapper](#automação-de-build-e-reprodutibilidade-com-apache-maven-e-maven-wrapper)
-  - [Arquitetura Cliente-Servidor e Fundamentos do Protocolo HTTP](#arquitetura-cliente-servidor-e-fundamentos-do-protocolo-http)
-  - [Princípios da Arquitetura REST e Modelagem de Recursos](#princípios-da-arquitetura-rest-e-modelagem-de-recursos)
-  - [Arquitetura em Camadas e Inversão de Controle no Spring Boot](#arquitetura-em-camadas-e-inversão-de-controle-no-spring-boot)
-  - [Modelagem de Domínio Rico e Encapsulamento de Invariantes em Java Puro](#modelagem-de-domínio-rico-e-encapsulamento-de-invariantes-em-java-puro)
-  - [Aritmética de Alta Precisão e Representação Monetária com BigDecimal](#aritmética-de-alta-precisão-e-representação-monetária-com-bigdecimal)
-  - [Associação Bidirecional 1:N e Integridade Referencial em Memória](#associação-bidirecional-1n-e-integridade-referencial-em-memória)
-  - [Pilha de Persistência Relacional e o Desencontro Objeto-Relacional](#pilha-de-persistência-relacional-e-o-desencontro-objeto-relacional)
-  - [Migrações Declarativas e Versionamento de Banco de Dados com Liquibase](#migrações-declarativas-e-versionamento-de-banco-de-dados-com-liquibase)
-  - [Isolamento de Ambientes, Perfis do Spring e Paridade com PostgreSQL](#isolamento-de-ambientes-perfis-do-spring-e-paridade-com-postgresql)
-  - [Spring Data JPA, Repositórios e Proxies Dinâmicos](#spring-data-jpa-repositórios-e-proxies-dinâmicos)
-  - [Fronteiras Transacionais, ACID e Ciclo de Vida das Entidades JPA](#fronteiras-transacionais-acid-e-ciclo-de-vida-das-entidades-jpa)
-  - [Evolução Segura de Esquema pelo Padrão Expand-Migrate-Contract](#evolução-segura-de-esquema-pelo-padrão-expand-migrate-contract)
-  - [DTOs Imutáveis com Java Records e Validação com Jakarta Bean Validation](#dtos-imutáveis-com-java-records-e-validação-com-jakarta-bean-validation)
-  - [Tratamento Global Padronizado de Exceções com RestControllerAdvice](#tratamento-global-padronizado-de-exceções-com-restcontrolleradvice)
-- [Sintaxe e Exemplos Práticos](#sintaxe-e-exemplos-práticos)
-  - [Modelagem de Entidades Ricas em Java Puro](#modelagem-de-entidades-ricas-em-java-puro)
-  - [Mapeamento Objeto-Relacional com Jakarta Persistence](#mapeamento-objeto-relacional-com-jakarta-persistence)
-  - [Changelogs Estruturados em YAML com Liquibase](#changelogs-estruturados-em-yaml-com-liquibase)
-  - [Consultas Derivadas em Interfaces Spring Data JPA](#consultas-derivadas-em-interfaces-spring-data-jpa)
-  - [Serviço Transacional com Orquestração e Exceções de Aplicação](#serviço-transacional-com-orquestração-e-exceções-de-aplicação)
-  - [DTOs com Java Records e Regras Declarativas de Validação](#dtos-com-java-records-e-regras-declarativas-de-validação)
-  - [Mapeadores Manuais Puros de Borda](#mapeadores-manuais-puros-de-borda)
-  - [Controlador REST com Emissão Semântica de Cabeçalhos e Códigos HTTP](#controlador-rest-com-emissão-semântica-de-cabeçalhos-e-códigos-http)
-  - [Tratador Centralizado de Falhas e Padronização de Erro com ApiError](#tratador-centralizado-de-falhas-e-padronização-de-erro-com-apierror)
-  - [Testes Automatizados: Unidade (AAA com JUnit 5) e Integração Web (MockMvc)](#testes-automatizados-unidade-aaa-com-junit-5-e-integração-web-mockmvc)
-- [Boas Práticas e Armadilhas Comuns](#boas-práticas-e-armadilhas-comuns)
-- [Tabelas Comparativas](#tabelas-comparativas)
-  - [Git versus GitHub versus Subversion (VCS Centralizado)](#git-versus-github-versus-subversion-vcs-centralizado)
-  - [JVM versus JRE versus JDK](#jvm-versus-jre-versus-jdk)
-  - [Renderização no Servidor (SSR/JSP) versus APIs Web RESTful (JSON)](#renderização-no-servidor-ssrejsp-versus-apis-web-restful-json)
-  - [Modelo de Domínio Rico versus Modelo de Domínio Anêmico](#modelo-de-domínio-rico-versus-modelo-de-domínio-anêmico)
-  - [Entidades JPA versus Objetos de Valor versus DTOs (Records)](#entidades-jpa-versus-objetos-de-valor-versus-dtos-records)
-  - [Semântica dos Métodos HTTP: Segurança, Idempotência e Operações](#semântica-dos-métodos-http-segurança-idempotência-e-operações)
-  - [Estratégias de Evolução do Banco: Hibernate ddl-auto versus Diff versus Migração Declarativa](#estratégias-de-evolução-do-banco-hibernate-ddl-auto-versus-diff-versus-migração-declarativa)
-- [Linha do Tempo da Disciplina](#linha-do-tempo-da-disciplina)
-- [Glossário](#glossário)
-- [Checklist de Revisão para Prova](#checklist-de-revisão-para-prova)
+- [Módulo 0: Controle de Versão Distribuído, Governança Git e GitHub](#módulo-0-controle-de-versão-distribuído-governança-git-e-github)
+  - [Diferenciação conceitual e operacional: Git versus GitHub](#diferenciação-conceitual-e-operacional-git-versus-github)
+  - [Modelagem interna do Git: Snapshots, Objetos e o Grafo Acíclico Dirigido (DAG)](#modelagem-interna-do-git-snapshots-objetos-e-o-grafo-acíclico-dirigido-dag)
+  - [Topologia distribuída e sincronização com o remoto origin](#topologia-distribuída-e-sincronização-com-o-remoto-origin)
+  - [Protocolos de transporte e autenticação: HTTPS versus SSH](#protocolos-de-transporte-e-autenticação-https-versus-ssh)
+  - [Hierarquia de configurações e governança de identidade](#hierarquia-de-configurações-e-governança-de-identidade)
+  - [Arquivos de governança do repositório: README, .editorconfig e .gitignore](#arquivos-de-governança-do-repositório-readme-editorconfig-e-gitignore)
+  - [Ciclo de vida dos arquivos e comandos fundamentais](#ciclo-de-vida-dos-arquivos-e-comandos-fundamentais)
+  - [Branches locais, isolamento de funcionalidades e tags anotadas](#branches-locais-isolamento-de-funcionalidades-e-tags-anotadas)
+  - [Higiene e segurança do repositório](#higiene-e-segurança-do-repositório)
+- [Módulo 1: Plataforma Java, Compilação Híbrida e Preparação do Ecossistema](#módulo-1-plataforma-java-compilação-híbrida-e-preparação-do-ecossistema)
+  - [Arquitetura da plataforma: JVM, JRE e JDK](#arquitetura-da-plataforma-jvm-jre-e-jdk)
+  - [Ciclo de compilação híbrida e inspeção de bytecode](#ciclo-de-compilação-híbrida-e-inspeção-de-bytecode)
+  - [Resolução de comandos no sistema operacional: PATH e JAVA_HOME](#resolução-de-comandos-no-sistema-operacional-path-e-java_home)
+  - [Automação de construção com Apache Maven e Maven Wrapper](#automação-de-construção-com-apache-maven-e-maven-wrapper)
+  - [Evolução dos servidores web: Standalone versus Embarcados](#evolução-dos-servidores-web-standalone-versus-embarcados)
+  - [A transição histórica de namespaces: de javax para jakarta](#a-transição-histórica-de-namespaces-de-javax-para-jakarta)
+- [Módulo 2: Arquitetura Cliente-Servidor, Fundamentos REST e Bootstrap com Spring Boot](#módulo-2-arquitetura-cliente-servidor-fundamentos-rest-e-bootstrap-com-spring-boot)
+  - [Metodologia pedagógica: Projeto de Referência versus Projeto Temático](#metodologia-pedagógica-projeto-de-referência-versus-projeto-temático)
+  - [O contrato de compatibilidade de domínio](#o-contrato-de-compatibilidade-de-domínio)
+  - [Fundamentos de arquitetura cliente-servidor e fronteira de APIs](#fundamentos-de-arquitetura-cliente-servidor-e-fronteira-de-apis)
+  - [Renderização no servidor (SSR) versus APIs Web desacopladas](#renderização-no-servidor-ssr-versus-apis-web-desacopladas)
+  - [Anatomia estrita do protocolo HTTP (RFC 9110)](#anatomia-estrita-do-protocolo-http-rfc-9110)
+  - [Modelagem de recursos, URIs e Endpoints](#modelagem-de-recursos-uris-e-endpoints)
+  - [Semântica dos métodos HTTP, segurança e idempotência](#semântica-dos-métodos-http-segurança-e-idempotência)
+  - [Famílias de códigos de status HTTP](#famílias-de-códigos-de-status-http)
+  - [Inversão de Controle, Injeção de Dependências e Beans Spring](#inversão-de-controle-injeção-de-dependências-e-beans-spring)
+  - [Inicialização do projeto e o endpoint GET /api/health](#inicialização-do-projeto-e-o-endpoint-get-apihealth)
+- [Módulo 3: Modelagem de Domínio Rico com Java Puro](#módulo-3-modelagem-de-domínio-rico-com-java-puro)
+  - [O conceito de domínio e o isolamento arquitetural](#o-conceito-de-domínio-e-o-isolamento-arquitetural)
+  - [Entidades versus Objetos de Valor (Value Objects)](#entidades-versus-objetos-de-valor-value-objects)
+  - [Encapsulamento estrito e defesa de invariantes de negócio](#encapsulamento-estrito-e-defesa-de-invariantes-de-negócio)
+  - [O modelo rico versus o anti-padrão do modelo anêmico](#o-modelo-rico-versus-o-anti-padrão-do-modelo-anêmico)
+  - [Aritmética decimal exata com BigDecimal](#aritmética-decimal-exata-com-bigdecimal)
+  - [Mapeamento e sincronização de associações bidirecionais 1:N em memória](#mapeamento-e-sincronização-de-associações-bidirecionais-1n-em-memória)
+  - [Representação de estados finitos com Enum e datas determinísticas](#representação-de-estados-finitos-com-enum-e-datas-determinísticas)
+  - [Testes unitários puros com JUnit 5 no padrão AAA](#testes-unitários-puros-com-junit-5-no-padrão-aaa)
+- [Módulo 4: Persistência Relacional com JPA, PostgreSQL e Liquibase](#módulo-4-persistência-relacional-com-jpa-postgresql-e-liquibase)
+  - [A pilha de persistência: PostgreSQL, JDBC, JPA, Hibernate e Spring Data](#a-pilha-de-persistência-postgresql-jdbc-jpa-hibernate-e-spring-data)
+  - [O descompasso de impedância objeto-relacional](#o-descompasso-de-impedância-objeto-relacional)
+  - [Migrações versionadas com Liquibase: Idempotência e integridade](#migrações-versionadas-com-liquibase-idempotência-e-integridade)
+  - [Estratégia de defesa em profundidade](#estratégia-de-defesa-em-profundidade)
+  - [Isolamento de perfis no Spring e paridade de ambientes](#isolamento-de-perfis-no-spring-e-paridade-de-ambientes)
+  - [Gestão segura de segredos com variáveis de ambiente](#gestão-segura-de-segredos-com-variáveis-de-ambiente)
+  - [Mapeamento objeto-relacional declarativo com JPA](#mapeamento-objeto-relacional-declarativo-com-jpa)
+  - [Validação estrita de esquema com ddl-auto=validate](#validação-estrita-de-esquema-com-ddl-autovalidate)
+- [Módulo 5: Repositórios Spring Data JPA, Serviços de Aplicação e Transações](#módulo-5-repositórios-spring-data-jpa-serviços-de-aplicação-e-transações)
+  - [Arquitetura em camadas e segregação de papéis](#arquitetura-em-camadas-e-segregação-de-papéis)
+  - [Spring Data JPA: Interfaces e proxies dinâmicos em tempo de execução](#spring-data-jpa-interfaces-e-proxies-dinâmicos-em-tempo-de-execução)
+  - [Injeção de dependências estrita via construtores](#injeção-de-dependências-estrita-via-construtores)
+  - [Consultas derivadas por convenção de nomenclatura (Derived Queries)](#consultas-derivadas-por-convenção-de-nomenclatura-derived-queries)
+  - [Fronteiras transacionais declarativas com @Transactional](#fronteiras-transacionais-declarativas-com-transactional)
+  - [Estados do ciclo de vida de uma entidade JPA](#estados-do-ciclo-de-vida-de-uma-entidade-jpa)
+  - [Mecanismo de detecção automática de alterações (Dirty Checking)](#mecanismo-de-detecção-automática-de-alterações-dirty-checking)
+  - [Modelagem de exceções de negócio da aplicação](#modelagem-de-exceções-de-negócio-da-aplicação)
+  - [Testes de integração transacionais com reversão automática](#testes-de-integração-transacionais-com-reversão-automática)
+- [Módulo 6: Evolução do Modelo Relacional e Changelogs Assistidos](#módulo-6-evolução-do-modelo-relacional-e-changelogs-assistidos)
+  - [Evolução de esquema: ddl-auto versus diff versus migração versionada](#evolução-de-esquema-ddl-auto-versus-diff-versus-migração-versionada)
+  - [Topologia de comparação diferencial com bancos reais no PostgreSQL](#topologia-de-comparação-diferencial-com-bancos-reais-no-postgresql)
+  - [Evolução do domínio: Entidade Fornecedor e associação opcional](#evolução-do-domínio-entidade-fornecedor-e-associação-opcional)
+  - [Evolução de campos e retrocompatibilidade de código](#evolução-de-campos-e-retrocompatibilidade-de-código)
+  - [Geração assistida com liquibase-maven-plugin](#geração-assistida-com-liquibase-maven-plugin)
+  - [Auditoria e saneamento de diffs gerados automaticamente](#auditoria-e-saneamento-de-diffs-gerados-automaticamente)
+  - [O padrão Expand-Migrate-Contract para colunas obrigatórias](#o-padrão-expand-migrate-contract-para-colunas-obrigatórias)
+  - [Enriquecimento manual: Constraints de integridade e rollbacks reversos](#enriquecimento-manual-constraints-de-integridade-e-rollbacks-reversos)
+- [Módulo 7: Camada Web REST, DTOs Imutáveis, Mapeadores e Validação](#módulo-7-camada-web-rest-dtos-imutáveis-mapeadores-e-validação)
+  - [O papel da camada de controle REST](#o-papel-da-camada-de-controle-rest)
+  - [Riscos e armadilhas da exposição direta de entidades JPA](#riscos-e-armadilhas-da-exposição-direta-de-entidades-jpa)
+  - [Data Transfer Objects (DTOs) e imutabilidade com Java Records](#data-transfer-objects-dtos-e-imutabilidade-com-java-records)
+  - [Validação declarativa na borda com Jakarta Bean Validation](#validação-declarativa-na-borda-com-jakarta-bean-validation)
+  - [Mapeamento manual desacoplado](#mapeamento-manual-desacoplado)
+  - [Controllers REST, respostas semânticas e o cabeçalho Location](#controllers-rest-respostas-semânticas-e-o-cabeçalho-location)
+  - [Tratamento global de exceções com @RestControllerAdvice e ApiError](#tratamento-global-de-exceções-com-restcontrolleradvice-e-apierror)
+  - [Testes de integração da camada Web com MockMvc](#testes-de-integração-da-camada-web-com-mockmvc)
+  - [Automação de testes de contrato com Postman](#automação-de-testes-de-contrato-com-postman)
+- [Módulo 8: Estudo de Caso Prático — Aplicação Catálogo de Cursos](#módulo-8-estudo-de-caso-prático-aplicação-catálogo-de-cursos)
+  - [Análise do problema e regras do relacionamento 1:N](#análise-do-problema-e-regras-do-relacionamento-1n)
+  - [Estrutura física do banco de dados e migrações Liquibase](#estrutura-física-do-banco-de-dados-e-migrações-liquibase)
+  - [Modelagem das entidades de domínio JPA](#modelagem-das-entidades-de-domínio-jpa)
+  - [Camada de persistência com Spring Data JPA](#camada-de-persistência-com-spring-data-jpa)
+  - [Camada de serviços e regras transacionais](#camada-de-serviços-e-regras-transacionais)
+  - [Contratos de transferência (DTOs) e mapeadores](#contratos-de-transferência-dtos-e-mapeadores)
+  - [Controladores REST e tratamento centralizado de erros](#controladores-rest-e-tratamento-centralizado-de-erros)
+  - [Suíte de testes automatizados obrigatórios](#suíte-de-testes-automatizados-obrigatórios)
+  - [Roteiro de validação ponta a ponta com cURL](#roteiro-de-validação-ponta-a-ponta-com-curl)
+- [Módulo 9: Avaliação Formal (A1) — Simulado Técnico Resolvido e Questões de Revisão](#módulo-9-avaliação-formal-a1-simulado-técnico-resolvido-e-questões-de-revisão)
+  - [Questões teóricas dissertativas com gabarito comentado](#questões-teóricas-dissertativas-com-gabarito-comentado)
+  - [Atividade de transferência para temas individuais](#atividade-de-transferência-para-temas-individuais)
+  - [Checklist definitivo de auditoria pré-prova](#checklist-definitivo-de-auditoria-pré-prova)
 
 ---
 
-## Resumo Executivo
+## Módulo 0: Controle de Versão Distribuído, Governança Git e GitHub
 
-O curso de Laboratório de Programação IV do Bacharelado em Sistemas de Informação da UniFEF, sob regência do Prof. Jefferson Passerini, estabelece o percurso formativo rigoroso de engenharia de software para o desenvolvimento de sistemas corporativos distribuídos na plataforma Java 21 LTS e no ecossistema Spring Boot. Rejeitando abordagens superficiais de prototipagem, a disciplina adota como coluna dorsal a construção do sistema industrial **Suporte OS 2026** (`suporteos2026`), implementado em paralelo aos projetos temáticos individuais de cada acadêmico baseados em contratos estritos de equivalência de domínio.
+### Diferenciação conceitual e operacional: Git versus GitHub
 
-A trajetória pedagógica parte da governança e reprodutibilidade do código-fonte (Git, GitHub, `.editorconfig`, `.gitignore` e Maven Wrapper), passa pela compreensão minuciosa da pilha de execução Java (JVM, JRE, JDK, compilação JIT e variáveis de ambiente `PATH` e `JAVA_HOME`), e avança para o isolamento do domínio de negócio puro (Rich Domain Model) blindado por testes unitários no padrão Arrange-Act-Assert com JUnit 5. A persistência relacional é construída sobre o PostgreSQL 16+, recusando terminantemente bancos em memória (H2) para garantir paridade estrita entre os perfis `dev`, `test` e `prod`. O esquema é governado pelo Liquibase como fonte canônica da verdade estrutural, relegando o Hibernate à mera validação em tempo de inicialização (`ddl-auto=validate`). A orquestração transacional é assumida por serviços anotados com `@Transactional`, integrados a repositórios Spring Data JPA operados via proxies dinâmicos e dirty checking. A borda da aplicação é estruturada como uma API RESTful de alta maturidade, empregando DTOs imutáveis via Java Records, validação declarativa com Jakarta Bean Validation, mappers manuais desacoplados, tratamento uniforme de falhas via `@RestControllerAdvice` e validação contínua automatizada por testes de integração com `MockMvc` e suítes do Postman.
+A correta compreensão da engenharia de software exige a distinção imediata entre a ferramenta de controle de versão local e a plataforma de hospedagem e colaboração em nuvem.
 
-### Pilares Centrais da Disciplina
-
-- **Governança, Rastreabilidade e Reprodutibilidade:** Controle de versão distribuído via Git (modelo DAG), isolamento de credenciais via `.env`, padronização multiplataforma com Maven Wrapper e commits atômicos de alta rastreabilidade.
-- **Fundamentos da Plataforma e Compilação Híbrida:** Compreensão do ciclo de transformação de código-fonte em bytecode executado pela JVM, resolução precisa de binários no sistema operacional e gestão de ciclo de vida de build com Maven.
-- **Design de Software Orientado a Domínio (DDD) e Modelo Rico:** Blindagem de invariantes de negócio na camada de domínio puro, tipos imutáveis para precisão monetária e quantitativa (`BigDecimal`), coleções não modificáveis e controle de associações bidirecionais em memória.
-- **Persistência Relacional Segura e Versionamento de Esquema:** Separação entre mapeamento declarativo (JPA/Hibernate) e evolução física do banco de dados (Liquibase via YAML), garantindo idempotência, histórico auditável e defesa em profundidade.
-- **Evolução de Esquema sem Perda de Dados:** Engenharia de migração incremental através do padrão *Expand-Migrate-Contract*, viabilizando adições de restrições de integridade (`NOT NULL`, `CHECK`, chaves estrangeiras) sobre bases de produção já populadas.
-- **Arquitetura em Camadas e Gerenciamento Transacional:** Orquestração desacoplada de casos de uso na camada de serviços de aplicação, com delimitação formal de transações ACID e tratamento explícito de estados de persistência.
-- **Borda de Comunicação RESTful:** Exposição de recursos orientados a substantivos no plural, contratos imutáveis protegidos contra atribuição em massa (*mass assignment*), serialização livre de ciclos, códigos de status precisos e documentação executável de contratos HTTP.
-
----
-
-## Mapa de Conteúdo
-
-```mermaid
-mindmap
-  root("Laboratório de Programação IV")
-    "Fundamentos e Infraestrutura"
-      "Git e Governança"
-        "Grafo Acíclico Dirigido (DAG)"
-        "Autenticação SSH e HTTPS"
-        "Higiene de Repositório (.gitignore e .env)"
-      "Plataforma Java 21"
-        "JVM, JRE e JDK"
-        "Resolução de PATH e JAVA_HOME"
-        "Maven Wrapper (mvnw)"
-    "Modelagem de Domínio Rico"
-      "Entidades versus Value Objects"
-      "Invariantes e Encapsulamento"
-      "Precisão com BigDecimal"
-      "Associações Bidirecionais 1:N"
-      "Testes Unitários com JUnit 5 (AAA)"
-    "Persistência e Migrações"
-      "PostgreSQL e Paridade de Ambientes"
-      "JPA e Hibernate (ddl-auto=validate)"
-      "Liquibase e Changelogs em YAML"
-      "Padrão Expand-Migrate-Contract"
-    "Camada de Aplicação"
-      "Spring Data JPA e Proxies Dinâmicos"
-      "Fronteiras Transacionais (@Transactional)"
-      "Dirty Checking e Estados de Persistência"
-      "Injeção por Construtor"
-    "Camada Web e Borda REST"
-      "Semântica HTTP e Modelagem de Recursos"
-      "DTOs Imutáveis com Java Records"
-      "Validação com Jakarta Bean Validation"
-      "Mapeadores Manuais Puros"
-      "Tratamento Global com ApiError"
-      "Testes Web com MockMvc e Postman"
-```
-
----
-
-## Fundamentos e Arquitetura
-
-### Controle de Versão Distribuído e Grafo Acíclico Dirigido no Git
-
-O Git é um sistema de controle de versão distribuído (*DVCS*) no qual cada nó de trabalho retém uma réplica integral e independente de todo o histórico de desenvolvimento do projeto, armazenada no diretório oculto `.git`. Diferente de sistemas legados orientados a arquivos que registravam diferenças linha a linha (*deltas*), o Git fundamenta seu modelo conceitual em uma sequência temporal de **snapshots** (fotografias estáticas completas do projeto).
-
-Cada snapshot é registrado através de um objeto do tipo **commit**, identificado de forma imutável por um hash criptográfico (SHA-1 com 160 bits ou SHA-256). O commit contém metadados de autoria, registro temporal, uma mensagem contextual e referências aos seus commits ancestrais imediatos (*parent commits*). Como cada nó aponta exclusivamente para trás na linha do tempo e nós futuros não podem apontar ciclicamente para estados posteriores que ainda não existem, o Git constitui matematicamente um **Grafo Acíclico Dirigido** (*Directed Acyclic Graph* - DAG).
-
-```mermaid
-flowchart LR
-  subgraph Referencias["Ponteiros de Referência"]
-    HEAD["HEAD"] --> BranchMain["Branch: main"]
-    Tag["Tag: aula-00-inicio"] --> CommitD
-    BranchMain --> CommitD
-  end
-
-  subgraph GrafoDAG["Grafo Acíclico Dirigido de Commits"]
-    CommitD["Commit D (hash: e5a1b3...)"] --> CommitC["Commit C (hash: d4c2a1...)"]
-    CommitC --> CommitB["Commit B (hash: b2f49c...)"]
-    CommitB --> CommitA["Commit A (hash: a1029e...)"]
-  end
-```
-
-#### Definição, Motivação, Exemplo, Contraexemplo e Armadilhas
-
-- **Definição:** Branches são referências móveis de 41 bytes gravadas em `.git/refs/heads/` que armazenam o hash do commit mais recente daquela linha de trabalho. Tags são referências fixas (estáticas) que ancoram um identificador textual indelével a um nó de commit específico.
-- **Motivação:** O modelo distribuído assegura independência de conexão de rede para criação de ramificações, inspeção de diferenças e registros atômicos de evolução, permitindo colaboração concorrente sem risco de bloqueio central.
-- **Exemplo:** Criação de tags anotadas ao encerramento de cada unidade didática (`git tag -a aula-00-inicio -m "Marco zero do projeto Suporte OS"`), criando checkpoints auditáveis de recuperação.
-- **Contraexemplo:** Tratar o Git como ferramenta de envio em bloco ao fim do semestre, registrando commits massivos com centenas de arquivos alterados e mensagens opacas como "ajustes finais".
-- **Armadilhas:** Versionamento de arquivos de configuração local de IDE (`.idea/`, `.vscode/`), diretórios de compilação binária (`target/`) ou credenciais sensíveis (`.env`). Uma vez gravado em um commit, um segredo integra o histórico criptográfico do DAG e sua remoção exige procedimentos intrusivos de reescrita de histórico (`git filter-repo`).
-
----
-
-### Ecossistema da Plataforma Java: JVM, JRE, JDK e Bytecode
-
-A plataforma Java adota uma estratégia de compilação híbrida para conferir portabilidade multiplataforma sem abrir mão de alto desempenho em tempo de execução. O código-fonte humano contido em arquivos `.java` é analisado pelo compilador (`javac`) e traduzido para um conjunto de instruções intermediárias de baixo nível denominado **bytecode**, estruturado em arquivos binários `.class`. O bytecode é completamente agnóstico em relação à arquitetura de silício ou sistema operacional hospedeiro.
-
-A arquitetura da plataforma divide-se em três fronteiras concêntricas complementares:
+- **Git:** É um software de controle de versão distribuído (*Distributed Version Control System - DVCS*), executável diretamente no sistema operacional do desenvolvedor. Ele opera de forma autônoma e descentralizada, gravando o histórico em um diretório oculto denominado `.git`. Operações como criação de branches, registro de commits, inspeção de histórico e reversão de versões não demandam conexão à internet.
+- **GitHub:** É uma plataforma em nuvem mantida pela Microsoft que provê repositórios Git remotos agregados a serviços corporativos: controle de acesso por perfis, revisão formal de código (*Pull Requests*), rastreamento de defeitos e tarefas (*Issues* e *Projects*), automação de fluxos de CI/CD (*GitHub Actions*) e varredura estática de credenciais vazadas (*Secret Scanning*).
 
 ```mermaid
 flowchart TD
-  subgraph JDK["JDK (Java Development Kit) - Engenharia de Software"]
-    javac["javac (Compilador de Bytecode)"]
-    javap["javap (Desmontador de Binários)"]
-    jcmd["jcmd / jstack (Diagnóstico de Processos)"]
-    subgraph JRE["JRE (Java Runtime Environment) - Ambiente de Execução"]
-      subgraph Libs["Bibliotecas Padrão da Plataforma"]
-        javaBase["java.base (Coleções, Concorrência, IO, Redes)"]
-        javaSql["java.sql (JDBC)"]
-      end
-      subgraph JVM["JVM (Java Virtual Machine) - Motor de Computação"]
-        Classloader["Carregador de Classes (Classloader)"]
-        BytecodeVerif["Verificador de Bytecode"]
-        Engine["Motor de Execução: Interpretador + Compilador JIT (HotSpot)"]
-        GC["Coletor de Lixo Automático (Garbage Collector)"]
-      end
+    subgraph Local["Ambiente Local do Desenvolvedor"]
+        WD["Diretório de Trabalho (Working Directory)"]
+        ST["Área de Preparação (Staging / Index)"]
+        LR["Repositório Local (.git / DAG de Commits)"]
+        WD -->|"git add"| ST
+        ST -->|"git commit"| LR
     end
-  end
+
+    subgraph Nuvem["Plataforma GitHub"]
+        RR["Repositório Remoto (origin/main)"]
+        PR["Pull Requests e Code Review"]
+        ACT["GitHub Actions (CI / CD)"]
+        ISS["Issues e Governança"]
+        RR --> PR
+        RR --> ACT
+        RR --> ISS
+    end
+
+    LR -->|"git push origin main"| RR
+    RR -->|"git pull / git fetch"| LR
 ```
 
-#### O Mecanismo da JVM e a Resolução no Sistema Operacional
+*Tabela comparativa analítica:*
 
-A **JVM** opera internamente como uma máquina abstrata baseada em pilha (*stack-based virtual machine*). O código intermediário carrega dados para a pilha de operandos, executa computações aritméticas e retira resultados. Conforme determinados métodos atingem alta frequência de invocação ("hot spots"), o compilador *Just-In-Time* (JIT) traduz esses trechos dinamicamente para instruções de código de máquina nativo da CPU (`x86_64` ou `AArch64`), dispensando nova interpretação e maximizando a vazão de processamento.
+| Critério de Comparação | Git | GitHub |
+|---|---|---|
+| **Natureza** | Motor de controle de versão (CLI / Core) | Plataforma de serviços em nuvem |
+| **Ambiente de Execução** | Sistema operacional local | Servidores remotos de alta disponibilidade |
+| **Dependência de Conectividade** | Nula para o fluxo local de commits e branches | Obrigatória para navegação e sincronização |
+| **Modelo de Dados** | Grafo Acíclico Dirigido gravado em arquivos soltos | Repositórios Git com camadas de metadados relacionais |
+| **Responsabilidade no Curso** | Rastreamento atômico das alterações da aplicação | Entrega formal de atividades e repositório do professor |
 
-Para que o sistema operacional localize as ferramentas e runtimes, duas variáveis de ambiente operam de forma orquestrada:
-1. **`PATH`:** Lista ordenada de diretórios de sistema inspecionada sequencialmente pelo interpretador de comandos quando um binário é invocado no terminal. O primeiro executável correspondente localizado encerra a busca com sucesso.
-2. **`JAVA_HOME`:** Variável de ambiente categórica que aponta de forma absoluta para o diretório raiz de instalação do JDK. É consumida diretamente por ferramentas corporativas de build (Maven, Gradle), IDEs e servidores de integração contínua para localizar módulos, compiladores e cabeçalhos internos.
+### Modelagem interna do Git: Snapshots, Objetos e o Grafo Acíclico Dirigido (DAG)
 
-- **Armadilha Crítica:** Desalinhamento entre `PATH` e `JAVA_HOME`. Se um instalador legado registrar uma JRE 8 no início do `PATH`, o comando `java -version` responderá Java 8, enquanto o Maven, lendo `JAVA_HOME`, invocará o compilador Java 21. Essa inconsistência provoca a clássica falha de carregamento:
-```text
-java.lang.UnsupportedClassVersionError: ... has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 52.0
-```
+Diferente de sistemas legados centralizados (como CVS ou Subversion) que calculavam e armazenavam listas de diferenças delta por arquivo, o Git modela a evolução temporal do projeto como uma sucessão de **snapshots** integrais do estado da pasta de trabalho.
 
----
+Internamente, a integridade de cada objeto é garantida por funções de dispersão criptográfica (SHA-1 gerando hashes hexadecimais de 40 caracteres, evoluindo para SHA-256).
 
-### Automação de Build e Reprodutibilidade com Apache Maven e Maven Wrapper
+Todo commit registrado no Git constitui um nó imutável contendo:
+1. Uma referência direta para um objeto de árvore (*tree object*), que espelha os diretórios e referencia o conteúdo binário dos arquivos (*blobs*);
+2. Metadados de autoria e comissionamento: nome, e-mail, carimbo de data/hora (timestamp) e mensagem explicativa;
+3. Ponteiros diretos para zero, um ou múltiplos commits predecessores (*parent commits*).
 
-Em projetos corporativos, a compilação manual via `javac` torna-se inviável devido à teia de dependências transitivas, necessidade de isolamento entre código produtivo e testes, processamento de recursos e regras padronizadas de empacotamento. O **Apache Maven** atua como ferramenta de automação orientada pelo paradigma de **Convenção sobre Configuração** (*Convention over Configuration*). 
-
-A topologia do projeto é padronizada pelo Maven:
-- `src/main/java`: Classes de código-fonte de produção.
-- `src/main/resources`: Configurações de tempo de execução (`application.properties`, changelogs do Liquibase).
-- `src/test/java`: Códigos de testes unitários e de integração.
-- `src/test/resources`: Parâmetros de infraestrutura isolados para a suíte de testes.
-- `pom.xml`: Descritor declarativo em XML (*Project Object Model*).
+Como todo commit aponta obrigatoriamente para trás (em direção ao commit que o precedeu) e referências cíclicas são matematicamente impossíveis na linha do tempo, a estrutura de dados resultante é formalmente um **Grafo Acíclico Dirigido** (*Directed Acyclic Graph - DAG*).
 
 ```mermaid
 flowchart LR
-  Validate["validate"] --> Compile["compile"]
-  Compile --> Test["test"]
-  Test --> Package["package"]
-  Package --> Verify["verify"]
-  Verify --> Install["install"]
+    subgraph Referencias["Ponteiros Móveis e Estáticos"]
+        HEAD["HEAD"] --> BranchMain["Branch: main"]
+        Tag["Tag Anotada: aula-00-inicio"] --> CommitC
+        BranchMain --> CommitD
+    end
+
+    subgraph DAG["Grafo Acíclico Dirigido (Snapshots Imutáveis)"]
+        CommitD["Commit D (hash: e5a1b3...)"] --> CommitC["Commit C (hash: d4c2a1...)"]
+        CommitC --> CommitB["Commit B (hash: b2f49c...)"]
+        CommitB --> CommitA["Commit A (hash: a1029e...)"]
+    end
 ```
 
-#### Ciclo de Vida e o Maven Wrapper (`mvnw`)
+*Componentes do grafo e suas funções:*
 
-O ciclo de vida padrão do Maven (*default lifecycle*) é composto por fases ordenadas e interdependentes. Invocar uma fase posterior (como `package`) força a execução automática de todas as fases precedentes (`validate`, `compile`, `test`).
+- **Commit:** Vértice imutável. Qualquer modificação no código-fonte, na mensagem ou nos metadados gera um novo hash SHA, criando outro nó e jamais alterando o existente.
+- **Branch:** Um ponteiro leve e móvel (*reference*) de 41 bytes gravado em `.git/refs/heads/<nome>`, contendo o hash do commit mais recente de uma linha de trabalho. O ponteiro avança de forma automática a cada novo commit.
+- **Tag:** Uma referência estática ancorada permanentemente a um commit específico. Não se move quando novos commits são registrados. Utilizada no curso para registrar os marcos pedagógicos de entrega e tags de encerramento de aula.
+- **HEAD:** Arquivo especial em `.git/HEAD` que indica a referência ativa carregada no diretório de trabalho.
 
-Para erradicar o problema crônico de disparidade de ambientes em equipes ("na minha máquina compila, na sua não"), a disciplina adota obrigatoriamente o **Maven Wrapper** (`mvnw` para ambientes Unix e `mvnw.cmd` para ambientes Windows):
+### Topologia distribuída e sincronização com o remoto origin
+
+No modelo distribuído, não há assimetria técnica entre os repositórios: todo clone local possui a íntegra dos branches, arquivos e commits existentes no servidor desde o primeiro commit do projeto.
+
+O termo `origin` nada mais é do que um apelido (*alias*) convencionado pelo Git para apontar para a URL do repositório remoto a partir do qual a clonagem foi disparada.
 
 ```mermaid
 sequenceDiagram
-  autonumber
-  actor Dev as Desenvolvedor / Esteira CI
-  participant Wrapper as Script mvnw / mvnw.cmd
-  participant Cache as Cache do Usuário (~/.m2/wrapper)
-  participant Apache as Repositório Apache Maven Central
-  participant Build as Execução do Ciclo de Build
+    autonumber
+    actor Dev as Desenvolvedor Local
+    participant Local as Repositório Local (.git)
+    participant Remoto as GitHub (origin)
 
-  Dev->>Wrapper: ./mvnw clean test
-  Wrapper->>Wrapper: Lê .mvn/wrapper/maven-wrapper.properties
-  Wrapper->>Cache: Verifica se a versão declarada já existe em disco
-  alt Binário Ausente no Cache
-    Wrapper->>Apache: Efetua download da distribuição exata do Maven
-    Apache-->>Wrapper: Arquivo zip descompactado no cache local
-  end
-  Wrapper->>Build: Transfere argumentos para o Maven encapsulado
-  Build-->>Dev: Executa compilação e testes com reprodutibilidade absoluta
+    Note over Dev,Local: Operações Locais Desconectadas
+    Dev->>Local: git add . (Prepara alterações no Index)
+    Dev->>Local: git commit -m "feat: estrutura base" (Gera commit no DAG)
+    Dev->>Local: git log (Examina histórico em memória/disco)
+
+    Note over Dev,Remoto: Sincronização em Rede
+    Dev->>Remoto: git push origin main (Transfere objetos e atualiza refs remotas)
+    Remoto-->>Dev: Confirmação de recebimento
+    Dev->>Remoto: git pull origin main (Obtém commits e mescla ao local)
+    Remoto-->>Local: Atualiza branches remotas rastreadas (origin/main)
 ```
 
----
+### Protocolos de transporte e autenticação: HTTPS versus SSH
 
-### Arquitetura Cliente-Servidor e Fundamentos do Protocolo HTTP
+O intercâmbio de dados entre o cliente local do Git e os servidores do GitHub ocorre por dois canais criptográficos principais:
 
-O modelo arquitetural cliente-servidor para sistemas web distribui responsabilidades entre dois papéis complementares através de redes baseadas na pilha TCP/IP:
-1. **Cliente:** Agente ativo que inicia a conversação estabelecendo conexões de rede e despachando uma **requisição HTTP** (*request*).
-2. **Servidor:** Processo passivo que escuta permanentemente em uma porta de rede definida (padrão `8080` no Spring Boot com Tomcat embutido), decodifica o payload recebido, executa a orquestração de negócios e retorna uma **resposta HTTP** (*response*).
+1. **HTTPS (Porta 443):**
+   - URL no formato `https://github.com/jeffersonarpasserini/suporteos2026.git`.
+   - Requer o uso de **Personal Access Tokens (PAT)** com escopos estritos de permissão de escrita em repositórios (`repo`). O GitHub baniu o uso de senhas convencionais de usuário via terminal desde agosto de 2021.
+   - Apresenta facilidade de tráfego em redes acadêmicas e corporativas que bloqueiam portas não padrão.
+2. **SSH (Porta 22):**
+   - URL no formato `git@github.com:jeffersonarpasserini/suporteos2026.git`.
+   - Utiliza criptografia de chave pública assimétrica (algoritmos recomendados: Ed25519 ou RSA de 4096 bits).
+   - Elimina a digitação repetitiva de credenciais por meio do agente de autenticação em memória (`ssh-agent`).
+
+```bash
+# Geração de chave SSH Ed25519
+ssh-keygen -t ed25519 -C "aluno@unifef.edu.br"
+
+# Validação do canal criptográfico com o GitHub
+ssh -T git@github.com
+```
+
+> [!CAUTION]
+> **Segurança de Chaves Privadas:** O arquivo de chave privada (`id_ed25519`) jamais deve ser transferido, copiado para repositórios ou compartilhado. Apenas a chave pública correspondente (`id_ed25519.pub`) é enviada e vinculada à conta do GitHub.
+
+### Hierarquia de configurações e governança de identidade
+
+O Git exige a definição obrigatória de dois metadados de autoria: `user.name` e `user.email`. Essas variáveis são consultadas em três níveis hierárquicos:
+
+1. **System (`--system`):** Configuração global da máquina física, armazenada em `/etc/gitconfig`, afetando todos os usuários do sistema operacional.
+2. **Global (`--global`):** Configuração específica do usuário logado no sistema operacional, gravada em `~/.gitconfig`.
+3. **Local (`--local`):** Configuração específica de um repositório isolado, gravada em `.git/config`. Possui a mais alta precedência, sobrepondo definições globais e de sistema.
+
+```bash
+# Configuração global recomendada para o aluno
+git config --global user.name "Nome do Aluno"
+git config --global user.email "aluno@unifef.edu.br"
+git config --global init.defaultBranch main
+
+# Inspeção das configurações ativas e origens
+git config --list --show-origin
+```
+
+### Arquivos de governança do repositório: README, .editorconfig e .gitignore
+
+A raiz de um repositório profissional de engenharia de software deve conter três arquivos fundamentais de governança:
+
+1. **`README.md`:** Documento em Markdown que serve de ponto de entrada técnico para o projeto. Deve detalhar a arquitetura, objetivos, matriz de tecnologias, pré-requisitos e comandos de inicialização.
+2. **`.editorconfig`:** Arquivo padronizador de formatação de código entre diferentes IDEs e editores (IntelliJ IDEA, VS Code, Eclipse), estabelecendo regras para tipo de indentação, tamanho de espaçamento e terminação de linha.
+3. **`.gitignore`:** Lista declarativa de regras que instrui o Git a ignorar binários compilados, pastas de dependências locais, configurações privadas de IDE e arquivos de ambiente contendo segredos.
+
+```ini
+# .editorconfig
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+```
+
+```gitignore
+# .gitignore para projetos Java Spring Boot
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# IDEs e Editores
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Arquivos de Ambiente e Segredos (CRÍTICO)
+.env
+.env.*
+!.env.example
+*.log
+```
+
+### Ciclo de vida dos arquivos e comandos fundamentais
+
+Os arquivos em um diretório sob controle do Git transitam por quatro estados bem definidos:
 
 ```mermaid
-sequenceDiagram
-  autonumber
-  actor Cliente as Cliente (curl / Navegador / Postman)
-  participant Servidor as Servidor Spring Boot (Tomcat na Porta 8080)
-  
-  Cliente->>Servidor: Abertura de Socket TCP (Handshake)
-  Cliente->>Servidor: Requisição HTTP (Linha de Comando + Headers + Body)
-  Note over Servidor: Processamento interno: filtros, roteamento,<br/>serviços, banco e serialização
-  Servidor-->>Cliente: Resposta HTTP (Linha de Status + Headers + Body)
-  Note over Cliente: Interpretação do Status Code<br/>e processamento do payload
+stateDiagram-v2
+    [*] --> Untracked : Novo arquivo criado
+    Untracked --> Staged : git add
+    Unmodified --> Modified : Edição do arquivo
+    Modified --> Staged : git add
+    Staged --> Unmodified : git commit
+    Unmodified --> Untracked : git rm --cached
 ```
 
-#### Anatomia da Mensagem HTTP (RFC 9110)
+- **Untracked (Não rastreado):** O arquivo reside no diretório de trabalho, mas o repositório não rastreia seu histórico.
+- **Modified (Modificado):** O arquivo rastreado teve seu conteúdo alterado em relação ao último snapshot.
+- **Staged / Index (Preparado):** O arquivo foi marcado via `git add` para ser incluído no próximo commit.
+- **Committed / Unmodified (Registrado):** Os dados foram gravados de forma permanente no banco de objetos do Git.
 
-Uma mensagem HTTP opera estritamente em formato textual estruturado. Uma requisição divide-se em:
-- **Linha de Comando (*Request Line*):** Método HTTP (`GET`, `POST`, `PUT`, `DELETE`), URI do recurso (`/api/produtos`) e versão do protocolo (`HTTP/1.1`).
-- **Cabeçalhos da Requisição (*Headers*):** Metadados em formato chave-valor (`Host`, `Content-Type`, `Accept`, `Authorization`).
-- **Linha em Branco:** Separador obrigatório composto pelo caractere CRLF (`\r\n`).
-- **Corpo da Mensagem (*Body*):** Carga útil de dados transmitida (predominantemente em formato JSON), ausente em consultas simples.
+### Branches locais, isolamento de funcionalidades e tags anotadas
 
-A resposta devolvida pelo servidor espelha essa organização:
-- **Linha de Status (*Status Line*):** Versão do protocolo (`HTTP/1.1`), Código de Status numérico (`200`, `201`, `400`, `404`) e Frase de Motivo textual descritiva (`OK`, `Created`, `Bad Request`).
-- **Cabeçalhos de Resposta (*Headers*):** Metadados emitidos pelo servidor (`Location`, `Content-Type`, `Date`).
-- **Linha em Branco:** Separador CRLF.
-- **Corpo da Resposta (*Body*):** Representação textual serializada do resultado ou mensagem de erro.
+O trabalho em equipe exige que alterações não sejam realizadas diretamente sobre a linha principal (`main`). A criação de branches possibilita o desenvolvimento concorrente e isolado de requisitos.
+
+```bash
+# Criação e ativação de um branch de funcionalidade
+git checkout -b feature/modelagem-dominio
+
+# Alternativa moderna no Git 2.23+
+git switch -c feature/modelagem-dominio
+
+# Retorno à branch principal e mesclagem
+git switch main
+git merge feature/modelagem-dominio
+```
+
+As tags marcam pontos específicos da história como importantes:
+- **Tag Leve (*Lightweight*):** Apenas um ponteiro fixo para um commit.
+- **Tag Anotada (*Annotated*):** Um objeto completo gravado no banco do Git com autor, data, e-mail e mensagem explicativa assinada. **É o padrão obrigatório adotado na disciplina.**
+
+```bash
+# Criação de tag anotada
+git tag -a aula-00-inicio -m "Marco zero: inicialização da governança do projeto Suporte OS"
+
+# Publicação da tag no repositório remoto
+git push origin aula-00-inicio
+```
+
+### Higiene e segurança do repositório
+
+- **Definição:** A higiene de repositório consiste na aplicação de regras estritas que impedem a inclusão de arquivos transitórios, artefatos gerados pelo processo de compilação (`target/`), diretórios proprietários de IDEs e, fundamentalmente, segredos e credenciais de infraestrutura.
+- **Motivação:** A submissão acidental de arquivos `.env` ou senhas de bancos de dados a repositórios públicos ou compartilhados compromete imediatamente os servidores, além de inflar desnecessariamente o volume binário do repositório.
+- **Exemplo Correto:** Versionar um arquivo estéril denominado `.env.example`, demonstrando o nome das variáveis exigidas pela aplicação com valores fictícios:
+  ```properties
+  DB_DEV_HOST=localhost
+  DB_DEV_PORT=5432
+  DB_DEV_NAME=suporteos2026_dev
+  DB_DEV_USER=suporteos_app
+  DB_DEV_PASSWORD=segredo_exemplo
+  ```
+- **Contraexemplo:** Adicionar o arquivo `.env` real com as senhas do banco de produção ao commit via `git add .` sem auditar o `git status`.
+- **Armadilhas:** Adicionar um arquivo ao `.gitignore` após ele já ter sido comissionado em commits anteriores. O Git continuará rastreando o arquivo até que seja explicitamente removido da área de preparação com `git rm --cached <arquivo>`.
 
 ---
 
-### Princípios da Arquitetura REST e Modelagem de Recursos
+## Módulo 1: Plataforma Java, Compilação Híbrida e Preparação do Ecossistema
 
-**REST** (*Representational State Transfer*) é um estilo arquitetural formulado por Roy Fielding que define restrições formais para a criação de sistemas hipermídia distribuídos e escaláveis.
+### Arquitetura da plataforma: JVM, JRE e JDK
 
-#### As Seis Restrições Arquiteturais do REST
+A independência de plataforma preconizada pela tecnologia Java fundamenta-se em uma arquitetura de camadas concêntricas perfeitamente delimitadas:
 
-1. **Arquitetura Cliente-Servidor:** Isolamento estrito entre a interface de interação (consumidores) e os mecanismos de armazenamento e regras (provedor).
-2. **Stateless (Sem Estado):** Cada requisição enviada pelo cliente deve carregar todas as informações contextuais indispensáveis para que o servidor consiga processá-la com sucesso. O servidor não retém o estado de sessão do cliente na memória entre requisições.
-3. **Cacheabilidade (*Cacheable*):** Respostas devem categorizar-se explicitamente como passíveis de cache ou não, prevenindo tráfego desnecessário na rede.
-4. **Interface Uniforme:** A comunicação é padronizada através da identificação unívoca de recursos por URIs substantivas, manipulação de recursos por meio de representações (JSON) e mensagens autodescritivas.
-5. **Sistema em Camadas (*Layered System*):** O cliente não possui visibilidade se está comunicando-se diretamente com o nó final de aplicação, com um balanceador de carga ou com um gateway de segurança.
-6. **Código sob Demanda (*Code on Demand* - Opcional):** Capacidade de estender funcionalidades do cliente transferindo código executável.
+```mermaid
+flowchart TD
+    subgraph JDK["JDK 21 LTS (Java Development Kit)"]
+        subgraph Ferramentas["Ferramentas de Engenharia"]
+            javac["javac (Compilador)"]
+            jar["jar (Empacotador)"]
+            javap["javap (Desmontador)"]
+            diag["jcmd / jstack / jmap (Diagnóstico)"]
+        end
+        subgraph JRE["JRE (Java Runtime Environment)"]
+            subgraph Bibliotecas["Bibliotecas Padrão da Plataforma"]
+                APIs["java.base / java.sql / java.net / java.math"]
+            end
+            subgraph JVM["JVM (Java Virtual Machine)"]
+                CL["Classloader (Carregador de Classes)"]
+                JIT["Motor de Execução (Interpretador + Compilador JIT)"]
+                GC["Coletor de Lixo (Garbage Collector)"]
+            end
+        end
+    end
+```
 
-#### Segurança e Idempotência de Métodos HTTP
+1. **JVM (Java Virtual Machine):** Motor abstrato de execução. Realiza a interpretação das instruções de bytecode, compilação *Just-In-Time* (JIT) para instruções de máquina do processador físico, gerencia a pilha de execução de threads e aloca/desaloca memória dinâmica por meio do Coletor de Lixo (*Garbage Collector*). A JVM não é instalada de forma isolada para desenvolvimento.
+2. **JRE (Java Runtime Environment):** Pacote voltado à execução de aplicações prontas em ambientes produtivos. É formada pela JVM acompanhada das bibliotecas binárias fundamentais da API do Java (`java.base`, `java.sql`, etc.). **Não contém compiladores.**
+3. **JDK (Java Development Kit):** O conjunto integral de engenharia destinado aos desenvolvedores. Contém a JRE e incorpora ferramentas como o compilador `javac`, o utilitário de empacotamento `jar`, o desmontador `javap` e as ferramentas de perfilamento e diagnóstico (`jstack`, `jcmd`, `jmap`). Para a disciplina, adota-se obrigatoriamente a distribuição **Eclipse Temurin JDK 21 LTS**.
 
-A especificação RFC 9110 define dois conceitos fundamentais para a semântica da Web:
-- **Método Seguro (*Safe Method*):** A execução da operação não acarreta nenhuma alteração de estado perceptível no servidor. Trata-se estritamente de operações de leitura (`GET`, `HEAD`).
-- **Método Idempotente (*Idempotent Method*):** A execução repetida de múltiplas requisições idênticas consecutivas produz o mesmo efeito observável no estado final do servidor que a execução de uma única requisição:
+### Ciclo de compilação híbrida e inspeção de bytecode
+
+O Java opera por compilação híbrida: o compilador converte o arquivo legível `.java` em uma linguagem binária intermediária gravada em arquivos `.class` (bytecode), a qual é carregada e traduzida pela JVM em tempo de execução:
+
+```mermaid
+flowchart LR
+    Fonte["Código Fonte<br>(Calculo.java)"] -->|"javac Calculo.java"| Bytecode["Bytecode Intermediário<br>(Calculo.class)"]
+    Bytecode -->|"java Calculo"| JVM["JVM: Carga e Verificação"]
+    JVM -->|"Compilação JIT (C1/C2)"| Nativo["Instruções Nativas de Máquina<br>(x86_64 / ARM64)"]
+    Nativo --> CPU["Processador Físico e Kernel"]
+```
+
+*Inspeção de operações da JVM baseada em pilha via javap:*
+
+```java
+public class Calculo {
+    public int somar(int a, int b) {
+        return a + b;
+    }
+}
+```
+
+Ao executar `javap -c Calculo` sobre o binário compilado:
+
+```text
+public int somar(int, int);
+  Code:
+   0: iload_1       // Empilha o primeiro parâmetro inteiro
+   1: iload_2       // Empilha o segundo parâmetro inteiro
+   2: iadd          // Desempilha ambos, soma-os e empilha o resultado
+   3: ireturn       // Retorna o valor inteiro posicionado no topo da pilha
+```
+
+*Complemento técnico do instrutor:* Observe que a JVM é estruturada como uma máquina baseada em pilha (*stack-based architecture*), permitindo que instruções como `iadd` e `iload` operem de modo idêntico em qualquer plataforma de hardware (Intel, AMD, ARM), garantindo a portabilidade nativa da linguagem.
+
+### Resolução de comandos no sistema operacional: PATH e JAVA_HOME
+
+A correta amarração das variáveis de ambiente é indispensável para evitar que ferramentas de linha de comando invoquem executáveis divergentes instalados na máquina:
+
+- **`PATH`:** Variável de sistema que armazena uma sequência ordenada de diretórios nos quais o interpretador de comandos (PowerShell, Bash, Zsh) busca os binários executáveis. A resolução cessa assim que a primeira ocorrência é localizada.
+- **`JAVA_HOME`:** Variável que aponta diretamente para a raiz do diretório de instalação do JDK correspondente. É lida diretamente por ferramentas corporativas de compilação (Maven, Gradle, contêineres e IDEs) para localizar bibliotecas internas do compilador.
+
+```mermaid
+flowchart TD
+    Terminal["Execução de 'javac -version'"] --> ScanPath["Varredura sequencial dos diretórios no PATH"]
+    ScanPath -->|"Diretório 1: C:\Windows\System32"| D1["Não encontrado"]
+    D1 -->|"Diretório 2: C:\Adoptium\jdk-21\bin"| D2["Encontrado javac.exe!"]
+    D2 --> Disparo["Executa o compilador Java 21 e encerra a busca"]
+
+    Maven["Execução do Maven (mvnw)"] --> LeituraJH["Lê diretamente a variável JAVA_HOME"]
+    LeituraJH --> RaizJDK["Aponta para a pasta raiz do JDK 21"]
+```
+
+*Auditoria no terminal:*
+
+```powershell
+# Windows (PowerShell)
+where.exe java
+where.exe javac
+$env:JAVA_HOME
+```
+
+```bash
+# Linux / macOS (Bash/Zsh)
+which java
+which javac
+echo "$JAVA_HOME"
+```
+
+### Automação de construção com Apache Maven e Maven Wrapper
+
+Em ambientes profissionais, compilar arquivos manualmente por comandos `javac *.java` é proibitivo devido à necessidade de gerenciar dezenas de dependências externas transitivas, executar testes automatizados e empacotar a aplicação de forma determinística.
+
+O **Apache Maven** resolve esses problemas orientado pelo princípio de **Convenção sobre Configuração** (*Convention over Configuration*):
+- Código de produção: `src/main/java`
+- Configurações da aplicação: `src/main/resources`
+- Código de testes: `src/test/java`
+- Descritor formal de build: `pom.xml` (*Project Object Model*)
+
+#### Ciclo de vida padrão do Maven
+
+O Maven organiza suas operações em fases estritamente sequenciais:
+
+```mermaid
+flowchart LR
+    Validate["validate"] --> Compile["compile"]
+    Compile --> Test["test"]
+    Test --> Package["package"]
+    Package --> Verify["verify"]
+    Verify --> Install["install"]
+```
+
+A invocação de uma fase tardia (ex.: `./mvnw package`) obriga a execução automática e sequencial de todas as fases precedentes (`validate`, `compile`, `test`).
+
+#### O Maven Wrapper (mvnw)
+
+O **Maven Wrapper** é uma infraestrutura embutida no projeto (`mvnw`, `mvnw.cmd` e a pasta `.mvn/wrapper`) cuja responsabilidade é baixar e encapsular uma versão idêntica do Maven exigida pela aplicação. 
+
+Isso elimina a necessidade de o desenvolvedor instalar o Maven globalmente no sistema operacional e garante que o ambiente de Integração Contínua (CI) compile a aplicação sob as mesmas regras binárias.
+
+```bash
+# Execução da suíte de testes com o wrapper
+./mvnw clean test
+
+# No Windows (PowerShell)
+.\mvnw.cmd clean test
+```
+
+### Evolução dos servidores web: Standalone versus Embarcados
+
+1. **Modelo Clássico de Servidores Web Externos (*Standalone*):**
+   - O servidor (ex.: Apache Tomcat 9 clássico, Payara Server 6) era instalado de forma autônoma no sistema operacional do servidor.
+   - A aplicação era empacotada no formato de arquivo compactado `.war` (*Web Application Archive*) e submetida a um processo manual ou automatizado de *deploy* dentro da pasta `webapps/` do servidor.
+   - Provocava forte acoplamento entre a versão da JVM do servidor e as bibliotecas da aplicação, gerando conflitos de carregamento de classes (*classloader hell*).
+2. **Modelo Moderno com Servidor Embarcado (*Embedded Server*):**
+   - A arquitetura do Spring Boot inverte a relação de hospedagem: o servidor web (Tomcat) é transformado em uma dependência de biblioteca (`spring-boot-starter-tomcat`) compilada dentro do próprio artefato executável `.jar` (*Java Archive*).
+   - A aplicação inicializa a si mesma invocando seu método canônico `public static void main(String[] args)`. Ela instancia programaticamente o servidor HTTP na porta desejada (padrão `8080`) e expõe os endpoints.
+
+```mermaid
+flowchart TD
+    subgraph ModeloLegado["Abordagem Clássica: Deploy em Servidor Externo"]
+        SO1["Sistema Operacional"] --> TomcatExt["Instância Standalone Apache Tomcat"]
+        TomcatExt --> Deploy["Deploy de suporteos2026.war"]
+    end
+
+    subgraph ModeloModerno["Abordagem Spring Boot: Servidor Embutido"]
+        SO2["Sistema Operacional"] --> App["JVM: Executa suporteos2026.jar"]
+        App --> Embedded["Tomcat Embutido gerenciado via Spring Boot"]
+    end
+```
+
+### A transição histórica de namespaces: de javax para jakarta
+
+Em 2017, a Oracle transferiu a custódia das especificações corporativas do Java EE (*Java Enterprise Edition*) para a Fundação Eclipse. Devido a restrições de direitos de uso da marca registrada "Java", a fundação renomeou a plataforma para **Jakarta EE**.
+
+A partir da versão Jakarta EE 9 (e consolidada no Spring Boot 3 e Java 21), houve a renomeação obrigatória de todos os pacotes das APIs corporativas:
+
+```java
+// Código Legado (Java EE / Spring Boot 2.x) - OBSOLETO
+import javax.persistence.Entity;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
+
+// Código Moderno (Jakarta EE / Spring Boot 3.x / Java 21) - OBRIGATÓRIO
+import jakarta.persistence.Entity;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.NotNull;
+```
+
+> [!WARNING]
+> **Quebra de Compatibilidade Binária:** A importação inadvertida de pacotes que iniciam com o prefixo `javax.persistence` ou `javax.validation` resultará em falhas de compilação ou na total inoperância das validações e do mapeamento JPA, uma vez que o Spring Boot 3/4 não reconhece as anotações do namespace antigo.
+
+---
+
+## Módulo 2: Arquitetura Cliente-Servidor, Fundamentos REST e Bootstrap com Spring Boot
+
+### Metodologia pedagógica: Projeto de Referência versus Projeto Temático
+
+O ensino de engenharia de software nesta disciplina assenta-se na técnica do **espelhamento arquitetural**.
+
+```mermaid
+flowchart TD
+    subgraph Referencia["Projeto de Referência do Docente (suporteos2026)"]
+        R1["GrupoProduto (Entidade Classificatória)"]
+        R2["Produto (Entidade Principal)"]
+        R1 -->|"Classifica 1:N"| R2
+    end
+
+    subgraph Tematico["Projeto Temático Individual do Estudante (Ex: biblioteca2026)"]
+        E1["CategoriaLivro (Entidade Classificatória)"]
+        E2["Livro (Entidade Principal)"]
+        E1 -->|"Classifica 1:N"| E2
+    end
+
+    Referencia -.->|"Espelhamento de Arquitetura, Padrões e Camadas"| Tematico
+```
+
+- **Projeto de Referência (`suporteos2026`):** Repositório público mantido pelo professor. Nele são introduzidos os padrões canônicos, as migrações estruturais do Liquibase e as implementações de referência.
+- **Projeto Temático Individual:** Repositório criado e mantido pelo próprio estudante, com tema negocial único (ex.: gestão de oficina, biblioteca, locadora, clínica médica). O discente é desafiado a transpor os conceitos aprendidos no domínio de ordens de serviço para as regras específicas do seu projeto.
+
+### O contrato de compatibilidade de domínio
+
+Para garantir que o projeto individual suporte todos os tópicos avançados do semestre, o tema escolhido pelo aluno deve satisfazer obrigatoriamente à seguinte estrutura de relacionamento entre duas entidades centrais:
+
+```mermaid
+erDiagram
+    ENTIDADE_CLASSIFICACAO ||--o{ ENTIDADE_PRINCIPAL : categoriza
+    ENTIDADE_CLASSIFICACAO {
+        bigint id PK
+        varchar descricao
+        varchar status
+    }
+    ENTIDADE_PRINCIPAL {
+        bigint id PK
+        varchar codigoUnico UK
+        varchar descricao
+        numeric medidaQuantitativa
+        numeric valorMonetario
+        date dataRelevante
+        varchar status
+        bigint classificacao_id FK
+    }
+```
+
+*Matriz de equivalência temática:*
+
+| Elemento do Contrato | Projeto de Referência (`suporteos2026`) | Exemplo: Biblioteca | Exemplo: Oficina Mecânica |
+|---|---|---|---|
+| **Classificação** | `GrupoProduto` | `CategoriaLivro` | `TipoServico` |
+| **Entidade Principal** | `Produto` | `Livro` | `Servico` |
+| **Identificador Natural** | Código de Barras (`codigoBarras`) | ISBN (`isbn`) | Código de Catálogo (`codigoServico`) |
+| **Medida Quantitativa** | Saldo em Estoque | Exemplares Disponíveis | Horas Estimadas |
+| **Valor Monetário** | Preço Unitário (`BigDecimal`) | Preço de Aquisição (`BigDecimal`) | Custo da Mão de Obra (`BigDecimal`) |
+
+### Fundamentos de arquitetura cliente-servidor e fronteira de APIs
+
+Uma **API** (*Application Programming Interface*) define uma fronteira formal de contratos de entrada e saída por meio da qual dois sistemas de software se comunicam.
+
+No modelo cliente-servidor para APIs Web:
+1. **Cliente:** O componente emissor que inicia a conversação despachando uma **requisição HTTP** (*request*) pela rede para um endereço identificado. Exemplos: Postman, navegadores com aplicações SPA (React, Vue, Angular) ou aplicativos móveis.
+2. **Servidor:** O processo ou serviço que escuta requisições em uma porta TCP/IP (ex.: porta `8080`). Ele intercepta a mensagem, orquestra a lógica de negócio, interage com o banco de dados e retorna uma **resposta HTTP** (*response*).
+
+```mermaid
+flowchart LR
+    subgraph ClientesHeterogeneos["Clientes Heterogêneos"]
+        CLI1["Navegador Web / SPA"]
+        CLI2["Aplicativo Mobile"]
+        CLI3["Scripts / CLI (cURL)"]
+    end
+
+    subgraph Backend["Servidor Web (Spring Boot)"]
+        API["API REST Controllers"]
+        BD[("PostgreSQL")]
+        API -->|"TCP / SQL"| BD
+    end
+
+    CLI1 -->|"HTTP / JSON"| API
+    CLI2 -->|"HTTP / JSON"| API
+    CLI3 -->|"HTTP / JSON"| API
+```
+
+### Renderização no servidor (SSR) versus APIs Web desacopladas
+
+| Característica | Renderização no Servidor (SSR - JSP, Thymeleaf) | API Web Desacoplada (RESTful / JSON) |
+|---|---|---|
+| **Carga de Trabalho** | O servidor processa os dados e compila o código HTML/CSS da tela. | O servidor processa regras e entrega apenas dados estruturados em JSON. |
+| **Tamanho da Mensagem** | Elevado (transporta a árvore completa do documento visual). | Reduzido (transporta estritamente os pares chave-valor necessários). |
+| **Acoplamento** | Alto: a aplicação backend fica refém do motor de visualização web. | Baixo: um único endpoint serve web, mobile, smart TVs e integrações B2B. |
+| **Escalabilidade** | Menor, devido ao consumo de CPU para renderizar layouts visuais. | Alta, viabilizando microsserviços e cacheamento eficiente de dados. |
+
+### Anatomia estrita do protocolo HTTP (RFC 9110)
+
+O protocolo **HTTP** (*Hypertext Transfer Protocol*) baseia-se em mensagens de texto transmitidas sobre a camada de transporte (TCP).
+
+#### Estrutura formal de uma requisição HTTP
+
+Uma requisição HTTP divide-se em:
+1. **Linha de Comando (*Request Line*):** Contém o método semântico, a URI do recurso e a versão do protocolo;
+2. **Cabeçalhos da Requisição (*Headers*):** Metadados estruturados no padrão chave-valor;
+3. **Linha em Branco (`\r\n`):** Separador obrigatório que encerra a seção de metadados;
+4. **Corpo da Mensagem (*Message Body*):** Dados estruturados (payload) enviados ao servidor.
+
+```http
+POST /api/produtos HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigoBarras": "7891000300012",
+  "descricao": "Teclado Mecânico USB",
+  "saldoEstoque": 45,
+  "valorUnitario": 289.90,
+  "grupoId": 2
+}
+```
+
+#### Estrutura formal de uma resposta HTTP
+
+Uma resposta HTTP divide-se em:
+1. **Linha de Status (*Status Line*):** Versão do protocolo, código de status numérico de três dígitos e a mensagem textual descritiva (*reason phrase*);
+2. **Cabeçalhos de Resposta (*Headers*):** Metadados gerados pelo servidor;
+3. **Linha em Branco (`\r\n`):** Delimitador;
+4. **Corpo da Mensagem (*Message Body*):** A representação em JSON do recurso processado.
+
+```http
+HTTP/1.1 201 Created
+Location: /api/produtos/84
+Content-Type: application/json
+
+{
+  "id": 84,
+  "codigoBarras": "7891000300012",
+  "descricao": "Teclado Mecânico USB",
+  "saldoEstoque": 45,
+  "valorUnitario": 289.90,
+  "status": "ATIVO"
+}
+```
+
+### Modelagem de recursos, URIs e Endpoints
+
+No paradigma REST, a menor unidade manipulável é o **recurso**.
+
+- **Identificação de Recursos:** Recursos são representados conceitualmente por substantivos no plural (`/api/produtos`, `/api/grupos-produtos`), e não por verbos ou ações computacionais.
+- **Diferença entre URI e Endpoint:**
+  - **URI (*Uniform Resource Identifier*):** O caminho global que identifica o recurso na rede (`/api/produtos/84`).
+  - **Endpoint:** A composição técnica entre o **Método HTTP** e a **URI**. Portanto, `GET /api/produtos` e `POST /api/produtos` apontam para a mesma URI, mas constituem **endpoints completamente distintos**, com comportamentos, códigos de status e contratos diferentes.
+
+### Semântica dos métodos HTTP, segurança e idempotência
+
+A especificação RFC 9110 estabelece duas propriedades conceituais fundamentais para os métodos HTTP:
+
+1. **Método Seguro (*Safe Method*):** Uma operação cuja execução acarreta apenas a leitura de dados, não provocando nenhuma alteração perceptível no estado interno do servidor.
+2. **Método Idempotente (*Idempotent Method*):** Uma operação cuja execução consecutiva com os mesmos parâmetros produz exatamente o mesmo resultado no estado do servidor que sua execução isolada uma única vez:
 
 ```math
 f(f(x)) = f(x)
 ```
 
-`GET`, `PUT` e `DELETE` são métodos inerentemente idempotentes. O método `POST` **não é idempotente**, pois submeter múltiplos disparos de criação gerará múltiplos registros distintos ou falhas sequenciais de chave única duplicada.
-
 ```mermaid
 stateDiagram-v2
-  [*] --> EstadoInicial
-  EstadoInicial --> EstadoInicial: GET /api/produtos/1 (Seguro e Idempotente)
-  EstadoInicial --> Criado: POST /api/produtos (NÃO Idempotente)
-  Criado --> Conflito409: Repetir POST /api/produtos (Altera estado ou falha)
-  EstadoInicial --> Atualizado: PUT /api/produtos/1 (Idempotente)
-  Atualizado --> Atualizado: Repetir PUT /api/produtos/1 (Mantém estado final)
-  EstadoInicial --> Removido: DELETE /api/produtos/1 (Idempotente)
-  Removido --> Removido: Repetir DELETE /api/produtos/1 (Permanece ausente)
+    [*] --> EstadoEstavel
+    EstadoEstavel --> EstadoEstavel : GET /api/produtos/1 (Seguro e Idempotente)
+    EstadoEstavel --> NovoRecurso : POST /api/produtos (NÃO Idempotente)
+    NovoRecurso --> Conflito409 : Repetir POST /api/produtos (Falha por duplicidade)
+    EstadoEstavel --> RecursoAtualizado : PUT /api/produtos/1 (Idempotente)
+    RecursoAtualizado --> RecursoAtualizado : Repetir PUT /api/produtos/1 (Mesmo estado final)
+    EstadoEstavel --> RecursoExcluido : DELETE /api/produtos/1 (Idempotente)
+    RecursoExcluido --> RecursoExcluido : Repetir DELETE /api/produtos/1 (Permanece ausente)
 ```
 
----
+*Tabela de métodos HTTP:*
 
-### Arquitetura em Camadas e Inversão de Controle no Spring Boot
+| Método HTTP | Propósito Semântico | Seguro? | Idempotente? | Sucesso Típico |
+|---|---|---|---|---|
+| `GET` | Recuperar representação de recursos | Sim | Sim | `200 OK` |
+| `POST` | Criar novos recursos ou executar comandos | Não | Não | `201 Created` |
+| `PUT` | Substituição integral do recurso existente | Não | Sim | `200 OK` / `204 No Content` |
+| `PATCH` | Modificação parcial do recurso | Não | Não | `200 OK` |
+| `DELETE` | Remover o recurso identificado | Não | Sim | `204 No Content` / `200 OK` |
 
-Para impedir o acoplamento desordenado entre preocupações de transporte de rede, regras de negócio e acesso a disco, o Spring Boot adota uma divisão formal em camadas funcionais:
+### Famílias de códigos de status HTTP
 
-```mermaid
-flowchart TD
-  subgraph CamadaWeb["1. Camada de Apresentação e Borda (api)"]
-    Ctrl["Controlador REST (@RestController)"]
-    DTO["Contratos de Transporte (Java Records)"]
-    Val["Validação de Entrada (@Valid / Bean Validation)"]
-    Map["Mapeadores Manuais Puros"]
-    Adv["Tratador Global (@RestControllerAdvice)"]
-  end
+Os códigos de status dividem-se em cinco famílias categóricas pelo dígito inicial:
 
-  subgraph CamadaAplicacao["2. Camada de Aplicação (application)"]
-    Serv["Serviços de Orquestração (@Service)"]
-    Tx["Fronteira Transacional (@Transactional)"]
-    Exc["Exceções de Regra de Negócio"]
-  end
+- **`2xx` (Sucesso):** A requisição foi compreendida e processada com êxito.
+  - `200 OK`: Operação de leitura ou atualização executada com retorno de dados.
+  - `201 Created`: Criação bem-sucedida de um novo recurso, acompanhado do cabeçalho `Location`.
+  - `204 No Content`: Ação processada com sucesso, mas a resposta não possui corpo (típico de exclusões).
+- **`4xx` (Erros do Cliente):** A requisição contém sintaxe inválida ou violou regras da aplicação.
+  - `400 Bad Request`: Dados inválidos, campos obrigatórios ausentes ou falhas na validação sintática.
+  - `404 Not Found`: O recurso identificado pela URI não existe no banco de dados.
+  - `409 Conflict`: Conflito de integridade de dados (ex.: duplicação de e-mail ou código de barras).
+- **`5xx` (Erros do Servidor):** Falha interna no servidor ao processar uma requisição válida.
+  - `500 Internal Server Error`: Erro inesperado não tratado pelo sistema.
 
-  subgraph CamadaDominio["3. Camada de Domínio Puro (domain)"]
-    Ent["Entidades Ricas de Negócio"]
-    Invar["Invariantes e Regras de Cálculo"]
-    Enum["Enumerações Tipadas"]
-  end
+### Inversão de Controle, Injeção de Dependências e Beans Spring
 
-  subgraph CamadaPersistencia["4. Camada de Persistência (repository)"]
-    Repo["Spring Data Repositories (Interfaces)"]
-    Proxy["Proxies Dinâmicos em Tempo de Execução"]
-  end
+- **Inversão de Controle (*Inversion of Control - IoC*):** Princípio arquitetural no qual o controle do fluxo de execução e a gestão do ciclo de vida dos objetos é transferido da mão do programador para o framework.
+- **Injeção de Dependência (*Dependency Injection - DI*):** Padrão de projeto que materializa o IoC. Em vez de uma classe instanciar diretamente suas dependências através do operador `new`, as dependências são fornecidas externamente à classe em tempo de execução.
+- **Spring Bean:** Qualquer classe Java instanciada, configurada e gerenciada dentro do ciclo de vida do contêiner do Spring (*ApplicationContext*).
 
-  Ctrl --> DTO
-  Ctrl --> Val
-  Ctrl --> Map
-  Ctrl --> Serv
-  Serv --> Tx
-  Serv --> Repo
-  Serv --> Ent
-  Serv --> Exc
-  Adv -. Captura .-> Exc
-  Repo --> Ent
-```
+### Inicialização do projeto e o endpoint GET /api/health
 
-#### Inversão de Controle (IoC) e Injeção de Dependências por Construtor
+O ecossistema Spring Boot provê módulos denominados **Starters** (ex.: `spring-boot-starter-web`), que agregam dependências transitivas compatíveis entre si.
 
-No desenvolvimento estruturado tradicional, uma classe que necessita de um serviço secundário instancia sua dependência diretamente utilizando a palavra-chave `new`, amarrando sua execução a uma implementação concreta. Sob a **Inversão de Controle (IoC)**, a responsabilidade de instanciar, configurar e conectar as classes é transferida da própria classe para o contêiner de infraestrutura do Spring (*ApplicationContext*). Os objetos gerenciados pelo contêiner são formalmente denominados **Spring Beans**.
-
-A **Injeção de Dependências (DI)** é o padrão que concretiza o princípio de IoC. A disciplina estabelece como regra mandatória o uso de **injeção estrita por construtor**, rejeitando terminantemente anotações `@Autowired` soltas sobre campos privados:
+Para comprovar a operacionalidade da aplicação sem depender de conexões com banco de dados nesta fase inicial, implementa-se o controlador de verificação de disponibilidade (*health check*):
 
 ```java
-@Service
-public class ProdutoService {
+package com.curso.suporteos.api.controller;
 
-    private final ProdutoRepository produtoRepository;
-    private final GrupoProdutoRepository grupoProdutoRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-    // Injeção de dependência via construtor declarativo e imutável
-    public ProdutoService(ProdutoRepository produtoRepository, GrupoProdutoRepository grupoProdutoRepository) {
-        this.produtoRepository = produtoRepository;
-        this.grupoProdutoRepository = grupoProdutoRepository;
+import java.time.LocalDateTime;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/health")
+public class HealthController {
+
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> checarSaude() {
+        return ResponseEntity.ok(Map.of(
+            "status", "UP",
+            "aplicacao", "suporteos2026",
+            "timestamp", LocalDateTime.now()
+        ));
     }
 }
 ```
 
-*Vantagens Arquiteturais:*
-- **Imutabilidade Real:** Permite a utilização da palavra-chave `final` nos atributos da classe, garantindo que as referências sejam atribuídas unicamente no momento da instanciação.
-- **Detecção Fail-Fast:** Casos de dependência circular são identificados instantaneamente durante a compilação do grafo de dependências no boot da aplicação.
-- **Testabilidade Desacoplada:** Facilita a escrita de testes unitários isolados, viabilizando a instanciação manual do serviço fornecendo classes simuladas (*mocks* ou instâncias reais de teste) sem exigir a subida onerosa do contêiner Spring.
-
 ---
 
-### Modelagem de Domínio Rico e Encapsulamento de Invariantes em Java Puro
+## Módulo 3: Modelagem de Domínio Rico com Java Puro
 
-Uma das falhas mais perniciosas na engenharia de sistemas é o anti-padrão denominado **Modelo de Domínio Anêmico** (*Anemic Domain Model*), no qual as classes representativas do negócio consistem em repositórios de dados passivos, repletos de métodos modificadores públicos (`setters`) desprovidos de validação. Toda a lógica de negócio acaba espalhada de forma procedural em classes de serviço.
+### O conceito de domínio e o isolamento arquitetural
 
-No projeto `suporteos2026`, adotamos o **Modelo de Domínio Rico** (*Rich Domain Model*):
-- O objeto de domínio assume a responsabilidade indelegável de proteger sua integridade interna.
-- Invariantes de negócio são predicados lógicos que devem manter-se rigorosamente válidos durante todo o ciclo de vida da instância. Se um produto não pode ter saldo de estoque negativo, a própria entidade `Produto` barra mutações inconsistentes.
-- A criação de instâncias inválidas é impedida na origem por meio de **construtores ricos de negócio** que validam obrigatoriedade, formato e nulidade de argumentos.
-- Mutadores semânticos (`receberEstoque`, `retirarEstoque`, `inativar`) substituem *setters* genéricos.
+Na Engenharia de Software, o **Domínio** representa a esfera de conhecimento, regras de negócio, limites e operações para a qual a aplicação computacional é construída. As regras do negócio existem de forma independente da tecnologia: um saldo de estoque não pode assumir valor negativo, independentemente de a aplicação ser implementada em Java, rodar na web ou ser registrada em fichas de papel.
+
+O **isolamento arquitetural** prega que o núcleo do domínio (*Core Domain*) deve ser implementado em Java puro (POJOs - *Plain Old Java Objects*), livre de acoplamento direto com tecnologias de transporte (HTTP, JSON) e bancos relacionais.
 
 ```mermaid
 flowchart TD
-  Invocacao["Chamada: produto.retirarEstoque(quantidade)"] --> V1{"quantidade == null?"}
-  V1 -- "Sim" --> E1["Lança NullPointerException"]
-  V1 -- "Não" --> V2{"quantidade.signum() <= 0?"}
-  V2 -- "Sim" --> E2["Lança IllegalArgumentException: Quantidade deve ser positiva"]
-  V2 -- "Não" --> V3{"saldoEstoque.compareTo(quantidade) < 0?"}
-  V3 -- "Sim" --> E3["Lança IllegalArgumentException: Saldo insuficiente"]
-  V3 -- "Não" --> Exec["saldoEstoque = saldoEstoque.subtract(quantidade)"]
-  Exec --> Sucesso["Estado Interno Consistente Preservado"]
+    API["Camada de API / Transporte (HTTP, DTOs, Controllers)"] --> APP["Camada de Aplicação (Serviços e Transações)"]
+    APP --> DOM["Núcleo do Domínio (Entidades e Regras de Negócio Puras)"]
+    APP --> REP["Camada de Repositório (Spring Data JPA)"]
+    REP --> BD[("Banco de Dados PostgreSQL")]
 ```
 
-#### Distinção entre Entidades e Objetos de Valor (Value Objects)
+### Entidades versus Objetos de Valor (Value Objects)
 
-- **Entidade (`Entity`):** Possui continuidade de identidade explícita ao longo do tempo. Dois produtos com os mesmos valores de descrição e preço são entidades distintas caso possuam chaves primárias ou códigos de barras diferentes. Inversamente, se a descrição mudar, o produto preserva sua identidade.
-- **Objeto de Valor (`Value Object`):** Elemento concebido para quantificar ou descrever características, desprovido de identificador persistente próprio. É definido exclusivamente pela totalidade dos seus atributos e é intrinsecamente imutável. Dois objetos de valor com campos idênticos são intercambiáveis (exemplo: `BigDecimal`, `LocalDate`, `Status`).
+1. **Entidades (*Entities*):** Objetos definidos por uma linha contínua de identidade ao longo do tempo, e não exclusivamente por seus atributos transitórios. Dois produtos continuam sendo entidades distintas mesmo que possuam a mesma descrição e o mesmo valor, caso possuam códigos identificadores diferentes. Inversamente, se o valor de um produto for alterado, sua identidade permanece a mesma.
+2. **Objetos de Valor (*Value Objects*):** Elementos conceituais que descrevem características ou grandezas, sendo definidos unicamente pela totalidade dos seus valores. São intrinsecamente imutáveis: se qualquer elemento mudar, tem-se uma nova instância. Dois objetos de valor com atributos idênticos são absolutamente equivalentes.
 
----
+```mermaid
+classDiagram
+    class EntidadeProduto {
+        -String codigoBarras
+        -String descricao
+        -BigDecimal saldoEstoque
+        -BigDecimal valorUnitario
+        +receberEstoque(BigDecimal quantidade) void
+        +retirarEstoque(BigDecimal quantidade) void
+    }
+    class ObjetoValorPreco {
+        -BigDecimal valor
+        -String moeda
+        +somar(ObjetoValorPreco outro) ObjetoValorPreco
+    }
+    EntidadeProduto --> ObjetoValorPreco : possui
+```
 
-### Aritmética de Alta Precisão e Representação Monetária com BigDecimal
+### Encapsulamento estrito e defesa de invariantes de negócio
 
-Os tipos primitivos `float` (32 bits) e `double` (64 bits) do Java implementam o padrão aritmético de ponto flutuante binário IEEE 754. Esses tipos operam com base de potências de dois e foram otimizados para processamento gráfico e cálculos científicos, nos quais pequenas aproximações são perfeitamente toleradas em troca de velocidade na Unidade de Ponto Flutuante (FPU).
+- **Invariante de Negócio:** É uma asserção lógica que deve permanecer verdadeira durante todo o ciclo de vida de uma entidade válida.
+- **Encapsulamento Efetivo:** Consiste em impedir que agentes externos coloquem a entidade em um estado corrompido. Proíbe-se a exposição de métodos modificadores públicos (`setters`) arbitrários. O estado interno só pode ser alterado através de métodos de negócio que validam as invariantes antes de atualizar os atributos.
 
-Em sistemas corporativos, fiscais e de controle de estoque, o emprego de `double` ou `float` é terminantemente inaceitável. Na aritmética binária, frações decimais elementares como $`0.1`$ ou $`0.2`$ não possuem representação finita exata, convertendo-se em dízimas periódicas que geram erros cumulativos de arredondamento:
+```mermaid
+flowchart TD
+    Entrada["Invocação: produto.retirarEstoque(quantidade)"] --> ValNulo{"quantidade == null?"}
+    ValNulo -- "Sim" --> E1["Lançar NullPointerException"]
+    ValNulo -- "Não" --> ValPositivo{"quantidade.signum() <= 0?"}
+    ValPositivo -- "Sim" --> E2["Lançar IllegalArgumentException: Quantidade deve ser positiva"]
+    ValPositivo -- "Não" --> ValSaldo{"saldoEstoque.compareTo(quantidade) < 0?"}
+    ValSaldo -- "Sim" --> E3["Lançar IllegalArgumentException: Saldo insuficiente"]
+    ValSaldo -- "Não" --> Sucesso["saldoEstoque = saldoEstoque.subtract(quantidade)"]
+```
+
+### O modelo rico versus o anti-padrão do modelo anêmico
+
+- **Modelo Anêmico (*Anemic Domain Model*):** Entidades reduzidas a simples bolsas de dados sem lógica (`getters` e `setters`), enquanto a lógica de validação fica dispersa em serviços procedurais. Permite a criação de objetos vazios e corrompidos em memória.
+- **Modelo Rico (*Rich Domain Model*):** As entidades concentram dados e comportamentos. Elas protegem seu próprio estado e recusam instanciações ou mutações ilegais através de seus construtores e métodos expressivos.
 
 ```java
-double v1 = 0.1;
-double v2 = 0.2;
-System.out.println(v1 + v2); // Imprime: 0.30000000000000004
+// Anti-padrão: Modelo Anêmico
+Produto p = new Produto();
+p.setSaldoEstoque(p.getSaldoEstoque().subtract(qtd)); // Sem validações na entidade!
+
+// Padrão Recomendado: Modelo Rico
+produto.retirarEstoque(qtd); // Protegido e validado
 ```
 
-A classe `java.math.BigDecimal` resolve a discrepância ao fornecer representação decimal exata com precisão arbitrária. Sua estrutura interna baseia-se em um inteiro de precisão infinita (`BigInteger` não escalonado) e um valor inteiro de 32 bits que representa a escala (`scale`), indicando quantas casas decimais o número possui:
+### Aritmética decimal exata com BigDecimal
 
-```math
-\text{Valor} = \text{unscaledValue} \times 10^{-\text{scale}}
+Os tipos primitivos `float` (32 bits) e `double` (64 bits) implementam a aritmética binária IEEE 754. Eles foram concebidos para computação gráfica e científica, onde a velocidade de cálculo sobrepuja a exatidão absoluta de pequenas frações.
+
+Na aritmética binária, frações decimais simples como $`0.1`$ ou $`0.2`$ resultam em dízimas periódicas infinitas, produzindo desvios matemáticos:
+
+```java
+double a = 0.1;
+double b = 0.2;
+System.out.println(a + b); // Imprime: 0.30000000000000004
 ```
 
-```mermaid
-flowchart TD
-  subgraph Entrada["Instanciação"]
-    S["String: '12.90'"] --> C1["new BigDecimal('12.90')"]
-    D["Double: 12.90"] --> C2["new BigDecimal(12.90)"]
-  end
-  subgraph Memoria["Representação Interna na JVM"]
-    C1 --> M1["Valor exato: 1290 x 10^-2"]
-    C2 --> M2["Valor corrompido: 12.900000000000000355..."]
-  end
-  subgraph Efeito["Efeito Fiscal e Contábil"]
-    M1 --> OK["Cálculo Exato e Previsível"]
-    M2 --> ERR["Divergência de Centavos em Lote"]
-  end
-```
+Em sistemas de gestão financeira e de estoque, esse comportamento é inaceitável. Deve-se empregar exclusivamente a classe `java.math.BigDecimal`, com atenção a três regras mandatórias:
 
-#### Regras Mandatórias de Uso do BigDecimal
+1. **Construção via String:** Nunca instancie via `new BigDecimal(double)`. Utilize o construtor que aceita `String` ou o método estático `BigDecimal.valueOf(double)`.
+2. **Controle de Escala e Arredondamento:** Ao realizar multiplicações e divisões, determine a escala decimal e o algoritmo de corte através de `RoundingMode.HALF_UP` (arredondamento bancário clássico).
+3. **Comparação de Valores (`compareTo` versus `equals`):** O método `equals()` avalia o valor numérico e a escala. Assim, `new BigDecimal("10.0")` não é igual a `new BigDecimal("10.00")`. Para aferir igualdade matemática em testes e regras de negócio, utilize sempre `compareTo(outro) == 0`.
 
-1. **Construção estritamente via String:** Jamais utilize o construtor `new BigDecimal(double)`. Utilize `new BigDecimal("12.90")` ou `BigDecimal.valueOf(12.90)`.
-2. **Definição de Escala e Arredondamento:** Operações de multiplicação e divisão exigem truncamento ou arredondamento controlado via `.setScale(escala, RoundingMode.HALF_UP)`.
-3. **Comparação de Valores (`compareTo` vs `equals`):** O método `.equals()` compara o valor numérico e a escala. Logo, `new BigDecimal("10.0").equals(new BigDecimal("10.00"))` retorna **`false`**. Para avaliar igualdade matemática em regras de negócio e testes automatizados, utilize sempre `a.compareTo(b) == 0`.
+### Mapeamento e sincronização de associações bidirecionais 1:N em memória
 
----
+No banco relacional, relacionamentos $`1:N`$ são estruturados de forma unidirecional: a tabela filha (`produto`) possui a chave estrangeira apontando para a tabela pai (`grupo_produto`).
 
-### Associação Bidirecional 1:N e Integridade Referencial em Memória
+Em memória na JVM, um relacionamento bidirecional exige que:
+- O `GrupoProduto` mantenha uma lista interna de `Produto`;
+- Cada `Produto` mantenha um ponteiro de referência para seu `GrupoProduto`.
 
-No paradigma relacional, uma associação 1:N entre tabelas (`grupo_produto` e `produto`) é resolvida de forma unidirecional simples: a tabela subordinada armazena uma chave estrangeira (`grupo_produto_id`) apontando para a chave primária da tabela pai.
-
-No paradigma orientado a objetos, associações bidirecionais exigem que ambos os lados participantes conheçam seus pares correspondentes:
-- `GrupoProduto` contém uma lista de referências em memória: `List<Produto> produtos`.
-- Cada `Produto` retém um ponteiro para o seu grupo agrupador: `GrupoProduto grupo`.
-
-Se a manipulação dessas referências for deixada desprotegida, o sistema cairá em inconsistência mútua (um produto aponta para um grupo, mas o grupo não lista o produto).
+Se essas referências forem manipuladas de forma solta por código cliente, o sistema atingirá inconsistência (o produto aponta para um grupo, mas a lista do grupo não contém o produto).
 
 ```mermaid
 sequenceDiagram
-  autonumber
-  actor Cliente as Caso de Uso / Serviço
-  participant Grupo as grupo:GrupoProduto
-  participant Prod as produto:Produto
+    autonumber
+    actor Cliente as Código Cliente
+    participant Grupo as grupo:GrupoProduto
+    participant Prod as produto:Produto
 
-  Cliente->>Grupo: adicionarProduto(produto)
-  activate Grupo
-  Grupo->>Grupo: Valida produto não nulo
-  Grupo->>Grupo: Valida duplicidade de código de barras
-  Grupo->>Prod: associarAoGrupo(this)
-  activate Prod
-  Prod->>Prod: Verifica se produto já possui outro grupo associado
-  Prod-->>Grupo: Amarração recíproca confirmada
-  deactivate Prod
-  Grupo->>Grupo: Insere na coleção interna (produtos.add)
-  Grupo-->>Cliente: Associação concluída com integridade
-  deactivate Grupo
+    Cliente->>Grupo: adicionarProduto(produto)
+    activate Grupo
+    Grupo->>Grupo: Valida produto não nulo e duplicidade de código de barras
+    Grupo->>Prod: associarAo(this)
+    activate Prod
+    Prod->>Prod: Vincula referência interna (this.grupo = grupo)
+    Prod-->>Grupo: Confirmação
+    deactivate Prod
+    Grupo->>Grupo: Adiciona produto à lista interna (this.produtos.add)
+    Grupo-->>Cliente: Concluído com integridade
+    deactivate Grupo
 ```
 
-#### Blindagem da Associação
+*Regras de implementação da associação:*
+1. **Ponto de entrada único:** Apenas o método `adicionarProduto` de `GrupoProduto` é público para a operação.
+2. **Visibilidade de pacote:** O método `associarAo` em `Produto` possui visibilidade protegida de pacote (*package-private*), impedindo que classes fora do pacote manipulem o ponteiro de forma desavisada.
+3. **Coleção Encapsulada:** O método `getProdutos()` em `GrupoProduto` retorna uma coleção somente leitura via `Collections.unmodifiableList(this.produtos)`, impedindo que códigos externos executem mutações na lista ignorando as regras de integridade da entidade.
 
-Para assegurar consistência indelével:
-1. **Ponto Único de Entrada:** O método `adicionarProduto(Produto produto)` em `GrupoProduto` atua como o único canal público autorizado para compor a relação.
-2. **Visibilidade de Pacote:** O método `associarAoGrupo(GrupoProduto grupo)` em `Produto` recebe nível de acesso protegido de pacote (*package-private*), impedindo que clientes externos forcem amarrações fora do fluxo coordenado do grupo.
-3. **Coleções Não Modificáveis:** O método de leitura `getProdutos()` em `GrupoProduto` jamais expõe a referência direta da lista interna. Retorna-se `Collections.unmodifiableList(this.produtos)`. Se agentes externos tentarem invocar `.add()` ou `.clear()` diretamente sobre a lista retornada, a JVM lançará imediatamente `UnsupportedOperationException`.
+### Representação de estados finitos com Enum e datas determinísticas
+
+- **Enumerações (`enum`):** Representam conjuntos finitos e imutáveis de valores permitidos (ex.: `Status.ATIVO`, `Status.INATIVO`). Conferem segurança estrita em tempo de compilação (*type-safety*), impedindo a gravação de literais corrompidos.
+- **Datas com `LocalDate`:** Para datas de relevância contábil ou cadastral desprovidas de fuso horário, adota-se `java.time.LocalDate` em detrimento das classes legadas `java.util.Date` e `Calendar` (que são mutáveis e não thread-safe).
+
+### Testes unitários puros com JUnit 5 no padrão AAA
+
+Testes de unidade do domínio rico devem ser executados em Java puro, sem subir o contexto do Spring Boot, garantindo velocidade de execução:
+
+- **Arrange (Preparar):** Instancia os objetos, dependências e dados necessários;
+- **Act (Agir):** Executa a operação de negócio sob teste;
+- **Assert (Afirmar):** Verifica as mutações de estado e o disparo de exceções esperadas.
+
+```java
+@Test
+void deveLancarExcecaoAoTentarRetirarQuantidadeMaiorQueOSaldo() {
+    // Arrange
+    Produto produto = new Produto("7891", "Teclado", new BigDecimal("10.00"), new BigDecimal("100.00"));
+
+    // Act & Assert
+    IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+        produto.retirarEstoque(new BigDecimal("15.00"));
+    });
+    assertEquals("Saldo de estoque insuficiente", ex.getMessage());
+}
+```
 
 ---
 
-### Pilha de Persistência Relacional e o Desencontro Objeto-Relacional
+## Módulo 4: Persistência Relacional com JPA, PostgreSQL e Liquibase
 
-Persistir dados consiste em garantir que o estado dos objetos sobreviva ao término da execução do processo da JVM. Em sistemas corporativos modernos baseados em Spring Boot, a persistência relacional assenta-se sobre uma pilha de abstrações complementares:
+### A pilha de persistência: PostgreSQL, JDBC, JPA, Hibernate e Spring Data
+
+A persistência de dados em aplicações corporativas Java baseia-se em uma hierarquia de abstrações com papéis específicos:
 
 ```mermaid
 flowchart TD
-  subgraph Dominio["Domínio da Aplicação"]
-    Obj["Entidades de Domínio Java"]
-  end
-  subgraph AbstracaoJPA["Especificação"]
-    JPA["JPA (Jakarta Persistence) - Contratos e Interfaces"]
-  end
-  subgraph ProvedorORM["Mecanismo ORM"]
-    HIB["Hibernate ORM - Tradução SQL, Caches e Dirty Checking"]
-  end
-  subgraph DriverRede["Conectividade"]
-    JDBC["Driver JDBC PostgreSQL - Protocolo de Sockets e Tipagem Nativa"]
-  end
-  subgraph SGBD["Banco Relacional"]
-    PG[("PostgreSQL 16+ - Armazenamento Físico e Transações ACID")]
-  end
-  subgraph Migrador["Governança Estrutural"]
-    LQ["Liquibase - Fonte Única da Verdade do Esquema DDL"]
-  end
-
-  Obj --> JPA
-  JPA --> HIB
-  HIB --> JDBC
-  JDBC --> PG
-  LQ -. Executa DDL Versionado e Idempotente .-> PG
-  HIB -. Inspeciona e Valida Estrutura (ddl-auto=validate) .-> PG
+    Entidades["Entidades de Domínio Java"] --> JPA["JPA (Jakarta Persistence: Interfaces e Anotações)"]
+    JPA --> HIB["Hibernate ORM (Mecanismo de Implementação / Mapeamento)"]
+    HIB --> JDBC["Driver JDBC PostgreSQL (Protocolo de Rede e Sockets)"]
+    JDBC --> PG[("SGBD PostgreSQL (Armazenamento Físico e ACID)")]
+    LQ["Liquibase (Controle Versionado de DDL)"] -. Executa migrações estruturais .-> PG
+    HIB -. Valida paridade de esquema com ddl-auto=validate .-> PG
 ```
 
-#### O Desencontro de Impedância Objeto-Relacional
+- **PostgreSQL:** Sistema Gerenciador de Banco de Dados Relacional (SGBD). Garante persistência em disco, transações ACID e integridade referencial física.
+- **JDBC (*Java Database Connectivity*):** API básica de baixo nível do Java que conecta a aplicação ao banco via sockets, transmitindo comandos SQL puros e processando `ResultSets`.
+- **JPA (*Jakarta Persistence*):** Especificação formal composta por anotações (`@Entity`, `@Id`) e interfaces (`EntityManager`). Não executa código por si só.
+- **Hibernate:** Provedor ORM (*Object-Relational Mapping*). Implementa a especificação JPA, gerencia o cache de primeiro nível e converte operações em objetos para instruções SQL.
+- **Spring Data JPA:** Camada de produtividade que gera dinamicamente implementações para interfaces de repositório, simplificando consultas.
+- **Liquibase:** Ferramenta de migração de banco de dados. Atua como a **única fonte da verdade** sobre a evolução estrutural do banco.
 
-O desencontro de impedância (*Object-Relational Impedance Mismatch*) decorre da dissonância entre dois paradigmas matemáticos fundamentais:
-- **Paradigma Orientado a Objetos:** Governa-se por princípios de encapsulamento, identidade por instância/ponteiro em memória, polimorfismo e navegação através de grafos direcionados de referências.
-- **Paradigma Relacional:** Governa-se pela teoria dos conjuntos e lógica de predicados, operando sobre relações (tabelas), tuplas (linhas), atributos atômicos (colunas) e integridade governada por chaves primárias e estrangeiras.
+### O descompasso de impedância objeto-relacional
 
-| Dimensão da Impedância | Paradigma Orientado a Objetos | Paradigma Relacional | Solução de Engenharia Adotada |
+O descompasso de impedância (*Object-Relational Impedance Mismatch*) decorre da fricção entre o modelo conceitual orientado a objetos (grafos de objetos com identidade em memória, encapsulamento e polimorfismo) e o modelo relacional (álgebra relacional baseada em tabelas, tuplas, chaves primárias e tipos escalares):
+
+1. **Granularidade:** Objetos ricos como `BigDecimal` e `LocalDate` precisam ser convertidos para tipos SQL escalares (`NUMERIC(18,2)` e `DATE`).
+2. **Identidade:** No Java, duas instâncias são idênticas se residem no mesmo endereço de memória (`==`) ou se satisfazem `equals()`. No banco, linhas são distintas se diferem em sua chave primária (`id`).
+3. **Navegabilidade:** No Java, navega-se de `GrupoProduto` para seus `Produto` através de referências em memória. No banco, as consultas navegam da chave estrangeira contida em `produto` em direção à chave primária de `grupo_produto`.
+
+### Migrações versionadas com Liquibase: Idempotência e integridade
+
+A evolução do banco de dados relacional deve ser governada como código. O Liquibase registra a transição ordenada do esquema através de arquivos declarativos denominados **changelogs**:
+
+```mermaid
+stateDiagram-v2
+    [*] --> ChecarLock
+    ChecarLock --> AdquirirLock : LOCKED = FALSE
+    AdquirirLock --> LerHistorico : Registra execução em DATABASECHANGELOGLOCK
+    LerHistorico --> CompararChangeSets : Consulta DATABASECHANGELOG
+    CompararChangeSets --> ExecutarPendente : ChangeSet novo encontrado
+    CompararChangeSets --> ValidarChecksum : ChangeSet já executado
+    ValidarChecksum --> ErroChecksum : Hash MD5 divergente (Falha Fatal)
+    ValidarChecksum --> ProximoChangeSet : Hash MD5 íntegro
+    ExecutarPendente --> RegistrarExecucao : Executa DDL em transação e grava hash
+    RegistrarExecucao --> ProximoChangeSet
+    ProximoChangeSet --> LiberarLock : Todos concluídos
+    LiberarLock --> [*] : LOCKED = FALSE
+```
+
+- **`DATABASECHANGELOGLOCK`:** Tabela de bloqueio atômico que impede execuções concorrentes de migração caso múltiplos nós da aplicação iniciem simultaneamente.
+- **`DATABASECHANGELOG`:** Tabela append-only que registra o histórico de migrações contendo o identificador do `changeSet`, autor, arquivo de origem, timestamp e a soma de verificação criptográfica (`md5sum`).
+
+> [!IMPORTANT]
+> **Imutabilidade de ChangeSets:** Um `changeSet` que já foi executado em qualquer ambiente compartilhado torna-se estritamente imutável. Alterar o texto de uma migração existente invalida o seu `md5sum`, impedindo o boot da aplicação. Evoluções estruturais exigem **novos** changelogs incrementais.
+
+### Estratégia de defesa em profundidade
+
+A garantia da higidez dos dados em um sistema distribuído exige validações em múltiplas fronteiras concêntricas (*Defense in Depth*):
+
+```mermaid
+flowchart TD
+    subgraph CamadaJava["Fronteira 1: Aplicação (Fail-Fast)"]
+        Construtor["Validações Ricas em Construtores de Domínio"]
+        BeanVal["Jakarta Bean Validation nos DTOs da API"]
+    end
+
+    subgraph CamadaBanco["Fronteira 2: Banco de Dados Relacional (Inviolável)"]
+        NOTNULL["Constraints NOT NULL"]
+        UK["Constraints UNIQUE"]
+        FK["Constraints FOREIGN KEY"]
+        CK["Constraints CHECK"]
+    end
+
+    BeanVal --> Construtor
+    Construtor --> NOTNULL
+    NOTNULL --> UK --> FK --> CK --> Gravacao[("Gravação Efetiva no Disco")]
+```
+
+*Matriz de integridade:*
+
+| Regra de Integridade | Camada de Aplicação (Java) | Camada de Banco (PostgreSQL) | Racional Arquitetural |
 |---|---|---|---|
-| **Granularidade** | Tipos ricos como `BigDecimal`, `LocalDate` e enums | Tipos escalares como `NUMERIC(18,2)` e `DATE` | Mapeamento explícito via `@Column` e `@Enumerated(EnumType.STRING)` |
-| **Identidade** | Identidade por referência de memória (`a == b`) ou semântica | Identidade baseada em Chave Primária (`PRIMARY KEY`) | Identificadores com `@Id` e geração incremental controlada |
-| **Navegabilidade** | `GrupoProduto` mantém uma lista direta de `Produto` | `produto` contém a FK `grupo_produto_id` apontando para o pai | Mapeamento bidirecional `@OneToMany(mappedBy="grupo")` e `@ManyToOne` |
-| **Encapsulamento** | Métodos protegem o estado contra acessos ilegais | Linhas e colunas completamente acessíveis via comandos `SELECT` | Hibernate acessa propriedades via reflexão; DDL possui constraints |
+| **Saldo não pode ser negativo** | `validarNaoNegativo(...)` lança `IllegalArgumentException` | `CONSTRAINT ck_produto_saldo CHECK (saldo_estoque >= 0)` | Falha rápida na aplicação antes de gastar I/O de rede; garantia no banco contra scripts externos. |
+| **Código de barras único** | Validação no método `adicionarProduto` em memória | `CONSTRAINT uk_produto_codigo_barras UNIQUE (codigo_barras)` | Tratamento de integridade na aplicação e proteção final contra condições de corrida concorrentes no banco. |
+| **Integridade de Relacionamento** | Ponteiros de referência de objeto não nulos | `CONSTRAINT fk_produto_grupo FOREIGN KEY ... NOT NULL` | O Java previne ponteiros perdidos; o SGBD impede registros órfãos fisicamente no disco. |
 
----
+### Isolamento de perfis no Spring e paridade de ambientes
 
-### Migrações Declarativas e Versionamento de Banco de Dados com Liquibase
+O uso do banco em memória H2 para testes é expressamente proibido neste curso. O H2 possui dialetos, locks, mecanismos de ordenação e estruturas de tabelas diferentes do PostgreSQL.
 
-A abordagem empírica de confiar na propriedade `spring.jpa.hibernate.ddl-auto=update` para criar ou alterar tabelas automaticamente é proibida na disciplina. O Hibernate não possui rastreabilidade de histórico, falha ao aplicar renomeações de colunas e não oferece garantias de idempotência para esteiras de integração contínua (CI/CD).
-
-A evolução estrutural do banco relacional é assumida pelo **Liquibase**, uma ferramenta de migração de banco baseada em arquivos declarativos versionados em formato YAML.
-
-```math
-\text{Estado Final do Esquema} = S_0 + \sum_{i=1}^{n} \Delta M_i
-```
-
-O Liquibase mantém o controle da integridade do banco através de duas tabelas internas de metadados criadas automaticamente no esquema público:
-1. **`databasechangeloglock`:** Semáforo distribuído composto por uma linha booleana (`locked`). Garante que apenas uma réplica da aplicação execute migrações por vez, impedindo condições de corrida quando múltiplos nós iniciam em paralelo.
-2. **`databasechangelog`:** Registro append-only de todas as migrações já executadas. Cada bloco de alteração (*changeSet*) é identificado pela tríade unívoca:
-
-```math
-\text{Identidade do ChangeSet} = (\text{id}, \text{author}, \text{filename})
-```
-
-```mermaid
-stateDiagram-v2
-  [*] --> ChecarLock
-  ChecarLock --> Aguardar: LOCKED = TRUE
-  Aguardar --> ChecarLock: Polling
-  ChecarLock --> AdquirirLock: LOCKED = FALSE
-  AdquirirLock --> LerHistorico: Atualiza DATABASECHANGELOGLOCK
-  LerHistorico --> CompararChangeSets: Consulta DATABASECHANGELOG
-  CompararChangeSets --> ExecutarPendente: ChangeSet Inédito
-  CompararChangeSets --> ValidarChecksum: ChangeSet Já Executado
-  ValidarChecksum --> ErroChecksum: Checksum Divergente (Falha Fatal)
-  ValidarChecksum --> ProximoChangeSet: Checksum Idêntico (Pula)
-  ExecutarPendente --> RegistrarExecucao: Sucesso DDL
-  RegistrarExecucao --> ProximoChangeSet
-  ProximoChangeSet --> LiberarLock: Todos Processados
-  LiberarLock --> [*]: LOCKED = FALSE
-```
-
-- **Regra Fundamental de Imutabilidade:** Jamais altere o conteúdo estrutural de um `changeSet` que já foi executado em ambiente compartilhado. Qualquer modificação alterará o hash MD5/SHA recalculado pelo Liquibase, gerando a falha irrecuperável `Validation Failed: Checksum Check Failed`. Mutações de esquema exigem obrigatoriamente a criação de um **novo** `changeSet` incremental.
-
----
-
-### Isolamento de Ambientes, Perfis do Spring e Paridade com PostgreSQL
-
-A disciplina estabelece uma diretriz rigorosa: **o uso de bancos de dados em memória (como o H2) é terminantemente proibido**, inclusive para testes automatizados. O H2 possui dialeto SQL distinto, gerencia transações concorrentes de forma simplificada e omite peculiaridades cruciais do PostgreSQL (como comportamento de locks de catálogo e tipos decimais de precisão exata).
-
-O isolamento é alcançado via perfis do Spring Framework (`Spring Profiles`), garantindo paridade tecnológica estrita:
-- **`dev` (`application-dev.properties`):** Aponta para a base local `suporteos2026_dev`. Habilita formatação de consultas SQL no console para apoio ao desenvolvimento manual.
-- **`test` (`application-test.properties`):** Aponta para a base isolada `suporteos2026_test`. Cada execução da suíte de testes com `@SpringBootTest` e `@ActiveProfiles("test")` roda contra um PostgreSQL real, sem risco de corrupção ou colisão com os dados inseridos manualmente no perfil de desenvolvimento.
-- **`prod` (`application-prod.properties`):** Perfil de produção, onde credenciais e URLs são injetadas exclusivamente via variáveis de ambiente da infraestrutura de hospedagem.
+Adota-se **paridade tecnológica estrita**, operando com instâncias reais do PostgreSQL isoladas por perfis (*profiles*):
+- **Perfil `dev`:** Banco `suporteos2026_dev` para testes manuais no ambiente de desenvolvimento.
+- **Perfil `test`:** Banco `suporteos2026_test` dedicado à execução de testes automatizados com o Maven. Os dados são limpos ou revertidos a cada ciclo de teste.
+- **Perfil `prod`:** Banco de produção com credenciais injetadas exclusivamente via variáveis do sistema operacional.
 
 ```mermaid
 flowchart LR
-  subgraph PerfisSpring["Perfis do Spring Framework"]
-    Dev["Perfil 'dev'"]
-    Test["Perfil 'test'"]
-    Prod["Perfil 'prod'"]
-  end
-
-  subgraph BancosPG["Isolamento Lógico no PostgreSQL 16+"]
-    BDev[("suporteos2026_dev")]
-    BTest[("suporteos2026_test")]
-    BProd[("suporteos2026_prod")]
-  end
-
-  Dev -->|"Lê variáveis do .env"| BDev
-  Test -->|"Lê variáveis do .env"| BTest
-  Prod -->|"Lê variáveis do SO / Cloud"| BProd
+    DevProfile["Profile 'dev'"] -->|"Lê .env (DB_DEV_*)"| BancoDev[("PostgreSQL: suporteos2026_dev")]
+    TestProfile["Profile 'test'"] -->|"Lê .env (DB_TEST_*)"| BancoTest[("PostgreSQL: suporteos2026_test")]
 ```
 
----
+### Gestão segura de segredos com variáveis de ambiente
 
-### Spring Data JPA, Repositórios e Proxies Dinâmicos
+As configurações de banco de dados são parametrizadas no arquivo `application-dev.properties` utilizando a sintaxe de expansão de variáveis do Spring:
 
-No ecossistema corporativo moderno, o padrão *Repository* do Domain-Driven Design (DDD) é implementado de forma altamente produtiva através do **Spring Data JPA**. Em vez de exigir a escrita de classes concretas manuais com dezenas de chamadas imperativas ao `EntityManager`, o engenheiro de software declara apenas uma interface pública estendendo `JpaRepository<T, ID>`.
-
-Durante a fase de inicialização da aplicação (*bootstrap*):
-1. O Spring varre as interfaces filhas de `Repository`.
-2. Para cada interface, o mecanismo de **Java Dynamic Proxies** instancia um objeto proxy em memória acoplado à classe interna `SimpleJpaRepository<T, ID>`.
-3. O proxy intercepta as chamadas aos métodos genéricos (`save`, `findById`, `findAll`, `deleteById`) e os encaminha ao `EntityManager` associado à transação.
-4. O analisador sintático processa os **Derived Query Methods** (consultas derivadas), decompondo o nome do método a partir da partícula `By` para compilar instruções canônicas JPQL (*Java Persistence Query Language*).
-
-```mermaid
-sequenceDiagram
-  autonumber
-  participant App as Bootstrap da Aplicação
-  participant Scanner as Spring Data Repository Scanner
-  participant Factory as Fábrica de Proxies (Dynamic Proxy)
-  participant Context as Spring ApplicationContext
-  participant Servico as ProdutoService
-
-  App->>Scanner: Escaneia pacote com.curso.suporteos.repository
-  Scanner->>Factory: Detecta interface ProdutoRepository
-  Factory->>Factory: Gera classe Proxy estendendo SimpleJpaRepository
-  Factory->>Context: Registra objeto Proxy como Spring Bean gerenciado
-  Context->>Servico: Injeta o Proxy no construtor de ProdutoService
+```properties
+spring.datasource.url=jdbc:postgresql://${DB_DEV_HOST:localhost}:${DB_DEV_PORT:5432}/${DB_DEV_NAME:suporteos2026_dev}
+spring.datasource.username=${DB_DEV_USER:suporteos_app}
+spring.datasource.password=${DB_DEV_PASSWORD}
 ```
 
----
+O arquivo `.env` local contém os valores reais das variáveis e é mantido fora do versionamento pelo `.gitignore`.
 
-### Fronteiras Transacionais, ACID e Ciclo de Vida das Entidades JPA
+### Mapeamento objeto-relacional declarativo com JPA
 
-Uma transação lógica de banco de dados representa uma unidade indivisível de trabalho orientada pelos princípios **ACID** (Atomicidade, Consistência, Isolamento e Durabilidade). A fronteira transacional da aplicação deve residir **exclusivamente na camada de serviços** (`@Service`), através da anotação `@Transactional`.
-
-Se a demarcação transacional fosse delegada aos repositórios, cada método de persistência abriria e fecharia transações pontuais e efêmeras. Um caso de uso de negócio que envolva múltiplas etapas (como verificar chave única, buscar grupo, salvar produto e baixar saldo) ficaria fragmentado, inviabilizando o *rollback* em bloco caso a última etapa falhasse.
-
-#### Estados do Ciclo de Vida das Entidades JPA
-
-```mermaid
-stateDiagram-v2
-  [*] --> Transient: Instanciação com new
-  Transient --> Managed: em.persist() / repository.save()
-  Managed --> Managed: Mutação de propriedades (Dirty Checking)
-  Managed --> Detached: Transação encerra (Commit/Rollback) ou em.detach()
-  Detached --> Managed: em.merge() / repository.save()
-  Managed --> Removed: em.remove() / repository.delete()
-  Removed --> [*]: Sincronização e Deleção Relacional no Banco
-```
-
-- **`Transient`:** O objeto foi instanciado em memória via `new`. Não possui identificador persistente e não é acompanhado pelo contexto de persistência.
-- **`Managed`:** A entidade está ativamente monitorada pelo `EntityManager`. Alterações feitas em seus atributos através de métodos de negócio são rastreadas pelo mecanismo de **Dirty Checking** do Hibernate e sincronizadas automaticamente no banco com instruções SQL `UPDATE` durante o encerramento da transação, sem necessidade de reexecutar `save()`.
-- **`Detached`:** A entidade possui chave primária, mas sua sessão transacional foi finalizada ou desconectada. Acesso a propriedades preguiçosas (*lazy properties*) nesse estado dispara a clássica `LazyInitializationException`.
-- **`Removed`:** A entidade foi marcada para exclusão física e será removida do banco no fechamento da transação.
-
-#### Otimização com readOnly = true
-
-Anotar consultas com `@Transactional(readOnly = true)` desativa os snapshots de *dirty checking* no Hibernate, economizando alocação substancial de memória heap e permitindo que o driver JDBC redirecione leituras para réplicas de leitura em bancos distribuídos.
-
----
-
-### Evolução Segura de Esquema pelo Padrão Expand-Migrate-Contract
-
-Alterar o esquema de um banco de dados em produção contendo milhões de registros exige uma engenharia cuidadosa para evitar indisponibilidade e corrupção de dados. A tentativa de adicionar diretamente uma coluna obrigatória (`NOT NULL`) sobre uma tabela populada provoca a rejeição imediata da instrução DDL pelo PostgreSQL:
-
-```text
-ERROR: column "estoque_minimo" contains null values
-```
-
-Para superar esse desafio, a engenharia corporativa emprega o padrão **Expand-Migrate-Contract**:
-
-```mermaid
-flowchart TD
-  subgraph Fase1["1. Fase Expand (Expansão Flexível)"]
-    P1["Adiciona a coluna estoque_minimo permitindo valores nulos (nullable: true)"]
-  end
-  subgraph Fase2["2. Fase Migrate (Migração / Backfill)"]
-    P2["Executa UPDATE produto SET estoque_minimo = 0 WHERE estoque_minimo IS NULL"]
-  end
-  subgraph Fase3["3. Fase Contract (Contração e Blindagem)"]
-    P3["Aplica restrição NOT NULL e adiciona constraints CHECK relacionais (>= 0)"]
-  end
-
-  Fase1 --> Fase2 --> Fase3
-```
-
-- **Fase Expand:** O esquema é expandido de forma permissiva, introduzindo o novo campo como opcional.
-- **Fase Migrate:** Os dados legados pré-existentes passam por rotinas de saneamento e preenchimento retroativo (*data backfill*).
-- **Fase Contract:** A coluna é formalmente contraída com a aplicação de restrições de obrigatoriedade (`addNotNullConstraint`) e validações de regras matemáticas (`addCheckConstraint`).
-
----
-
-### DTOs Imutáveis com Java Records e Validação com Jakarta Bean Validation
-
-A exposição direta de classes anotadas com `@Entity` na camada de controladores REST constitui uma severa falha de arquitetura:
-1. **Acoplamento Indesejado:** Qualquer alteração no esquema relacional ou na nomenclatura de colunas quebra unilateralmente o contrato público com os clientes da API.
-2. **Loops de Serialização Bidirecional:** A serialização JSON de associações bidirecionais (como `GrupoProduto.produtos` e `Produto.grupo`) provoca chamadas recursivas infinitas, resultando em `StackOverflowError`.
-3. **Ataques de Atribuição em Massa (*Mass Assignment*):** Um usuário malicioso pode injetar atributos proibidos no corpo do JSON (ex.: `status: "ATIVO"`, `saldoEstoque: 99999`) que, se aceitos diretamente na entidade, adulteram dados protegidos do sistema.
-
-A disciplina adota **Java Records** como DTOs (*Data Transfer Objects*):
-
-```mermaid
-flowchart LR
-  subgraph EntradaRede["Borda de Entrada"]
-    JSON["Payload JSON Externo"] --> DTO["ProdutoRequest (Java Record Imutável)"]
-    DTO --> Val["Jakarta Bean Validation (@Valid)"]
-  end
-
-  subgraph AdaptadorInterno["Mapeamento"]
-    Val -->|"Válido"| Map["ProdutoMapper (Puro em Memória)"]
-    Map --> Ent["Entidade Rica de Domínio (Produto)"]
-  end
-
-  subgraph SaidaRede["Borda de Saída"]
-    Ent --> MapRes["ProdutoMapper"]
-    MapRes --> Res["ProdutoResponse (Java Record)"]
-    Res --> JSONOut["Payload JSON Seguro"]
-  end
-```
-
-#### Defesa em Profundidade nas Validações
-
-- **Borda da API (Jakarta Bean Validation):** Focada na sintaxe e formato estrutural da requisição (`@NotBlank`, `@NotNull`, `@Positive`, `@Size`). Barram o erro imediatamente antes que ele atinja a lógica de aplicação.
-- **Núcleo de Domínio (Invariantes em Java Puro):** Focado na consistência indelével das regras de negócio (cálculos de estoque, garantias de não-negatividade e dependências mútuas).
-
----
-
-### Tratamento Global Padronizado de Exceções com RestControllerAdvice
-
-Em vez de poluir os métodos de controle com blocos defensivos `try/catch`, adota-se um interceptador centralizado de exceções anotado com `@RestControllerAdvice`. Esse componente atua interceptando as exceções que cruzam a fronteira da camada de aplicação e as traduz em um formato corporativo padronizado denominado **`ApiError`**.
-
-```mermaid
-sequenceDiagram
-  autonumber
-  actor Cliente as Cliente HTTP
-  participant Ctrl as ProdutoController
-  participant Serv as ProdutoService
-  participant Adv as ApiExceptionHandler (@RestControllerAdvice)
-
-  Cliente->>Ctrl: POST /api/produtos (Payload Inválido ou Conflitante)
-  Ctrl->>Serv: cadastrar(produto, grupoId)
-  Note over Serv: Detecta duplicidade de código de barras
-  Serv-->>Ctrl: Lança RecursoDuplicadoException
-  Ctrl-->>Adv: Exceção propaga sem tratamento local
-  Adv->>Adv: Mapeia exceção para 409 Conflict e compõe ApiError
-  Adv-->>Cliente: Retorna 409 Conflict + Payload JSON estruturado com ApiError
-```
-
-O payload de erro corporativo padronizado fornece ao cliente todas as informações necessárias para diagnóstico sem expor stack traces sensíveis:
-- `timestamp`: Momento exato em que a falha foi capturada.
-- `status`: Código numérico do status HTTP (`400`, `404`, `409`, `500`).
-- `error`: Descrição textual formal da categoria do erro.
-- `message`: Mensagem negocial clara e compreensível para o usuário final.
-- `path`: URI específica interceptada durante o processamento.
-- `validationErrors`: Mapa estruturado detalhando campos inválidos e mensagens de restrição em caso de falhas de Bean Validation.
-
----
-
-## Sintaxe e Exemplos Práticos
-
-### Modelagem de Entidades Ricas em Java Puro
-
-A implementação de `Produto` exemplifica o modelo de domínio rico: ausência de *setters*, campos imutáveis marcados como `final`, construtor de negócio que valida invariantes e métodos semânticos para transições de estado.
+O mapeamento das entidades realiza a ponte entre as classes e as tabelas:
 
 ```java
 package com.curso.suporteos.domain;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.util.Objects;
-
-public class Produto {
-
-    private final String codigoBarras;
-    private String descricao;
-    private BigDecimal saldoEstoque;
-    private BigDecimal valorUnitario;
-    private BigDecimal estoqueMinimo;
-    private final LocalDate dataCadastro;
-    private Status status;
-    private GrupoProduto grupo;
-
-    // Construtor canônico de negócio que blinda as invariantes
-    public Produto(String codigoBarras, String descricao, BigDecimal saldoEstoque, 
-                   BigDecimal valorUnitario, BigDecimal estoqueMinimo, GrupoProduto grupo) {
-        this.codigoBarras = validarTextoObrigatorio(codigoBarras, "Código de barras é obrigatório");
-        this.descricao = validarTextoObrigatorio(descricao, "Descrição é obrigatória");
-        this.saldoEstoque = validarNaoNegativo(saldoEstoque, "Saldo de estoque não pode ser negativo");
-        this.valorUnitario = validarNaoNegativo(valorUnitario, "Valor unitário não pode ser negativo");
-        this.estoqueMinimo = validarNaoNegativo(estoqueMinimo, "Estoque mínimo não pode ser negativo");
-        this.dataCadastro = LocalDate.now();
-        this.status = Status.ATIVO;
-        this.grupo = Objects.requireNonNull(grupo, "Grupo de produto é obrigatório");
-    }
-
-    public void receberEstoque(BigDecimal quantidade) {
-        validarPositivo(quantidade, "Quantidade recebida deve ser maior que zero");
-        this.saldoEstoque = this.saldoEstoque.add(quantidade);
-    }
-
-    public void retirarEstoque(BigDecimal quantidade) {
-        validarPositivo(quantidade, "Quantidade retirada deve ser maior que zero");
-        if (this.saldoEstoque.compareTo(quantidade) < 0) {
-            throw new IllegalArgumentException("Saldo de estoque insuficiente para atender a retirada");
-        }
-        this.saldoEstoque = this.saldoEstoque.subtract(quantidade);
-    }
-
-    public BigDecimal calcularValorEstoque() {
-        return this.saldoEstoque.multiply(this.valorUnitario).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    public void inativar() {
-        this.status = Status.INATIVO;
-    }
-
-    public void ativar() {
-        this.status = Status.ATIVO;
-    }
-
-    // Visibilidade de pacote: amarrado estritamente através de GrupoProduto.adicionarProduto()
-    void associarAoGrupo(GrupoProduto grupo) {
-        this.grupo = Objects.requireNonNull(grupo, "Grupo não pode ser nulo");
-    }
-
-    private static String validarTextoObrigatorio(String valor, String mensagem) {
-        if (valor == null || valor.isBlank()) {
-            throw new IllegalArgumentException(mensagem);
-        }
-        return valor.trim();
-    }
-
-    private static BigDecimal validarNaoNegativo(BigDecimal valor, String mensagem) {
-        Objects.requireNonNull(valor, mensagem);
-        if (valor.signum() < 0) {
-            throw new IllegalArgumentException(mensagem);
-        }
-        return valor;
-    }
-
-    private static void validarPositivo(BigDecimal valor, String mensagem) {
-        Objects.requireNonNull(valor, mensagem);
-        if (valor.signum() <= 0) {
-            throw new IllegalArgumentException(mensagem);
-        }
-    }
-
-    public String getCodigoBarras() { return codigoBarras; }
-    public String getDescricao() { return descricao; }
-    public BigDecimal getSaldoEstoque() { return saldoEstoque; }
-    public BigDecimal getValorUnitario() { return valorUnitario; }
-    public BigDecimal getEstoqueMinimo() { return estoqueMinimo; }
-    public LocalDate getDataCadastro() { return dataCadastro; }
-    public Status getStatus() { return status; }
-    public GrupoProduto getGrupo() { return grupo; }
-}
-```
-
----
-
-### Mapeamento Objeto-Relacional com Jakarta Persistence
-
-A classe `Produto` mapeada com Jakarta Persistence para persistência no PostgreSQL:
-
-```java
-package com.curso.suporteos.domain;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(
     name = "produto",
-    uniqueConstraints = @UniqueConstraint(
-        name = "uk_produto_codigo_barras",
-        columnNames = "codigo_barras"
-    )
+    uniqueConstraints = @UniqueConstraint(name = "uk_produto_codigo_barras", columnNames = "codigo_barras")
 )
 public class Produto {
 
@@ -907,7 +1077,7 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "codigo_barras", nullable = false, length = 50, updatable = false)
+    @Column(name = "codigo_barras", nullable = false, length = 50)
     private String codigoBarras;
 
     @Column(nullable = false, length = 150)
@@ -919,225 +1089,399 @@ public class Produto {
     @Column(name = "valor_unitario", nullable = false, precision = 18, scale = 2)
     private BigDecimal valorUnitario;
 
-    @Column(name = "estoque_minimo", nullable = false, precision = 18, scale = 3)
-    private BigDecimal estoqueMinimo;
-
-    @Column(name = "data_cadastro", nullable = false, updatable = false)
+    @Column(name = "data_cadastro", nullable = false)
     private LocalDate dataCadastro;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(
-        name = "grupo_produto_id",
-        nullable = false,
-        foreignKey = @ForeignKey(name = "fk_produto_grupo_produto")
-    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grupo_produto_id", nullable = false, foreignKey = @ForeignKey(name = "fk_produto_grupo_produto"))
     private GrupoProduto grupo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "fornecedor_id",
-        foreignKey = @ForeignKey(name = "fk_produto_fornecedor")
-    )
-    private Fornecedor fornecedor;
+    // Construtor protegido exigido pela especificação JPA para reidratação reflexiva
+    protected Produto() {}
 
-    // Construtor sem argumentos exigido pela especificação JPA para reidratação reflexiva
-    protected Produto() {
+    // Construtor canônico rico com validação de invariantes
+    public Produto(String codigoBarras, String descricao, BigDecimal saldoEstoque, BigDecimal valorUnitario, GrupoProduto grupo) {
+        // Validações e atribuição encapsulada
     }
-
-    public Long getId() { return id; }
-    public String getCodigoBarras() { return codigoBarras; }
-    public String getDescricao() { return descricao; }
-    public BigDecimal getSaldoEstoque() { return saldoEstoque; }
-    public BigDecimal getValorUnitario() { return valorUnitario; }
-    public BigDecimal getEstoqueMinimo() { return estoqueMinimo; }
-    public LocalDate getDataCadastro() { return dataCadastro; }
-    public Status getStatus() { return status; }
-    public GrupoProduto getGrupo() { return grupo; }
-    public Fornecedor getFornecedor() { return fornecedor; }
 }
 ```
 
----
+### Validação estrita de esquema com ddl-auto=validate
 
-### Changelogs Estruturados em YAML com Liquibase
+No arquivo `application.properties`, a propriedade do Hibernate é travada em:
 
-O arquivo mestre `db.changelog-master.yaml` orquestra a aplicação atômica e ordenada dos changelogs incrementais:
-
-```yaml
-databaseChangeLog:
-  - include:
-      file: db/changelog/migrations/001-create-grupo-produto.yaml
-  - include:
-      file: db/changelog/migrations/002-create-produto.yaml
-  - include:
-      file: db/changelog/migrations/003-fornecedor-e-estoque-minimo.yaml
+```properties
+spring.jpa.hibernate.ddl-auto=validate
 ```
 
-Aplicação do padrão **Expand-Migrate-Contract** para introdução segura do campo `estoque_minimo` em `003-fornecedor-e-estoque-minimo.yaml`:
-
-```yaml
-databaseChangeLog:
-  # 1. EXPAND: Adiciona a coluna permitindo valores nulos temporariamente
-  - changeSet:
-      id: 003-1-add-column-estoque-minimo
-      author: jefferson.passerini
-      changes:
-        - addColumn:
-            tableName: produto
-            columns:
-              - column:
-                  name: estoque_minimo
-                  type: numeric(18, 3)
-      rollback:
-        - dropColumn:
-            tableName: produto
-            columnName: estoque_minimo
-
-  # 2. MIGRATE: Realiza o backfill preenchendo dados legados com o valor neutro 0
-  - changeSet:
-      id: 003-2-backfill-estoque-minimo
-      author: jefferson.passerini
-      changes:
-        - update:
-            tableName: produto
-            columns:
-              - column:
-                  name: estoque_minimo
-                  valueNumeric: 0
-            where: estoque_minimo IS NULL
-      rollback:
-        - empty: {}
-
-  # 3. CONTRACT: Torna a coluna formalmente NOT NULL e adiciona a constraint CHECK
-  - changeSet:
-      id: 003-3-contract-estoque-minimo
-      author: jefferson.passerini
-      changes:
-        - addNotNullConstraint:
-            tableName: produto
-            columnName: estoque_minimo
-            columnDataType: numeric(18, 3)
-        - addCheckConstraint:
-            tableName: produto
-            constraintName: ck_produto_estoque_minimo
-            checkConstraint: estoque_minimo >= 0
-      rollback:
-        - dropCheckConstraint:
-            tableName: produto
-            constraintName: ck_produto_estoque_minimo
-        - dropNotNullConstraint:
-            tableName: produto
-            columnName: estoque_minimo
-            columnDataType: numeric(18, 3)
-```
+Isso garante que o Hibernate inspecione as classes `@Entity` no boot e confronte cada tabela, coluna e tipo com o catálogo do PostgreSQL. Se houver qualquer discrepância entre o que o Liquibase construiu e o que a classe Java mapeou, o Hibernate aborta a inicialização com uma exceção explícita (`SchemaManagementException`), impedindo erros silenciosos em produção.
 
 ---
 
-### Consultas Derivadas em Interfaces Spring Data JPA
+## Módulo 5: Repositórios Spring Data JPA, Serviços de Aplicação e Transações
+
+### Arquitetura em camadas e segregação de papéis
+
+A aplicação organiza-se em camadas funcionais com limites rígidos de responsabilidade:
+
+```mermaid
+flowchart TD
+    subgraph Web["Camada de Apresentação / Web"]
+        Ctrl["REST Controller (@RestController)"]
+    end
+
+    subgraph Aplicacao["Camada de Aplicação / Serviços"]
+        Srv["Application Service (@Service, @Transactional)"]
+    end
+
+    subgraph Dominio["Camada de Domínio"]
+        Ent["Entidades Ricas e Invariantes (@Entity)"]
+    end
+
+    subgraph Persistencia["Camada de Repositório / Persistência"]
+        Repo["Spring Data Repositories (@Repository)"]
+    end
+
+    Ctrl --> Srv
+    Srv --> Repo
+    Srv --> Ent
+    Repo --> Ent
+```
+
+- **Camada de Domínio (`domain`):** Entidades, enums e regras de negócio invariantes. Não possui dependências de bibliotecas de transporte ou chamadas SQL.
+- **Camada de Repositório (`repository`):** Abstrai as coleções de entidades persistidas. Fornece contratos para consulta, exclusão e salvamento de dados.
+- **Camada de Aplicação / Serviço (`application`):** Orquestra os casos de uso do sistema. Carrega entidades via repositórios, invoca seus métodos de negócio, dispara validações de unicidade e delimita as fronteiras transacionais.
+- **Camada Web / API (`api`):** Trata a comunicação com o cliente HTTP, processa DTOs e gerencia códigos de status.
+
+### Spring Data JPA: Interfaces e proxies dinâmicos em tempo de execução
+
+O Spring Data JPA elimina a necessidade de codificar classes de repositório manuais. O engenheiro declara uma interface que estende `JpaRepository<T, ID>`:
 
 ```java
 package com.curso.suporteos.repository;
 
 import com.curso.suporteos.domain.Produto;
-import com.curso.suporteos.domain.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-
-    // Busca exata por código de barras com retorno protegido por Optional
     Optional<Produto> findByCodigoBarras(String codigoBarras);
-
-    // Verificação de existência sem sobrecarga de carga de entidade
     boolean existsByCodigoBarras(String codigoBarras);
-
-    // Travessia de propriedade: acessa o atributo 'id' dentro do objeto relacionado 'grupo'
-    List<Produto> findByGrupoId(Long grupoId);
-
-    // Filtro por enum de status ordenado deterministicamente por descrição
-    List<Produto> findByStatusOrderByDescricaoAsc(Status status);
-
-    // Filtro por valor de corte com operador relacional
-    List<Produto> findBySaldoEstoqueLessThanEqual(BigDecimal limite);
 }
 ```
 
----
+Durante o *bootstrap* da aplicação, o contêiner IoC do Spring realiza o escaneamento do pacote, intercepta a interface e instancia um **Dynamic Proxy** acoplado à classe padrão `SimpleJpaRepository`. O proxy gerado é registrado como um Bean gerenciado no contexto do Spring.
 
-### Serviço Transacional com Orquestração e Exceções de Aplicação
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Boot as Bootstrap Spring Boot
+    participant Scan as Repository Component Scan
+    participant Fábrica as Dynamic Proxy Factory
+    participant Ctx as ApplicationContext
+    participant Srv as ProdutoService
+
+    Boot->>Scan: Inicia varredura em com.curso.suporteos.repository
+    Scan->>Fábrica: Localiza interface ProdutoRepository
+    Fábrica->>Fábrica: Gera instância proxy baseada em SimpleJpaRepository
+    Fábrica->>Ctx: Registra proxy dinâmico como Bean
+    Ctx->>Srv: Injeta o proxy via construtor de ProdutoService
+```
+
+### Injeção de dependências estrita via construtores
+
+É terminantemente proibido o uso da anotação `@Autowired` sobre campos privados. Adota-se a injeção estrita via construtores:
 
 ```java
-package com.curso.suporteos.application;
-
-import com.curso.suporteos.application.exception.RecursoDuplicadoException;
-import com.curso.suporteos.application.exception.RecursoNaoEncontradoException;
-import com.curso.suporteos.domain.GrupoProduto;
-import com.curso.suporteos.domain.Produto;
-import com.curso.suporteos.repository.GrupoProdutoRepository;
-import com.curso.suporteos.repository.ProdutoRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.util.List;
-
 @Service
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
-    private final GrupoProdutoRepository grupoProdutoRepository;
+    private final GrupoProdutoRepository grupoRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository, GrupoProdutoRepository grupoProdutoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, GrupoProdutoRepository grupoRepository) {
         this.produtoRepository = produtoRepository;
-        this.grupoProdutoRepository = grupoProdutoRepository;
-    }
-
-    @Transactional
-    public Produto cadastrar(Produto novoProduto, Long grupoId) {
-        if (produtoRepository.existsByCodigoBarras(novoProduto.getCodigoBarras())) {
-            throw new RecursoDuplicadoException("Já existe produto cadastrado com o código de barras: " 
-                + novoProduto.getCodigoBarras());
-        }
-
-        GrupoProduto grupo = grupoProdutoRepository.findById(grupoId)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Grupo de produto não localizado para o ID: " + grupoId));
-
-        grupo.adicionarProduto(novoProduto);
-        return produtoRepository.save(novoProduto);
-    }
-
-    @Transactional(readOnly = true)
-    public Produto buscarPorId(Long id) {
-        return produtoRepository.findById(id)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não localizado para o ID: " + id));
-    }
-
-    @Transactional(readOnly = true)
-    public List<Produto> listarTodos() {
-        return produtoRepository.findAll();
-    }
-
-    @Transactional
-    public void darBaixaEstoque(Long produtoId, BigDecimal quantidade) {
-        Produto produto = buscarPorId(produtoId);
-        // Regra de negócio invocada na entidade rica; Dirty checking sincroniza sem chamar save()
-        produto.retirarEstoque(quantidade);
+        this.grupoRepository = grupoRepository;
     }
 }
 ```
 
+- **Imutabilidade Real:** Permite declarar as dependências como `final`.
+- **Fail-Fast em Dependências Cíclicas:** A JVM detecta e impede ciclos de injeção no boot.
+- **Testabilidade:** Permite instanciar a classe em testes unitários puros passando instâncias simuladas (*mocks*) no construtor sem auxílio do Spring.
+
+### Consultas derivadas por convenção de nomenclatura (Derived Queries)
+
+O Spring Data compila expressões JPQL canônicas a partir da assinatura semântica dos métodos declarados na interface de repositório, dividindo-os em prefixo de operação e predicado de restrição delimitados por `By`:
+
+```text
+[Operação Principal] + "By" + [Propriedades e Conectivos Lógicos]
+findByCodigoBarras
+existsByEmail
+findByStatusAndValorUnitarioGreaterThan
+findByGrupo_Id
+```
+
+*Exemplos de derived queries:*
+
+```java
+// Busca exata por chave única
+Optional<Produto> findByCodigoBarras(String codigoBarras);
+
+// Verificação rápida de existência sem trazer entidade em memória
+boolean existsByCodigoBarras(String codigoBarras);
+
+// Travessia de propriedade da entidade associada (produto.grupo.id)
+List<Produto> findByGrupoId(Long grupoId);
+```
+
+### Fronteiras transacionais declarativas com @Transactional
+
+A anotação `@Transactional` gerencia as propriedades ACID da transação física no banco:
+
+- **Operações de Escrita (`@Transactional`):** Abre a transação, desativa o autocommit e comete (*commit*) os dados ao término. Caso uma exceção não verificada (`RuntimeException`) seja disparada, aciona imediatamente a reversão (*rollback*).
+- **Operações de Leitura (`@Transactional(readOnly = true)`):** Informa à engine do Hibernate e ao driver JDBC que não haverá gravação. O Hibernate otimiza a sessão desabilitando o mecanismo de verificação de sujeira (*dirty checking*), economizando alocação de memória e ciclos de CPU.
+
+```mermaid
+flowchart TD
+    Chamada["Invocação de método anotado com @Transactional"] --> AOP["Proxy Interceptador AOP abre transação física"]
+    AOP --> Execucao["Execução dos casos de uso e chamadas JPA"]
+    Execucao --> TesteErro{"Ocorreu RuntimeException?"}
+    TesteErro -- "Não (Sucesso)" --> Commit["Proxy executa COMMIT e sincroniza alterações"]
+    TesteErro -- "Sim (Falha)" --> Rollback["Proxy executa ROLLBACK integral e aborta"]
+```
+
+### Estados do ciclo de vida de uma entidade JPA
+
+Dentro e fora do Contexto de Persistência (*Persistence Context*), uma entidade transita por quatro estados formais:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Transient : new Produto(...)
+    Transient --> Managed : persist() / save()
+    Managed --> Detached : close() / clear() / detach()
+    Detached --> Managed : merge()
+    Managed --> Removed : remove() / delete()
+    Removed --> [*] : Commit da transação (DELETE físico)
+```
+
+1. **Transient (Transitório):** Objeto recém-instanciado pelo operador `new`. Existe apenas na memória da JVM; não possui ID gerado e não está vinculado a nenhuma sessão JPA.
+2. **Managed (Gerenciado):** Objeto vinculado ativamente ao contexto de persistência. O Hibernate rastreia toda e qualquer mutação realizada em seus atributos.
+3. **Detached (Desanexado):** A entidade possui um ID associado, mas a sessão transacional na qual ela foi carregada foi encerrada. Alterações em seus campos não são propagadas ao banco.
+4. **Removed (Removido):** Marcada para exclusão física; o comando SQL `DELETE` será disparado no momento da sincronização (*flush*).
+
+### Mecanismo de detecção automática de alterações (Dirty Checking)
+
+Quando uma entidade entra no estado **Managed**, o Hibernate armazena uma cópia fiel de seu estado inicial (*snapshot*). Ao término do método transacional, o Hibernate compara o estado atual do objeto em memória com o snapshot original.
+
+Se houver diferenças, o Hibernate agenda e executa os comandos `UPDATE` automaticamente no banco antes do commit, **sem necessidade de invocar métodos explícitos como `repository.save()`**.
+
+```java
+@Transactional
+public void atualizarPreco(Long id, BigDecimal novoPreco) {
+    Produto produto = produtoRepository.findById(id)
+        .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não encontrado"));
+
+    // O método de domínio altera o estado do objeto gerenciado
+    produto.atualizarPreco(novoPreco);
+
+    // O Hibernate detecta a alteração via Dirty Checking e dispara o UPDATE no banco automaticamente!
+}
+```
+
+### Modelagem de exceções de negócio da aplicação
+
+Erros de regra de negócio devem ser sinalizados através de exceções dedicadas de runtime, desacopladas de códigos HTTP:
+
+```java
+package com.curso.suporteos.application.exception;
+
+public class RecursoNaoEncontradoException extends RuntimeException {
+    public RecursoNaoEncontradoException(String mensagem) {
+        super(mensagem);
+    }
+}
+```
+
+```java
+package com.curso.suporteos.application.exception;
+
+public class RecursoDuplicadoException extends RuntimeException {
+    public RecursoDuplicadoException(String mensagem) {
+        super(mensagem);
+    }
+}
+```
+
+### Testes de integração transacionais com reversão automática
+
+Testes de integração que verificam a persistência devem operar sobre o perfil de teste (`application-test.properties`), anotados com `@SpringBootTest` e `@Transactional`. Ao término de cada método de teste, o Spring executa automaticamente o *rollback*, garantindo que a base de testes permaneça estéril para as asserções seguintes.
+
 ---
 
-### DTOs com Java Records e Regras Declarativas de Validação
+## Módulo 6: Evolução do Modelo Relacional e Changelogs Assistidos
 
-Os DTOs são modelados com Java Records para assegurar imutabilidade física e concisão sintática:
+### Evolução de esquema: ddl-auto versus diff versus migração versionada
+
+| Dimensão | Geração via Hibernate (`ddl-auto=update`) | Liquibase Diff Automático | Migração Versionada Auditada |
+|---|---|---|---|
+| **Determinismo** | Baixo: depende do estado corrente do banco | Médio: infere diferenças estruturais brutas | Absoluto: reproduzível em qualquer ambiente |
+| **Preservação de Dados** | Nula: ignora transição de registros pré-existentes | Nula: não gera comandos de backfill de dados | Total: planeja transição de dados com SQL |
+| **Versionamento** | Inexistente (ocorre em tempo de execução) | Rascunho efêmero em arquivo temporário | Total: arquivos declarativos comitados no Git |
+| **Capacidade de Rollback** | Inexistente | Parcial ou ausente | Total: comandos explícitos de reversão |
+
+### Topologia de comparação diferencial com bancos reais no PostgreSQL
+
+A extensão `liquibase-hibernate` apresenta instabilidades de introspecção estática com Java 21 e Hibernate 7 (falhas de `NullPointerException` em metadados JDBC). 
+
+A solução de engenharia adotada utiliza **dois bancos de dados reais descartáveis** instanciados no PostgreSQL:
+
+```mermaid
+flowchart LR
+    subgraph TargetEnv["Banco Alvo / Destino (suporteos2026_diff)"]
+        D1["Recebe os changelogs oficiais já aplicados (001 + 002)"]
+    end
+
+    subgraph RefEnv["Banco de Referência (suporteos2026_reference)"]
+        D2["Materializado pelo Hibernate (ddl-auto=create) com o código Java novo"]
+    end
+
+    subgraph DiffEngine["Motor Liquibase (liquibase-maven-plugin)"]
+        D1 -->|"url"| Engine["Compara metadados via JDBC nativo"]
+        D2 -->|"referenceUrl"| Engine
+        Engine --> Rascunho["Gera rascunho: target/liquibase-diff/changelog.yaml"]
+    end
+```
+
+### Evolução do domínio: Entidade Fornecedor e associação opcional
+
+A evolução do sistema introduz a entidade `Fornecedor` e associa-a opcionalmente a `Produto`:
+
+```java
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "fornecedor_id", foreignKey = @ForeignKey(name = "fk_produto_fornecedor"))
+private Fornecedor fornecedor;
+```
+
+*Racional da chave estrangeira opcional:* Em bases de dados já existentes em produção com milhares de produtos cadastrados, impor uma coluna `fornecedor_id` obrigatória (`nullable = false`) provocaria a quebra imediata do sistema, pois não há registros históricos de fornecedores para associar aos produtos legados. A relação nasce opcional para garantir a retrocompatibilidade.
+
+### Evolução de campos e retrocompatibilidade de código
+
+Ao adicionar um atributo obrigatório como `BigDecimal estoqueMinimo` na classe `Produto`, deve-se preservar o construtor legado invocando o construtor novo com um valor padrão seguro (*overload de construtores*), garantindo que testes unitários legados não quebrem:
+
+```java
+// Construtor legado preservado para compatibilidade retroativa
+public Produto(String codigoBarras, String descricao, BigDecimal saldoEstoque, BigDecimal valorUnitario, GrupoProduto grupo) {
+    this(codigoBarras, descricao, saldoEstoque, valorUnitario, BigDecimal.ZERO, grupo);
+}
+
+// Construtor canônico atualizado
+public Produto(String codigoBarras, String descricao, BigDecimal saldoEstoque, BigDecimal valorUnitario, BigDecimal estoqueMinimo, GrupoProduto grupo) {
+    // Validações e atribuição
+}
+```
+
+### Geração assistida com liquibase-maven-plugin
+
+O plugin do Liquibase é configurado no `pom.xml` para ler as URLs de conexão dos dois bancos temporários e produzir um rascunho de migração:
+
+```bash
+./mvnw liquibase:diff
+```
+
+### Auditoria e saneamento de diffs gerados automaticamente
+
+O arquivo gerado pelo plugin em `target/liquibase-diff` é apenas um **rascunho**. Ele deve ser auditado criticamente pelo desenvolvedor:
+1. **Remoção de Falsos Positivos:** O diff frequentemente acusa índices e sequences nativas do PostgreSQL como novas alterações desnecessárias.
+2. **Padronização de Nomenclatura:** Substituição de nomes automáticos aleatórios de constraints por nomes semânticos do projeto (ex.: `fk_produto_fornecedor`, `uk_fornecedor_cnpj`).
+3. **Escrita Manual de Rollback:** O diff raramente gera scripts reversos seguros de exclusão de colunas e constraints.
+
+### O padrão Expand-Migrate-Contract para colunas obrigatórias
+
+A inclusão de uma coluna `NOT NULL` sobre uma tabela já populada em produção não pode ser realizada de forma abrupta (`ALTER TABLE produto ADD COLUMN estoque_minimo NUMERIC NOT NULL`), pois a instrução falhará imediatamente pela existência de linhas pré-existentes com valores nulos.
+
+Aplica-se o padrão **Expand-Migrate-Contract** dentro do mesmo `changeSet` ou em migrações ordenadas:
+
+```mermaid
+flowchart TD
+    Expand["1. Expandir: Cria a coluna permitindo valores nulos (nullable: true)"] --> Migrate["2. Migrar: Executa UPDATE atribuindo valor default aos dados legados"]
+    Migrate --> Contract["3. Contrair: Aplica a restrição de obrigatoriedade (nullable: false) e CHECK"]
+```
+
+```yaml
+- changeSet:
+    id: 003-adicionar-estoque-minimo
+    author: jefferson
+    changes:
+      # 1. Expandir
+      - addColumn:
+          tableName: produto
+          columns:
+            - column:
+                name: estoque_minimo
+                type: numeric(18, 3)
+                constraints:
+                  nullable: true
+      # 2. Migrar
+      - sql:
+          sql: UPDATE produto SET estoque_minimo = 0 WHERE estoque_minimo IS NULL;
+      # 3. Contrair
+      - addNotNullConstraint:
+          tableName: produto
+          columnName: estoque_minimo
+          columnDataType: numeric(18, 3)
+      - addCheckConstraint:
+          tableName: produto
+          constraintName: ck_produto_estoque_minimo
+          checkCondition: "estoque_minimo >= 0"
+    rollback:
+      - dropColumn:
+          tableName: produto
+          columnName: estoque_minimo
+```
+
+### Enriquecimento manual: Constraints de integridade e rollbacks reversos
+
+O Liquibase diff é incapaz de inferir constraints de validação matemática (`CHECK`) a partir de anotações Java. O desenvolvedor deve incluir manualmente no YAML as checagens físicas (`CHECK (saldo_estoque >= 0)`) e a regra de integridade de deleção `onDelete="RESTRICT"`, impedindo a remoção de fornecedores ou grupos que possuam produtos vinculados.
+
+---
+
+## Módulo 7: Camada Web REST, DTOs Imutáveis, Mapeadores e Validação
+
+### O papel da camada de controle REST
+
+Os controladores REST (`@RestController`) funcionam como adaptadores de interface do sistema:
+- Interceptam requisições HTTP e desserializam JSON para objetos Java;
+- Disparam a validação sintática da borda (`@Valid`);
+- Delegam o processamento para a camada de serviços de aplicação (`@Service`);
+- Empacotam o resultado em DTOs de resposta, definindo códigos de status semânticos e cabeçalhos de rede (`Location`).
+- **Não devem conter:** Cálculos matemáticos de domínio, lógicas de regras de negócio ou chamadas diretas ao banco de dados.
+
+### Riscos e armadilhas da exposição direta de entidades JPA
+
+Retornar instâncias de classes `@Entity` diretamente nos métodos do `@RestController` é um anti-padrão grave:
+
+1. **Vazamento de Dados Confidenciais:** Propriedades internas ou metadados de auditoria podem vazar para o cliente;
+2. **Ciclos de Serialização Infinita:** Entidades com associações bidirecionais (ex.: `Instrutor` possui `List<Curso>` e `Curso` aponta para `Instrutor`) geram estouro de pilha (`StackOverflowError`) durante a conversão para JSON via Jackson:
+   
+```mermaid
+flowchart LR
+    A["Instrutor"] -->|"getCursos()"| B["Curso"]
+    B -->|"getInstrutor()"| A
+```
+
+3. **Exceções de Lazy Loading (`LazyInitializationException`):** A serialização ocorre fora da transação de banco. Ao tentar ler atributos `FetchType.LAZY`, o Jackson dispara exceções por ausência de sessão aberta.
+4. **Vulnerabilidade de Atribuição em Massa (*Mass Assignment*):** Um cliente malicioso pode enviar campos que deveriam ser imutáveis (ex.: `status: "ATIVO"`, `saldoEstoque: 9999`) e o framework associá-los automaticamente.
+
+### Data Transfer Objects (DTOs) e imutabilidade com Java Records
+
+A solução canônica é a utilização de **Data Transfer Objects (DTOs)** implementados por meio de **Java Records**:
+- **Imutabilidade Intrínseca:** Todos os atributos de um `record` são `private final`. Não possuem *setters*, impedindo efeitos colaterais acidentais após a desserialização;
+- **Concisão e Sintaxe Limpa:** O compilador gera automaticamente construtor canônico, métodos de leitura (`nome()`, `email()`), `equals()`, `hashCode()` e `toString()`.
 
 ```java
 package com.curso.suporteos.api.dto;
@@ -1145,42 +1489,33 @@ package com.curso.suporteos.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public record ProdutoRequest(
     @NotBlank(message = "Código de barras é obrigatório")
-    @Size(max = 50, message = "Código de barras deve conter no máximo 50 caracteres")
     String codigoBarras,
 
     @NotBlank(message = "Descrição é obrigatória")
-    @Size(max = 150, message = "Descrição deve conter no máximo 150 caracteres")
     String descricao,
 
     @NotNull(message = "Saldo de estoque é obrigatório")
-    @PositiveOrZero(message = "Saldo de estoque não pode ser negativo")
     BigDecimal saldoEstoque,
 
     @NotNull(message = "Valor unitário é obrigatório")
-    @Positive(message = "Valor unitário deve ser estritamente maior que zero")
+    @Positive(message = "Valor unitário deve ser maior que zero")
     BigDecimal valorUnitario,
 
-    @NotNull(message = "Estoque mínimo é obrigatório")
-    @PositiveOrZero(message = "Estoque mínimo não pode ser negativo")
-    BigDecimal estoqueMinimo,
+    @NotNull(message = "Grupo é obrigatório")
+    Long grupoId,
 
-    @NotNull(message = "Identificador do grupo é obrigatório")
-    Long grupoId
+    Long fornecedorId
 ) {}
 ```
 
 ```java
 package com.curso.suporteos.api.dto;
 
-import com.curso.suporteos.domain.Status;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public record ProdutoResponse(
     Long id,
@@ -1188,175 +1523,121 @@ public record ProdutoResponse(
     String descricao,
     BigDecimal saldoEstoque,
     BigDecimal valorUnitario,
-    BigDecimal estoqueMinimo,
-    LocalDate dataCadastro,
-    Status status,
-    Long grupoId,
-    String grupoNome
+    String status,
+    String grupoNome,
+    String fornecedorRazaoSocial
 ) {}
 ```
 
----
+### Validação declarativa na borda com Jakarta Bean Validation
 
-### Mapeadores Manuais Puros de Borda
+O módulo `spring-boot-starter-validation` introduz o processamento declarativo de restrições na borda da aplicação:
+- `@NotBlank`: O campo não pode ser nulo e deve conter pelo menos um caractere não-branco (exclusivo para strings).
+- `@NotNull`: O objeto ou número não pode ser nulo.
+- `@Size(min = 3, max = 120)`: Restringe o tamanho de caracteres.
+- `@Positive`: O valor numérico deve ser estritamente maior que zero ($`x > 0`$).
+- `@PositiveOrZero`: O valor numérico deve ser maior ou igual a zero ($`x \ge 0`$).
+- `@Email`: Valida se a string satisfaz à sintaxe de correio eletrônico.
 
-Mapeador manual com escopo estritamente de memória, dispensando bibliotecas reflexivas intrusivas e viabilizando desacoplamento absoluto:
+Ao anotar o DTO com `@Valid` na assinatura do método do controller, o Spring intercepta os dados antes da execução do método. Se houver violações, dispara automaticamente uma `MethodArgumentNotValidException`.
+
+### Mapeamento manual desacoplado
+
+Adota-se a escrita de mapeadores manuais puros implementados como componentes Spring (`@Component`). Isso elimina dependências complexas de bibliotecas de reflexão (como ModelMapper ou MapStruct), garantindo clareza total sobre quais campos estão sendo transformados:
 
 ```java
 package com.curso.suporteos.api.mapper;
 
-import com.curso.suporteos.api.dto.ProdutoRequest;
 import com.curso.suporteos.api.dto.ProdutoResponse;
-import com.curso.suporteos.domain.GrupoProduto;
 import com.curso.suporteos.domain.Produto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProdutoMapper {
 
-    public Produto toEntity(ProdutoRequest request, GrupoProduto grupo) {
-        if (request == null) {
-            return null;
-        }
-        return new Produto(
-            request.codigoBarras(),
-            request.descricao(),
-            request.saldoEstoque(),
-            request.valorUnitario(),
-            request.estoqueMinimo(),
-            grupo
-        );
-    }
-
-    public ProdutoResponse toResponse(Produto entity) {
-        if (entity == null) {
-            return null;
-        }
+    public ProdutoResponse toResponse(Produto p) {
         return new ProdutoResponse(
-            entity.getId(),
-            entity.getCodigoBarras(),
-            entity.getDescricao(),
-            entity.getSaldoEstoque(),
-            entity.getValorUnitario(),
-            entity.getEstoqueMinimo(),
-            entity.getDataCadastro(),
-            entity.getStatus(),
-            entity.getGrupo() != null ? entity.getGrupo().getId() : null,
-            entity.getGrupo() != null ? entity.getGrupo().getNome() : null
+            p.getId(),
+            p.getCodigoBarras(),
+            p.getDescricao(),
+            p.getSaldoEstoque(),
+            p.getValorUnitario(),
+            p.getStatus().name(),
+            p.getGrupo().getNome(),
+            p.getFornecedor() != null ? p.getFornecedor().getRazaoSocial() : null
         );
     }
 }
 ```
 
----
+### Controllers REST, respostas semânticas e o cabeçalho Location
 
-### Controlador REST com Emissão Semântica de Cabeçalhos e Códigos HTTP
-
-O controlador processa as requisições na borda da aplicação, delegando as regras à camada de serviços e emitindo respostas semânticas:
+No método de cadastro (`POST`), é mandatório responder com o status `201 Created` e incluir o cabeçalho `Location` contendo a URI completa para acesso ao recurso recém-criado, utilizando `ServletUriComponentsBuilder`:
 
 ```java
-package com.curso.suporteos.api.controller;
+@PostMapping
+public ResponseEntity<ProdutoResponse> cadastrar(@RequestBody @Valid ProdutoRequest request) {
+    Produto produtoCriado = produtoService.cadastrar(
+        request.codigoBarras(),
+        request.descricao(),
+        request.saldoEstoque(),
+        request.valorUnitario(),
+        request.grupoId(),
+        request.fornecedorId()
+    );
 
-import com.curso.suporteos.api.dto.ProdutoRequest;
-import com.curso.suporteos.api.dto.ProdutoResponse;
-import com.curso.suporteos.api.mapper.ProdutoMapper;
-import com.curso.suporteos.application.GrupoProdutoService;
-import com.curso.suporteos.application.ProdutoService;
-import com.curso.suporteos.domain.GrupoProduto;
-import com.curso.suporteos.domain.Produto;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-import java.net.URI;
-import java.util.List;
+    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+        .path("/{id}")
+        .buildAndExpand(produtoCriado.getId())
+        .toUri();
 
-@RestController
-@RequestMapping("/api/produtos")
-public class ProdutoController {
-
-    private final ProdutoService produtoService;
-    private final GrupoProdutoService grupoProdutoService;
-    private final ProdutoMapper mapper;
-
-    public ProdutoController(ProdutoService produtoService, GrupoProdutoService grupoProdutoService, 
-                             ProdutoMapper mapper) {
-        this.produtoService = produtoService;
-        this.grupoProdutoService = grupoProdutoService;
-        this.mapper = mapper;
-    }
-
-    @PostMapping
-    public ResponseEntity<ProdutoResponse> cadastrar(@Valid @RequestBody ProdutoRequest request,
-                                                     UriComponentsBuilder uriBuilder) {
-        GrupoProduto grupo = grupoProdutoService.buscarPorId(request.grupoId());
-        Produto novoProduto = mapper.toEntity(request, grupo);
-        Produto salvo = produtoService.cadastrar(novoProduto, request.grupoId());
-
-        URI location = uriBuilder.path("/api/produtos/{id}")
-            .buildAndExpand(salvo.getId())
-            .toUri();
-
-        return ResponseEntity.created(location).body(mapper.toResponse(salvo));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> buscarPorId(@PathVariable Long id) {
-        Produto produto = produtoService.buscarPorId(id);
-        return ResponseEntity.ok(mapper.toResponse(produto));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ProdutoResponse>> listarTodos() {
-        List<ProdutoResponse> responses = produtoService.listarTodos().stream()
-            .map(mapper::toResponse)
-            .toList();
-        return ResponseEntity.ok(responses);
-    }
+    return ResponseEntity.created(location).body(produtoMapper.toResponse(produtoCriado));
 }
 ```
 
----
+### Tratamento global de exceções com @RestControllerAdvice e ApiError
 
-### Tratador Centralizado de Falhas e Padronização de Erro com ApiError
+Para impedir que a aplicação vaze rastros de pilha (*stack traces*) e erros técnicos em formato HTML, implementa-se um interceptador global de erros com `@RestControllerAdvice`:
 
-Estrutura do DTO de resposta de erro:
+```mermaid
+flowchart LR
+    Excecao["Disparo de Exceção no Controller ou Service"] --> Interceptador["ApiExceptionHandler (@RestControllerAdvice)"]
+    Interceptador --> Mapeamento{"Tipo da Exceção?"}
+    Mapeamento -- "RecursoNaoEncontradoException" --> R404["404 Not Found (ApiError)"]
+    Mapeamento -- "RecursoDuplicadoException" --> R409["409 Conflict (ApiError)"]
+    Mapeamento -- "MethodArgumentNotValidException" --> R400["400 Bad Request (ApiError com lista de campos)"]
+    Mapeamento -- "Qualquer outra Exception" --> R500["500 Internal Error (ApiError genérico)"]
+```
 
 ```java
-package com.curso.suporteos.api.dto;
+package com.curso.suporteos.api.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record ApiError(
-    LocalDateTime timestamp,
     int status,
-    String error,
-    String message,
-    String path,
-    Map<String, String> validationErrors
+    String erro,
+    String mensagem,
+    String caminho,
+    LocalDateTime timestamp,
+    Map<String, String> campos
 ) {
-    public ApiError(int status, String error, String message, String path) {
-        this(LocalDateTime.now(), status, error, message, path, null);
+    public static ApiError simples(int status, String erro, String mensagem, String caminho) {
+        return new ApiError(status, erro, mensagem, caminho, LocalDateTime.now(), null);
     }
 
-    public ApiError(int status, String error, String message, String path, Map<String, String> validationErrors) {
-        this(LocalDateTime.now(), status, error, message, path, validationErrors);
+    public static ApiError comCampos(int status, String erro, String mensagem, String caminho, Map<String, String> campos) {
+        return new ApiError(status, erro, mensagem, caminho, LocalDateTime.now(), campos);
     }
 }
 ```
 
-Tratador centralizado anotado com `@RestControllerAdvice`:
-
 ```java
-package com.curso.suporteos.api.controller;
+package com.curso.suporteos.api.exception;
 
-import com.curso.suporteos.api.dto.ApiError;
 import com.curso.suporteos.application.exception.RecursoDuplicadoException;
 import com.curso.suporteos.application.exception.RecursoNaoEncontradoException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -1366,6 +1647,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -1373,105 +1655,838 @@ import java.util.Map;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(RecursoNaoEncontradoException.class)
-    public ResponseEntity<ApiError> tratarRecursoNaoEncontrado(RecursoNaoEncontradoException ex, 
-                                                              HttpServletRequest request) {
-        ApiError erro = new ApiError(
-            HttpStatus.NOT_FOUND.value(),
-            HttpStatus.NOT_FOUND.getReasonPhrase(),
-            ex.getMessage(),
-            request.getRequestURI()
-        );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+    public ResponseEntity<ApiError> tratarNaoEncontrado(RecursoNaoEncontradoException ex, HttpServletRequest req) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ApiError.simples(404, "Not Found", ex.getMessage(), req.getRequestURI()));
     }
 
     @ExceptionHandler(RecursoDuplicadoException.class)
-    public ResponseEntity<ApiError> tratarRecursoDuplicado(RecursoDuplicadoException ex, 
-                                                          HttpServletRequest request) {
-        ApiError erro = new ApiError(
-            HttpStatus.CONFLICT.value(),
-            HttpStatus.CONFLICT.getReasonPhrase(),
-            ex.getMessage(),
-            request.getRequestURI()
-        );
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    public ResponseEntity<ApiError> tratarDuplicidade(RecursoDuplicadoException ex, HttpServletRequest req) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(ApiError.simples(409, "Conflict", ex.getMessage(), req.getRequestURI()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> tratarValidacaoSintatica(MethodArgumentNotValidException ex, 
-                                                            HttpServletRequest request) {
-        Map<String, String> falhas = new HashMap<>();
-        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-            falhas.put(fieldError.getField(), fieldError.getDefaultMessage());
+    public ResponseEntity<ApiError> tratarValidacao(MethodArgumentNotValidException ex, HttpServletRequest req) {
+        Map<String, String> erros = new HashMap<>();
+        for (FieldError fe : ex.getBindingResult().getFieldErrors()) {
+            erros.put(fe.getField(), fe.getDefaultMessage());
         }
-
-        ApiError erro = new ApiError(
-            HttpStatus.BAD_REQUEST.value(),
-            HttpStatus.BAD_REQUEST.getReasonPhrase(),
-            "Falha de validação estrutural nos atributos enviados",
-            request.getRequestURI(),
-            falhas
-        );
-        return ResponseEntity.badRequest().body(erro);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ApiError.comCampos(400, "Bad Request", "Erro de validação nos campos submetidos", req.getRequestURI(), erros));
     }
 }
+```
+
+### Testes de integração da camada Web com MockMvc
+
+O `MockMvc` permite testar toda a infraestrutura web do Spring (roteamento, validações, cabeçalhos e serialização JSON) sem a necessidade de subir um servidor HTTP físico de rede real:
+
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@Transactional
+class ProdutoControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void deveRetornar400QuandoSubmeterPayloadInvalido() throws Exception {
+        mockMvc.perform(post("/api/produtos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.status").value(400))
+            .andExpect(jsonPath("$.campos.descricao").exists());
+    }
+}
+```
+
+### Automação de testes de contrato com Postman
+
+No Postman, as requisições são organizadas em coleções parametrizadas por variáveis de ambiente (`{{base_url}}`). Utilizam-se scripts na aba **Tests** (*Post-response*) para automatizar asserções de contrato:
+
+```javascript
+// Validação de status code 201 e extração de variável dinâmica
+pm.test("Status code é 201 Created", function () {
+    pm.response.to.have.status(201);
+});
+
+pm.test("Cabeçalho Location está presente", function () {
+    pm.response.to.have.header("Location");
+});
+
+var json = pm.response.json();
+pm.environment.set("produto_id", json.id);
 ```
 
 ---
 
-### Testes Automatizados: Unidade (AAA com JUnit 5) e Integração Web (MockMvc)
+## Módulo 8: Estudo de Caso Prático — Aplicação Catálogo de Cursos
 
-#### Teste Unitário Puro em Java (Sem Framework)
+### Análise do problema e regras do relacionamento 1:N
+
+Para consolidar as exigências avaliativas práticas da disciplina, analisamos a aplicação **Catálogo de Cursos** (`br.edu.catalogocursos`), criada em um repositório isolado e independente de `suporteos2026`.
+
+*Regras de Negócio Fundamentais:*
+- O sistema gerencia as entidades `Instrutor` e `Curso` em um relacionamento $`1:N`$ bidirecional;
+- Um Instrutor ministra múltiplos Cursos; um Curso pertence a exatamente um Instrutor;
+- `Instrutor`: identificador numérico `id`, `nome` (3 a 120 caracteres), `email` único e válido, e coleção interna `cursos`;
+- `Curso`: identificador numérico `id`, `titulo` (3 a 150 caracteres), `cargaHoraria` (inteiro positivo entre 1 e 400), `nivel` (Enum: `INICIANTE`, `INTERMEDIARIO`, `AVANCADO`) e a referência obrigatória ao seu `Instrutor`;
+- O Hibernate opera estritamente sob `ddl-auto=validate`. O esquema relacional físico é versionado via Liquibase;
+- Ausência total de loops cíclicos de serialização JSON por meio do uso de DTOs Records imutáveis.
+
+```mermaid
+erDiagram
+    INSTRUTOR ||--o{ CURSO : ministra
+    INSTRUTOR {
+        bigint id PK
+        varchar nome
+        varchar email UK
+    }
+    CURSO {
+        bigint id PK
+        varchar titulo
+        integer carga_horaria
+        varchar nivel
+        bigint instrutor_id FK
+    }
+```
+
+### Estrutura física do banco de dados e migrações Liquibase
+
+O arquivo mestre `src/main/resources/db/changelog/db.changelog-master.yaml` orquestra as migrações:
+
+```yaml
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/001-create-instrutor.yaml
+  - include:
+      file: db/changelog/migrations/002-create-curso.yaml
+```
+
+*Migração 001: Criação da Tabela Instrutor:*
+
+```yaml
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-instrutor
+      author: jefferson
+      changes:
+        - createTable:
+            tableName: instrutor
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_instrutor
+              - column:
+                  name: nome
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uk_instrutor_email
+      rollback:
+        - dropTable:
+            tableName: instrutor
+```
+
+*Migração 002: Criação da Tabela Curso com FK Física:*
+
+```yaml
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-curso
+      author: jefferson
+      changes:
+        - createTable:
+            tableName: curso
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_curso
+              - column:
+                  name: titulo
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: carga_horaria
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nivel
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: instrutor_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_curso_instrutor
+                    references: instrutor(id)
+        - addCheckConstraint:
+            tableName: curso
+            constraintName: ck_curso_carga_horaria
+            checkCondition: "carga_horaria >= 1 AND carga_horaria <= 400"
+        - addCheckConstraint:
+            tableName: curso
+            constraintName: ck_curso_nivel
+            checkCondition: "nivel IN ('INICIANTE', 'INTERMEDIARIO', 'AVANCADO')"
+      rollback:
+        - dropTable:
+            tableName: curso
+```
+
+### Modelagem das entidades de domínio JPA
+
+*Enum NivelCurso:*
 
 ```java
-package com.curso.suporteos.domain;
+package br.edu.catalogocursos.domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public enum NivelCurso {
+    INICIANTE,
+    INTERMEDIARIO,
+    AVANCADO
+}
+```
 
-class ProdutoTest {
+*Entidade Instrutor (Lado Inverso):*
 
-    @Test
-    @DisplayName("Deve debitar o estoque com sucesso quando a quantidade for válida e inferior ao saldo")
-    void deveDebitarEstoqueQuandoQuantidadeValida() {
-        // Arrange (Preparação de Cenário)
-        GrupoProduto grupo = new GrupoProduto("Hardware");
-        Produto produto = new Produto("7891112223334", "Teclado Mecânico", new BigDecimal("10.000"), 
-                                      new BigDecimal("250.00"), new BigDecimal("2.000"), grupo);
+```java
+package br.edu.catalogocursos.domain;
 
-        // Act (Execução da Ação)
-        produto.retirarEstoque(new BigDecimal("3.000"));
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-        // Assert (Verificação de Asserções)
-        assertEquals(0, produto.getSaldoEstoque().compareTo(new BigDecimal("7.000")), 
-            "Saldo de estoque deve refletir com exatidão a subtração efetuada");
+@Entity
+@Table(
+    name = "instrutor",
+    uniqueConstraints = @UniqueConstraint(name = "uk_instrutor_email", columnNames = "email")
+)
+public class Instrutor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 120)
+    private String nome;
+
+    @Column(nullable = false, length = 150)
+    private String email;
+
+    @OneToMany(mappedBy = "instrutor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Curso> cursos = new ArrayList<>();
+
+    protected Instrutor() {}
+
+    public Instrutor(String nome, String email) {
+        this.nome = validarTexto(nome, 3, 120, "Nome deve ter entre 3 e 120 caracteres");
+        this.email = validarEmail(email);
     }
 
-    @Test
-    @DisplayName("Deve disparar IllegalArgumentException ao tentar retirar quantidade superior ao saldo")
-    void deveLancarExcecaoQuandoRetiradaSuperiorAoSaldo() {
-        // Arrange
-        GrupoProduto grupo = new GrupoProduto("Hardware");
-        Produto produto = new Produto("7891112223334", "Teclado Mecânico", new BigDecimal("5.000"), 
-                                      new BigDecimal("250.00"), new BigDecimal("1.000"), grupo);
+    public void adicionarCurso(Curso curso) {
+        if (curso == null) {
+            throw new IllegalArgumentException("Curso não pode ser nulo");
+        }
+        if (this.cursos.contains(curso)) {
+            throw new IllegalArgumentException("Curso já associado a este instrutor");
+        }
+        curso.associarInstrutor(this);
+        this.cursos.add(curso);
+    }
 
-        // Act & Assert
-        IllegalArgumentException excecao = assertThrows(
-            IllegalArgumentException.class,
-            () -> produto.retirarEstoque(new BigDecimal("6.000")),
-            "Operação deve ser barrada pela invariante da entidade"
-        );
-        assertEquals("Saldo de estoque insuficiente para atender a retirada", excecao.getMessage());
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public String getEmail() { return email; }
+    public List<Curso> getCursos() { return Collections.unmodifiableList(cursos); }
+
+    private static String validarTexto(String valor, int min, int max, String msg) {
+        if (valor == null || valor.trim().length() < min || valor.trim().length() > max) {
+            throw new IllegalArgumentException(msg);
+        }
+        return valor.trim();
+    }
+
+    private static String validarEmail(String email) {
+        if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            throw new IllegalArgumentException("E-mail com formato inválido");
+        }
+        return email.trim().toLowerCase();
     }
 }
 ```
 
-#### Teste de Integração da Borda REST com MockMvc e PostgreSQL Real
+*Entidade Curso (Lado Proprietário da Chave Estrangeira):*
 
 ```java
-package com.curso.suporteos.api.controller;
+package br.edu.catalogocursos.domain;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "curso")
+public class Curso {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 150)
+    private String titulo;
+
+    @Column(name = "carga_horaria", nullable = false)
+    private Integer cargaHoraria;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private NivelCurso nivel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instrutor_id", nullable = false, foreignKey = @ForeignKey(name = "fk_curso_instrutor"))
+    private Instrutor instrutor;
+
+    protected Curso() {}
+
+    public Curso(String titulo, Integer cargaHoraria, NivelCurso nivel, Instrutor instrutor) {
+        this.titulo = validarTexto(titulo, 3, 150, "Título deve ter entre 3 e 150 caracteres");
+        this.cargaHoraria = validarCargaHoraria(cargaHoraria);
+        if (nivel == null) throw new IllegalArgumentException("Nível do curso é obrigatório");
+        if (instrutor == null) throw new IllegalArgumentException("Instrutor é obrigatório");
+        this.nivel = nivel;
+        this.instrutor = instrutor;
+    }
+
+    // Método package-private para sincronização de associação
+    void associarInstrutor(Instrutor instrutor) {
+        this.instrutor = instrutor;
+    }
+
+    public Long getId() { return id; }
+    public String getTitulo() { return titulo; }
+    public Integer getCargaHoraria() { return cargaHoraria; }
+    public NivelCurso getNivel() { return nivel; }
+    public Instrutor getInstrutor() { return instrutor; }
+
+    private static String validarTexto(String v, int min, int max, String msg) {
+        if (v == null || v.trim().length() < min || v.trim().length() > max) {
+            throw new IllegalArgumentException(msg);
+        }
+        return v.trim();
+    }
+
+    private static Integer validarCargaHoraria(Integer c) {
+        if (c == null || c < 1 || c > 400) {
+            throw new IllegalArgumentException("Carga horária deve ser entre 1 e 400 horas");
+        }
+        return c;
+    }
+}
+```
+
+### Camada de persistência com Spring Data JPA
+
+```java
+package br.edu.catalogocursos.repository;
+
+import br.edu.catalogocursos.domain.Instrutor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+public interface InstrutorRepository extends JpaRepository<Instrutor, Long> {
+    Optional<Instrutor> findByEmail(String email);
+    boolean existsByEmail(String email);
+}
+```
+
+```java
+package br.edu.catalogocursos.repository;
+
+import br.edu.catalogocursos.domain.Curso;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface CursoRepository extends JpaRepository<Curso, Long> {
+
+    // Derived Query com ordenação alfabética obrigatória
+    List<Curso> findByInstrutorIdOrderByTituloAsc(Long instrutorId);
+
+    // Consulta otimizada com JOIN FETCH para evitar N+1 na recuperação detalhada
+    @Query("SELECT c FROM Curso c JOIN FETCH c.instrutor WHERE c.id = :id")
+    Optional<Curso> findByIdComInstrutor(@Param("id") Long id);
+}
+```
+
+### Camada de serviços e regras transacionais
+
+```java
+package br.edu.catalogocursos.application;
+
+import br.edu.catalogocursos.api.exception.ConflitoRegraNegocioException;
+import br.edu.catalogocursos.api.exception.RecursoNaoEncontradoException;
+import br.edu.catalogocursos.domain.Instrutor;
+import br.edu.catalogocursos.repository.InstrutorRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class InstrutorService {
+
+    private final InstrutorRepository instrutorRepository;
+
+    public InstrutorService(InstrutorRepository instrutorRepository) {
+        this.instrutorRepository = instrutorRepository;
+    }
+
+    @Transactional
+    public Instrutor cadastrar(String nome, String email) {
+        if (instrutorRepository.existsByEmail(email.trim().toLowerCase())) {
+            throw new ConflitoRegraNegocioException("Já existe instrutor cadastrado com o e-mail: " + email);
+        }
+        Instrutor instrutor = new Instrutor(nome, email);
+        return instrutorRepository.save(instrutor);
+    }
+
+    @Transactional(readOnly = true)
+    public Instrutor buscarPorId(Long id) {
+        return instrutorRepository.findById(id)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Instrutor não localizado para o ID: " + id));
+    }
+}
+```
+
+```java
+package br.edu.catalogocursos.application;
+
+import br.edu.catalogocursos.api.exception.RecursoNaoEncontradoException;
+import br.edu.catalogocursos.domain.Curso;
+import br.edu.catalogocursos.domain.Instrutor;
+import br.edu.catalogocursos.domain.NivelCurso;
+import br.edu.catalogocursos.repository.CursoRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class CursoService {
+
+    private final CursoRepository cursoRepository;
+    private final InstrutorService instrutorService;
+
+    public CursoService(CursoRepository cursoRepository, InstrutorService instrutorService) {
+        this.cursoRepository = cursoRepository;
+        this.instrutorService = instrutorService;
+    }
+
+    @Transactional
+    public Curso cadastrar(String titulo, Integer cargaHoraria, NivelCurso nivel, Long instrutorId) {
+        Instrutor instrutor = instrutorService.buscarPorId(instrutorId);
+        Curso curso = new Curso(titulo, cargaHoraria, nivel, instrutor);
+        instrutor.adicionarCurso(curso);
+        return cursoRepository.save(curso);
+    }
+
+    @Transactional(readOnly = true)
+    public Curso buscarPorId(Long id) {
+        return cursoRepository.findByIdComInstrutor(id)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Curso não localizado para o ID: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Curso> listarPorInstrutor(Long instrutorId) {
+        // Valida se o instrutor existe antes de disparar a listagem
+        instrutorService.buscarPorId(instrutorId);
+        return cursoRepository.findByInstrutorIdOrderByTituloAsc(instrutorId);
+    }
+}
+```
+
+### Contratos de transferência (DTOs) e mapeadores
+
+*DTOs do Instrutor:*
+
+```java
+package br.edu.catalogocursos.api.dto;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record InstrutorRequest(
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 120, message = "Nome deve ter entre 3 e 120 caracteres")
+    String nome,
+
+    @NotBlank(message = "E-mail é obrigatório")
+    @Email(message = "Formato de e-mail inválido")
+    String email
+) {}
+```
+
+```java
+package br.edu.catalogocursos.api.dto;
+
+public record InstrutorResponse(Long id, String nome, String email) {}
+```
+
+```java
+package br.edu.catalogocursos.api.dto;
+
+// DTO Sumarizado para neutralização de serialização cíclica
+public record InstrutorResumo(Long id, String nome) {}
+```
+
+*DTOs do Curso:*
+
+```java
+package br.edu.catalogocursos.api.dto;
+
+import br.edu.catalogocursos.domain.NivelCurso;
+import jakarta.validation.constraints.*;
+
+public record CursoRequest(
+    @NotBlank(message = "Título é obrigatório")
+    @Size(min = 3, max = 150, message = "Título deve ter entre 3 e 150 caracteres")
+    String titulo,
+
+    @NotNull(message = "Carga horária é obrigatória")
+    @Min(value = 1, message = "Carga horária mínima é de 1 hora")
+    @Max(value = 400, message = "Carga horária máxima é de 400 horas")
+    Integer cargaHoraria,
+
+    @NotNull(message = "Nível do curso é obrigatório")
+    NivelCurso nivel,
+
+    @NotNull(message = "ID do instrutor é obrigatório")
+    Long instrutorId
+) {}
+```
+
+```java
+package br.edu.catalogocursos.api.dto;
+
+import br.edu.catalogocursos.domain.NivelCurso;
+
+public record CursoResponse(
+    Long id,
+    String titulo,
+    Integer cargaHoraria,
+    NivelCurso nivel,
+    InstrutorResumo instrutor
+) {}
+```
+
+```java
+package br.edu.catalogocursos.api.dto;
+
+import br.edu.catalogocursos.domain.NivelCurso;
+
+public record CursoResumoResponse(
+    Long id,
+    String titulo,
+    Integer cargaHoraria,
+    NivelCurso nivel
+) {}
+```
+
+*Mapeadores:*
+
+```java
+package br.edu.catalogocursos.api.mapper;
+
+import br.edu.catalogocursos.api.dto.CursoResponse;
+import br.edu.catalogocursos.api.dto.CursoResumoResponse;
+import br.edu.catalogocursos.api.dto.InstrutorResumo;
+import br.edu.catalogocursos.domain.Curso;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CursoMapper {
+
+    public CursoResponse toResponse(Curso c) {
+        return new CursoResponse(
+            c.getId(),
+            c.getTitulo(),
+            c.getCargaHoraria(),
+            c.getNivel(),
+            new InstrutorResumo(c.getInstrutor().getId(), c.getInstrutor().getNome())
+        );
+    }
+
+    public CursoResumoResponse toResumoResponse(Curso c) {
+        return new CursoResumoResponse(c.getId(), c.getTitulo(), c.getCargaHoraria(), c.getNivel());
+    }
+}
+```
+
+```java
+package br.edu.catalogocursos.api.mapper;
+
+import br.edu.catalogocursos.api.dto.InstrutorResponse;
+import br.edu.catalogocursos.domain.Instrutor;
+import org.springframework.stereotype.Component;
+
+@Component
+public class InstrutorMapper {
+    public InstrutorResponse toResponse(Instrutor i) {
+        return new InstrutorResponse(i.getId(), i.getNome(), i.getEmail());
+    }
+}
+```
+
+### Controladores REST e tratamento centralizado de erros
+
+```java
+package br.edu.catalogocursos.api.controller;
+
+import br.edu.catalogocursos.api.dto.CursoResumoResponse;
+import br.edu.catalogocursos.api.dto.InstrutorRequest;
+import br.edu.catalogocursos.api.dto.InstrutorResponse;
+import br.edu.catalogocursos.api.mapper.CursoMapper;
+import br.edu.catalogocursos.api.mapper.InstrutorMapper;
+import br.edu.catalogocursos.application.CursoService;
+import br.edu.catalogocursos.application.InstrutorService;
+import br.edu.catalogocursos.domain.Instrutor;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/instrutores")
+public class InstrutorController {
+
+    private final InstrutorService instrutorService;
+    private final CursoService cursoService;
+    private final InstrutorMapper instrutorMapper;
+    private final CursoMapper cursoMapper;
+
+    public InstrutorController(InstrutorService instrutorService, CursoService cursoService,
+                               InstrutorMapper instrutorMapper, CursoMapper cursoMapper) {
+        this.instrutorService = instrutorService;
+        this.cursoService = cursoService;
+        this.instrutorMapper = instrutorMapper;
+        this.cursoMapper = cursoMapper;
+    }
+
+    @PostMapping
+    public ResponseEntity<InstrutorResponse> cadastrar(@RequestBody @Valid InstrutorRequest request) {
+        Instrutor instrutor = instrutorService.cadastrar(request.nome(), request.email());
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(instrutor.getId())
+            .toUri();
+        return ResponseEntity.created(location).body(instrutorMapper.toResponse(instrutor));
+    }
+
+    @GetMapping("/{id}/cursos")
+    public ResponseEntity<List<CursoResumoResponse>> listarCursosPorInstrutor(@PathVariable Long id) {
+        List<CursoResumoResponse> cursos = cursoService.listarPorInstrutor(id).stream()
+            .map(cursoMapper::toResumoResponse)
+            .toList();
+        return ResponseEntity.ok(cursos);
+    }
+}
+```
+
+```java
+package br.edu.catalogocursos.api.controller;
+
+import br.edu.catalogocursos.api.dto.CursoRequest;
+import br.edu.catalogocursos.api.dto.CursoResponse;
+import br.edu.catalogocursos.api.mapper.CursoMapper;
+import br.edu.catalogocursos.application.CursoService;
+import br.edu.catalogocursos.domain.Curso;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping("/api/cursos")
+public class CursoController {
+
+    private final CursoService cursoService;
+    private final CursoMapper cursoMapper;
+
+    public CursoController(CursoService cursoService, CursoMapper cursoMapper) {
+        this.cursoService = cursoService;
+        this.cursoMapper = cursoMapper;
+    }
+
+    @PostMapping
+    public ResponseEntity<CursoResponse> cadastrar(@RequestBody @Valid CursoRequest request) {
+        Curso curso = cursoService.cadastrar(
+            request.titulo(),
+            request.cargaHoraria(),
+            request.nivel(),
+            request.instrutorId()
+        );
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(curso.getId())
+            .toUri();
+        return ResponseEntity.created(location).body(cursoMapper.toResponse(curso));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CursoResponse> buscarPorId(@PathVariable Long id) {
+        Curso curso = cursoService.buscarPorId(id);
+        return ResponseEntity.ok(cursoMapper.toResponse(curso));
+    }
+}
+```
+
+### Suíte de testes automatizados obrigatórios
+
+A avaliação exige quatro testes automatizados cobrindo as quatro camadas arquiteturais:
+
+#### 1. Teste de Domínio: Regras de Associação Bidirecional
+
+```java
+package br.edu.catalogocursos.domain;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class DominioAssociacaoTest {
+
+    @Test
+    @DisplayName("Deve garantir integridade mútua da associação bidirecional 1:N")
+    void deveGarantirCoerenciaBidirecional() {
+        Instrutor instrutor = new Instrutor("Prof. Jefferson", "jefferson@unifef.edu.br");
+        Curso curso = new Curso("Spring Boot 2026", 80, NivelCurso.AVANCADO, instrutor);
+
+        instrutor.adicionarCurso(curso);
+
+        assertEquals(1, instrutor.getCursos().size());
+        assertTrue(instrutor.getCursos().contains(curso));
+        assertSame(instrutor, curso.getInstrutor());
+        assertThrows(UnsupportedOperationException.class, () -> instrutor.getCursos().add(curso));
+    }
+}
+```
+
+#### 2. Teste de Repositório: Ordenação Alfabética Obrigatória
+
+```java
+package br.edu.catalogocursos.repository;
+
+import br.edu.catalogocursos.domain.Curso;
+import br.edu.catalogocursos.domain.Instrutor;
+import br.edu.catalogocursos.domain.NivelCurso;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
+
+@DataJpaTest
+@ActiveProfiles("test")
+class CursoRepositoryTest {
+
+    @Autowired
+    private CursoRepository cursoRepository;
+
+    @Autowired
+    private InstrutorRepository instrutorRepository;
+
+    @Test
+    @DisplayName("Deve listar cursos de um instrutor ordenados alfabeticamente por título")
+    void deveListarCursosOrdenadosPorTitulo() {
+        Instrutor inst = instrutorRepository.save(new Instrutor("Instrutor Teste", "teste@unifef.edu.br"));
+
+        cursoRepository.save(new Curso("Zookeeper Architecture", 40, NivelCurso.AVANCADO, inst));
+        cursoRepository.save(new Curso("Algoritmos com Java", 60, NivelCurso.INICIANTE, inst));
+        cursoRepository.save(new Curso("Banco de Dados", 80, NivelCurso.INTERMEDIARIO, inst));
+
+        List<Curso> resultado = cursoRepository.findByInstrutorIdOrderByTituloAsc(inst.getId());
+
+        assertEquals(3, resultado.size());
+        assertEquals("Algoritmos com Java", resultado.get(0).getTitulo());
+        assertEquals("Banco de Dados", resultado.get(1).getTitulo());
+        assertEquals("Zookeeper Architecture", resultado.get(2).getTitulo());
+    }
+}
+```
+
+#### 3. Teste de Serviço: Rejeição de Duplicidade de E-mail
+
+```java
+package br.edu.catalogocursos.application;
+
+import br.edu.catalogocursos.api.exception.ConflitoRegraNegocioException;
+import br.edu.catalogocursos.repository.InstrutorRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
+class InstrutorServiceTest {
+
+    @Autowired
+    private InstrutorService instrutorService;
+
+    @Test
+    @DisplayName("Deve lançar ConflitoRegraNegocioException ao tentar cadastrar e-mail duplicado")
+    void deveRejeitarEmailDuplicado() {
+        instrutorService.cadastrar("Primeiro Cadastro", "duplicado@unifef.edu.br");
+
+        ConflitoRegraNegocioException ex = assertThrows(ConflitoRegraNegocioException.class, () -> {
+            instrutorService.cadastrar("Segundo Cadastro", "duplicado@unifef.edu.br");
+        });
+
+        assertTrue(ex.getMessage().contains("Já existe instrutor cadastrado"));
+    }
+}
+```
+
+#### 4. Teste de Controller MockMvc: Validação de Payload Inválido (400 Bad Request)
+
+```java
+package br.edu.catalogocursos.api.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -1483,9 +2498,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -1493,335 +2506,164 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-class ProdutoControllerIT {
+class CursoControllerMockMvcTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("Deve cadastrar produto com sucesso retornando 201 Created e Header Location")
-    void deveCadastrarProdutoComSucesso() throws Exception {
-        String payloadJson = """
+    @DisplayName("Deve responder 400 Bad Request com detalhes dos campos ao submeter payload de curso inválido")
+    void deveRetornar400ParaPayloadInvalido() throws Exception {
+        String jsonInvalido = """
             {
-                "codigoBarras": "7899998881112",
-                "descricao": "Mouse Óptico Gamer USB",
-                "saldoEstoque": 50.000,
-                "valorUnitario": 120.00,
-                "estoqueMinimo": 5.000,
-                "grupoId": 1
+                "titulo": "A",
+                "cargaHoraria": 500,
+                "nivel": null,
+                "instrutorId": null
             }
             """;
 
-        mockMvc.perform(post("/api/produtos")
+        mockMvc.perform(post("/api/cursos")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(payloadJson))
-            .andExpect(status().isCreated())
-            .andExpect(header().exists("Location"))
-            .andExpect(jsonPath("$.id").isNumber())
-            .andExpect(jsonPath("$.codigoBarras").value("7899998881112"))
-            .andExpect(jsonPath("$.descricao").value("Mouse Óptico Gamer USB"));
-    }
-
-    @Test
-    @DisplayName("Deve emitir 400 Bad Request ao submeter dados obrigatórios vazios")
-    void deveEmitirBadRequestAoSubmeterDadosInvalidos() throws Exception {
-        String payloadInvalido = """
-            {
-                "codigoBarras": "",
-                "descricao": "Mouse Óptico Gamer USB",
-                "saldoEstoque": -5.000,
-                "valorUnitario": 0,
-                "estoqueMinimo": 0,
-                "grupoId": 1
-            }
-            """;
-
-        mockMvc.perform(post("/api/produtos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(payloadInvalido))
+                .content(jsonInvalido))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.status").value(400))
-            .andExpect(jsonPath("$.validationErrors.codigoBarras").exists())
-            .andExpect(jsonPath("$.validationErrors.saldoEstoque").exists())
-            .andExpect(jsonPath("$.validationErrors.valorUnitario").exists());
-    }
-
-    @Test
-    @DisplayName("Deve retornar 404 Not Found com formato ApiError ao buscar ID inexistente")
-    void deveRetornarNotFoundParaIdInexistente() throws Exception {
-        mockMvc.perform(get("/api/produtos/{id}", 999999L)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.status").value(404))
-            .andExpect(jsonPath("$.error").value("Not Found"))
-            .andExpect(jsonPath("$.path").value("/api/produtos/999999"));
+            .andExpect(jsonPath("$.erro").value("Bad Request"))
+            .andExpect(jsonPath("$.campos.titulo").exists())
+            .andExpect(jsonPath("$.campos.cargaHoraria").exists())
+            .andExpect(jsonPath("$.campos.nivel").exists())
+            .andExpect(jsonPath("$.campos.instrutorId").exists());
     }
 }
 ```
 
----
+### Roteiro de validação ponta a ponta com cURL
 
-## Boas Práticas e Armadilhas Comuns
+```bash
+# 1. Cadastrar Instrutor (Espera 201 Created + Header Location)
+curl -i -X POST http://localhost:8080/api/instrutores \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Prof. Jefferson Passerini", "email": "jefferson@unifef.edu.br"}'
 
-### 1. Governança e Controle de Versão (Git e Maven)
-- **Boas Práticas:**
-  - Padronizar mensagens de commit com verbos no infinitivo ou modo imperativo técnico estruturado.
-  - Utilizar branches locais dedicadas para implementação de funcionalidades antes de integrá-las à branch principal `main`.
-  - Auditar periodicamente o arquivo `.gitignore` para assegurar que variáveis sensíveis (`.env`), arquivos de logs (`*.log`) e saídas binárias (`target/`) jamais sejam rastreados.
-  - Executar compilações e rotinas de teste utilizando unicamente o Maven Wrapper (`./mvnw clean test`), eliminando divergências com instalações globais do sistema operacional.
-- **Armadilhas Comuns:**
-  - Cometer segredos e credenciais de banco de dados diretamente em arquivos de propriedades. Caso ocorra, criar novo commit não remove o segredo do grafo DAG; é imperativo revogar a senha no banco imediatamente.
-  - Utilizar `git push --force` em branches compartilhadas, sobrescrevendo commits de outros desenvolvedores.
+# 2. Testar Duplicidade de E-mail (Espera 409 Conflict)
+curl -i -X POST http://localhost:8080/api/instrutores \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Tentativa Clone", "email": "jefferson@unifef.edu.br"}'
 
-### 2. Design Orientado a Domínio (POO Pura)
-- **Boas Práticas:**
-  - Modelar entidades com foco em comportamento e regras de negócio invariantes, aplicando construtores canônicos de validação estrita.
-  - Adotar `BigDecimal` para grandezas monetárias e quantitativas, construindo instâncias através de `String` e especificando escala e `RoundingMode.HALF_UP`.
-  - Expor coleções de associações 1:N por meio de invólucros imutáveis (`Collections.unmodifiableList`).
-  - Empregar o método `a.compareTo(b) == 0` para aferir igualdade aritmética entre valores decimais.
-- **Armadilhas Comuns:**
-  - Gerar indiscriminadamente métodos *getters* e *setters* públicos para todos os atributos da entidade, criando um modelo anêmico desprotegido.
-  - Usar primitivos `double` ou `float` para cálculo financeiro, causando inconsistências fiscais por imprecisões do padrão IEEE 754.
-  - Utilizar `a.equals(b)` para comparar instâncias de `BigDecimal`, recebendo `false` em virtude de divergências meramente visuais de escala (`10.0` vs `10.00`).
+# 3. Cadastrar Curso vinculado ao Instrutor ID 1 (Espera 201 Created)
+curl -i -X POST http://localhost:8080/api/cursos \
+  -H "Content-Type: application/json" \
+  -d '{"titulo": "Laboratório de Programação IV", "cargaHoraria": 80, "nivel": "AVANCADO", "instrutorId": 1}'
 
-### 3. Persistência Relacional e Migrações (JPA, Hibernate e Liquibase)
-- **Boas Práticas:**
-  - Tratar o Liquibase como fonte canônica da verdade estrutural do banco de dados relacional.
-  - Configurar a propriedade `spring.jpa.hibernate.ddl-auto=validate`, delegando ao Hibernate apenas a inspeção de aderência das entidades na inicialização.
-  - Manter paridade tecnológica estrita entre os perfis `dev` e `test` utilizando PostgreSQL 16+ real em contêineres Docker, eliminando bancos H2.
-  - Aplicar o padrão *Expand-Migrate-Contract* para inclusão de restrições `NOT NULL` sobre bases já populadas.
-- **Armadilhas Comuns:**
-  - Utilizar `spring.jpa.hibernate.ddl-auto=update` em produção, sujeitando o banco a perdas silenciosas de dados e abandono de colunas órfãs.
-  - Modificar manualmente arquivos YAML de `changeSet` do Liquibase após sua execução em ambientes compartilhados, provocando falha fatal de `Checksum Check Failed`.
-  - Mapear chaves estrangeiras com carregamento ansioso (`FetchType.EAGER`), gerando problemas graves de degradação por consultas repetitivas (*N+1 Selects*).
+# 4. Cadastrar Segundo Curso para o mesmo Instrutor (Espera 201 Created)
+curl -i -X POST http://localhost:8080/api/cursos \
+  -H "Content-Type: application/json" \
+  -d '{"titulo": "Arquitetura de Microsserviços", "cargaHoraria": 40, "nivel": "AVANCADO", "instrutorId": 1}'
 
-### 4. Camada de Aplicação e Transações
-- **Boas Práticas:**
-  - Demarcar transações exclusivamente na camada de serviço (`@Service`) com `@Transactional`.
-  - Utilizar `@Transactional(readOnly = true)` em métodos estritamente de consulta para otimizar alocação de memória e desempenho do driver JDBC.
-  - Permitir que o mecanismo de *Dirty Checking* do Hibernate sincronize alterações de entidades gerenciadas sem invocar chamadas supérfluas a `repository.save()`.
-  - Injetar dependências unicamente através de construtores explícitos da classe com atributos declarados como `final`.
-- **Armadilhas Comuns:**
-  - Invocar um método anotado com `@Transactional` a partir de outro método dentro da própria classe (`this.metodoInterno()`), ignorando o proxy interceptador AOP do Spring e executando a lógica fora de transação.
-  - Capturar exceções com blocos genéricos `try/catch` dentro do serviço sem relançá-las, induzindo o Spring a efetuar o commit de transações que deveriam sofrer *rollback*.
+# 5. Listar Cursos do Instrutor 1 (Espera 200 OK com cursos em ordem alfabética)
+curl -i -X GET http://localhost:8080/api/instrutores/1/cursos
 
-### 5. Camada Web e Arquitetura REST
-- **Boas Práticas:**
-  - Projetar URIs orientadas a substantivos no plural (`/api/produtos`), utilizando o método HTTP apropriado para sinalizar a intenção da operação.
-  - Proteger a API utilizando DTOs imutáveis via Java Records, isolando as entidades JPA do mundo externo.
-  - Aplicar validação declarativa de entrada através do Jakarta Bean Validation (`@Valid`, `@NotBlank`, `@Positive`).
-  - Retornar códigos de status precisos e cabeçalhos semânticos (como `201 Created` acompanhado do cabeçalho `Location`).
-  - Centralizar a tradução de falhas em um tratador global com `@RestControllerAdvice`, emitindo a estrutura padronizada `ApiError`.
-- **Armadilhas Comuns:**
-  - Expor entidades JPA diretamente nos parâmetros de entrada ou retorno de métodos de controladores REST, abrindo brechas para ataques de *mass assignment*, falhas de *lazy loading* e recursão infinita na serialização JSON.
-  - Embutir verbos de ação nas rotas da API (exemplo: `/api/salvarProduto` ou `/api/excluirProduto`), desrespeitando as diretrizes semânticas do protocolo HTTP e do estilo REST.
-
----
-
-## Tabelas Comparativas
-
-### Git versus GitHub versus Subversion (VCS Centralizado)
-
-| Critério de Comparação | Git | GitHub | Subversion (Apache SVN) |
-|---|---|---|---|
-| **Arquitetura Base** | Distribuída (DVCS) | Plataforma na Nuvem / SaaS | Centralizada (CVCS) |
-| **Instalação Primária** | Local no sistema operacional | Servidores remotos gerenciados | Servidor central e clientes locais |
-| **Dependência de Conexão** | Nula para operações locais (commit, branch, log) | Obrigatória para navegação e sincronização | Obrigatória para commits, branches e consultas |
-| **Estrutura de Armazenamento** | Grafo Acíclico Dirigido (DAG) em `.git` | Repositórios Git com banco relacional | Árvore centralizada com controle de deltas |
-| **Operação de Branching** | Instantânea (ponteiro de 41 bytes) | Suporte visual, PRs e automações | Cópia física cara de diretórios |
-| **Papel na Disciplina** | Controle de versão de código e rastreabilidade | Hospedagem canônica do projeto do professor | Estudo histórico de paradigmas legados |
-
----
-
-### JVM versus JRE versus JDK
-
-| Característica | JVM (Java Virtual Machine) | JRE (Java Runtime Environment) | JDK (Java Development Kit) |
-|---|---|---|---|
-| **Público-Alvo** | Motor de execução de baixo nível | Usuários finais e sistemas em produção | Engenheiros e desenvolvedores de software |
-| **Comando / Utilitário** | Processo interno (`jvm.dll` / `libjvm.so`) | Utilitário `java` | `javac`, `java`, `javap`, `jar`, `jcmd` |
-| **Contém Compilador?** | Não | Não | Sim (`javac`) |
-| **Executa Bytecode?** | Sim (interpretação e compilação JIT) | Sim (através da JVM encapsulada) | Sim (contém a JRE internamente) |
-| **Contém APIs Básicas?** | Não (gerencia apenas execução e memória) | Sim (`java.base`, `java.sql`, etc.) | Sim (inclui código-fonte e documentação) |
-| **Status na Disciplina** | Componente de execução da plataforma | Integrada ao JDK instalado | **Obrigatório: Eclipse Temurin JDK 21** |
-
----
-
-### Renderização no Servidor (SSR/JSP) versus APIs Web RESTful (JSON)
-
-| Dimensão Arquitetural | Renderização no Servidor (SSR / JSP / Thymeleaf) | API Web RESTful Baseada em Dados (JSON) |
-|---|---|---|
-| **Papel do Servidor** | Monta a página HTML completa combinando dados e layout | Processa regras de negócio e retorna apenas dados serializados |
-| **Carga de Processamento** | Alta no backend (renderização de tags visuais para cada cliente) | Leve no backend (serialização rápida); cliente cuida da UI |
-| **Payload de Rede** | Elevado (transporta HTML integral, tags, CSS e scripts) | Otimizado (transporta estritamente dados em texto JSON) |
-| **Acoplamento de Clientes** | Restrito a clientes com motor de navegação Web completo | Desacoplado: atende Web, Mobile, CLI, IoT e microsserviços |
-| **Gerenciamento de Estado** | Comumente atrelado à sessão do servidor (`HttpSession`) | Estritamente sem estado (*Stateless* - RFC 9110) |
-| **Foco na Disciplina** | Contextualização histórica de sistemas legados | **Padrão arquitetural obrigatório do projeto** |
-
----
-
-### Modelo de Domínio Rico versus Modelo de Domínio Anêmico
-
-| Critério de Comparação | Modelo de Domínio Rico (Correto / POO Pura) | Modelo de Domínio Anêmico (Anti-padrão Procedural) |
-|---|---|---|
-| **Localização da Lógica** | Encapsulada dentro da própria entidade de negócio | Espalhada de forma desordenada em classes de serviços |
-| **Controle de Invariantes** | Garantido na criação e métodos semânticos de mutação | Ausente; entidades aceitam qualquer valor arbitrário |
-| **Métodos Modificadores** | Operações expressivas (`retirarEstoque`, `inativar`) | Métodos `setters` públicos genéricos para todos os campos |
-| **Instanciação** | Construtores ricos exigem todos os dados obrigatórios | Construtor vazio padrão seguido de chamadas soltas a *setters* |
-| **Consistência de Estado** | Impossível manter a entidade em estado corrompido | Permite objetos inválidos existindo livremente em memória |
-| **Testabilidade** | Testes unitários puros, rápidos e desacoplados | Exige levantar serviços complexos para validar regras simples |
-
----
-
-### Entidades JPA versus Objetos de Valor versus DTOs (Records)
-
-| Aspecto | Entidade JPA (`@Entity`) | Objeto de Valor (`Value Object`) | DTO (`record`) |
-|---|---|---|---|
-| **Ciclo de Vida** | Gerenciada pelo `EntityManager` | Imutável; atrelado ao ciclo da entidade | Efêmero; vive apenas durante a requisição |
-| **Mutabilidade** | Mutável (controlada por dirty checking) | Rigorosamente imutável | Rigorosamente imutável |
-| **Identidade** | Identificador persistente (`@Id` / PK) | Sem identidade; definido pelos valores | Baseado na totalidade de seus atributos |
-| **Construtores** | Exige construtor sem argumentos | Construtores com validação de dados | Construtor canônico gerado pelo compilador |
-| **Responsabilidade** | Concretizar regras e persistência de dados | Quantificar ou descrever características | Contrato público na fronteira externa da API |
-| **Exemplo no Projeto** | `Produto`, `GrupoProduto`, `Fornecedor` | `BigDecimal`, `LocalDate`, `Status` | `ProdutoRequest`, `ProdutoResponse` |
-
----
-
-### Semântica dos Métodos HTTP: Segurança, Idempotência e Operações
-
-| Método HTTP | Propósito Semântico Primário | Método Seguro? | Método Idempotente? | Corpo na Requisição? | Código de Sucesso Padrão |
-|---|---|---|---|---|---|
-| `GET` | Recuperar a representação de um recurso | Sim | Sim | Não permitido / Ignorado | `200 OK` |
-| `POST` | Criar recurso subordinado ou comando | Não | Não | Obrigatório (Payload) | `201 Created` |
-| `PUT` | Substituir integralmente o recurso alvo | Não | Sim | Obrigatório (Payload) | `200 OK` ou `204 No Content` |
-| `PATCH` | Modificar parcialmente o recurso alvo | Não | Não (salvo se definido) | Obrigatório (Payload parcial) | `200 OK` |
-| `DELETE` | Remover o recurso especificado por URI | Não | Sim | Ausente / Opcional | `204 No Content` ou `200 OK` |
-
----
-
-### Estratégias de Evolução do Banco: Hibernate ddl-auto versus Diff versus Migração Declarativa
-
-| Dimensão de Análise | Geração Dinâmica (`ddl-auto=update`) | Geração Assistida (`liquibase:diff`) | Migração Versionada Auditada (Oficial) |
-|---|---|---|---|
-| **Determinismo** | Nulo (varia conforme o estado atual) | Médio (rascunho de diferenças brutas) | Absoluto (reproduzível em qualquer ambiente) |
-| **Preservação de Dados** | Baixa (risco de exclusões silenciosas) | Nula (ignora dados existentes em regras) | Total (planeja transição e migração de dados) |
-| **Auditabilidade em Git** | Inexistente (executado em tempo de boot) | Temporária (gerado em pasta `target/`) | Alta (arquivos YAML perenes no repositório) |
-| **Capacidade de Rollback** | Inexistente | Nula ou frágil | Total (instruções explícitas de reversão) |
-| **Padrão Expand-Migrate** | Impossível de implementar | Não suportado de forma autônoma | Totalmente suportado via *changeSets* atômicos |
-| **Ambiente Indicado** | Prototipagem descartável de poucas horas | Apoio à geração inicial de rascunhos | **Ambientes de Desenvolvimento, Teste e Produção** |
-
----
-
-## Linha do Tempo da Disciplina
-
-```mermaid
-timeline
-  title Linha do Tempo e Evolução Arquitetural - Laboratório de Programação IV
-  Aula 00 : Fundamentos de Git e GitHub : Grafo DAG e Repositório Remoto : Arquivos de Governança
-  Aula 01 : Ecossistema da Plataforma Java : JVM, JRE, JDK e Bytecode : Variáveis PATH e JAVA_HOME : Maven Wrapper
-  Aula 02 : Inicialização do Projeto Spring Boot : Fundamentos da Arquitetura REST : Endpoint /api/health
-  Aula 03 : Modelagem de Domínio Rico em Java : Invariantes e Encapsulamento : Precisão com BigDecimal : Testes com JUnit 5
-  Aula 04 : Persistência Relacional com JPA : PostgreSQL e Paridade de Ambientes : Versionamento com Liquibase
-  Aula 05 : Spring Data JPA e Repositórios : Proxies Dinâmicos : Fronteiras Transacionais e Dirty Checking
-  Aula 06 : Evolução Segura de Esquema : Topologia de Diff com Dois Bancos : Padrão Expand-Migrate-Contract
-  Aula 07 : Exposição de APIs RESTful : DTOs Imutáveis com Records : Jakarta Bean Validation : MockMvc e Postman
-  Avaliação 1 : Avaliação Formal Individual : Defesa de Arquitetura em Camadas : Integração da Cadeia Completa
+# 6. Consultar Curso por ID com Detalhes (Espera 200 OK sem recursão JSON)
+curl -i -X GET http://localhost:8080/api/cursos/1
 ```
 
-### Detalhamento Cronológico das Unidades Didáticas
-
-| Aula / Marco | Marco no Git (Tag) | Entregáveis Técnicos e Conceitos Consolidados |
-|---|---|---|
-| **Aula 00** | `aula-00-inicio` | Configuração de identidade do Git (`user.name`, `user.email`), autenticação segura via chaves SSH, estruturação do repositório remoto oficial `suporteos2026`, criação dos arquivos de governança (`.gitignore`, `.editorconfig`, `README.md`) e compreensão do modelo de snapshots e DAG. |
-| **Aula 01** | `aula-01-ambiente-spring-boot` | Diagnóstico da infraestrutura de compilação, instalação do Eclipse Temurin JDK 21 LTS, alinhamento rigoroso entre `PATH` e `JAVA_HOME`, distinção entre compilador (`javac`) e máquina virtual (`java`), transição do namespace `javax.*` para `jakarta.*` e adoção do Maven Wrapper (`mvnw`). |
-| **Aula 02** | `aula-02-projeto-spring-boot` | Inicialização formal da aplicação Spring Boot, anatomia do descritor `pom.xml`, introdução aos Spring Starters, conceituação do modelo cliente-servidor, anatomia das requisições e respostas HTTP e implementação do endpoint de verificação `/api/health`. |
-| **Aula 03** | `aula-03-dominio` | Construção das entidades em Java puro (`Produto`, `GrupoProduto`, `Status`), blindagem de invariantes, rejeição do modelo anêmico, uso mandatório de `BigDecimal` para controle monetário, amarração bidirecional 1:N com integridade de memória e testes unitários no padrão AAA com JUnit 5. |
-| **Aula 04** | `aula-04-jpa-postgresql-liquibase` | Mapeamento objeto-relacional com Jakarta Persistence, superação do desencontro objeto-relacional, paridade estrita de ambientes com PostgreSQL 16+ (perfis `dev` e `test`), blindagem de credenciais locais via `.env`, introdução ao Liquibase e ativação de `ddl-auto=validate`. |
-| **Aula 05** | `aula-05-repositories-servicos-transacoes` | Implementação do padrão Repository via interfaces Spring Data JPA, geração dinâmica de proxies, consultas derivadas por convenção de nomenclatura, demarcação transacional declarativa com `@Transactional`, análise dos quatro estados das entidades e testes transacionais com reversão controlada (*rollback*). |
-| **Aula 06** | `aula-06-evolucao-modelo-changelogs` | Evolução incremental do modelo com a entidade `Fornecedor`, arquitetura de comparação diferencial (*diff*) com bancos PostgreSQL descartáveis isolados (`suporteos2026_diff` e `suporteos2026_reference`), descarte de falsos positivos e aplicação do padrão *Expand-Migrate-Contract* para inclusão da coluna `estoque_minimo`. |
-| **Aula 07** | `aula-07-api-rest-dtos-postman` | Exposição da interface RESTful externa, modelagem de DTOs imutáveis com Java Records, validação na borda com Jakarta Bean Validation, mappers manuais desacoplados, padronização corporativa de erros com `@RestControllerAdvice` e automação de testes com MockMvc e Postman. |
-| **Avaliação 1** | `avaliacao-1-consolidada` | Primeira avaliação formal da disciplina, englobando a entrega e defesa do projeto temático individual espelhado nos padrões de governança, domínio rico, persistência com migração versionada, transações de serviço e API REST documentada. |
-
 ---
 
-## Glossário
+## Módulo 9: Avaliação Formal (A1) — Simulado Técnico Resolvido e Questões de Revisão
 
-- **ACID:** Acrônimo para Atomicidade, Consistência, Isolamento e Durabilidade. Conjunto de propriedades indispensáveis que garantem que transações de banco de dados sejam executadas de maneira confiável.
-- **Anemic Domain Model (Modelo de Domínio Anêmico):** Anti-padrão de engenharia de software no qual as classes de entidade contêm unicamente atributos e métodos modificadores públicos (`getters` e `setters`), carecendo de lógica de negócio ou proteção de invariantes.
-- **ApiError:** Estrutura de dados corporativa padronizada retornada pela borda da API contendo metadados semânticos sobre erros ocorridos durante o processamento de uma requisição HTTP.
-- **Bean (Spring Bean):** Objeto instanciado, configurado, conectado e gerenciado pelo contêiner de Inversão de Controle (IoC) do Spring Framework ao longo do ciclo de vida da aplicação.
-- **BigDecimal:** Classe da biblioteca padrão do Java (`java.math.BigDecimal`) que fornece representação numérica decimal exata com precisão arbitrária e controle explícito de escala e regras de arredondamento.
-- **Bytecode:** Conjunto de instruções intermediárias otimizadas, gerado pelo compilador `javac`, interpretado e compilado para código de máquina nativo pela Máquina Virtual Java (JVM).
-- **ChangeSet:** Unidade básica, atômica e indivisível de alteração estrutural ou manipulação de dados gerenciada pelo Liquibase dentro de um arquivo de changelog.
-- **Checksum:** Valor hash criptográfico calculado pelo Liquibase a partir do conteúdo de um `changeSet` para assegurar que instruções já executadas em ambientes compartilhados permaneçam imutáveis.
-- **Convention over Configuration (Convenção sobre Configuração):** Paradigma de design de software que busca diminuir o número de decisões que o desenvolvedor precisa tomar, definindo padrões sensatos de infraestrutura (como na estrutura de pastas do Maven).
-- **DAG (Grafo Acíclico Dirigido):** Estrutura matemática composta por vértices ligados por arestas direcionadas sem a presença de ciclos fechados; modelo fundamental utilizado pelo Git para indexar o histórico de commits.
-- **Database-Driven Design:** Abordagem de desenvolvimento viciada em projetar tabelas e relacionamentos físicos de banco de dados antes de modelar as regras e abstrações do domínio do problema.
-- **DDL (Data Definition Language):** Subconjunto de comandos da linguagem SQL utilizado para definir, criar, alterar ou excluir estruturas e esquemas relacionais (`CREATE`, `ALTER`, `DROP`).
-- **Defense in Depth (Defesa em Profundidade):** Estratégia de segurança e integridade de dados que estabelece múltiplas barreiras redundantes de proteção (como validações na borda HTTP, invariantes em Java e constraints no banco relacional).
-- **Derived Query Methods (Consultas Derivadas):** Mecanismo do Spring Data JPA que traduz a assinatura e a nomenclatura declarativa de um método de interface em instruções canônicas JPQL/SQL.
-- **Dirty Checking:** Funcionalidade interna do Hibernate que compara o estado atual de entidades gerenciadas com seus snapshots originais no contexto de persistência, emitindo comandos `UPDATE` automaticamente no encerramento da transação.
-- **DTO (Data Transfer Object):** Padrão de projeto utilizado para transportar dados estruturados entre subsistemas ou camadas de software, desacoplando os contratos públicos de comunicação das entidades internas de persistência.
-- **Expand-Migrate-Contract:** Padrão arquitetural de evolução segura de banco de dados relacional que divide adições de restrições complexas em três fases: expansão permissiva, migração de dados legados e contração com regras estritas.
-- **Fail-Fast:** Princípio de engenharia que determina que um sistema deve falhar imediatamente e de forma explícita na presença de qualquer anomalia ou parâmetro inválido, impedindo a propagação de estados inconsistentes.
-- **Garbage Collector (GC):** Processo em segundo plano da JVM responsável por monitorar, gerenciar e liberar automaticamente a memória heap ocupada por objetos que não possuem mais referências ativas.
-- **Idempotência:** Propriedade matemática e computacional de uma operação na qual a execução repetida múltiplas vezes consecutivas produz o mesmo efeito observável no estado do sistema que uma única execução.
-- **Invariante de Negócio:** Condição ou predicado lógico que deve permanecer estritamente verdadeiro durante todo o ciclo de vida de um objeto de domínio válido.
-- **Java Dynamic Proxy:** Recurso de reflexão em tempo de execução do Java que permite a instanciação dinâmica de objetos que implementam uma ou mais interfaces sem a necessidade de classes concretas compiladas estaticamente.
-- **Java Record:** Construção sintática introduzida no Java moderno que define uma classe concisa, puramente orientada a dados e estruturalmente imutável.
-- **JIT (Just-In-Time Compiler):** Componente do motor de execução da JVM que traduz dinamicamente trechos críticos de bytecode frequentemente acessados para código de máquina nativo da CPU.
-- **Liquibase:** Ferramenta de código aberto voltada para a automação, rastreamento, gerenciamento e versionamento declarativo de alterações no esquema de bancos de dados relacionais.
-- **Maven Wrapper (`mvnw`):** Utilitário composto por scripts que encapsula e baixa automaticamente a versão exata do Apache Maven requerida pelo projeto, garantindo reprodutibilidade idêntica de build entre máquinas.
-- **MockMvc:** Framework de suporte a testes do Spring que permite simular requisições e respostas HTTP contra controladores REST sem a necessidade de subir um servidor de rede real em porta física.
-- **Object-Relational Impedance Mismatch (Desencontro Objeto-Relacional):** Conjunto de dificuldades técnicas resultantes da incompatibilidade entre o paradigma orientado a objetos (grafos, herança, referências) e o paradigma relacional (tabelas, chaves, tuplas).
-- **Rich Domain Model (Modelo de Domínio Rico):** Paradigma de modelagem orientada a objetos no qual as entidades encapsulam seus atributos privados, protegem suas invariantes e expõem métodos de negócio semanticamente expressivos.
-- **Stateless:** Característica arquitetural que dita que nenhuma informação de estado ou sessão do cliente deve ser retida na memória do servidor entre chamadas consecutivas.
-- **Value Object (Objeto de Valor):** Objeto de domínio que não possui identificador persistente próprio, sendo definido unicamente pelo conjunto de seus atributos e mantendo-se estritamente imutável.
+### Questões teóricas dissertativas com gabarito comentado
 
----
+#### Questão 1: Concorrência e Transacionalidade
+*Enunciado:* Em um ambiente de alta concorrência com múltiplas instâncias de microsserviços em execução, explique o comportamento do Spring e do PostgreSQL quando dois usuários tentam cadastrar simultaneamente um produto com o mesmo código de barras. Qual é o papel da validação da aplicação versus a constraint do banco?
 
-## Checklist de Revisão para Prova
+*Gabarito Comentado:*
+A aplicação Spring executa a validação rápida em memória (`existsByCodigoBarras`). Contudo, em condições de corrida (*race conditions*), duas requisições paralelas podem executar a verificação simultaneamente, obtendo ambas o resultado `false`. As duas transações prosseguirão para o salvamento. 
+Nesse instante, a **segunda fronteira de defesa** (a restrição física `CONSTRAINT uk_produto_codigo_barras UNIQUE` do PostgreSQL) atua no momento do *flush/commit*. O motor relacional concede a gravação à primeira transação e rejeita a segunda, abortando-a com uma violação de unicidade (`DataIntegrityViolationException`). O Spring executa o *rollback* da transação derrotada. Isso demonstra que validações na aplicação garantem respostas ágeis, mas **apenas a constraint física do banco garante atomicidade e consistência ACID**.
 
-### 1. Git, Governança e Infraestrutura de Compilação
-- [ ] Compreendo a distinção conceitual e prática entre o motor local Git e a plataforma colaborativa remota GitHub?
-- [ ] Sei explicar por que o histórico do Git forma um Grafo Acíclico Dirigido (DAG) e como ponteiros de branches e tags operam sobre commits?
-- [ ] Sei diferenciar o papel do compilador `javac` das responsabilidades de interpretação e compilação JIT exercidas pela JVM?
-- [ ] Sei diagnosticar a causa e a solução para o erro `UnsupportedClassVersionError` originado pelo conflito entre `PATH` e `JAVA_HOME`?
-- [ ] Compreendo por que o Maven Wrapper (`mvnw`) é mandatório em equipes corporativas e como ele garante a reprodutibilidade da compilação?
+#### Questão 2: Mecanismo de Dirty Checking e readOnly
+*Enunciado:* Por que é recomendado aplicar `@Transactional(readOnly = true)` em métodos de consulta? O que ocorre internamente na sessão do Hibernate?
 
-### 2. Modelagem Orientada a Domínio (POO Pura)
-- [ ] Sei formular a crítica técnica contra o anti-padrão do Modelo de Domínio Anêmico e defender o Modelo de Domínio Rico?
-- [ ] Sei implementar uma entidade blindada com construtor canônico de validação de argumentos e métodos de mutação semânticos?
-- [ ] Sei explicar as razões matemáticas pelas quais tipos primitivos `float` e `double` falham em representações monetárias e fiscais?
-- [ ] Domínio as regras mandatórias do `BigDecimal`: construção via `String`, controle de escala com `HALF_UP` e comparação estrita via `compareTo`?
-- [ ] Sei estruturar uma associação bidirecional 1:N garantindo consistência atômica através de método com visibilidade de pacote?
-- [ ] Sei projetar testes unitários focados em invariantes de negócio utilizando a estrutura Arrange-Act-Assert (AAA) com JUnit 5?
+*Gabarito Comentado:*
+Ao carregar uma entidade em uma transação de escrita convencional, o Hibernate armazena dois estados na memória do contexto de persistência: o objeto ativo e uma cópia estática do seu estado original (*snapshot*). No encerramento da transação, o Hibernate realiza uma varredura custosa comparando cada atributo para identificar se houve alterações (*dirty checking*). 
+Ao anotar o método com `readOnly = true`, sinaliza-se que a transação é exclusivamente de leitura. O Hibernate otimiza a execução desabilitando a criação de snapshots e desligando o mecanismo de dirty checking. Isso economiza até 50% de alocação de memória no heap da JVM, reduz o trabalho do Garbage Collector e instrui o driver JDBC a otimizar a conexão de leitura no PostgreSQL.
 
-### 3. Persistência Relacional, Liquibase e PostgreSQL
-- [ ] Compreendo as dimensões da impedância objeto-relacional (granularidade, identidade, navegabilidade e encapsulamento)?
-- [ ] Sei justificar por que o uso de bancos em memória (como o H2) é proibido e como os perfis `dev` e `test` garantem paridade com PostgreSQL real?
-- [ ] Compreendo o funcionamento interno do Liquibase, a função das tabelas `databasechangelog` e `databasechangeloglock` e o papel do checksum?
-- [ ] Sei explicar por que a configuração `spring.jpa.hibernate.ddl-auto=validate` é a única condizente com ambientes governados por migração declarativa?
-- [ ] Sei detalhar as três etapas do padrão *Expand-Migrate-Contract* para adicionar colunas obrigatórias com dados legados sem indisponibilidade?
+#### Questão 3: Prevenção de Loops Cíclicos e LazyInitializationException
+*Enunciado:* Explique por que anotações como `@JsonIgnore` ou `@JsonBackReference` em entidades JPA são consideradas soluções paliativas e tecnicamente inferiores ao uso de DTOs Records.
 
-### 4. Camada de Aplicação, Repositórios e Transações
-- [ ] Compreendo como o Spring Data JPA analisa interfaces e cria proxies dinâmicos em tempo de execução?
-- [ ] Sei projetar consultas derivadas (*derived query methods*) respeitando palavras-chave e navegando por propriedades de associações?
-- [ ] Sei justificar a razão arquitetural pela qual fronteiras transacionais (`@Transactional`) devem residir na camada de serviços e não nos repositórios?
-- [ ] Conheço as otimizações computacionais habilitadas pelo parâmetro `@Transactional(readOnly = true)` em operações de leitura?
-- [ ] Compreendo os quatro estados do ciclo de vida das entidades JPA (`transient`, `managed`, `detached`, `removed`) e a mecânica do *Dirty Checking*?
+*Gabarito Comentado:*
+O uso de anotações do Jackson (`@JsonIgnore`) diretamente sobre classes de domínio polui a camada de negócio com preocupações de infraestrutura e serialização HTTP, violando o Princípio da Responsabilidade Única (SRP). 
+Além disso, `@JsonIgnore` é estático: se em um endpoint for necessário ocultar os cursos de um instrutor, mas em outro for obrigatório exibi-los, a anotação na entidade impedirá a segunda operação. 
+Se a entidade for retornada solta para serialização, o Jackson tentará ler coleções com `FetchType.LAZY` fora da transação de banco aberta, disparando a falha fatal `LazyInitializationException`. O uso de **DTOs Records** desacopla integralmente o contrato público da API da estrutura física do banco, permitindo criar projeções sob medida para cada caso de uso sem risco de vazamento de dados, loops infinitos ou falhas de sessão.
 
-### 5. Camada Web RESTful, DTOs e Validações
-- [ ] Sei diferenciar o estilo arquitetural REST da abordagem RPC com base no desacoplamento e modelagem de recursos substantivos?
-- [ ] Sei classificar os métodos HTTP (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) quanto às suas propriedades formais de segurança e idempotência?
-- [ ] Sei explicar por que expor entidades JPA diretamente em controladores acarreta riscos de segurança (*mass assignment*) e falhas de serialização?
-- [ ] Compreendo as vantagens do uso de Java Records como DTOs imutáveis na fronteira de entrada e saída da aplicação?
-- [ ] Sei aplicar as anotações do Jakarta Bean Validation (`@NotBlank`, `@NotNull`, `@PositiveOrZero`) em registros DTO?
-- [ ] Sei estruturar uma classe tratadora centralizada com `@RestControllerAdvice` para capturar exceções negociais e devolver o formato padronizado `ApiError`?
-- [ ] Sei elaborar testes de integração da borda REST utilizando `MockMvc` cobrindo cenários de sucesso (`201 Created` com header `Location`) e falha (`400 Bad Request`, `404 Not Found`)?
+### Atividade de transferência para temas individuais
+
+Todo estudante deve transpor a arquitetura desenvolvida para o seu respectivo tema de projeto individual aprovado. Abaixo, apresenta-se o mapa mental que orienta o aluno durante a implementação do seu projeto semântico:
+
+```mermaid
+mindmap
+  root("Arquitetura Corporativa Spring Boot")
+    "Controle de Versão"
+      "Git Flow com Branches Locais"
+      "Tags Anotadas de Marcos"
+      "Higiene Estrita e .gitignore"
+    "Domínio Rico"
+      "Entidades Imutáveis nos Construtores"
+      "Encapsulamento de Invariantes"
+      "BigDecimal para Moeda e Medidas"
+      "Associação 1:N com Método Único"
+    "Persistência e Banco"
+      "PostgreSQL Real em Perfis dev e test"
+      "Liquibase como Única Fonte de DDL"
+      "Hibernate em ddl-auto=validate"
+      "Defesa em Profundidade com Constraints"
+    "Camada de Aplicação"
+      "Proxies do Spring Data JPA"
+      "Injeção Estrita por Construtor"
+      "Fronteiras com @Transactional"
+      "Dirty Checking e Exceções de Domínio"
+    "Camada Web RESTful"
+      "Endpoints Orientados a Recursos"
+      "Java Records como DTOs Imutáveis"
+      "Validação Declarativa com @Valid"
+      "Tratador Global @RestControllerAdvice"
+      "Testes Automatizados com MockMvc"
+```
+
+### Checklist definitivo de auditoria pré-prova
+
+Antes de submeter o repositório ou ingressar na avaliação prática formal, o estudante deve auditar sua aplicação contra a seguinte lista de conformidade:
+
+1. **Compilação e Suíte de Testes:**
+   - [ ] O comando `./mvnw clean test` executa sem erros e retorna `BUILD SUCCESS`.
+   - [ ] Nenhum teste unitário ou de integração depende de ordem de execução ou de dados pré-existentes.
+2. **PostgreSQL e Liquibase:**
+   - [ ] A aplicação conecta-se exclusivamente ao PostgreSQL real (proibição de H2).
+   - [ ] O arquivo `application.properties` contém obrigatoriamente `spring.jpa.hibernate.ddl-auto=validate`.
+   - [ ] Todos os scripts de migração YAML possuem instruções de `rollback` testadas e funcionais.
+   - [ ] As tabelas possuem chaves primárias, restrições `UNIQUE` e chaves estrangeiras físicas explícitas.
+3. **Modelagem de Domínio e Invariantes:**
+   - [ ] Entidades de domínio validam obrigatoriedade de campos e invariantes em construtores ricos.
+   - [ ] Não existem métodos `setters` públicos expondo o estado ou coleções internas das entidades.
+   - [ ] Todos os cálculos monetários e quantitativos operam sobre `BigDecimal` com escala e `RoundingMode.HALF_UP`.
+   - [ ] A associação bidirecional $`1:N`$ possui ponto de entrada único na entidade pai e método com visibilidade de pacote na entidade dependente.
+4. **Camada de Aplicação e Serviços:**
+   - [ ] Injeção de dependência realizada estritamente via construtores com campos `final` (sem `@Autowired` em campos).
+   - [ ] Métodos de consulta demarcados com `@Transactional(readOnly = true)`.
+   - [ ] Métodos de escrita demarcados com `@Transactional` gerenciando rollback sob `RuntimeException`.
+5. **API REST e DTOs:**
+   - [ ] Nenhuma classe `@Entity` é recebida ou retornada pelos métodos do `@RestController`.
+   - [ ] Todos os contratos utilizam Java Records validados com anotações de Jakarta Bean Validation (`@Valid`, `@NotBlank`, etc.).
+   - [ ] O endpoint de cadastro (`POST`) retorna o código `201 Created` e preenche o cabeçalho `Location`.
+   - [ ] Exceções são interceptadas centralizadamente por `@RestControllerAdvice`, retornando o payload padronizado `ApiError`.
+6. **Higiene do Repositório Git:**
+   - [ ] Nenhum arquivo `.env`, credencial real ou pasta `target/` foi comitado no Git.
+   - [ ] O arquivo `.env.example` está documentado na raiz do repositório.
+   - [ ] O histórico do Git possui commits atômicos, mensagens semânticas e a tag anotada do marco da aula.
 
 ---
 
 ## Fontes e Metadados
 
 - Turma no Classroom: 2026 2S Lab 4
-- Itens processados: 0 materiais, 1 tarefas, 1 avisos
-- Gerado em: 19/10/2026, 02:08:44 (BRT) via classroom-sync
+- Itens processados: 0 materiais, 2 tarefas, 1 avisos
+- Gerado em: 13/11/2026, 15:12:35 (BRT) via classroom-sync

@@ -7,6 +7,7 @@
 ## Sumário
 
 - [Aulas](#aulas)
+- [Trabalhos](#trabalhos)
 - [Provas](#provas)
 - [Revisão](#revisão)
 - [Estrutura da pasta](#estrutura-da-pasta)
@@ -23,6 +24,12 @@
 | [Aula 05 - Spring Data JPA Repositórios Serviços Transações](Aulas/Aula%2005%20-%20Spring%20Data%20JPA%20Reposit%C3%B3rios%20Servi%C3%A7os%20Transa%C3%A7%C3%B5es/detalhes.md) | Organização de arquitetura em camadas com Spring Data JPA, proxies dinâmicos, repositórios, serviços de aplicação e fronteiras transacionais | [codigo](Aulas/Aula%2005%20-%20Spring%20Data%20JPA%20Reposit%C3%B3rios%20Servi%C3%A7os%20Transa%C3%A7%C3%B5es/codigo) |
 | [Aula 06 - Evolução do Modelo e Changelogs Assistidos](Aulas/Aula%2006%20-%20Evolu%C3%A7%C3%A3o%20do%20Modelo%20e%20Changelogs%20Assistidos/detalhes.md) | Evolução incremental de entidades JPA, geração assistida de changelogs com liquibase:diff e migrações seguras com padrão expand-migrate-contract | [codigo](Aulas/Aula%2006%20-%20Evolu%C3%A7%C3%A3o%20do%20Modelo%20e%20Changelogs%20Assistidos/codigo) |
 | [Aula 07 - API REST DTOs Mapeadores e Postman](Aulas/Aula%2007%20-%20API%20REST%20DTOs%20Mapeadores%20e%20Postman/detalhes.md) | Construção de APIs REST com Spring Boot, DTOs imutáveis, validação declarativa, mapeadores manuais, tratamento global de exceções e automação de testes com MockMvc e Postman. | [codigo](Aulas/Aula%2007%20-%20API%20REST%20DTOs%20Mapeadores%20e%20Postman/codigo) |
+
+## Trabalhos
+
+| Atividade | Prazo | Pontuação |
+| :--- | :--- | :--- |
+| [20261105 - Atividade Avaliatória](Trabalhos/20261105%20-%20Atividade%20Avaliat%C3%B3ria/detalhes.md) | 05/11/2026 às 22:30 | 100 pontos |
 
 ## Provas
 

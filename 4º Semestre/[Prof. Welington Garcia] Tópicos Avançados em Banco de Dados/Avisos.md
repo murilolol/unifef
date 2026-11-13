@@ -2,7 +2,7 @@
 
 > **Professor:** Welington Garcia
 > **Semestre:** 4º Semestre
-> **Postagens:** 11 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 12 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -17,6 +17,7 @@
 | 30/09/2026 | Tarefa | LIsta de Procedures |
 | 28/10/2026 | Material | Triggers |
 | 28/10/2026 | Material | Exercicios Trigger |
+| 11/11/2026 | Tarefa | Atividade AV2 |
 
 ## 05/08/2026 - Material: Aulas Joins e Sub selects
 
@@ -93,3 +94,12 @@ _Sem texto._
 _Sem texto._
 
 - [base_exercicios_triggers_postgresql.sql](https://drive.google.com/file/d/1Nc1U47zFQ_KMKzd_f2wWJNUkfNPdqROU/view?usp=drive_web)
+
+## 11/11/2026 - Tarefa: Atividade AV2
+
+**Entrega:** 2026-12-03 | **Pontos:** 100
+
+_Sem texto._
+
+- [30_exercicios_plpgsql.md](https://drive.google.com/file/d/1etfoe21Z76uJJbSy1LKx0jOzlXTi7opB/view?usp=drive_web)
+- [db_loja_avancada.sql](https://drive.google.com/file/d/1MPcy4Y5EISK4rL9a84XAjAmCNYf7ABQI/view?usp=drive_web)

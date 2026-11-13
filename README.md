@@ -2,7 +2,7 @@
 
 > Material de estudo vivo do Bacharelado em Sistemas de Informação do Centro Universitário UniFEF: cada aula, trabalho e prova postados pelos professores no Google Classroom, documentados em profundidade, com diagramas, código resolvido e material de revisão.
 
-**Última sincronização:** 4 de novembro de 2026 às 08:15 (horário de Brasília)
+**Última sincronização:** 13 de novembro de 2026 às 15:47 (horário de Brasília)
 
 ## Sumário
 
@@ -48,10 +48,10 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 | :--- | ---: |
 | Semestres | 2 |
 | Disciplinas | 8 |
-| Aulas documentadas | 52 |
-| Trabalhos e provas | 33 |
-| Arquivos de código resolvido | 232 |
-| Linhas de documentação (Markdown) | 128.742 |
+| Aulas documentadas | 56 |
+| Trabalhos e provas | 38 |
+| Arquivos de código resolvido | 252 |
+| Linhas de documentação (Markdown) | 139.523 |
 | Linguagens nos códigos | C, Java, SQL |
 
 ## Disciplinas
@@ -60,10 +60,10 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 
 | Disciplina | Professor | Aulas | Trabalhos e provas | Código | Revisão |
 | :--- | :--- | :---: | :---: | :--- | :--- |
-| [Laboratório de Programação IV](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/README.md) | Jefferson Passerini | 8 | 1 | Java, SQL | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Resumos-IA/Simulados-Comentados.md) |
-| [Tópicos Avançados em Banco de Dados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/README.md) | Welington Garcia | 4 | 6 | SQL | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Simulados-Comentados.md) |
-| [Engenharia de Software II](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/README.md) | Wesley Soares | 8 | 4 | Java | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Resumos-IA/Simulados-Comentados.md) |
-| [Estrutura de Dados I](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/README.md) | Wesley Soares | 10 | 5 | Java | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Resumos-IA/Simulados-Comentados.md) |
+| [Laboratório de Programação IV](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/README.md) | Jefferson Passerini | 8 | 2 | Java, SQL | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Jefferson%20Passerini%5D%20Laborat%C3%B3rio%20de%20Programa%C3%A7%C3%A3o%20IV/Resumos-IA/Simulados-Comentados.md) |
+| [Tópicos Avançados em Banco de Dados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/README.md) | Welington Garcia | 5 | 7 | SQL | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Resumos-IA/Simulados-Comentados.md) |
+| [Engenharia de Software II](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/README.md) | Wesley Soares | 10 | 6 | Java | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Resumos-IA/Simulados-Comentados.md) |
+| [Estrutura de Dados I](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/README.md) | Wesley Soares | 11 | 6 | Java | [Caderno](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Resumos-IA/Caderno-Consolidado.md) · [Simulados](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Resumos-IA/Simulados-Comentados.md) |
 
 **Laboratório de Programação IV** - conteúdo das aulas:
 
@@ -82,6 +82,7 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 - [Aula 03 - Stored Procedures no PostgreSQL com PL pgSQL](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2003%20-%20Stored%20Procedures%20no%20PostgreSQL%20com%20PL%20pgSQL/detalhes.md)
 - [Aula 04 - Junções e Subconsultas em PostgreSQL](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2004%20-%20Jun%C3%A7%C3%B5es%20e%20Subconsultas%20em%20PostgreSQL/detalhes.md)
 - [Aula 05 - Triggers no PostgreSQL com PL pgSQL](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2005%20-%20Triggers%20no%20PostgreSQL%20com%20PL%20pgSQL/detalhes.md)
+- [Aula 06 - Triggers e Regras de Negócio em PostgreSQL](4%C2%BA%20Semestre/%5BProf.%20Welington%20Garcia%5D%20T%C3%B3picos%20Avan%C3%A7ados%20em%20Banco%20de%20Dados/Aulas/Aula%2006%20-%20Triggers%20e%20Regras%20de%20Neg%C3%B3cio%20em%20PostgreSQL/detalhes.md)
 
 **Engenharia de Software II** - conteúdo das aulas:
 
@@ -93,6 +94,8 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 - [Aula 07 - Fundamentos da UML e Diagrama de Classes](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Aulas/Aula%2007%20-%20Fundamentos%20da%20UML%20e%20Diagrama%20de%20Classes/detalhes.md)
 - [Aula 08 - Arquitetura Model-View-Controller no Smalltalk-80](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Aulas/Aula%2008%20-%20Arquitetura%20Model-View-Controller%20no%20Smalltalk-80/detalhes.md)
 - [Aula 09 - Arquitetura de Software e Padrões Arquiteturais](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Aulas/Aula%2009%20-%20Arquitetura%20de%20Software%20e%20Padr%C3%B5es%20Arquiteturais/detalhes.md)
+- [Aula 10 - Modelagem de Interação Estados e Atividades](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Aulas/Aula%2010%20-%20Modelagem%20de%20Intera%C3%A7%C3%A3o%20Estados%20e%20Atividades/detalhes.md)
+- [Aula 11 - Diagramas de Estado e de Atividade](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Engenharia%20de%20Software%20II/Aulas/Aula%2011%20-%20Diagramas%20de%20Estado%20e%20de%20Atividade/detalhes.md)
 
 **Estrutura de Dados I** - conteúdo das aulas:
 
@@ -106,6 +109,7 @@ Além de apoio aos estudos, o projeto é também um exercício prático de engen
 - [Aula 09 - Ordenação com Bubble Sort e Selection Sort](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Aulas/Aula%2009%20-%20Ordena%C3%A7%C3%A3o%20com%20Bubble%20Sort%20e%20Selection%20Sort/detalhes.md)
 - [Aula 10 - Insertion Sort Ordenação por Inserção](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Aulas/Aula%2010%20-%20Insertion%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Inser%C3%A7%C3%A3o/detalhes.md)
 - [Aula 11 - Algoritmo de Ordenação Merge Sort](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Aulas/Aula%2011%20-%20Algoritmo%20de%20Ordena%C3%A7%C3%A3o%20Merge%20Sort/detalhes.md)
+- [Aula 12 - Quick Sort Ordenação por Particionamento](4%C2%BA%20Semestre/%5BProf.%20Wesley%20Soares%5D%20Estrutura%20de%20Dados%20I/Aulas/Aula%2012%20-%20Quick%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Particionamento/detalhes.md)
 
 ### 3º Semestre
 

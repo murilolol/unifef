@@ -2,7 +2,7 @@
 
 > **Professor:** Wesley Soares
 > **Semestre:** 4º Semestre
-> **Postagens:** 16 (espelho do Google Classroom, ordem cronológica)
+> **Postagens:** 18 (espelho do Google Classroom, ordem cronológica)
 
 | Data | Tipo | Título |
 | :--- | :--- | :--- |
@@ -22,6 +22,8 @@
 | 27/10/2026 | Aviso | Aviso sem título |
 | 02/11/2026 | Tarefa | Estrutura de ordenação 3 |
 | 03/11/2026 | Aviso | Aviso sem título |
+| 10/11/2026 | Tarefa | Quick sort |
+| 10/11/2026 | Aviso | Aula 14 |
 
 ## 05/08/2026 - Aviso: Conteúdo aula 01
 
@@ -130,7 +132,7 @@ Aviso sem título
 
 ## 02/11/2026 - Tarefa: Estrutura de ordenação 3
 
-**Entrega:** 2026-11-04 | **Pontos:** 100
+**Entrega:** 2026-11-07 | **Pontos:** 100
 
 Merge sort
 
@@ -141,3 +143,15 @@ Merge sort
 Aviso sem título
 
 - [https://outgoing-salt-444.notion.site/ED-I-Aula-13-Merge-sort-40c8a4f8f8a780eda933c75b49da313d?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-13-Merge-sort-40c8a4f8f8a780eda933c75b49da313d?source=copy_link)
+
+## 10/11/2026 - Tarefa: Quick sort
+
+**Entrega:** 2026-11-14 | **Pontos:** 100
+
+Copie a atividade da aula 14 presente no notion e coloque as respostas em um doc (Word, google docs, papel de pão, etc) e anexe como resposta
+
+## 10/11/2026 - Aviso: Aula 14
+
+Aula 14
+
+- [https://outgoing-salt-444.notion.site/ED-I-Aula-14-Quick-sort-Ordena-o-por-Particionamento-4148a4f8f8a7802197f4d8f255e2aa7c?source=copy_link](https://outgoing-salt-444.notion.site/ED-I-Aula-14-Quick-sort-Ordena-o-por-Particionamento-4148a4f8f8a7802197f4d8f255e2aa7c?source=copy_link)

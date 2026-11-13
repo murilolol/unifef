@@ -20,6 +20,7 @@
 | [Aula 03 - Stored Procedures no PostgreSQL com PL pgSQL](Aulas/Aula%2003%20-%20Stored%20Procedures%20no%20PostgreSQL%20com%20PL%20pgSQL/detalhes.md) | Programação procedural no PostgreSQL: criação de procedimentos armazenados, variáveis, controle de fluxo e gestão transacional com PL/pgSQL | [codigo](Aulas/Aula%2003%20-%20Stored%20Procedures%20no%20PostgreSQL%20com%20PL%20pgSQL/codigo) |
 | [Aula 04 - Junções e Subconsultas em PostgreSQL](Aulas/Aula%2004%20-%20Jun%C3%A7%C3%B5es%20e%20Subconsultas%20em%20PostgreSQL/detalhes.md) | Álgebra relacional aplicada, técnicas de junção de dados (JOINs), subconsultas escalares, correlacionadas e tabulares, expressões de tabela comuns (CTEs) e otimização de consultas no PostgreSQL. | [codigo](Aulas/Aula%2004%20-%20Jun%C3%A7%C3%B5es%20e%20Subconsultas%20em%20PostgreSQL/codigo) |
 | [Aula 05 - Triggers no PostgreSQL com PL pgSQL](Aulas/Aula%2005%20-%20Triggers%20no%20PostgreSQL%20com%20PL%20pgSQL/detalhes.md) | Automação de lógica procedimental reativa, validação de integridade e trilhas de auditoria com PL/pgSQL no PostgreSQL | [codigo](Aulas/Aula%2005%20-%20Triggers%20no%20PostgreSQL%20com%20PL%20pgSQL/codigo) |
+| [Aula 06 - Triggers e Regras de Negócio em PostgreSQL](Aulas/Aula%2006%20-%20Triggers%20e%20Regras%20de%20Neg%C3%B3cio%20em%20PostgreSQL/detalhes.md) | Desenvolvimento de gatilhos (triggers) em PL/pgSQL, integridade transacional, automação de regras de negócio e auditoria no PostgreSQL | [codigo](Aulas/Aula%2006%20-%20Triggers%20e%20Regras%20de%20Neg%C3%B3cio%20em%20PostgreSQL/codigo) |
 
 ## Trabalhos
 
@@ -35,6 +36,7 @@
 
 | Atividade | Prazo | Pontuação |
 | :--- | :--- | :--- |
+| [Atividade AV2](Provas/Atividade%20AV2/detalhes.md) | 02/12/2026 às 23:59 | 100 pontos |
 | [Avaliação de TABD](Provas/Avalia%C3%A7%C3%A3o%20de%20TABD/detalhes.md) | 09/09/2026 às 21:00 | 100 pontos |
 
 ## Revisão

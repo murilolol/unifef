@@ -26,6 +26,7 @@
 | [Aula 09 - Ordenação com Bubble Sort e Selection Sort](Aulas/Aula%2009%20-%20Ordena%C3%A7%C3%A3o%20com%20Bubble%20Sort%20e%20Selection%20Sort/detalhes.md) | Fundamentos de algoritmos de ordenação por trocas adjacentes (Bubble Sort) e seleção de extremos (Selection Sort), análise de complexidade quadrática e otimizações. | [codigo](Aulas/Aula%2009%20-%20Ordena%C3%A7%C3%A3o%20com%20Bubble%20Sort%20e%20Selection%20Sort/codigo) |
 | [Aula 10 - Insertion Sort Ordenação por Inserção](Aulas/Aula%2010%20-%20Insertion%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Inser%C3%A7%C3%A3o/detalhes.md) | Algoritmo de ordenação por inserção direta, mecânica de deslocamento, análise de complexidade e estabilidade | [codigo](Aulas/Aula%2010%20-%20Insertion%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Inser%C3%A7%C3%A3o/codigo) |
 | [Aula 11 - Algoritmo de Ordenação Merge Sort](Aulas/Aula%2011%20-%20Algoritmo%20de%20Ordena%C3%A7%C3%A3o%20Merge%20Sort/detalhes.md) | Ordenação eficiente de dados baseada no paradigma de divisão e conquista com o algoritmo Merge Sort | [codigo](Aulas/Aula%2011%20-%20Algoritmo%20de%20Ordena%C3%A7%C3%A3o%20Merge%20Sort/codigo) |
+| [Aula 12 - Quick Sort Ordenação por Particionamento](Aulas/Aula%2012%20-%20Quick%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Particionamento/detalhes.md) | Algoritmo de ordenação Quick Sort por particionamento de Lomuto, análise assintótica e implementação em Java | [codigo](Aulas/Aula%2012%20-%20Quick%20Sort%20Ordena%C3%A7%C3%A3o%20por%20Particionamento/codigo) |
 
 ## Trabalhos
 
@@ -35,6 +36,7 @@
 | [Estrutura de ordenação 2](Trabalhos/Estrutura%20de%20ordena%C3%A7%C3%A3o%202/detalhes.md) | 30/10/2026 às 22:00 | 100 pontos |
 | [Estrutura de ordenação 3](Trabalhos/Estrutura%20de%20ordena%C3%A7%C3%A3o%203/detalhes.md) | 03/11/2026 às 23:00 | 100 pontos |
 | [Estruturas de ordenação 1](Trabalhos/Estruturas%20de%20ordena%C3%A7%C3%A3o%201/detalhes.md) | 20/10/2026 às 22:00 | 100 pontos |
+| [Quick sort](Trabalhos/Quick%20sort/detalhes.md) | 13/11/2026 às 22:00 | 100 pontos |
 
 ## Provas
 
